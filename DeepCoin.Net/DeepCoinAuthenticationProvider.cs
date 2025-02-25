@@ -38,7 +38,7 @@ namespace DeepCoin.Net
                 return;
 
             var timestamp = GetTimestamp(apiClient);
-            var timestampString = timestamp.ToString("yyyy-MM-ddThh:mm:ss.fffZ");
+            var timestampString = timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
             var signStr = timestampString + method + uri.PathAndQuery 
                 + (uriParameters?.Any() == true ? ("?" + uriParameters.CreateParamString(false, arraySerialization)): "")

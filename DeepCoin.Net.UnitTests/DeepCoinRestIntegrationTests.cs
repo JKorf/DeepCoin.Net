@@ -11,7 +11,7 @@ using DeepCoin.Net.Objects;
 namespace DeepCoin.Net.UnitTests
 {
     [NonParallelizable]
-    public class DeepCoinRestIntegrationTests : RestIntergrationTest<DeepCoinRestClient>
+    public class DeepCoinRestIntegrationTests : RestIntegrationTest<DeepCoinRestClient>
     {
         public override bool Run { get; set; } = false;
 
