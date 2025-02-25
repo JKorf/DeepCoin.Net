@@ -1,0 +1,27 @@
+GET
+/deepcoin/market/tickers
+false
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "instId": "BTC-USD-SWAP",
+            "last": "96127.5",
+            "lastSz": "",
+            "askPx": "96127.8",
+            "askSz": "179208",
+            "bidPx": "96127.3",
+            "bidSz": "2951",
+            "open24h": "95596.6",
+            "high24h": "96531.5",
+            "low24h": "95247",
+            "volCcy24h": "55.814169",
+            "vol24h": "5350671",
+            "sodUtc0": "",
+            "sodUtc8": "",
+            "ts": "1739242026000"
+        }
+    ]
+}

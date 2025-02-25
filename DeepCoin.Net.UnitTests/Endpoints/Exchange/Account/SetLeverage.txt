@@ -1,0 +1,15 @@
+POST
+/deepcoin/account/set-leverage
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "instId": "BTC-USDT-SWAP",
+        "lever": "17",
+        "mgnMode": "cross",
+        "mrgPosition": "merge",
+        "sCode": "0",
+        "sMsg": ""
+    }
+}

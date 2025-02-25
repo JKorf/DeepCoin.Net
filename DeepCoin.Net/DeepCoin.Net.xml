@@ -1,0 +1,1536 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DeepCoin.Net</name>
+    </assembly>
+    <members>
+        <member name="T:DeepCoin.Net.Clients.DeepCoinRestClient">
+            <inheritdoc cref="T:DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient" />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.DeepCoinRestClient.ExchangeApi">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinRestClient.#ctor(System.Action{DeepCoin.Net.Objects.Options.DeepCoinRestOptions})">
+            <summary>
+            Create a new instance of the DeepCoinRestClient using provided options
+            </summary>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinRestClient.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Options.IOptions{DeepCoin.Net.Objects.Options.DeepCoinRestOptions})">
+            <summary>
+            Create a new instance of the DeepCoinRestClient using provided options
+            </summary>
+            <param name="options">Option configuration</param>
+            <param name="loggerFactory">The logger factory</param>
+            <param name="httpClient">Http client for this client</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinRestClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinRestClient.SetDefaultOptions(System.Action{DeepCoin.Net.Objects.Options.DeepCoinRestOptions})">
+            <summary>
+            Set the default options to be used when creating new clients
+            </summary>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinRestClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Clients.DeepCoinSocketClient">
+            <inheritdoc cref="T:DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient" />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.DeepCoinSocketClient.ExchangeApi">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinSocketClient.#ctor(System.Action{DeepCoin.Net.Objects.Options.DeepCoinSocketOptions})">
+            <summary>
+            Create a new instance of DeepCoinSocketClient
+            </summary>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinSocketClient.#ctor(Microsoft.Extensions.Options.IOptions{DeepCoin.Net.Objects.Options.DeepCoinSocketOptions},Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Create a new instance of DeepCoinSocketClient
+            </summary>
+            <param name="loggerFactory">The logger factory</param>
+            <param name="options">Option configuration</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinSocketClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinSocketClient.SetDefaultOptions(System.Action{DeepCoin.Net.Objects.Options.DeepCoinSocketOptions})">
+            <summary>
+            Set the default options to be used when creating new clients
+            </summary>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi">
+            <inheritdoc cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi" />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.Account">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.ExchangeData">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.Trading">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.ExchangeName">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateAccessor">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateSerializer">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.GetServerTimestampAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.GetTimeSyncInfo">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.SharedClient">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.GetBalancesAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.GetBillsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Nullable{DeepCoin.Net.Enums.BillType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.MarginMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiExchangeData">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiExchangeData.GetTickersAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiExchangeData.GetSymbolsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiExchangeData.GetKlinesAsync(System.String,DeepCoin.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.GetPositionsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi">
+            <summary>
+            Client providing access to the DeepCoin Exchange websocket Api
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.#ctor(Microsoft.Extensions.Logging.ILogger,DeepCoin.Net.Objects.Options.DeepCoinSocketOptions)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.CreateAccessor">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.CreateSerializer">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToSymbolUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SharedClient">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.DeepCoinEnvironment">
+            <summary>
+            DeepCoin environments
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinEnvironment.RestClientAddress">
+            <summary>
+            Rest API address
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinEnvironment.SocketClientAddress">
+            <summary>
+            Socket API address
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinEnvironment.#ctor">
+            <summary>
+            ctor for DI, use <see cref="M:DeepCoin.Net.DeepCoinEnvironment.CreateCustom(System.String,System.String,System.String)"/> for creating a custom environment
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinEnvironment.GetEnvironmentByName(System.String)">
+            <summary>
+            Get the DeepCoin environment by name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinEnvironment.Live">
+            <summary>
+            Live environment
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinEnvironment.CreateCustom(System.String,System.String,System.String)">
+            <summary>
+            Create a custom environment
+            </summary>
+            <param name="name"></param>
+            <param name="spotRestAddress"></param>
+            <param name="spotSocketStreamsAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeepCoin.Net.DeepCoinExchange">
+            <summary>
+            DeepCoin exchange information and configuration
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.ExchangeName">
+            <summary>
+            Exchange name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.Url">
+            <summary>
+            Url to the main website
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.ApiDocsUrl">
+            <summary>
+            Urls to the API documentation
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinExchange.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
+            <summary>
+            Format a base and quote asset to an DeepCoin recognized symbol 
+            </summary>
+            <param name="baseAsset">Base asset</param>
+            <param name="quoteAsset">Quote asset</param>
+            <param name="tradingMode">Trading mode</param>
+            <param name="deliverTime">Delivery time for delivery futures</param>
+            <returns></returns>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.RateLimiter">
+            <summary>
+            Rate limiter configuration for the DeepCoin API
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.DeepCoinRateLimiters">
+            <summary>
+            Rate limiter configuration for the DeepCoin API
+            </summary>
+        </member>
+        <member name="E:DeepCoin.Net.DeepCoinRateLimiters.RateLimitTriggered">
+            <summary>
+            Event for when a rate limit is triggered
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.DeepCoinTrackerFactory">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.#ctor(System.IServiceProvider)">
+            <summary>
+            ctor
+            </summary>
+            <param name="serviceProvider">Service provider for resolving logging and clients</param>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateKlineTracker(CryptoExchange.Net.SharedApis.SharedSymbol,CryptoExchange.Net.SharedApis.SharedKlineInterval,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateTradeTracker(CryptoExchange.Net.SharedApis.SharedSymbol,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Enums.BillType">
+            <summary>
+            Bill type
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.BillType.FundIncome">
+            <summary>
+            Fund in
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.BillType.FundExpense">
+            <summary>
+            Fund out
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.BillType.FundTransfer">
+            <summary>
+            Fund transfer
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.BillType.Fee">
+            <summary>
+            Fee
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.ContractType">
+            <summary>
+            Contract type
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.ContractType.Linear">
+            <summary>
+            Linear contract
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.ContractType.Inverse">
+            <summary>
+            Inverse contract
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.DeepCoinEnum">
+            <summary>
+            XXX
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.DeepCoinEnum.XXX">
+            <summary>
+            XXX
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.KlineInterval">
+            <summary>
+            Kline interval
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.OneMinute">
+            <summary>
+            One minute
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.FiveMinutes">
+            <summary>
+            Five minutes
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.FifteenMinutes">
+            <summary>
+            Fifteen minutes
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.ThirtyMinutes">
+            <summary>
+            Thirty minutes
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.OneHour">
+            <summary>
+            One hour
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.FourHours">
+            <summary>
+            Four hours
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.TwelveHours">
+            <summary>
+            Twelve hours
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.OneDay">
+            <summary>
+            One minute
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.OneWeek">
+            <summary>
+            One week
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.OneMonth">
+            <summary>
+            One month
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.KlineInterval.OneYear">
+            <summary>
+            One year
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.MarginMode">
+            <summary>
+            Margin mode
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.MarginMode.Cross">
+            <summary>
+            Cross margin
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.MarginMode.Isolated">
+            <summary>
+            Isolated margin
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.PositionSide.Long">
+            <summary>
+            Long
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.PositionSide.Short">
+            <summary>
+            Short
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.PositionType">
+            <summary>
+            Position type
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.PositionType.Merge">
+            <summary>
+            Merge position
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.PositionType.Split">
+            <summary>
+            Split position
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.SymbolStatus">
+            <summary>
+            Symbol status
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolStatus.Live">
+            <summary>
+            Live
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolStatus.Suspended">
+            <summary>
+            Suspended
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolStatus.PreOpen">
+            <summary>
+            Pre-open
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolStatus.Settling">
+            <summary>
+            Funding fee settling
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolStatus.Closing">
+            <summary>
+            Closing
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolStatus.Inactive">
+            <summary>
+            Inactive
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Enums.SymbolType">
+            <summary>
+            Symbol type
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolType.Spot">
+            <summary>
+            Spot symbol
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.SymbolType.Swap">
+            <summary>
+            Swap symbol
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.ExtensionMethods.DeepCoinExtensionMethods">
+            <summary>
+            Extension methods specific to using the DeepCoin API
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi">
+            <summary>
+            DeepCoin Exchange API endpoints
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.Account">
+            <summary>
+            Endpoints related to account settings, info or actions
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.ExchangeData">
+            <summary>
+            Endpoints related to retrieving market and system data
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.Trading">
+            <summary>
+            Endpoints related to orders and trades
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.SharedClient">
+            <summary>
+            Get the shared rest requests client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount">
+            <summary>
+            DeepCoin Exchange account endpoints. Account endpoints include balance info, withdraw/deposit info and requesting and account settings
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.GetBalancesAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get account balances
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBalance" /></para>
+            </summary>
+            <param name="accountType">Account type</param>
+            <param name="asset">Filter by asset, for example `ETH`</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.GetBillsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Nullable{DeepCoin.Net.Enums.BillType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBills" /></para>
+            </summary>
+            <param name="accountType">Account type</param>
+            <param name="asset">The asset, for example `ETH`</param>
+            <param name="billType">Filter by bill type</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max number of results, max 100</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.MarginMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
+            <summary>
+            Set leverage for a symbol
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountSetLeverage" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="leverage">Leverage</param>
+            <param name="marginMode">Margin mode</param>
+            <param name="positionType">Position type</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData">
+            <summary>
+            DeepCoin Exchange exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetTickersAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get ticker price info
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getMarketTickers" /></para>
+            </summary>
+            <param name="symbolType">Type of symbol</param>
+            <param name="underlying">Filter by underlying (swap only)</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetSymbolsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get symbols list
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getBaseInfo" /></para>
+            </summary>
+            <param name="type">Symbol type</param>
+            <param name="underlying">Filter by underlying</param>
+            <param name="symbol">Filter by symbol name</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetKlinesAsync(System.String,DeepCoin.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get kline/candlestick data
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getKlineData" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="interval">Kline interval</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max number of results, max 300</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get order book
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/marketBooks" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="depth">Number of order book rows, max 400</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiShared">
+            <summary>
+            Shared interface for Exchange rest API usage
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading">
+            <summary>
+            DeepCoin Exchange trading endpoints, placing and managing orders.
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetPositionsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get positions list
+            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountPositions" /></para>
+            </summary>
+            <param name="symbolType">Symbol type</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi">
+            <summary>
+            DeepCoin Exchange streams
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToSymbolUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            
+            <para><a href="XXX" /></para>
+            </summary>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="symbol"></param>
+            <param name="onMessage"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SharedClient">
+            <summary>
+            Get the shared socket requests client. This interface is shared with other exchanges to allow for a common implementation for different exchanges.
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApiShared">
+            <summary>
+            Shared interface for Exchange socket API usage
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient">
+            <summary>
+            Client for accessing the DeepCoin Rest API. 
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient.ExchangeApi">
+            <summary>
+            Exchange API endpoints
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <summary>
+            Update specific options
+            </summary>
+            <param name="options">Options to update. Only specific options are changeable after the client has been created</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <summary>
+            Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.
+            </summary>
+            <param name="credentials">The credentials to set</param>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient">
+            <summary>
+            Client for accessing the DeepCoin websocket API
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient.ExchangeApi">
+            <summary>
+            Exchange API endpoints
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <summary>
+            Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.
+            </summary>
+            <param name="credentials">The credentials to set</param>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.IDeepCoinOrderBookFactory">
+            <summary>
+            DeepCoin local order book factory
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Interfaces.IDeepCoinOrderBookFactory.Exchange">
+            <summary>
+            Exchange order book factory methods
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinOrderBookFactory.Create(CryptoExchange.Net.SharedApis.SharedSymbol,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <summary>
+            Create a SymbolOrderBook for the symbol
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="options">Book options</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinOrderBookFactory.Create(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <summary>
+            Create a new Exchange local order book instance
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory">
+            <summary>
+            Tracker factory
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory.CreateKlineTracker(CryptoExchange.Net.SharedApis.SharedSymbol,CryptoExchange.Net.SharedApis.SharedKlineInterval,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <summary>
+            Create a new kline tracker
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="interval">Kline interval</param>
+            <param name="limit">The max amount of klines to retain</param>
+            <param name="period">The max period the data should be retained</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory.CreateTradeTracker(CryptoExchange.Net.SharedApis.SharedSymbol,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <summary>
+            Create a new trade tracker for a symbol
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="limit">The max amount of klines to retain</param>
+            <param name="period">The max period the data should be retained</param>
+            <returns></returns>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.DeepCoinApiAddresses">
+            <summary>
+            Api addresses
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.DeepCoinApiAddresses.RestClientAddress">
+            <summary>
+            The address used by the DeepCoinRestClient for the API
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.DeepCoinApiAddresses.SocketClientAddress">
+            <summary>
+            The address used by the DeepCoinSocketClient for the websocket API
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Objects.DeepCoinApiAddresses.Default">
+            <summary>
+            The default addresses to connect to the DeepCoin API
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.DeepCoinApiCredentials">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Objects.DeepCoinApiCredentials.PassPhrase">
+            <summary>
+            Passphrase
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.DeepCoinApiCredentials.#ctor(System.String,System.String,System.String)">
+            <summary>
+            ctor
+            </summary>
+            <param name="key">The API key</param>
+            <param name="secret">The API secret</param>
+            <param name="passPhrase">The API passphrase</param>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.DeepCoinApiCredentials.Copy">
+            <summary>
+            Copy
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Internal.DeepCoinResponse">
+            <summary>
+            DeepCoin response
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinBalance">
+            <summary>
+            Balance info
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalance.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalance.Balance">
+            <summary>
+            Total balance
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalance.FrozenBalance">
+            <summary>
+            Frozen balance
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalance.AvailBalance">
+            <summary>
+            Avail balance
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinBill">
+            <summary>
+            Bill info
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.BillId">
+            <summary>
+            Bill id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.ClientId">
+            <summary>
+            Client id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.BalanceChange">
+            <summary>
+            Balance change
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.Balance">
+            <summary>
+            Balance
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.Type">
+            <summary>
+            Bill type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBill.Timestamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinKline">
+            <summary>
+            Kline info
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.OpenTime">
+            <summary>
+            Open time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.HighPrice">
+            <summary>
+            High price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.LowPrice">
+            <summary>
+            Low price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.ClosePrice">
+            <summary>
+            Close price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.Volume">
+            <summary>
+            Volume in base asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKline.QuoteVolume">
+            <summary>
+            Volume in quote asset
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinLeverage">
+            <summary>
+            Leverage setting
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.MarginMode">
+            <summary>
+            Margin mode
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.PositionType">
+            <summary>
+            Position type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.ResultCode">
+            <summary>
+            Result code
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.ResultMessage">
+            <summary>
+            Result message
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinOrderBook">
+            <summary>
+            Order book
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBook.Asks">
+            <summary>
+            Asks
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBook.Bids">
+            <summary>
+            Bids
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinOrderBookEntry">
+            <summary>
+            Order book entry
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookEntry.Price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookEntry.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinPosition">
+            <summary>
+            Position info
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.SymbolType">
+            <summary>
+            Symbol type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.MarginMode">
+            <summary>
+            Margin mode
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.PositionId">
+            <summary>
+            Position id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.Size">
+            <summary>
+            Position size
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.AveragePrice">
+            <summary>
+            Average price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.LiquidationPrice">
+            <summary>
+            Liquidation price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.UsedMargin">
+            <summary>
+            Used margin
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.PositionType">
+            <summary>
+            Position type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.MarginAsset">
+            <summary>
+            Margin asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.CreateTime">
+            <summary>
+            Create time
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinSymbol">
+            <summary>
+            Symbol info
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.SymbolType">
+            <summary>
+            Symbol type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.Underlying">
+            <summary>
+            Underlying
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.BaseAsset">
+            <summary>
+            Base asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.QuoteAsset">
+            <summary>
+            Quote asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.ContractSize">
+            <summary>
+            Size of a single contract
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.ContractSizeAsset">
+            <summary>
+            Asset the contract size is in
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.ListTime">
+            <summary>
+            List time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.MaxLeverage">
+            <summary>
+            Max leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.TickQuantity">
+            <summary>
+            Tick quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.LotQuantity">
+            <summary>
+            Lot quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.MinQuantity">
+            <summary>
+            Min order quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.ContractType">
+            <summary>
+            Contract type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.Alias">
+            <summary>
+            Alias
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.MaxLimitQuantity">
+            <summary>
+            Max limit order quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.MaxMarketQuantity">
+            <summary>
+            Max market order quantity
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate">
+            <summary>
+            Symbol update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.ExchangeId">
+            <summary>
+            Exchange Id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.ProductGroup">
+            <summary>
+            Product group
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.UpdateMilliSecond">
+            <summary>
+            Update millisecond
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.UpperLimitPrice">
+            <summary>
+            Upper limit price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.LowerLimitPrice">
+            <summary>
+            Lower limit price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.UnderlyingPrice">
+            <summary>
+            Underlying price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.MarkedPrice">
+            <summary>
+            Marked price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.PositionFeeRate">
+            <summary>
+            Position fee rate
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.HighPrice">
+            <summary>
+            High price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.LowPrice">
+            <summary>
+            Low price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.LastPrice">
+            <summary>
+            Last price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.Volume">
+            <summary>
+            Volume
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.Turnover">
+            <summary>
+            Turnover
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.OpenInterest">
+            <summary>
+            Open interest
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.Status">
+            <summary>
+            Symbol status
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate.PrePositionFeeRate">
+            <summary>
+            Pre position fee rate
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinTicker">
+            <summary>
+            Ticker price info
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.SymbolType">
+            <summary>
+            Symbol type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.LastPrice">
+            <summary>
+            Last trade price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.BestAskPrice">
+            <summary>
+            Best ask price in the order book
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.BestAskQuantity">
+            <summary>
+            Best ask quantity in the order book
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.BestBidPrice">
+            <summary>
+            Best bid price in the order book
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.BestBidQuantity">
+            <summary>
+            Best bid quantity in the order book
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.OpenPrice">
+            <summary>
+            Price 24h ago
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.HighPrice">
+            <summary>
+            Highest price in the last 24h
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.LowPrice">
+            <summary>
+            Lowest price in the last 24h
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.Volume">
+            <summary>
+            Volume in base asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.QuoteVolume">
+            <summary>
+            Volume in quote asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTicker.Timestamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate">
+            <summary>
+            Trade update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.TradeId">
+            <summary>
+            Trade id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.ExchangeId">
+            <summary>
+            Exchange id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Direction">
+            <summary>
+            Trade direction
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Quantity">
+            <summary>
+            Trade quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Timestamp">
+            <summary>
+            Trade timestamp
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Options.DeepCoinOptions">
+            <summary>
+            DeepCoin options
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.Rest">
+            <summary>
+            Rest client options
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.Socket">
+            <summary>
+            Socket client options
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.Environment">
+            <summary>
+            Trade environment. Contains info about URL's to use to connect to the API. Use `DeepCoinEnvironment` to swap environment, for example `Environment = DeepCoinEnvironment.Live`
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.ApiCredentials">
+            <summary>
+            The api credentials used for signing requests.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.SocketClientLifeTime">
+            <summary>
+            The DI service lifetime for the IDeepCoinSocketClient
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions">
+            <summary>
+            Options for the DeepCoin SymbolOrderBook
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions.Default">
+            <summary>
+            Default options for new clients
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions.Limit">
+            <summary>
+            The top amount of results to keep in sync. If for example limit=10 is used, the order book will contain the 10 best bids and 10 best asks. Leaving this null will sync the full order book
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions.InitialDataTimeout">
+            <summary>
+            After how much time we should consider the connection dropped if no data is received for this time after the initial subscriptions
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Options.DeepCoinRestOptions">
+            <summary>
+            Options for the DeepCoinRestClient
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinRestOptions.Default">
+            <summary>
+            Default options for new clients
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Options.DeepCoinRestOptions.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinRestOptions.ExchangeOptions">
+            <summary>
+            Exchange API options
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Options.DeepCoinSocketOptions">
+            <summary>
+            Options for the DeepCoinSocketClient
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinSocketOptions.Default">
+            <summary>
+            Default options for new clients
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Options.DeepCoinSocketOptions.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinSocketOptions.ExchangeOptions">
+            <summary>
+            Exchange API options
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.ListenerIdentifiers">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{DeepCoin.Net.Objects.Internal.TableData{`0}}}},System.Boolean)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook">
+            <summary>
+            Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
+            Make sure to check the State property to see if the order book is synced.
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.#ctor(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <summary>
+            Create a new order book instance
+            </summary>
+            <param name="symbol">The symbol the order book is for</param>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.#ctor(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions},Microsoft.Extensions.Logging.ILoggerFactory,DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient,DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient)">
+            <summary>
+            Create a new order book instance
+            </summary>
+            <param name="symbol">The symbol the order book is for</param>
+            <param name="optionsDelegate">Option configuration delegate</param>
+            <param name="logger">Logger</param>
+            <param name="restClient">Rest client instance</param>
+            <param name="socketClient">Socket client instance</param>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.DoReset">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.Dispose(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory">
+            <summary>
+            DeepCoin order book factory
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.#ctor(System.IServiceProvider)">
+            <summary>
+            ctor
+            </summary>
+            <param name="serviceProvider">Service provider for resolving logging and clients</param>
+        </member>
+        <member name="P:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.Exchange">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.Create(CryptoExchange.Net.SharedApis.SharedSymbol,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.Create(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <inheritdoc />
+        </member>
+        <member name="T:CryptoExchange.Net.Interfaces.CryptoClientExtensions">
+            <summary>
+            Extensions for the ICryptoRestClient and ICryptoSocketClient interfaces
+            </summary>
+        </member>
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.ICryptoRestClient)">
+            <summary>
+            Get the DeepCoin REST Api client
+            </summary>
+            <param name="baseClient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.ICryptoSocketClient)">
+            <summary>
+            Get the DeepCoin Websocket Api client
+            </summary>
+            <param name="baseClient"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions">
+            <summary>
+            Extensions for DI
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddDeepCoin(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add services such as the IDeepCoinRestClient and IDeepCoinSocketClient. Configures the services based on the provided configuration.
+            </summary>
+            <param name="services">The service collection</param>
+            <param name="configuration">The configuration(section) containing the options</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddDeepCoin(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOptions})">
+            <summary>
+            Add services such as the IDeepCoinRestClient and IDeepCoinSocketClient. Services will be configured based on the provided options.
+            </summary>
+            <param name="services">The service collection</param>
+            <param name="optionsDelegate">Set options for the DeepCoin services</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

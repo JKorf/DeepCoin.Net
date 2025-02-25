@@ -1,0 +1,25 @@
+GET
+/deepcoin/account/positions
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "mgnMode": "cross",
+            "instId": "BTC-USDT-SWAP",
+            "posId": "1000587858872759",
+            "posSide": "long",
+            "pos": "200",
+            "avgPx": "97603",
+            "lever": "1",
+            "liqPx": "0.1",
+            "useMargin": "19520.6",
+            "mrgPosition": "split",
+            "ccy": "USDT",
+            "uTime": "1739243187000",
+            "cTime": "1739243187000"
+        }
+    ]
+}

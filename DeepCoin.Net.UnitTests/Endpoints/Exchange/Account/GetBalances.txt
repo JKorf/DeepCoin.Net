@@ -1,0 +1,21 @@
+GET
+/deepcoin/account/balances
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "ccy": "USDT",
+            "bal": "41473433.53",
+            "frozenBal": "192.05",
+            "availBal": "41473234.12"
+        },
+        {
+            "ccy": "BTC",
+            "bal": "0.99715276",
+            "frozenBal": "0.00135139",
+            "availBal": "0.99448105"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+GET
+/deepcoin/market/books
+false
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "bids": [
+            [
+                "97515.7",
+                "14.507"
+            ]
+        ],
+        "asks": [
+            [
+                "97516",
+                "9.303"
+            ]
+        ]
+    }
+}

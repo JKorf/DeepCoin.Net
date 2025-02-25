@@ -1,0 +1,28 @@
+GET
+/deepcoin/market/instruments
+false
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "instId": "BTC-USDT-SWAP",
+            "uly": "",
+            "baseCcy": "BTC",
+            "quoteCcy": "USDT",
+            "ctVal": "0.001",
+            "ctValCcy": "",
+            "listTime": "0",
+            "lever": "125",
+            "tickSz": "0.1",
+            "lotSz": "1",
+            "minSz": "1",
+            "ctType": "",
+            "alias": "",
+            "state": "live",
+            "maxLmtSz": "200000",
+            "maxMktSz": "200000"
+        }
+    ]
+}
