@@ -12,7 +12,7 @@ namespace DeepCoin.Net.Objects.Internal
         [JsonPropertyName("index")]
         public string Index { get; set; }
         [JsonPropertyName("bNo")]
-        public int BusinessNumber { get; set; }
+        public long BusinessNumber { get; set; }
         [JsonPropertyName("changeType")]
         public string ChangeType { get; set; }
         [JsonPropertyName("result")]

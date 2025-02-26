@@ -45,9 +45,8 @@ namespace DeepCoin.Net.SymbolOrderBooks
         
          /// <inheritdoc />
         public ISymbolOrderBook Create(string symbol, Action<DeepCoinOrderBookOptions>? options = null)
-            => new DeepCoinExchangeSymbolOrderBook(symbol, options, 
+            => new DeepCoinSymbolOrderBook(symbol, options, 
                                                           _serviceProvider.GetRequiredService<ILoggerFactory>(),
-                                                          _serviceProvider.GetRequiredService<IDeepCoinRestClient>(),
                                                           _serviceProvider.GetRequiredService<IDeepCoinSocketClient>());
 
 

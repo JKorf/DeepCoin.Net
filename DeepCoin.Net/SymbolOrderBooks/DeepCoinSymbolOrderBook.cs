@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using DeepCoin.Net.Clients;
 using DeepCoin.Net.Interfaces.Clients;
 using DeepCoin.Net.Objects.Options;
+using DeepCoin.Net.Objects.Models;
+using System.Linq;
 
 namespace DeepCoin.Net.SymbolOrderBooks
 {
@@ -15,10 +17,9 @@ namespace DeepCoin.Net.SymbolOrderBooks
     /// Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
     /// Make sure to check the State property to see if the order book is synced.
     /// </summary>
-    public class DeepCoinExchangeSymbolOrderBook : SymbolOrderBook
+    public class DeepCoinSymbolOrderBook : SymbolOrderBook
     {
         private readonly bool _clientOwner;
-        private readonly IDeepCoinRestClient _restClient;
         private readonly IDeepCoinSocketClient _socketClient;
         private readonly TimeSpan _initialDataTimeout;
 
@@ -27,8 +28,8 @@ namespace DeepCoin.Net.SymbolOrderBooks
         /// </summary>
         /// <param name="symbol">The symbol the order book is for</param>
         /// <param name="optionsDelegate">Option configuration delegate</param>
-        public DeepCoinExchangeSymbolOrderBook(string symbol, Action<DeepCoinOrderBookOptions>? optionsDelegate = null)
-            : this(symbol, optionsDelegate, null, null, null)
+        public DeepCoinSymbolOrderBook(string symbol, Action<DeepCoinOrderBookOptions>? optionsDelegate = null)
+            : this(symbol, optionsDelegate, null, null)
         {
             _clientOwner = true;
         }
@@ -39,13 +40,11 @@ namespace DeepCoin.Net.SymbolOrderBooks
         /// <param name="symbol">The symbol the order book is for</param>
         /// <param name="optionsDelegate">Option configuration delegate</param>
         /// <param name="logger">Logger</param>
-        /// <param name="restClient">Rest client instance</param>
         /// <param name="socketClient">Socket client instance</param>
-        public DeepCoinExchangeSymbolOrderBook(
+        public DeepCoinSymbolOrderBook(
             string symbol,
             Action<DeepCoinOrderBookOptions>? optionsDelegate,
             ILoggerFactory? logger,
-            IDeepCoinRestClient? restClient,
             IDeepCoinSocketClient? socketClient) : base(logger, "DeepCoin", "Exchange", symbol)
         {
             var options = DeepCoinOrderBookOptions.Default.Copy();
@@ -53,21 +52,39 @@ namespace DeepCoin.Net.SymbolOrderBooks
                 optionsDelegate(options);
             Initialize(options);
 
-            _strictLevels = false;
-            _sequencesAreConsecutive = options?.Limit == null;
+            _strictLevels = true;
+            Levels = 25;
 
-            Levels = options?.Limit;
             _initialDataTimeout = options?.InitialDataTimeout ?? TimeSpan.FromSeconds(30);
             _clientOwner = socketClient == null;
             _socketClient = socketClient ?? new DeepCoinSocketClient();
-            _restClient = restClient ?? new DeepCoinRestClient();
         }
 
         /// <inheritdoc />
         protected override async Task<CallResult<UpdateSubscription>> DoStartAsync(CancellationToken ct)
         {
-            // XXX
-            throw new NotImplementedException();
+            var subResult = await _socketClient.ExchangeApi.SubscribeToOrderBookUpdatesAsync(Symbol, HandleUpdate).ConfigureAwait(false);
+
+            if (!subResult)
+                return new CallResult<UpdateSubscription>(subResult.Error!);
+
+            if (ct.IsCancellationRequested)
+            {
+                await subResult.Data.CloseAsync().ConfigureAwait(false);
+                return subResult.AsError<UpdateSubscription>(new CancellationRequestedError());
+            }
+
+            Status = OrderBookStatus.Syncing;
+            var setResult = await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
+            return setResult ? subResult : new CallResult<UpdateSubscription>(setResult.Error!);
+        }
+
+        private void HandleUpdate(DataEvent<DeepCoinOrderBookUpdate> data)
+        {
+            if (data.UpdateType == SocketUpdateType.Snapshot)
+                SetInitialOrderBook(data.Data.SequenceNumber, data.Data.Bids, data.Data.Asks);
+            else
+                UpdateOrderBook(data.Data.SequenceNumber, data.Data.Bids, data.Data.Asks);
         }
 
         /// <inheritdoc />
@@ -78,18 +95,14 @@ namespace DeepCoin.Net.SymbolOrderBooks
         /// <inheritdoc />
         protected override async Task<CallResult<bool>> DoResyncAsync(CancellationToken ct)
         {
-            // XXX
-            throw new NotImplementedException();
+            return await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             if (_clientOwner)
-            {
-                _restClient?.Dispose();
                 _socketClient?.Dispose();
-            }
 
             base.Dispose(disposing);
         }

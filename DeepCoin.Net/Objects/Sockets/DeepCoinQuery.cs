@@ -21,6 +21,10 @@ namespace DeepCoin.Net.Objects.Sockets
 
         public override CallResult<SocketResponse> HandleMessage(SocketConnection connection, DataEvent<SocketResponse> message)
         {
+            var result = message.Data;
+            if (result.ErrorCode != 0)
+                return message.ToCallResult<SocketResponse>(new ServerError(result.ErrorCode, result.ErrorMessage));
+
             return message.ToCallResult();
         }
     }

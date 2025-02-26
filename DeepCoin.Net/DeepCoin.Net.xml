@@ -161,6 +161,12 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToKlineUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
@@ -402,6 +408,21 @@
             Isolated margin
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Enums.OrderSide">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.OrderSide.Buy">
+            <summary>
+            Buy
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.OrderSide.Sell">
+            <summary>
+            Sell
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Enums.PositionSide">
             <summary>
             Position side
@@ -621,21 +642,43 @@
         </member>
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToSymbolUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate}},System.Threading.CancellationToken)">
             <summary>
-            
-            <para><a href="XXX" /></para>
+            Subscribe to symbol/ticker updates for a symbol
+            <para><a href="https://www.deepcoin.com/docs/publicWS/latestMarketData" /></para>
             </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate}},System.Threading.CancellationToken)">
             <summary>
-            
+            Subscribe to live trade updates for a symbol
+            <para><a href="https://www.deepcoin.com/docs/publicWS/lastTransactions" /></para>
             </summary>
-            <param name="symbol"></param>
-            <param name="onMessage"></param>
-            <param name="ct"></param>
-            <returns></returns>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToKlineUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to kline/candlestick updates for a symbol. Only 1 minute klines supported.
+            <para><a href="https://www.deepcoin.com/docs/publicWS/KLines" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to 25-level incremental order book updates
+            <para><a href="https://www.deepcoin.com/docs/publicWS/25LevelIncrementalMarketData" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
         <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SharedClient">
             <summary>
@@ -884,6 +927,71 @@
             Volume in quote asset
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate">
+            <summary>
+            Kline update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.ExchangeId">
+            <summary>
+            Exchange id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.Interval">
+            <summary>
+            Interval
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.OpenTime">
+            <summary>
+            Open timestamp
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.ClosePrice">
+            <summary>
+            Close price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.HighPrice">
+            <summary>
+            High price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.LowPrice">
+            <summary>
+            Low price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.Volume">
+            <summary>
+            Volume in base asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.Turnover">
+            <summary>
+            Turnover
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.TimeZone">
+            <summary>
+            TimeZone
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate.UpdateTime">
+            <summary>
+            Update timestamp
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinLeverage">
             <summary>
             Leverage setting
@@ -947,6 +1055,61 @@
         <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookEntry.Quantity">
             <summary>
             Quantity
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate">
+            <summary>
+            Order book update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate.SequenceNumber">
+            <summary>
+            Sequence number
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate.Asks">
+            <summary>
+            Updated asks
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate.Bids">
+            <summary>
+            Updated bids
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry">
+            <summary>
+            Order book update entry
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry.ExchangeId">
+            <summary>
+            Exchange id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry.Direction">
+            <summary>
+            Trade direction
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry.Quantity">
+            <summary>
+            Trade quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry.Orders">
+            <summary>
+            Number of orders
             </summary>
         </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinPosition">
@@ -1304,7 +1467,7 @@
             Symbol name
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Direction">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate.Side">
             <summary>
             Trade direction
             </summary>
@@ -1364,11 +1527,6 @@
             Default options for new clients
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions.Limit">
-            <summary>
-            The top amount of results to keep in sync. If for example limit=10 is used, the order book will contain the 10 best bids and 10 best asks. Leaving this null will sync the full order book
-            </summary>
-        </member>
         <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions.InitialDataTimeout">
             <summary>
             After how much time we should consider the connection dropped if no data is received for this time after the initial subscriptions
@@ -1414,6 +1572,29 @@
             Exchange API options
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.ListenerIdentifiers">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Boolean)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+            <inheritdoc />
+        </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1">
             <inheritdoc />
         </member>
@@ -1423,7 +1604,7 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{DeepCoin.Net.Objects.Internal.TableData{`0}}}},System.Boolean)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{DeepCoin.Net.Objects.Internal.TableData{`0}}}},System.Boolean)">
             <summary>
             ctor
             </summary>
@@ -1435,41 +1616,6 @@
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
-            <inheritdoc />
-        </member>
-        <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook">
-            <summary>
-            Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
-            Make sure to check the State property to see if the order book is synced.
-            </summary>
-        </member>
-        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.#ctor(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
-            <summary>
-            Create a new order book instance
-            </summary>
-            <param name="symbol">The symbol the order book is for</param>
-            <param name="optionsDelegate">Option configuration delegate</param>
-        </member>
-        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.#ctor(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions},Microsoft.Extensions.Logging.ILoggerFactory,DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient,DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient)">
-            <summary>
-            Create a new order book instance
-            </summary>
-            <param name="symbol">The symbol the order book is for</param>
-            <param name="optionsDelegate">Option configuration delegate</param>
-            <param name="logger">Logger</param>
-            <param name="restClient">Rest client instance</param>
-            <param name="socketClient">Socket client instance</param>
-        </member>
-        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.DoReset">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinExchangeSymbolOrderBook.Dispose(System.Boolean)">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory">
@@ -1490,6 +1636,40 @@
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.Create(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook">
+            <summary>
+            Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
+            Make sure to check the State property to see if the order book is synced.
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.#ctor(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions})">
+            <summary>
+            Create a new order book instance
+            </summary>
+            <param name="symbol">The symbol the order book is for</param>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.#ctor(System.String,System.Action{DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions},Microsoft.Extensions.Logging.ILoggerFactory,DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient)">
+            <summary>
+            Create a new order book instance
+            </summary>
+            <param name="symbol">The symbol the order book is for</param>
+            <param name="optionsDelegate">Option configuration delegate</param>
+            <param name="logger">Logger</param>
+            <param name="socketClient">Socket client instance</param>
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.DoReset">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.Dispose(System.Boolean)">
             <inheritdoc />
         </member>
         <member name="T:CryptoExchange.Net.Interfaces.CryptoClientExtensions">

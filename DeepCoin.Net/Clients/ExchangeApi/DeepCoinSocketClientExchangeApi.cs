@@ -20,6 +20,8 @@ using System.Linq;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects.Sockets;
+using DeepCoin.Net.Enums;
+using System.Collections;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -30,6 +32,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     {
         #region fields
         private static readonly MessagePath _actionPath = MessagePath.Get().Property("action");
+        private static readonly MessagePath _errorMsgPath = MessagePath.Get().Property("errorMsg");
         private static readonly MessagePath _actionIdPath = MessagePath.Get().Property("result").Index(0).Property("data").Property("LocalNo");
         private static readonly MessagePath _indexPath = MessagePath.Get().Property("index");
         #endregion
@@ -42,6 +45,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         internal DeepCoinSocketClientExchangeApi(ILogger logger, DeepCoinSocketOptions options) :
             base(logger, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
+            KeepAliveInterval = TimeSpan.Zero;
+
             RegisterPeriodicQuery("ping",
                 TimeSpan.FromSeconds(30), 
                 (x) => new DeepCoinPingQuery(), 
@@ -69,19 +74,56 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default)
         {
-            var subscription = new DeepCoinSubscription<DeepCoinSymbolUpdate>(_logger, "PushMarketDataOverView", "DeepCoin_" + symbol, "7", x => onMessage(x.As(x.Data.First().Data).WithSymbol(x.Data.First().Data.Symbol)), false);
-            return await SubscribeAsync(BaseAddress.AppendPath("public/ws"), subscription, ct).ConfigureAwait(false);
+            var path = symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase) ? "public/ws" : "public/spotws";
+            symbol = symbol.Replace("SWAP", "").Replace("-", "");
+            var subscription = new DeepCoinSubscription<DeepCoinSymbolUpdate>(_logger, "PushMarketDataOverView", "MarketDataOverView", "DeepCoin_" + symbol, "7", x => onMessage(x.As(x.Data.First().Data).WithSymbol(x.Data.First().Data.Symbol)), false);
+            return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default)
         {
-            var subscription = new DeepCoinSubscription<DeepCoinTradeUpdate>(_logger, "PushMarketTrade", "DeepCoin_" + symbol, "2", x => onMessage(
+            var path = symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase) ? "public/ws" : "public/spotws";
+            symbol = symbol.Replace("SWAP", "").Replace("-", "");
+            var subscription = new DeepCoinSubscription<DeepCoinTradeUpdate>(_logger, "PushMarketTrade", "MarketTrade", "DeepCoin_" + symbol, "2", x => onMessage(
                 x.As(x.Data.First().Data)
                 .WithSymbol(x.Data.First().Data.Symbol)
                 .WithDataTimestamp(x.Data.Max(x => x.Data.Timestamp))
                 ), false);
-            return await SubscribeAsync(BaseAddress.AppendPath("public/ws"), subscription, ct).ConfigureAwait(false);
+            return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default)
+        {
+            var path = symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase) ? "public/ws" : "public/spotws";
+            symbol = symbol.Replace("SWAP", "").Replace("-", "");
+            var topic = "DeepCoin_" + symbol + "_1m";
+            var subscription = new DeepCoinSubscription<DeepCoinKlineUpdate>(_logger, "PushKLine", "LastKLine", topic, "11", x => onMessage(
+                x.As(x.Data.First().Data)
+                .WithSymbol(x.Data.First().Data.Symbol)
+                .WithDataTimestamp(x.Data.Max(x => x.Data.UpdateTime))
+                ), false);
+            return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default)
+        {
+            string path;
+            if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                path = "public/ws";
+                symbol = symbol.Replace("-SWAP", "").Replace("-", "");
+            }
+            else
+            {
+                path = "public/spotws";
+                symbol = symbol.Replace("-", "/");
+            }
+
+            var subscription = new DeepCoinBookSubscription(_logger, "PushMarketOrder", "MarketOrder", "DeepCoin_" + symbol, "25", onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -98,6 +140,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             }
 
             var index = message.GetValue<string>(_indexPath);
+            if (index == null)
+            {
+                // ErrorMsg field contains first snapshot data..? {"action":"PushMarketOrder","requestNo":0,"errorCode":0,"errorMsg":"DeepCoin_ETHUSDT","result": [] }
+                index = message.GetValue<string>(_errorMsgPath);
+            }
+
             return action + index;
         }
 
@@ -109,6 +157,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null)
-            => DeepCoinExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
+        {
+            if (tradingMode == TradingMode.Spot)
+                return baseAsset + "/" + quoteAsset;
+
+            return baseAsset + quoteAsset;
+        }
     }
 }

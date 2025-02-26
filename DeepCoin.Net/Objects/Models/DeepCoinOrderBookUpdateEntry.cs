@@ -1,4 +1,5 @@
-﻿using DeepCoin.Net.Enums;
+﻿using CryptoExchange.Net.Interfaces;
+using DeepCoin.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,15 +8,29 @@ using System.Text.Json.Serialization;
 namespace DeepCoin.Net.Objects.Models
 {
     /// <summary>
-    /// Trade update
+    /// Order book update
     /// </summary>
-    public record DeepCoinTradeUpdate
+    public record DeepCoinOrderBookUpdate
     {
         /// <summary>
-        /// Trade id
+        /// Sequence number
         /// </summary>
-        [JsonPropertyName("TradeID")]
-        public string TradeId { get; set; } = string.Empty;
+        public long SequenceNumber { get; set; }
+        /// <summary>
+        /// Updated asks
+        /// </summary>
+        public DeepCoinOrderBookUpdateEntry[] Asks { get; set; } = [];
+        /// <summary>
+        /// Updated bids
+        /// </summary>
+        public DeepCoinOrderBookUpdateEntry[] Bids { get; set; } = [];
+    }
+
+    /// <summary>
+    /// Order book update entry
+    /// </summary>
+    public record DeepCoinOrderBookUpdateEntry : ISymbolOrderBookEntry
+    {
         /// <summary>
         /// Exchange id
         /// </summary>
@@ -30,7 +45,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Trade direction
         /// </summary>
         [JsonPropertyName("Direction")]
-        public OrderSide Side { get; set; }
+        public OrderSide Direction { get; set; }
         /// <summary>
         /// Trade price
         /// </summary>
@@ -42,9 +57,9 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("Volume")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Trade timestamp
+        /// Number of orders
         /// </summary>
-        [JsonPropertyName("TradeTime")]
-        public DateTime Timestamp { get; set; }
+        [JsonPropertyName("Orders")]
+        public int Orders { get; set; }
     }
 }
