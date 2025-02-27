@@ -46,5 +46,66 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, MarginMode marginMode, PositionType positionType, CancellationToken ct = default);
 
+        /// <summary>
+        /// Get list of transferable assets
+        /// <para><a href="https://www.deepcoin.com/docs/InternalTransfer/getSupportCoin" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinTransferableAsset>> GetTransferableAssetsAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Transfer an asset to another account
+        /// <para><a href="https://www.deepcoin.com/docs/InternalTransfer/goInternalTransfer" /></para>
+        /// </summary>
+        /// <param name="asset">The asset, for example `ETH`</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="toAccount">To account</param>
+        /// <param name="toAccountType">Account type</param>
+        /// <param name="clientOrderId">Client order id</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinTransferResult>> TransferAsync(string asset, decimal quantity, string toAccount, AccountType toAccountType, string? clientOrderId = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get transfer history
+        /// <para><a href="https://www.deepcoin.com/docs/InternalTransfer/internalTransferHistory" /></para>
+        /// </summary>
+        /// <param name="toAccount">Filter by to account</param>
+        /// <param name="asset">Filter by asset</param>
+        /// <param name="status">Filter by status</param>
+        /// <param name="receiverId">Receiver account id</param>
+        /// <param name="orderId">Filter by order id</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="page">Page number</param>
+        /// <param name="pageSize">Max number of results</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinTransferPage>> GetTransferHistoryAsync(string? toAccount = null, string? asset = null, TransferStatus? status = null, string? receiverId = null, string? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get deposit history
+        /// <para><a href="https://www.deepcoin.com/docs/assets/deposit" /></para>
+        /// </summary>
+        /// <param name="asset">Filter by asset, for example `ETH`</param>
+        /// <param name="transactionHash">Filter by transaction hash</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="page">Page</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinDepositPage>> GetDepositHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get withdrawal history
+        /// <para><a href="https://www.deepcoin.com/docs/assets/withdraw" /></para>
+        /// </summary>
+        /// <param name="asset">Filter by asset, for example `ETH`</param>
+        /// <param name="transactionHash">Filter by transaction hash</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="page">Page</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinWithdrawPage>> GetWithdrawHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+
     }
 }

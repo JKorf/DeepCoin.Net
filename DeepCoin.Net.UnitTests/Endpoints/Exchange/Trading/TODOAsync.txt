@@ -1,5 +1,0 @@
-GET
-/openApi/spot/v2/market/depth
-false
-{
-}

@@ -52,5 +52,15 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="depth">Number of order book rows, max 400</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinOrderBook>> GetOrderBookAsync(string symbol, int? depth = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get funding rate
+        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/fundingRate" /></para>
+        /// </summary>
+        /// <param name="type">Contract type</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT-SWAP`</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<DeepCoinFundingRate>>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
+
     }
 }

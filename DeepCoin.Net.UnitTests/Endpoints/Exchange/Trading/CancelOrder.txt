@@ -1,0 +1,13 @@
+POST
+/deepcoin/trade/cancel-order
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "ordId": "1000587866272245",
+        "clOrdId": "",
+        "sCode": "0",
+        "sMsg": ""
+    }
+}

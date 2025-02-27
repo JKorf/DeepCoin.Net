@@ -1,0 +1,3 @@
+POST
+/deepcoin/trade/replace-order-sltp
+true

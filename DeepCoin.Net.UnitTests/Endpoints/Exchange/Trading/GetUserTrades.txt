@@ -1,0 +1,43 @@
+GET
+/deepcoin/trade/fills
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "instId": "BTC-USDT-SWAP",
+            "tradeId": "1000169956494218",
+            "ordId": "1000587866072658",
+            "clOrdId": "",
+            "billId": "10001699564942181",
+            "tag": "",
+            "fillPx": "98230.5",
+            "fillSz": "200",
+            "side": "sell",
+            "posSide": "short",
+            "execType": "T",
+            "feeCcy": "USDT",
+            "fee": "5.89383",
+            "ts": "1739261250000"
+        },
+        {
+            "instType": "SWAP",
+            "instId": "BTC-USDT-SWAP",
+            "tradeId": "1000169956494217",
+            "ordId": "1000587866072658",
+            "clOrdId": "",
+            "billId": "10001699564942171",
+            "tag": "",
+            "fillPx": "98230.5",
+            "fillSz": "50",
+            "side": "sell",
+            "posSide": "short",
+            "execType": "T",
+            "feeCcy": "USDT",
+            "fee": "1.4734575",
+            "ts": "1739261250000"
+        }
+    ]
+}

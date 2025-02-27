@@ -1,0 +1,47 @@
+GET
+/deepcoin/trade/orders-history
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "instId": "BTC-USDT-SWAP",
+            "tgtCcy": "",
+            "ccy": "",
+            "ordId": "1000587866072658",
+            "clOrdId": "",
+            "tag": "",
+            "px": "90000",
+            "sz": "300",
+            "pnl": "0",
+            "ordType": "limit",
+            "side": "sell",
+            "posSide": "short",
+            "tdMode": "cross",
+            "accFillSz": "300",
+            "fillPx": "98230.5",
+            "tradeId": "",
+            "fillSz": "300",
+            "fillTime": "1739261250000",
+            "avgPx": "98230.5",
+            "state": "filled",
+            "lever": "1",
+            "tpTriggerPx": "",
+            "tpTriggerPxType": "",
+            "tpOrdPx": "",
+            "slTriggerPx": "",
+            "slTriggerPxType": "",
+            "slOrdPx": "",
+            "feeCcy": "USDT",
+            "fee": "8.840745",
+            "rebateCcy": "",
+            "source": "",
+            "rebate": "",
+            "category": "normal",
+            "uTime": "1739261250000",
+            "cTime": "1739261250000"
+        }
+    ]
+}

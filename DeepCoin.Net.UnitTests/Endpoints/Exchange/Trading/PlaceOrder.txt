@@ -1,0 +1,14 @@
+POST
+/deepcoin/trade/order
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "ordId": "1000587866646229",
+        "clOrdId": "",
+        "tag": "",
+        "sCode": "0",
+        "sMsg": ""
+    }
+}

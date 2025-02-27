@@ -1,0 +1,22 @@
+GET
+/deepcoin/asset/withdraw-list
+true
+{
+  "code": "0",
+  "msg": "",
+  "data": {
+    "data": [
+      {
+        "createTime": 1719459854,
+	"txHash": "xxxxxxxxx",
+        "address": "",
+        "amount": "100",
+        "coin": "USDT",
+        "status": "auditing"
+      }
+    ],
+    "count": 4,
+    "page": 1,
+    "size": 1
+  }
+}

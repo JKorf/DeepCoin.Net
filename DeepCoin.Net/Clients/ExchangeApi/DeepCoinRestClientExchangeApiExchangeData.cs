@@ -84,5 +84,21 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
+        #region Get Funding Rate
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<DeepCoinFundingRate>>> GetFundingRateAsync(ProductGroup contractType, string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddEnum("instType", contractType);
+            parameters.AddOptional("instId", symbol);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/funding-rate", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinFundingRate>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
     }
 }

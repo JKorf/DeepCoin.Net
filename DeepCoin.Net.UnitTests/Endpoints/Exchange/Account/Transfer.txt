@@ -1,0 +1,11 @@
+POST
+/deepcoin/internal-transfer
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "message": "success",
+        "orderId": "40ce50f2-a96d-4efc-8168-148fd82df25f"
+    }
+}

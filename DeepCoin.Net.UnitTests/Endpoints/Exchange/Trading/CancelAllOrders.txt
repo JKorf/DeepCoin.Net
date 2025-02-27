@@ -1,0 +1,9 @@
+POST
+/deepcoin/trade/swap/cancel-all
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+    }
+}

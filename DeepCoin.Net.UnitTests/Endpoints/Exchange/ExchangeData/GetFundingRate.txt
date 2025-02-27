@@ -1,0 +1,19 @@
+GET
+/deepcoin/trade/funding-rate
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "settleInterval": 28800,
+            "instrumentID": "1000BABYDOGEUSDT",
+            "nextSettleTime": 1739289600
+        },
+        {
+            "settleInterval": 14400,
+            "instrumentID": "1000CATUSDT",
+            "nextSettleTime": 1739275200
+        }
+    ]
+}

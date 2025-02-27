@@ -1,0 +1,30 @@
+GET
+/deepcoin/asset/deposit-list
+true
+{
+  "code": "0",
+  "msg": "",
+  "data": {
+    "data": [
+      {
+        "createTime": 1720764939,
+        "txHash": "be6a16eb864f4e7d98ed6bbd96405c558099b7a60834b3537901b275b06babff",
+        "chainName": "TRC20",
+        "amount": "1000000",
+        "coin": "USDT",
+        "status": "succeed"
+      },
+      {
+        "createTime": 1720764939,
+        "txHash": "be6a16eb864f4e7d98ed6bbd96405c558099b7a60834b3537901b275b06babff",
+        "chainName": "TRC20",
+        "amount": "1000000",
+        "coin": "USDT",
+        "status": "confirming"
+      }
+    ],
+    "count": 2,
+    "page": 1,
+    "size": 10
+  }
+}

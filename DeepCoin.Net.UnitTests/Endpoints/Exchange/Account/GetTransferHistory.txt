@@ -1,0 +1,38 @@
+GET
+/deepcoin/internal-transfer/history-order
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "data": [
+            {
+                "orderId": "49e39268-42e8-4dfb-bd56-e0eff5b7c455",
+                "receiverAccountType": "phone",
+                "receiverAccount": "",
+                "coin": "USDT",
+                "amount": "10",
+                "transferWay": "OpenAPI",
+                "status": "In Process",
+                "receiverUID": 36007196,
+                "createTime": 1739258691,
+                "updateTime": 1739258691
+            },
+            {
+                "orderId": "40ce50f2-a96d-4efc-8168-148fd82df25f",
+                "receiverAccountType": "phone",
+                "receiverAccount": "",
+                "coin": "USDT",
+                "amount": "10",
+                "transferWay": "OpenAPI",
+                "status": "In Process",
+                "receiverUID": 36007196,
+                "createTime": 1739258558,
+                "updateTime": 1739258558
+            }
+        ],
+        "count": 2,
+        "page": 1,
+        "size": 10
+    }
+}

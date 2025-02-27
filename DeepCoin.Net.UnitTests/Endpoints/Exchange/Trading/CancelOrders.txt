@@ -1,0 +1,25 @@
+POST
+/deepcoin/trade/batch-cancel-order
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "errorList": [
+            {
+                "memberId": "36006290",
+                "accountId": "36006290",
+                "orderSysId": "1000587865918838",
+                "errorCode": 24,
+                "errorMsg": "OrderNotFound:1000587865918838"
+            },
+            {
+                "memberId": "36006290",
+                "accountId": "36006290",
+                "orderSysId": "1000587865914949",
+                "errorCode": 24,
+                "errorMsg": "OrderNotFound:1000587865914949"
+            }
+        ]
+    }
+}

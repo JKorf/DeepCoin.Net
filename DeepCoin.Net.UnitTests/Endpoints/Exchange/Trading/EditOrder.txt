@@ -1,0 +1,12 @@
+POST
+/deepcoin/trade/replace-order
+true
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "errorCode": 0,
+        "errorMsg": "",
+        "ordId": "1000587867035933"
+    }
+}
