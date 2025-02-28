@@ -130,6 +130,12 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.GetWithdrawHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiExchangeData">
             <inheritdoc />
         </member>
@@ -216,6 +222,9 @@
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToUserUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
@@ -619,6 +628,11 @@
             Coin margined
             </summary>
         </member>
+        <member name="F:DeepCoin.Net.Enums.ProductGroup.Spot">
+            <summary>
+            Spot
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Enums.QuantityType">
             <summary>
             Quantity type
@@ -873,6 +887,21 @@
             <param name="pageSize">Page size</param>
             <param name="ct">Cancellation token</param>
         </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
+            <summary>
+            Start the user stream and return the listen key which can be used to subscribe to updates in the socket client
+            <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Extend the lifetime of a listen key
+            <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+            </summary>
+            <param name="listenKey">Listen key to extend</param>
+            <param name="ct">Cancellation token</param>
+        </member>
         <member name="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData">
             <summary>
             DeepCoin Exchange exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
@@ -1120,6 +1149,20 @@
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToUserUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to user data updates
+            </summary>
+            <param name="listenKey">ListenKey as returned by <see cref="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">restClient.ExchangeApi.Account.StartUserStream</see></param>
+            <param name="onOrderMessage">The event handler for order updates</param>
+            <param name="onBalanceMessage">The event handler for balance updates</param>
+            <param name="onPositionMessage">The event handler for position updates</param>
+            <param name="onUserTradeMessage">The event handler for user trade updates</param>
+            <param name="onAccountMessage">The event handler for account updates</param>
+            <param name="onTriggerOrderMessage">The event handler for trigger order updates</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
         <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SharedClient">
             <summary>
             Get the shared socket requests client. This interface is shared with other exchanges to allow for a common implementation for different exchanges.
@@ -1262,6 +1305,71 @@
             DeepCoin response
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate">
+            <summary>
+            Account update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.AccountId">
+            <summary>
+            Account id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.AccountDetailId">
+            <summary>
+            Account detail id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.Balance">
+            <summary>
+            Static balance
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.CreateTime">
+            <summary>
+            Create time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.UserId">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.PreBalance">
+            <summary>
+            Pre-change balance
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.Remark">
+            <summary>
+            Remark
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.TransactionType">
+            <summary>
+            Transaction type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate.RelatedId">
+            <summary>
+            Related change id
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinBalance">
             <summary>
             Balance info
@@ -1282,9 +1390,49 @@
             Frozen balance
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalance.AvailBalance">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalance.AvailableBalance">
             <summary>
-            Avail balance
+            Available balance
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate">
+            <summary>
+            Balance update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.AccountId">
+            <summary>
+            Account id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.Balance">
+            <summary>
+            Balance
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.Asset">
+            <summary>
+            Asset name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.UserId">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.Withdrawable">
+            <summary>
+            Withdrawable quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.Available">
+            <summary>
+            Available quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate.MarginUsed">
+            <summary>
+            Margin used
             </summary>
         </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinBill">
@@ -1587,6 +1735,21 @@
             Result message
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinListenKey">
+            <summary>
+            Listen key
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinListenKey.ListenKey">
+            <summary>
+            Listen key
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinListenKey.ExpireTime">
+            <summary>
+            Expire time
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinOrder">
             <summary>
             Order info
@@ -1887,6 +2050,96 @@
             Result message
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate">
+            <summary>
+            Order update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OrderSide">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.CreateTime">
+            <summary>
+            Create time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.LocalId">
+            <summary>
+            LocalId
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OrderStatus">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OrderPrice">
+            <summary>
+            Order price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.Turnover">
+            <summary>
+            Turnover
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.UpdateTime">
+            <summary>
+            UpdateTime
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.Quantity">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.IsCrossMargin">
+            <summary>
+            Is cross margin
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OffsetFlag">
+            <summary>
+            OffsetFlag
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.AverageFillPrice">
+            <summary>
+            Average fill price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.QuantityFilled">
+            <summary>
+            Quantity filled
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinPosition">
             <summary>
             Position info
@@ -1962,6 +2215,61 @@
             Create time
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate">
+            <summary>
+            Position update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.AccountId">
+            <summary>
+            Account id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.UserId">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.PositionSize">
+            <summary>
+            Position size
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.IsCrossMargin">
+            <summary>
+            Is cross margin
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.PositionSide">
+            <summary>
+            PositionSide
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate.MarginUsed">
+            <summary>
+            Margin used
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinSymbol">
             <summary>
             Symbol info
@@ -2012,12 +2320,12 @@
             Max leverage
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.TickQuantity">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.TickSize">
             <summary>
             Tick quantity
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.LotQuantity">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinSymbol.LotSize">
             <summary>
             Lot quantity
             </summary>
@@ -2357,6 +2665,96 @@
             Order id
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate">
+            <summary>
+            Trigger order update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.AccountId">
+            <summary>
+            Account id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.OrderSide">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.CreateTime">
+            <summary>
+            Create time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.UserId">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.O">
+            <summary>
+            O
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.OrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.TriggerOrderType">
+            <summary>
+            Trigger order type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.TpPrice">
+            <summary>
+            Take profit price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.TpTriggerPrice">
+            <summary>
+            Take profit trigger price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.TriggerStatus">
+            <summary>
+            Trigger status
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.PositionId">
+            <summary>
+            Position id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.TpPriceType">
+            <summary>
+            Take profit price type
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate.OffsetFlag">
+            <summary>
+            OffsetFlag
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinUserTrade">
             <summary>
             User trade info
@@ -2435,6 +2833,101 @@
         <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTrade.Timestamp">
             <summary>
             Timestamp
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate">
+            <summary>
+            User trade update
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.AccountId">
+            <summary>
+            Account id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.ClearingAsset">
+            <summary>
+            Clearing asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.OrderSide">
+            <summary>
+            Side
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Fee">
+            <summary>
+            Fee quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.CreateTime">
+            <summary>
+            Create time
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.UserId">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Turnover">
+            <summary>
+            Turnover
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.TradeId">
+            <summary>
+            Trade id
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.TradeTime">
+            <summary>
+            Trade timestamp
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Quantity">
+            <summary>
+            Trade quantity
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.C">
+            <summary>
+            C
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.FeeAsset">
+            <summary>
+            Fee asset
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.TradeRole">
+            <summary>
+            Trade role
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.OffsetFlag">
+            <summary>
+            OffsetFlag
             </summary>
         </member>
         <member name="T:DeepCoin.Net.Objects.Models.DeepCoinWithdrawPage">
@@ -2626,6 +3119,29 @@
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription">
+            <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.ListenerIdentifiers">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}})">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory">

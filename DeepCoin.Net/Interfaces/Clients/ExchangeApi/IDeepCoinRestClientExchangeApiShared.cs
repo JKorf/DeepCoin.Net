@@ -9,7 +9,19 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     /// Shared interface for Exchange rest API usage
     /// </summary>
     public interface IDeepCoinRestClientExchangeApiShared :
-        ISharedClient
+        IBalanceRestClient,
+        IDepositRestClient,
+        IKlineRestClient,
+        IListenKeyRestClient,
+        IOrderBookRestClient,
+        IWithdrawalRestClient,
+        ISpotTickerRestClient,
+        ISpotSymbolRestClient,
+        ISpotOrderRestClient,
+        ILeverageRestClient,
+        IFuturesTickerRestClient,
+        IFuturesSymbolRestClient,
+        IFuturesOrderRestClient
     {
     }
 }

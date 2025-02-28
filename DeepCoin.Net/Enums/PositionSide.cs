@@ -13,12 +13,12 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Long
         /// </summary>
-        [Map("long")]
+        [Map("long", "1")]
         Long,
         /// <summary>
         /// Short
         /// </summary>
-        [Map("short")]
+        [Map("short", "0")]
         Short
     }
 }

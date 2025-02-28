@@ -22,7 +22,6 @@ namespace DeepCoin.Net.Clients
          /// <inheritdoc />
         public IDeepCoinSocketClientExchangeApi ExchangeApi { get; }
 
-
         #endregion
 
         #region constructor/destructor
@@ -53,7 +52,7 @@ namespace DeepCoin.Net.Clients
         /// <inheritdoc />
         public void SetOptions(UpdateOptions options)
         {
-#warning TODO
+            ExchangeApi.SetOptions(options);
         }
 
         /// <summary>

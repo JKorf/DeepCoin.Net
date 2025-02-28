@@ -110,7 +110,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Average fill price
         /// </summary>
         [JsonPropertyName("avgPx")]
-        public string? AverageFillPrice { get; set; }
+        public decimal? AverageFillPrice { get; set; }
         /// <summary>
         /// Order status
         /// </summary>

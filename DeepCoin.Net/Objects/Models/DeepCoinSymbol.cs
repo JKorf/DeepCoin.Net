@@ -60,12 +60,12 @@ namespace DeepCoin.Net.Objects.Models
         /// Tick quantity
         /// </summary>
         [JsonPropertyName("tickSz")]
-        public decimal TickQuantity { get; set; }
+        public decimal TickSize { get; set; }
         /// <summary>
         /// Lot quantity
         /// </summary>
         [JsonPropertyName("lotSz")]
-        public decimal LotQuantity { get; set; }
+        public decimal LotSize { get; set; }
         /// <summary>
         /// Min order quantity
         /// </summary>

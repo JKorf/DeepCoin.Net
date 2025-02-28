@@ -19,6 +19,11 @@ namespace DeepCoin.Net.Enums
         /// Coin margined
         /// </summary>
         [Map("Swap")]
-        CoinMargined
+        CoinMargined,
+        /// <summary>
+        /// Spot
+        /// </summary>
+        [Map("Spot")]
+        Spot
     }
 }

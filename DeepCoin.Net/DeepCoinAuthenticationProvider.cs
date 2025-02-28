@@ -48,7 +48,6 @@ namespace DeepCoin.Net
             headers.Add("DC-ACCESS-SIGN", sign);
             headers.Add("DC-ACCESS-TIMESTAMP", timestampString);
             headers.Add("DC-ACCESS-PASSPHRASE", _credentials.PassPhrase);
-
         }
     }
 }

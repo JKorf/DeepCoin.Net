@@ -26,9 +26,9 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("frozenBal")]
         public decimal FrozenBalance { get; set; }
         /// <summary>
-        /// Avail balance
+        /// Available balance
         /// </summary>
         [JsonPropertyName("availBal")]
-        public decimal AvailBalance { get; set; }
+        public decimal AvailableBalance { get; set; }
     }
 }

@@ -9,7 +9,14 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     /// Shared interface for Exchange socket API usage
     /// </summary>
     public interface IDeepCoinSocketClientExchangeApiShared :
-        ISharedClient
+        IKlineSocketClient,
+        ITickerSocketClient,
+        ITradeSocketClient,
+        IBalanceSocketClient,
+        ISpotOrderSocketClient,
+        IFuturesOrderSocketClient,
+        IUserTradeSocketClient,
+        IPositionSocketClient
     {
     }
 }

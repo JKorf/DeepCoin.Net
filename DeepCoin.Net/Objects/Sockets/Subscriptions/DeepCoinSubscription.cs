@@ -42,7 +42,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _topic = topic;
             _table = table;
 
-            ListenerIdentifiers = new HashSet<string>() { pushAction + filter, pushAction + "SwapU," + filter };
+            ListenerIdentifiers = new HashSet<string>() { pushAction + filter, pushAction + "SwapU," + filter, pushAction + "Spot," + filter, pushAction + "Swap," + filter };
         }
 
         /// <inheritdoc />

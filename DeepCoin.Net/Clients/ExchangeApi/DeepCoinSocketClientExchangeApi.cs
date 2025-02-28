@@ -52,6 +52,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 (x) => new DeepCoinPingQuery(), 
                 (connection, result) =>
                 {
+                    if (connection.ConnectionUri.AbsolutePath.Contains("v1/private"))
+                        // Private endpoint doesn't return pong on pings
+                        return;
+
                     if (result.Error?.Message.Equals("Query timeout") == true)
                     {
                         // Ping timeout, reconnect
@@ -124,6 +128,21 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             var subscription = new DeepCoinBookSubscription(_logger, "PushMarketOrder", "MarketOrder", "DeepCoin_" + symbol, "25", onMessage, false);
             return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+            string listenKey,
+            Action<DataEvent<DeepCoinOrderUpdate[]>>? onOrderMessage = null, 
+            Action<DataEvent<DeepCoinBalanceUpdate[]>>? onBalanceMessage = null, 
+            Action<DataEvent<DeepCoinPositionUpdate[]>>? onPositionMessage = null, 
+            Action<DataEvent<DeepCoinUserTradeUpdate[]>>? onUserTradeMessage = null, 
+            Action<DataEvent<DeepCoinAccountUpdate[]>>? onAccountMessage = null, 
+            Action<DataEvent<DeepCoinTriggerOrderUpdate[]>>? onTriggerOrderMessage = null, 
+            CancellationToken ct = default)
+        {
+            var subscription = new DeepCoinUserSubscription(_logger, onOrderMessage, onBalanceMessage, onPositionMessage, onUserTradeMessage, onAccountMessage, onTriggerOrderMessage);
+            return await SubscribeAsync(BaseAddress.AppendPath("v1/private?listenKey=" + listenKey), subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

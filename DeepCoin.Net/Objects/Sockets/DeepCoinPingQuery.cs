@@ -4,6 +4,7 @@ using CryptoExchange.Net.Sockets;
 using System.Collections.Generic;
 using DeepCoin.Net.Objects.Models;
 using DeepCoin.Net.Objects.Internal;
+using System;
 
 namespace DeepCoin.Net.Objects.Sockets
 {
@@ -14,6 +15,7 @@ namespace DeepCoin.Net.Objects.Sockets
         public DeepCoinPingQuery() : base("ping", false, 1)
         {
             ListenerIdentifiers = new HashSet<string> { "pong" };
+            RequestTimeout = TimeSpan.FromSeconds(5);
         }
 
         public override CallResult<string> HandleMessage(SocketConnection connection, DataEvent<string> message)

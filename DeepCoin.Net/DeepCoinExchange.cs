@@ -77,8 +77,6 @@ namespace DeepCoin.Net
             DeepCoin.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
         }
 
-
         internal IRateLimitGate DeepCoin { get; private set; }
-
     }
 }

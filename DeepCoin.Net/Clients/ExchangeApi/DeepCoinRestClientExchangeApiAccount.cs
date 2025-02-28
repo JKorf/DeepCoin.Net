@@ -144,6 +144,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptional("size", pageSize);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/asset/deposit-list", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinDepositPage>(request, parameters, ct).ConfigureAwait(false);
+            if (!result)
+                return result;
+
+            if (result.Data.Data == null)
+                result.Data.Data = [];
+            
             return result;
         }
 
@@ -163,10 +169,42 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptional("size", pageSize);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/asset/withdraw-list", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinWithdrawPage>(request, parameters, ct).ConfigureAwait(false);
+            if (!result)
+                return result;
+
+            if (result.Data.Data == null)
+                result.Data.Data = [];
+
             return result;
         }
 
         #endregion
 
+        #region Start User Stream 
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<DeepCoinListenKey>> StartUserStreamAsync(CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/listenkey/acquire", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinListenKey>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Keep Alive User Stream 
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<DeepCoinListenKey>> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("listenkey", listenKey);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/listenkey/extend", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinListenKey>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
     }
 }

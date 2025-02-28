@@ -107,5 +107,19 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinWithdrawPage>> GetWithdrawHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
+        /// <summary>
+        /// Start the user stream and return the listen key which can be used to subscribe to updates in the socket client
+        /// <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinListenKey>> StartUserStreamAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Extend the lifetime of a listen key
+        /// <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+        /// </summary>
+        /// <param name="listenKey">Listen key to extend</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<DeepCoinListenKey>> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
     }
 }

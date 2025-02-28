@@ -25,7 +25,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Product group
         /// </summary>
         [JsonPropertyName("ProductGroup")]
-        public string ProductGroup { get; set; } = string.Empty;
+        public ProductGroup ProductGroup { get; set; }
         /// <summary>
         /// Update time
         /// </summary>
@@ -35,7 +35,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Update millisecond
         /// </summary>
         [JsonPropertyName("UpdateMilliSecond")]
-        public decimal UpdateMilliSecond { get; set; }
+        public int UpdateMilliSecond { get; set; }
         /// <summary>
         /// Upper limit price
         /// </summary>
@@ -55,7 +55,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Marked price
         /// </summary>
         [JsonPropertyName("MarkedPrice")]
-        public decimal MarkedPrice { get; set; }
+        public decimal? MarkedPrice { get; set; }
         /// <summary>
         /// Position fee rate
         /// </summary>
@@ -65,17 +65,17 @@ namespace DeepCoin.Net.Objects.Models
         /// High price
         /// </summary>
         [JsonPropertyName("HighestPrice")]
-        public decimal HighPrice { get; set; }
+        public decimal? HighPrice { get; set; }
         /// <summary>
         /// Low price
         /// </summary>
         [JsonPropertyName("LowestPrice")]
-        public decimal LowPrice { get; set; }
+        public decimal? LowPrice { get; set; }
         /// <summary>
         /// Last price
         /// </summary>
         [JsonPropertyName("LastPrice")]
-        public decimal LastPrice { get; set; }
+        public decimal? LastPrice { get; set; }
         /// <summary>
         /// Volume
         /// </summary>
@@ -95,7 +95,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Open price
         /// </summary>
         [JsonPropertyName("OpenPrice")]
-        public decimal OpenPrice { get; set; }
+        public decimal? OpenPrice { get; set; }
         /// <summary>
         /// Symbol status
         /// </summary>

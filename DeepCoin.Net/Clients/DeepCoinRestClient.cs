@@ -16,11 +16,9 @@ namespace DeepCoin.Net.Clients
     public class DeepCoinRestClient : BaseRestClient, IDeepCoinRestClient
     {
         #region Api clients
-
-        
+                
          /// <inheritdoc />
         public IDeepCoinRestClientExchangeApi ExchangeApi { get; }
-
 
         #endregion
 
@@ -49,10 +47,11 @@ namespace DeepCoin.Net.Clients
         }
 
         #endregion
+
         /// <inheritdoc />
         public void SetOptions(UpdateOptions options)
         {
-#warning TODO
+            ExchangeApi.SetOptions(options);
         }
 
         /// <summary>
@@ -67,9 +66,7 @@ namespace DeepCoin.Net.Clients
         /// <inheritdoc />
         public void SetApiCredentials(ApiCredentials credentials)
         {
-            
             ExchangeApi.SetApiCredentials(credentials);
-
         }
     }
 }
