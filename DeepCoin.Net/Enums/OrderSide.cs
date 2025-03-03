@@ -13,12 +13,12 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Buy
         /// </summary>
-        [Map("0")]
+        [Map("buy", "0")]
         Buy,
         /// <summary>
         /// Sell
         /// </summary>
-        [Map("1")]
+        [Map("sell", "1")]
         Sell
     }
 }

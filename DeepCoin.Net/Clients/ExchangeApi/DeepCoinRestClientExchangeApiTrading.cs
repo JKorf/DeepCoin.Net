@@ -45,18 +45,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Place Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, MarginMode? marginMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("instId", symbol);
             parameters.AddEnum("side", side);
             parameters.Add("ordType", orderType);
             parameters.AddString("size", quantity);
+            parameters.AddEnum("tdMode", tradeMode ?? TradeMode.Cross);
             parameters.AddOptionalString("px", price);
-            parameters.AddOptionalEnum("tdMode", marginMode);
             parameters.AddOptional("ccy", asset);
             parameters.AddOptional("clOrdId", clientOrderId);
-            parameters.AddOptionalEnum("targetCcy", quantityType);
+            parameters.AddOptionalEnum("tgtCcy", quantityType);
             parameters.AddOptionalEnum("posSide", positionSide);
             parameters.AddOptionalEnum("mrgPosition", positionType);
             parameters.AddOptional("closePosId", closePosId);
@@ -81,8 +81,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public async Task<WebCallResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default)
         {
+#warning Doesn't work for spot, only works for futures?
             var parameters = new ParameterCollection();
-            parameters.Add("OrderSysID", orderId);
+            parameters.Add("OrderSysID", $"{orderId}");
             parameters.AddOptional("price", price);
             parameters.AddOptional("volume", quantity);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/replace-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
@@ -136,12 +137,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Cancel All Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, MarginMode marginMode, PositionType positionType, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("instrumentID", symbol);
             parameters.AddEnum("ProductGroup", productGroup);
-            parameters.Add("IsCrossMargin", marginMode);
+            parameters.Add("IsCrossMargin", tradeMode == TradeMode.Cross);
             parameters.Add("IsMergeMode", positionType);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/swap/cancel-all", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinCancellationResult>(request, parameters, ct).ConfigureAwait(false);
@@ -171,12 +172,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #endregion
 
-        #region Get Order
+        #region Get Open Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrder>> GetOrderAsync(string symbol, string orderId, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinOrder>> GetOpenOrderAsync(string symbol, string orderId, CancellationToken ct = default)
         {
-#warning is this only for open orders?
             var parameters = new ParameterCollection();
             parameters.Add("instId", symbol);
             parameters.Add("ordId", orderId);

@@ -27,7 +27,7 @@ namespace DeepCoin.Net.UnitTests
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Account", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data", stjCompare: true);
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetBalancesAsync(SymbolType.Spot), "GetBalances", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetBillsAsync(SymbolType.Spot), "GetBills", nestedJsonProperty: "data");
-            await tester.ValidateAsync(client => client.ExchangeApi.Account.SetLeverageAsync("123", 0.1m, MarginMode.Cross, PositionType.Merge), "SetLeverage", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.Account.SetLeverageAsync("123", 0.1m, TradeMode.Cross, PositionType.Merge), "SetLeverage", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.TransferAsync("123", 0.1m, "123", AccountType.Email), "Transfer", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetTransferHistoryAsync(), "GetTransferHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetDepositHistoryAsync(), "GetDepositHistory", nestedJsonProperty: "data");
@@ -64,7 +64,7 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.EditOrderAsync("123"), "EditOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.CancelOrderAsync("123", "123"), "CancelOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.CancelOrdersAsync(["123"]), "CancelOrders", nestedJsonProperty: "data.errorList");
-            await tester.ValidateAsync(client => client.ExchangeApi.Trading.CancelAllOrdersAsync("123", ProductGroup.CoinMargined, MarginMode.Isolated, PositionType.Merge), "CancelAllOrders", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.Trading.CancelAllOrdersAsync("123", ProductGroup.CoinMargined, TradeMode.Isolated, PositionType.Merge), "CancelAllOrders", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetUserTradesAsync(SymbolType.Swap), "GetUserTrades", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetOrderAsync("123", "123"), "GetOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetClosedOrderAsync("123", "123"), "GetClosedOrder", nestedJsonProperty: "data");

@@ -80,7 +80,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Margin mode
         /// </summary>
         [JsonPropertyName("tdMode")]
-        public MarginMode MarginMode { get; set; }
+        public TradeMode TradeMode { get; set; }
         /// <summary>
         /// Quantity filled
         /// </summary>
@@ -100,12 +100,12 @@ namespace DeepCoin.Net.Objects.Models
         /// Last trade fill quantity
         /// </summary>
         [JsonPropertyName("fillSz")]
-        public decimal LastTradeQuantity { get; set; }
+        public decimal? LastTradeQuantity { get; set; }
         /// <summary>
         /// Last trade timestamp
         /// </summary>
         [JsonPropertyName("fillTime")]
-        public DateTime LastTradeTime { get; set; }
+        public DateTime? LastTradeTime { get; set; }
         /// <summary>
         /// Average fill price
         /// </summary>

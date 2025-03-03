@@ -112,7 +112,7 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.GetBillsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Nullable{DeepCoin.Net.Enums.BillType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.MarginMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.TradeMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiAccount.GetTransferableAssetsAsync(System.Threading.CancellationToken)">
@@ -160,7 +160,7 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.GetPositionsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.PlaceOrderAsync(System.String,DeepCoin.Net.Enums.OrderSide,DeepCoin.Net.Enums.OrderType,System.Decimal,System.Nullable{System.Decimal},System.Nullable{DeepCoin.Net.Enums.MarginMode},System.String,System.String,System.Nullable{DeepCoin.Net.Enums.QuantityType},System.Nullable{DeepCoin.Net.Enums.PositionSide},System.Nullable{DeepCoin.Net.Enums.PositionType},System.String,System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.PlaceOrderAsync(System.String,DeepCoin.Net.Enums.OrderSide,DeepCoin.Net.Enums.OrderType,System.Decimal,System.Nullable{System.Decimal},System.Nullable{DeepCoin.Net.Enums.TradeMode},System.String,System.String,System.Nullable{DeepCoin.Net.Enums.QuantityType},System.Nullable{DeepCoin.Net.Enums.PositionSide},System.Nullable{DeepCoin.Net.Enums.PositionType},System.String,System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.EditOrderAsync(System.String,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
@@ -172,13 +172,13 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.CancelOrdersAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.CancelAllOrdersAsync(System.String,DeepCoin.Net.Enums.ProductGroup,DeepCoin.Net.Enums.MarginMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.CancelAllOrdersAsync(System.String,DeepCoin.Net.Enums.ProductGroup,DeepCoin.Net.Enums.TradeMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.GetUserTradesAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.String,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.GetOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.GetOpenOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApiTrading.GetClosedOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
@@ -224,7 +224,7 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToUserUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToUserDataUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
@@ -483,21 +483,6 @@
             One year
             </summary>
         </member>
-        <member name="T:DeepCoin.Net.Enums.MarginMode">
-            <summary>
-            Margin mode
-            </summary>
-        </member>
-        <member name="F:DeepCoin.Net.Enums.MarginMode.Cross">
-            <summary>
-            Cross margin
-            </summary>
-        </member>
-        <member name="F:DeepCoin.Net.Enums.MarginMode.Isolated">
-            <summary>
-            Isolated margin
-            </summary>
-        </member>
         <member name="T:DeepCoin.Net.Enums.OrderSide">
             <summary>
             Order side
@@ -698,6 +683,26 @@
             Swap symbol
             </summary>
         </member>
+        <member name="T:DeepCoin.Net.Enums.TradeMode">
+            <summary>
+            Trade mode
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.TradeMode.Spot">
+            <summary>
+            Spot
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.TradeMode.Cross">
+            <summary>
+            Cross margin
+            </summary>
+        </member>
+        <member name="F:DeepCoin.Net.Enums.TradeMode.Isolated">
+            <summary>
+            Isolated margin
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Enums.TradeRole">
             <summary>
             Trade role
@@ -815,14 +820,14 @@
             <param name="limit">Max number of results, max 100</param>
             <param name="ct">Cancellation token</param>
         </member>
-        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.MarginMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.TradeMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
             <summary>
             Set leverage for a symbol
             <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountSetLeverage" /></para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="leverage">Leverage</param>
-            <param name="marginMode">Margin mode</param>
+            <param name="tradeMode">Margin mode</param>
             <param name="positionType">Position type</param>
             <param name="ct">Cancellation token</param>
         </member>
@@ -975,7 +980,7 @@
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
         </member>
-        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.PlaceOrderAsync(System.String,DeepCoin.Net.Enums.OrderSide,DeepCoin.Net.Enums.OrderType,System.Decimal,System.Nullable{System.Decimal},System.Nullable{DeepCoin.Net.Enums.MarginMode},System.String,System.String,System.Nullable{DeepCoin.Net.Enums.QuantityType},System.Nullable{DeepCoin.Net.Enums.PositionSide},System.Nullable{DeepCoin.Net.Enums.PositionType},System.String,System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.PlaceOrderAsync(System.String,DeepCoin.Net.Enums.OrderSide,DeepCoin.Net.Enums.OrderType,System.Decimal,System.Nullable{System.Decimal},System.Nullable{DeepCoin.Net.Enums.TradeMode},System.String,System.String,System.Nullable{DeepCoin.Net.Enums.QuantityType},System.Nullable{DeepCoin.Net.Enums.PositionSide},System.Nullable{DeepCoin.Net.Enums.PositionType},System.String,System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <summary>
             Place a new order
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/order" /></para>
@@ -985,7 +990,7 @@
             <param name="orderType">Order type</param>
             <param name="quantity">Quantity</param>
             <param name="price">Limit price</param>
-            <param name="marginMode">Margin mode</param>
+            <param name="tradeMode">Margin mode</param>
             <param name="asset">Margin asset, for example `ETH`</param>
             <param name="clientOrderId">Client order id</param>
             <param name="quantityType">Quantity type</param>
@@ -1012,7 +1017,7 @@
             Cancel an open order
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelOrder" /></para>
             </summary>
-            <param name="symbol">The symbol, for example `ETHUSDT`</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id</param>
             <param name="ct">Cancellation token</param>
         </member>
@@ -1024,12 +1029,12 @@
             <param name="orderIds">Ids of orders to cancel</param>
             <param name="ct">Cancellation token</param>
         </member>
-        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.CancelAllOrdersAsync(System.String,DeepCoin.Net.Enums.ProductGroup,DeepCoin.Net.Enums.MarginMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.CancelAllOrdersAsync(System.String,DeepCoin.Net.Enums.ProductGroup,DeepCoin.Net.Enums.TradeMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
             <summary>
             Cancel all orders matching the parameters
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelAllOrder" /></para>
             </summary>
-            <param name="symbol">The symbol, for example `ETHUSDT`</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="productGroup">Product group</param>
             <param name="marginMode">Margin mode</param>
             <param name="positionType">Position type</param>
@@ -1041,7 +1046,7 @@
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/tradeFills" /></para>
             </summary>
             <param name="symbolType">Symbol type</param>
-            <param name="symbol">Filter by symbol, for example `ETHUSDT`</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="orderId">Filter by order id</param>
             <param name="afterId">Return results after this id</param>
             <param name="beforeId">Return results before this id</param>
@@ -1050,12 +1055,12 @@
             <param name="limit">Max number of results</param>
             <param name="ct">Cancellation token</param>
         </member>
-        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetOpenOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
-            Get order by id
+            Get a open order by id
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/orderByID" /></para>
             </summary>
-            <param name="symbol">The symbol, for example `ETHUSDT`</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id</param>
             <param name="ct">Cancellation token</param>
         </member>
@@ -1064,7 +1069,7 @@
             Get closed order by id
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/finishOrderByID" /></para>
             </summary>
-            <param name="symbol">The symbol, for example `ETHUSDT`</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id</param>
             <param name="ct">Cancellation token</param>
         </member>
@@ -1074,7 +1079,7 @@
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersHistory" /></para>
             </summary>
             <param name="symbolType">Symbol type</param>
-            <param name="symbol">Filter by symbol, for example `ETHUSDT`</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="orderId">Filter by order id</param>
             <param name="orderType">Filter by order type</param>
             <param name="status">Filter by order status</param>
@@ -1088,7 +1093,7 @@
             Get open orders
             <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersPendingV2" /></para>
             </summary>
-            <param name="symbol">The symbol, for example `ETHUSDT`</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="page">Page index</param>
             <param name="pageSize">Page size</param>
             <param name="orderId">Filter by order id</param>
@@ -1149,7 +1154,7 @@
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
-        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToUserUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
+        <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToUserDataUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to user data updates
             </summary>
@@ -1715,7 +1720,7 @@
             Leverage
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.MarginMode">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinLeverage.TradeMode">
             <summary>
             Margin mode
             </summary>
@@ -1820,7 +1825,7 @@
             Position side
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrder.MarginMode">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrder.TradeMode">
             <summary>
             Margin mode
             </summary>
@@ -2085,7 +2090,7 @@
             Order type
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.OrderStatus">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate.Status">
             <summary>
             Order status
             </summary>
@@ -2150,7 +2155,7 @@
             Symbol type
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.MarginMode">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinPosition.TradeMode">
             <summary>
             Margin mode
             </summary>
@@ -2850,7 +2855,7 @@
             Clearing asset
             </summary>
         </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.OrderSide">
+        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Side">
             <summary>
             Side
             </summary>
@@ -2903,11 +2908,6 @@
         <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.Quantity">
             <summary>
             Trade quantity
-            </summary>
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.C">
-            <summary>
-            C
             </summary>
         </member>
         <member name="P:DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate.FeeAsset">

@@ -99,7 +99,7 @@ namespace DeepCoin.Net.Objects.Models
         /// <summary>
         /// Quantity filled
         /// </summary>
-        [JsonPropertyName("v")]
+        [JsonPropertyName("VT")]
         public decimal QuantityFilled { get; set; }
     }
 

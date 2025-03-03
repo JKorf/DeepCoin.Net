@@ -6,10 +6,15 @@ using System.Text;
 namespace DeepCoin.Net.Enums
 {
     /// <summary>
-    /// Margin mode
+    /// Trade mode
     /// </summary>
-    public enum MarginMode
+    public enum TradeMode
     {
+        /// <summary>
+        /// Spot
+        /// </summary>
+        [Map("cash")]
+        Spot,
         /// <summary>
         /// Cross margin
         /// </summary>

@@ -13,7 +13,7 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Open order
         /// </summary>
-        [Map("live")]
+        [Map("live", "4")]
         Live,
         /// <summary>
         /// Partially filled open order
@@ -23,12 +23,12 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Canceled
         /// </summary>
-        [Map("canceled")]
+        [Map("canceled", "6")]
         Canceled,
         /// <summary>
         /// Filled
         /// </summary>
-        [Map("filled")]
+        [Map("filled", "1")]
         Filled
     }
 }

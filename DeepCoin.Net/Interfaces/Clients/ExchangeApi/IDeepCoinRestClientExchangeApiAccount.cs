@@ -41,10 +41,10 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="leverage">Leverage</param>
-        /// <param name="marginMode">Margin mode</param>
+        /// <param name="tradeMode">Margin mode</param>
         /// <param name="positionType">Position type</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, MarginMode marginMode, PositionType positionType, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default);
 
         /// <summary>
         /// Get list of transferable assets

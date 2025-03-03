@@ -360,9 +360,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (validationError != null)
                 return new ExchangeWebResult<SharedSpotOrder>(Exchange, validationError);
 
-            var order = await Trading.GetOrderAsync(request.Symbol.GetSymbol(FormatSymbol), request.OrderId, ct: ct).ConfigureAwait(false);
-            if (!order)
-                return order.AsExchangeResult<SharedSpotOrder>(Exchange, null, default);
+            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var order = await Trading.GetOpenOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
+            if (!order) 
+            {
+                order = await Trading.GetClosedOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
+                
+                if (!order) 
+                    return order.AsExchangeResult<SharedSpotOrder>(Exchange, null, default);
+            }
 
             return order.AsExchangeResult(Exchange, TradingMode.Spot, new SharedSpotOrder(
                 order.Data.Symbol,
@@ -377,7 +383,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 OrderPrice = order.Data.Price,
                 TimeInForce = order.Data.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
 #warning Check quantities
-                Quantity = order.Data.QuantityType == QuantityType.BaseAsset ? order.Data.Quantity : null,
+                // For limit orders the default is BaseAsset, for market(buy) orders is the default QuoteAsset?
+                Quantity = (order.Data.QuantityType == null || order.Data.QuantityType == QuantityType.BaseAsset) ? order.Data.Quantity : null,
                 QuantityFilled = order.Data.QuantityFilled,
                 QuoteQuantity = order.Data.QuantityType == QuantityType.QuoteAsset ? order.Data.Quantity : null,
                 UpdateTime = order.Data.UpdateTime,
@@ -418,7 +425,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 OrderPrice = x.Price,
                 TimeInForce = x.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
 #warning Check quantities
-                Quantity = x.QuantityType == QuantityType.BaseAsset ? x.Quantity : null,
+                // For limit orders the default is BaseAsset, for market(buy) orders is the default QuoteAsset?
+                Quantity = (x.QuantityType == null || x.QuantityType == QuantityType.BaseAsset) ? x.Quantity : null,
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantity = x.QuantityType == QuantityType.QuoteAsset ? x.Quantity : null,
                 UpdateTime = x.UpdateTime,
@@ -465,8 +473,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 AveragePrice = x.AverageFillPrice,
                 OrderPrice = x.Price,
                 TimeInForce = x.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
-#warning Check quantities
-                Quantity = x.QuantityType == QuantityType.BaseAsset ? x.Quantity : null,
+                // For limit orders the default is BaseAsset, for market(buy) orders is the default QuoteAsset?
+                Quantity = (x.QuantityType == null || x.QuantityType == QuantityType.BaseAsset) ? x.Quantity : null,
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantity = x.QuantityType == QuantityType.QuoteAsset ? x.Quantity : null,
                 UpdateTime = x.UpdateTime,
@@ -606,7 +614,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         {
             RequiredOptionalParameters = new List<ParameterDescription>
             {
-                new ParameterDescription(nameof(SetLeverageRequest.MarginMode), typeof(SharedMarginMode), "Margin mode to set leverage for", MarginMode.Cross)
+                new ParameterDescription(nameof(SetLeverageRequest.MarginMode), typeof(SharedMarginMode), "Margin mode to set leverage for", TradeMode.Cross)
             }
         };
 
@@ -621,7 +629,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var result = await Account.SetLeverageAsync(
                 symbol: request.Symbol.GetSymbol(FormatSymbol), 
                 request.Leverage,
-                marginMode: request.MarginMode == SharedMarginMode.Cross ? MarginMode.Cross : MarginMode.Isolated,
+                tradeMode: request.MarginMode == SharedMarginMode.Cross ? TradeMode.Cross : TradeMode.Isolated,
                 positionType ?? PositionType.Merge,
                 ct: ct).ConfigureAwait(false);
             if (!result)
@@ -729,7 +737,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 quantity: request.Quantity ?? 0,
                 price: request.Price,
                 clientOrderId: request.ClientOrderId,
-                marginMode: request.MarginMode == null ? null: request.MarginMode == SharedMarginMode.Isolated ? MarginMode.Isolated : MarginMode.Cross,
+                tradeMode: request.MarginMode == null ? null: request.MarginMode == SharedMarginMode.Isolated ? TradeMode.Isolated : TradeMode.Cross,
                 positionSide: request.PositionSide == null? null: request.PositionSide == SharedPositionSide.Long? PositionSide.Long: PositionSide.Short,
                 positionType: positionType,
                 ct: ct).ConfigureAwait(false);
@@ -747,9 +755,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (validationError != null)
                 return new ExchangeWebResult<SharedFuturesOrder>(Exchange, validationError);
 
-            var order = await Trading.GetOrderAsync(request.Symbol.GetSymbol(FormatSymbol), request.OrderId, ct: ct).ConfigureAwait(false);
+            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var order = await Trading.GetOpenOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
             if (!order)
-                return order.AsExchangeResult<SharedFuturesOrder>(Exchange, null, default);
+            {
+                order = await Trading.GetClosedOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
+
+                if (!order)
+                    return order.AsExchangeResult<SharedFuturesOrder>(Exchange, null, default);
+            }
 
             return order.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedFuturesOrder(
                 order.Data.Symbol,

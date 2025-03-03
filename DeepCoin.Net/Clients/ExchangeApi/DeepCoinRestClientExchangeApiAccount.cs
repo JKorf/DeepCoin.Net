@@ -60,12 +60,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Set Leverage
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, MarginMode marginMode, PositionType positionType, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("instId", symbol);
             parameters.Add("lever", leverage);
-            parameters.AddEnum("mgnMode", marginMode);
+            parameters.AddEnum("mgnMode", tradeMode);
             parameters.AddEnum("mrgPosition", positionType);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/account/set-leverage", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinLeverage>(request, parameters, ct).ConfigureAwait(false);

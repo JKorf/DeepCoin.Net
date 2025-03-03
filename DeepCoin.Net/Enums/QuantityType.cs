@@ -13,12 +13,12 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Quantity in base asset
         /// </summary>
-        [Map("0")]
+        [Map("base_ccy", "0")]
         BaseAsset,
         /// <summary>
         /// Quantity in quote asset
         /// </summary>
-        [Map("1")]
+        [Map("quote_ccy", "1")]
         QuoteAsset
     }
 }

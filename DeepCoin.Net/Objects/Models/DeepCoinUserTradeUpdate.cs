@@ -76,11 +76,11 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("V")]
         public decimal Quantity { get; set; }
-        /// <summary>
-        /// C
-        /// </summary>
-        [JsonPropertyName("c")]
-        public decimal C { get; set; }
+        ///// <summary>
+        ///// C
+        ///// </summary>
+        //[JsonPropertyName("c")]
+        //public decimal C { get; set; }
         /// <summary>
         /// Fee asset
         /// </summary>

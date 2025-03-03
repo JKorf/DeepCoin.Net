@@ -32,7 +32,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="orderType">Order type</param>
         /// <param name="quantity">Quantity</param>
         /// <param name="price">Limit price</param>
-        /// <param name="marginMode">Margin mode</param>
+        /// <param name="tradeMode">Margin mode</param>
         /// <param name="asset">Margin asset, for example `ETH`</param>
         /// <param name="clientOrderId">Client order id</param>
         /// <param name="quantityType">Quantity type</param>
@@ -43,7 +43,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="tpTriggerPrice">Take profit trigger price</param>
         /// <param name="slTriggerPrice">Stop loss trigger price</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, MarginMode? marginMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default);
         
         /// <summary>
         /// Edit an existing order
@@ -59,7 +59,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// Cancel an open order
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelOrder" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string orderId, CancellationToken ct = default);
@@ -76,19 +76,19 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// Cancel all orders matching the parameters
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelAllOrder" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="productGroup">Product group</param>
         /// <param name="marginMode">Margin mode</param>
         /// <param name="positionType">Position type</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, MarginMode marginMode, PositionType positionType, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, TradeMode marginMode, PositionType positionType, CancellationToken ct = default);
         
         /// <summary>
         /// Get user trades
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/tradeFills" /></para>
         /// </summary>
         /// <param name="symbolType">Symbol type</param>
-        /// <param name="symbol">Filter by symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="afterId">Return results after this id</param>
         /// <param name="beforeId">Return results before this id</param>
@@ -99,19 +99,19 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         Task<WebCallResult<IEnumerable<DeepCoinUserTrade>>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
-        /// Get order by id
+        /// Get a open order by id
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/orderByID" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrder>> GetOrderAsync(string symbol, string orderId, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinOrder>> GetOpenOrderAsync(string symbol, string orderId, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed order by id
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/finishOrderByID" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinOrder>> GetClosedOrderAsync(string symbol, string orderId, CancellationToken ct = default);
@@ -121,7 +121,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersHistory" /></para>
         /// </summary>
         /// <param name="symbolType">Symbol type</param>
-        /// <param name="symbol">Filter by symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="orderType">Filter by order type</param>
         /// <param name="status">Filter by order status</param>
@@ -135,7 +135,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// Get open orders
         /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersPendingV2" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETHUSDT`</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="page">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="orderId">Filter by order id</param>

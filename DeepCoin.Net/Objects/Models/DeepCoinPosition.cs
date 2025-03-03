@@ -20,7 +20,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Margin mode
         /// </summary>
         [JsonPropertyName("mgnMode")]
-        public MarginMode MarginMode { get; set; }
+        public TradeMode TradeMode { get; set; }
         /// <summary>
         /// Symbol name
         /// </summary>

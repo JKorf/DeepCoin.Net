@@ -47,14 +47,14 @@ The NuGet package files are added along side the source with the latest GitHub r
 	```csharp
 	// Get the ETH/USDT ticker via rest request
 	var restClient = new DeepCoinRestClient();
-	var tickerResult = await restClient.SpotApi.ExchangeData.GetTickerAsync("ETHUSDT");
+	var tickerResult = await restClient.SpotApi.ExchangeData.GetTickerAsync("ETH-USDT");
 	var lastPrice = tickerResult.Data.LastPrice;
 	```
 * Websocket streams
 	```csharp
 	// Subscribe to ETH/USDT ticker updates via the websocket API
 	var socketClient = new DeepCoinSocketClient();
-	var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsync("ETHUSDT", (update) => 
+	var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsync("ETH-USDT", (update) => 
 	{
 	  var lastPrice = update.Data.LastPrice;
 	});
