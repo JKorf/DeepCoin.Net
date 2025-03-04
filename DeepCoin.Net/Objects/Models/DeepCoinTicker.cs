@@ -64,12 +64,12 @@ namespace DeepCoin.Net.Objects.Models
         /// <summary>
         /// Volume in base asset
         /// </summary>
-        [JsonPropertyName("volCcy24h")]
+        [JsonPropertyName("vol24h")]
         public decimal Volume { get; set; }
         /// <summary>
         /// Volume in quote asset
         /// </summary>
-        [JsonPropertyName("vol24h")]
+        [JsonPropertyName("volCcy24h")]
         public decimal QuoteVolume { get; set; }
         /// <summary>
         /// Timestamp
