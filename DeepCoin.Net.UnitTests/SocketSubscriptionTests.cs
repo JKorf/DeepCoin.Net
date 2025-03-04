@@ -11,7 +11,7 @@ namespace DeepCoin.Net.UnitTests
     public class SocketSubscriptionTests
     {
         [Test]
-        public async Task ValidateSpotExchangeDataSubscriptions()
+        public Task ValidateSpotExchangeDataSubscriptions()
         {
             var client = new DeepCoinSocketClient(opts =>
             {
@@ -21,6 +21,7 @@ namespace DeepCoin.Net.UnitTests
             // Current implementation not able to test this, requires a nested id property to be replaced during validation which is not supported
             // Fix after updating testing to System.Text.Json.
             //await tester.ValidateAsync<DeepCoinSymbolUpdate>((client, handler) => client.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETH-USDT", handler), "Symbol");
+            return Task.CompletedTask;
         }
     }
 }
