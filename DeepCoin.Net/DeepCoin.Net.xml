@@ -279,6 +279,16 @@
             Exchange name
             </summary>
         </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.DisplayName">
+            <summary>
+            Display name
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.ImageUrl">
+            <summary>
+            Url to exchange image
+            </summary>
+        </member>
         <member name="P:DeepCoin.Net.DeepCoinExchange.Url">
             <summary>
             Url to the main website

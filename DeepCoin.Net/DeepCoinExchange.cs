@@ -21,6 +21,16 @@ namespace DeepCoin.Net
         public static string ExchangeName => "DeepCoin";
 
         /// <summary>
+        /// Display name
+        /// </summary>
+        public static string DisplayName => "DeepCoin";
+
+        /// <summary>
+        /// Url to exchange image
+        /// </summary>
+        public static string ImageUrl { get; } = "https://github.com/JKorf/DeepCoin.Net/blob/4155bac6d2050a42479659c4cc3031726376a0cf/DeepCoin.Net/Icon/icon.png";
+
+        /// <summary>
         /// Url to the main website
         /// </summary>
         public static string Url { get; } = "https://www.deepcoin.com/";
