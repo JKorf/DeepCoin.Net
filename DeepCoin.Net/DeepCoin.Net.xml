@@ -299,6 +299,11 @@
             Urls to the API documentation
             </summary>
         </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.Type">
+            <summary>
+            Type of exchange
+            </summary>
+        </member>
         <member name="M:DeepCoin.Net.DeepCoinExchange.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <summary>
             Format a base and quote asset to an DeepCoin recognized symbol 
@@ -2959,31 +2964,6 @@
         <member name="T:DeepCoin.Net.Objects.Options.DeepCoinOptions">
             <summary>
             DeepCoin options
-            </summary>
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.Rest">
-            <summary>
-            Rest client options
-            </summary>
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.Socket">
-            <summary>
-            Socket client options
-            </summary>
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.Environment">
-            <summary>
-            Trade environment. Contains info about URL's to use to connect to the API. Use `DeepCoinEnvironment` to swap environment, for example `Environment = DeepCoinEnvironment.Live`
-            </summary>
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.ApiCredentials">
-            <summary>
-            The api credentials used for signing requests.
-            </summary>
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Options.DeepCoinOptions.SocketClientLifeTime">
-            <summary>
-            The DI service lifetime for the IDeepCoinSocketClient
             </summary>
         </member>
         <member name="T:DeepCoin.Net.Objects.Options.DeepCoinOrderBookOptions">
