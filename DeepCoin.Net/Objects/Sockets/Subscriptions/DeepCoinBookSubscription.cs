@@ -9,6 +9,7 @@ using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using System.Linq;
+using System.Diagnostics;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
@@ -23,6 +24,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         private readonly string _topic;
         private readonly string _table;
         private int _subId;
+        private DeepCoinOrderBookUpdate? _incompleteUpdate;
 
         /// <inheritdoc />
         public override Type? GetMessageType(IMessageAccessor message)
@@ -80,6 +82,41 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 Asks = data.Result.Where(x => x.Table.Equals(_table) && x.Data.Direction == Enums.OrderSide.Sell).Select(x => x.Data).ToArray(),
                 Bids = data.Result.Where(x => x.Table.Equals(_table) && x.Data.Direction == Enums.OrderSide.Buy).Select(x => x.Data).ToArray()
             };
+
+            // An update only seems to be complete when the last table is of the "CurrentTime" table.
+            // If an update doesn't have that there will be another update message with the same sequence number
+            var complete = data.Result.Any(x => x.Table == "CurrentTime") || data.BusinessNumber == 0;
+            if (!complete)
+            {
+                // Cache this incomplete update, we need the next message to complete it
+                _incompleteUpdate = update;
+                return new CallResult(null);
+            }
+
+            if (_incompleteUpdate != null)
+            {
+                if (_incompleteUpdate.SequenceNumber != update.SequenceNumber)
+                {
+                    // We have a cached update, but the next message is not the same sequence?
+                    _handler.Invoke(message.As(update, data.Action, data.Result.First().Data.Symbol, data.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
+                    _incompleteUpdate = null;
+                }
+                else
+                {
+                    // Complete the cached update
+                    var newAsks = _incompleteUpdate.Asks.ToList();
+                    var newBids = _incompleteUpdate.Bids.ToList();
+                    foreach (var ask in update.Asks)
+                        newAsks.Add(ask);
+                    foreach (var bid in update.Bids)
+                        newBids.Add(bid);
+
+                    update.Asks = newAsks.ToArray();
+                    update.Bids = newBids.ToArray();
+
+                    _incompleteUpdate = null;
+                }
+            }
 
             _handler.Invoke(message.As(update, data.Action, data.Result.First().Data.Symbol, data.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
             return new CallResult(null);
