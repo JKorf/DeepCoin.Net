@@ -314,6 +314,16 @@
             <param name="deliverTime">Delivery time for delivery futures</param>
             <returns></returns>
         </member>
+        <member name="M:DeepCoin.Net.DeepCoinExchange.FormatWebsocketSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
+            <summary>
+            Format a base and quote asset to an DeepCoin recognized symbol 
+            </summary>
+            <param name="baseAsset">Base asset</param>
+            <param name="quoteAsset">Quote asset</param>
+            <param name="tradingMode">Trading mode</param>
+            <param name="deliverTime">Delivery time for delivery futures</param>
+            <returns></returns>
+        </member>
         <member name="P:DeepCoin.Net.DeepCoinExchange.RateLimiter">
             <summary>
             Rate limiter configuration for the DeepCoin API

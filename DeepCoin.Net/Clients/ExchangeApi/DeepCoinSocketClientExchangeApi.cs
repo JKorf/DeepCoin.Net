@@ -206,11 +206,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null)
-        {
-            if (tradingMode == TradingMode.Spot)
-                return baseAsset + "/" + quoteAsset;
-
-            return baseAsset + quoteAsset;
-        }
+            => DeepCoinExchange.FormatWebsocketSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
     }
 }

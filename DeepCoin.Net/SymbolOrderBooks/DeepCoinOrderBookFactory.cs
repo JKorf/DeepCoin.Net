@@ -23,11 +23,9 @@ namespace DeepCoin.Net.SymbolOrderBooks
         /// <param name="serviceProvider">Service provider for resolving logging and clients</param>
         public DeepCoinOrderBookFactory(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider;
-            
+            _serviceProvider = serviceProvider;            
             
             Exchange = new OrderBookFactory<DeepCoinOrderBookOptions>(Create, Create);
-
         }
 
         
@@ -38,7 +36,7 @@ namespace DeepCoin.Net.SymbolOrderBooks
         /// <inheritdoc />
         public ISymbolOrderBook Create(SharedSymbol symbol, Action<DeepCoinOrderBookOptions>? options = null)
         {
-            var symbolName = DeepCoinExchange.FormatSymbol(symbol.BaseAsset, symbol.QuoteAsset, symbol.TradingMode, symbol.DeliverTime);
+            var symbolName = symbol.GetSymbol(DeepCoinExchange.FormatWebsocketSymbol);
             return Create(symbolName, options);
         }
 

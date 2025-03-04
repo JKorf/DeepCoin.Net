@@ -64,6 +64,22 @@ namespace DeepCoin.Net
         }
 
         /// <summary>
+        /// Format a base and quote asset to an DeepCoin recognized symbol 
+        /// </summary>
+        /// <param name="baseAsset">Base asset</param>
+        /// <param name="quoteAsset">Quote asset</param>
+        /// <param name="tradingMode">Trading mode</param>
+        /// <param name="deliverTime">Delivery time for delivery futures</param>
+        /// <returns></returns>
+        public static string FormatWebsocketSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null)
+        {
+            if (tradingMode == TradingMode.Spot)
+                return baseAsset + "/" + quoteAsset;
+
+            return baseAsset + quoteAsset;
+        }
+
+        /// <summary>
         /// Rate limiter configuration for the DeepCoin API
         /// </summary>
         public static DeepCoinRateLimiters RateLimiter { get; } = new DeepCoinRateLimiters();
