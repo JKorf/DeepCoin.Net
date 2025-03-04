@@ -8,14 +8,14 @@ namespace DeepCoin.Net.Objects.Internal
     internal record SocketUpdate<T>
     {
         [JsonPropertyName("action")]
-        public string Action { get; set; }
+        public string Action { get; set; } = string.Empty;
         [JsonPropertyName("index")]
-        public string Index { get; set; }
+        public string Index { get; set; } = string.Empty;
         [JsonPropertyName("bNo")]
         public long BusinessNumber { get; set; }
         [JsonPropertyName("changeType")]
-        public string ChangeType { get; set; }
+        public string ChangeType { get; set; } = string.Empty;
         [JsonPropertyName("result")]
-        public IEnumerable<TableData<T>> Result { get; set; }
+        public TableData<T>[] Result { get; set; } = [];
     }
 }

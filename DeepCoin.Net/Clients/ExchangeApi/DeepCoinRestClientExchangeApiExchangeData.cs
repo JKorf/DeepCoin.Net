@@ -40,14 +40,14 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Symbols
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinSymbol>>> GetSymbolsAsync(SymbolType type, string? underlying = null, string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinSymbol[]>> GetSymbolsAsync(SymbolType type, string? underlying = null, string? symbol = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", type);
             parameters.AddOptional("uly", underlying);
             parameters.AddOptional("instId", symbol);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/market/instruments", DeepCoinExchange.RateLimiter.DeepCoin, 1, false, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinSymbol>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinSymbol[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -56,7 +56,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Klines
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("instId", symbol);
@@ -64,7 +64,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptionalMilliseconds("after", endTime);
             parameters.AddOptional("limit", limit);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "deepcoin/market/candles", DeepCoinExchange.RateLimiter.DeepCoin, 1, false, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinKline>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinKline[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -88,13 +88,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Funding Rate
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinFundingRate>>> GetFundingRateAsync(ProductGroup contractType, string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinFundingRate[]>> GetFundingRateAsync(ProductGroup contractType, string? symbol = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", contractType);
             parameters.AddOptional("instId", symbol);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/funding-rate", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinFundingRate>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinFundingRate[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 

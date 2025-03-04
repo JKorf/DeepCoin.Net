@@ -37,62 +37,31 @@ namespace DeepCoin.Net
             var restClient = _serviceProvider?.GetRequiredService<IDeepCoinRestClient>() ?? new DeepCoinRestClient();
             var socketClient = _serviceProvider?.GetRequiredService<IDeepCoinSocketClient>() ?? new DeepCoinSocketClient();
 
-#warning todo
-            throw new NotImplementedException();
-            //IKlineRestClient sharedRestClient;
-            //IKlineSocketClient sharedSocketClient;
-            //if (symbol.TradingMode == TradingMode.Spot)
-            //{
-            //    sharedRestClient = restClient.SpotApi.SharedClient;
-            //    sharedSocketClient = socketClient.SpotApi.SharedClient;
-            //}
-            //else
-            //{
-            //    sharedRestClient = restClient.FuturesApi.SharedClient;
-            //    sharedSocketClient = socketClient.FuturesApi.SharedClient;
-            //}
-
-            //return new KlineTracker(
-            //    _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
-            //    sharedRestClient,
-            //    sharedSocketClient,
-            //    symbol,
-            //    interval,
-            //    limit,
-            //    period
-            //    );
+            return new KlineTracker(
+                _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
+                restClient.ExchangeApi.SharedClient,
+                socketClient.ExchangeApi.SharedClient,
+                symbol,
+                interval,
+                limit,
+                period
+                );
         }
         /// <inheritdoc />
         public ITradeTracker CreateTradeTracker(SharedSymbol symbol, int? limit = null, TimeSpan? period = null)
         {
             var restClient = _serviceProvider?.GetRequiredService<IDeepCoinRestClient>() ?? new DeepCoinRestClient();
             var socketClient = _serviceProvider?.GetRequiredService<IDeepCoinSocketClient>() ?? new DeepCoinSocketClient();
-
-#warning todo
-            throw new NotImplementedException();
-
-            //IRecentTradeRestClient? sharedRestClient;
-            //ITradeSocketClient sharedSocketClient;
-            //if (symbol.TradingMode == TradingMode.Spot)
-            //{
-            //    sharedRestClient = restClient.SpotApi.SharedClient;
-            //    sharedSocketClient = socketClient.SpotApi.SharedClient;
-            //}
-            //else
-            //{
-            //    sharedRestClient = restClient.FuturesApi.SharedClient;
-            //    sharedSocketClient = socketClient.FuturesApi.SharedClient;
-            //}
-
-            //return new TradeTracker(
-            //    _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
-            //    sharedRestClient,
-            //    null,
-            //    sharedSocketClient,
-            //    symbol,
-            //    limit,
-            //    period
-            //    );
+                        
+            return new TradeTracker(
+                _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
+                null,
+                null,
+                socketClient.ExchangeApi.SharedClient,
+                symbol,
+                limit,
+                period
+                );
         }
     }
 }

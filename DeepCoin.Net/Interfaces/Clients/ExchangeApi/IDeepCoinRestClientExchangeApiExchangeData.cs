@@ -31,7 +31,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="underlying">Filter by underlying</param>
         /// <param name="symbol">Filter by symbol name</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<DeepCoinSymbol>>> GetSymbolsAsync(SymbolType type, string? underlying = null, string? symbol = null, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinSymbol[]>> GetSymbolsAsync(SymbolType type, string? underlying = null, string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get kline/candlestick data
@@ -42,7 +42,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="endTime">Filter by end time</param>
         /// <param name="limit">Max number of results, max 300</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<DeepCoinKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get order book
@@ -60,7 +60,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="type">Contract type</param>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT-SWAP`</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<DeepCoinFundingRate>>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
+        Task<WebCallResult<DeepCoinFundingRate[]>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
 
     }
 }

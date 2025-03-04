@@ -75,7 +75,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Position side
         /// </summary>
         [JsonPropertyName("posSide")]
-        public PositionSide PositionSide { get; set; }
+        public PositionSide? PositionSide { get; set; }
         /// <summary>
         /// Margin mode
         /// </summary>

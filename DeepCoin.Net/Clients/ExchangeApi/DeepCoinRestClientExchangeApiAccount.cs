@@ -26,13 +26,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Balances
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinBalance>>> GetBalancesAsync(SymbolType accountType, string? asset = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinBalance[]>> GetBalancesAsync(SymbolType accountType, string? asset = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", accountType);
             parameters.AddOptional("ccy", asset);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "deepcoin/account/balances", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinBalance>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinBalance[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -41,7 +41,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Bills
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinBill>>> GetBillsAsync(SymbolType symbolType, string? asset = null, BillType? billType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinBill[]>> GetBillsAsync(SymbolType symbolType, string? asset = null, BillType? billType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", symbolType);
@@ -51,7 +51,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptionalMillisecondsString("before", endTime);
             parameters.AddOptional("limit", limit);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/account/bills", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinBill>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinBill[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -77,58 +77,59 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #endregion
 
-        #region Get Transferable Assets
+        // Transfer endpoints currently not useable
+        //#region Get Transferable Assets
 
-        /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinTransferableAsset>> GetTransferableAssetsAsync(CancellationToken ct = default)
-        {
-            var parameters = new ParameterCollection();
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/internal-transfer/support", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<DeepCoinTransferableAsset>(request, parameters, ct).ConfigureAwait(false);
-            return result;
-        }
+        ///// <inheritdoc />
+        //public async Task<WebCallResult<DeepCoinTransferableAsset>> GetTransferableAssetsAsync(CancellationToken ct = default)
+        //{
+        //    var parameters = new ParameterCollection();
+        //    var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/internal-transfer/support", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+        //    var result = await _baseClient.SendAsync<DeepCoinTransferableAsset>(request, parameters, ct).ConfigureAwait(false);
+        //    return result;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Transfer
+        //#region Transfer
 
-        /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinTransferResult>> TransferAsync(string asset, decimal quantity, string toAccount, AccountType toAccountType, string? clientOrderId = null, CancellationToken ct = default)
-        {
-            var parameters = new ParameterCollection();
-            parameters.Add("coin", asset);
-            parameters.AddString("amount", quantity);
-            parameters.Add("receiverAccount", toAccount);
-            parameters.AddEnum("accountType", toAccountType);
-            parameters.AddOptional("receiverUID", clientOrderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/internal-transfer", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<DeepCoinTransferResult>(request, parameters, ct).ConfigureAwait(false);
-            return result;
-        }
+        ///// <inheritdoc />
+        //public async Task<WebCallResult<DeepCoinTransferResult>> TransferAsync(string asset, decimal quantity, string toAccount, AccountType toAccountType, string? clientOrderId = null, CancellationToken ct = default)
+        //{
+        //    var parameters = new ParameterCollection();
+        //    parameters.Add("coin", asset);
+        //    parameters.AddString("amount", quantity);
+        //    parameters.Add("receiverAccount", toAccount);
+        //    parameters.AddEnum("accountType", toAccountType);
+        //    parameters.AddOptional("receiverUID", clientOrderId);
+        //    var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/internal-transfer", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+        //    var result = await _baseClient.SendAsync<DeepCoinTransferResult>(request, parameters, ct).ConfigureAwait(false);
+        //    return result;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Get Transfer History
+        //#region Get Transfer History
 
-        /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinTransferPage>> GetTransferHistoryAsync(string? toAccount = null, string? asset = null, TransferStatus? status = null, string? receiverId = null, string? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
-        {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("account", toAccount);
-            parameters.AddOptional("coin", asset);
-            parameters.AddOptionalEnum("status", status);
-            parameters.AddOptional("receiverUID", receiverId);
-            parameters.AddOptional("orderId", orderId);
-            parameters.AddOptionalMillisecondsString("startTime", startTime);
-            parameters.AddOptionalMillisecondsString("endTime", endTime);
-            parameters.AddOptional("page", page);
-            parameters.AddOptional("size", pageSize);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/internal-transfer/history-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<DeepCoinTransferPage>(request, parameters, ct).ConfigureAwait(false);
-            return result;
-        }
+        ///// <inheritdoc />
+        //public async Task<WebCallResult<DeepCoinTransferPage>> GetTransferHistoryAsync(string? toAccount = null, string? asset = null, TransferStatus? status = null, string? receiverId = null, string? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
+        //{
+        //    var parameters = new ParameterCollection();
+        //    parameters.AddOptional("account", toAccount);
+        //    parameters.AddOptional("coin", asset);
+        //    parameters.AddOptionalEnum("status", status);
+        //    parameters.AddOptional("receiverUID", receiverId);
+        //    parameters.AddOptional("orderId", orderId);
+        //    parameters.AddOptionalMillisecondsString("startTime", startTime);
+        //    parameters.AddOptionalMillisecondsString("endTime", endTime);
+        //    parameters.AddOptional("page", page);
+        //    parameters.AddOptional("size", pageSize);
+        //    var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/internal-transfer/history-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+        //    var result = await _baseClient.SendAsync<DeepCoinTransferPage>(request, parameters, ct).ConfigureAwait(false);
+        //    return result;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Get Deposit History
 

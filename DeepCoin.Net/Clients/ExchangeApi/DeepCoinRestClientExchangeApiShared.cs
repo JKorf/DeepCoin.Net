@@ -8,6 +8,7 @@ using System.Threading;
 using System.Linq;
 using CryptoExchange.Net.Objects;
 using DeepCoin.Net.Enums;
+using DeepCoin.Net.Objects.Models;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -311,12 +312,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Spot Order Client
 
-#warning Check
         SharedFeeDeductionType ISpotOrderRestClient.SpotFeeDeductionType => SharedFeeDeductionType.DeductFromOutput;
         SharedFeeAssetType ISpotOrderRestClient.SpotFeeAssetType => SharedFeeAssetType.OutputAsset;
         IEnumerable<SharedOrderType> ISpotOrderRestClient.SpotSupportedOrderTypes { get; } = new[] { SharedOrderType.Limit, SharedOrderType.Market, SharedOrderType.LimitMaker };
         IEnumerable<SharedTimeInForce> ISpotOrderRestClient.SpotSupportedTimeInForce { get; } = new[] { SharedTimeInForce.GoodTillCanceled, SharedTimeInForce.ImmediateOrCancel };
-#warning Check
         SharedQuantitySupport ISpotOrderRestClient.SpotSupportedOrderQuantity { get; } = new SharedQuantitySupport(
                 SharedQuantityType.BaseAndQuoteAsset,
                 SharedQuantityType.BaseAndQuoteAsset,
@@ -382,8 +381,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 AveragePrice = order.Data.AverageFillPrice,
                 OrderPrice = order.Data.Price,
                 TimeInForce = order.Data.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
-#warning Check quantities
-                // For limit orders the default is BaseAsset, for market(buy) orders is the default QuoteAsset?
                 Quantity = (order.Data.QuantityType == null || order.Data.QuantityType == QuantityType.BaseAsset) ? order.Data.Quantity : null,
                 QuantityFilled = order.Data.QuantityFilled,
                 QuoteQuantity = order.Data.QuantityType == QuantityType.QuoteAsset ? order.Data.Quantity : null,
@@ -424,8 +421,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 AveragePrice = x.AverageFillPrice,
                 OrderPrice = x.Price,
                 TimeInForce = x.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
-#warning Check quantities
-                // For limit orders the default is BaseAsset, for market(buy) orders is the default QuoteAsset?
                 Quantity = (x.QuantityType == null || x.QuantityType == QuantityType.BaseAsset) ? x.Quantity : null,
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantity = x.QuantityType == QuantityType.QuoteAsset ? x.Quantity : null,
@@ -702,7 +697,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region Futures Order Client
-#warning Check
         SharedFeeDeductionType IFuturesOrderRestClient.FuturesFeeDeductionType => SharedFeeDeductionType.AddToCost;
         SharedFeeAssetType IFuturesOrderRestClient.FuturesFeeAssetType => SharedFeeAssetType.QuoteAsset;
 
@@ -714,7 +708,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 SharedQuantityType.Contracts,
                 SharedQuantityType.Contracts);
 
-        PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions();
+        PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions()
+        {
+            RequiredOptionalParameters = new List<ParameterDescription>
+            {
+                new ParameterDescription(nameof(PlaceFuturesOrderRequest.PositionSide), typeof(SharedPositionSide), "Position side of the order", PositionSide.Long)
+            }
+        };
         async Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.PlaceFuturesOrderAsync(PlaceFuturesOrderRequest request, CancellationToken ct)
         {
             var validationError = ((IFuturesOrderRestClient)this).PlaceFuturesOrderOptions.ValidateRequest(
@@ -739,7 +739,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 clientOrderId: request.ClientOrderId,
                 tradeMode: request.MarginMode == null ? null: request.MarginMode == SharedMarginMode.Isolated ? TradeMode.Isolated : TradeMode.Cross,
                 positionSide: request.PositionSide == null? null: request.PositionSide == SharedPositionSide.Long? PositionSide.Long: PositionSide.Short,
-                positionType: positionType,
+                positionType: positionType ?? PositionType.Merge,
                 ct: ct).ConfigureAwait(false);
 
             if (!result)
@@ -974,7 +974,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, null, default);
 
-            var data = result.Data;
+            IEnumerable<DeepCoinPosition> data = result.Data;
             if (request.TradingMode.HasValue)
                 data = data.Where(x => request.TradingMode == TradingMode.PerpetualInverse ? x.Symbol.Contains("_USD_") : !x.Symbol.Contains("_USD_"));
 

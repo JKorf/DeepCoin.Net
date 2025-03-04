@@ -65,12 +65,12 @@ namespace DeepCoin.Net.Objects.Models
         /// Position side
         /// </summary>
         [JsonPropertyName("posSide")]
-        public PositionSide PositionSide { get; set; }
+        public PositionSide? PositionSide { get; set; }
         /// <summary>
         /// Trade role
         /// </summary>
         [JsonPropertyName("execType")]
-        public TradeRole Role { get; set; }
+        public TradeRole? Role { get; set; }
         /// <summary>
         /// Fee asset
         /// </summary>

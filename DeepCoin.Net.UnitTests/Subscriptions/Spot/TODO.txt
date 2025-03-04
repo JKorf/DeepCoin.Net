@@ -1,4 +1,0 @@
-> { "id": "|1|", "reqType": "sub", "dataType": "ETH-USDT@bookTicker" }
-< { "id": "|1|", "code": 0, "msg": "" }
-= 
-{}

@@ -10,6 +10,6 @@ namespace DeepCoin.Net.Objects.Internal
         [JsonPropertyName("errorCode")]
         public int ErrorCode { get; set; }
         [JsonPropertyName("errorMsg")]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 }

@@ -8,8 +8,8 @@ namespace DeepCoin.Net.Objects.Internal
     internal record TableData<T>
     {
         [JsonPropertyName("table")]
-        public string Table { get; set; }
+        public string Table { get; set; } = string.Empty;
         [JsonPropertyName("data")]
-        public T Data { get; set; }
+        public T Data { get; set; } = default!;
     }
 }

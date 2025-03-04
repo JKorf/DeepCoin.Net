@@ -30,13 +30,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Positions
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinPosition>>> GetPositionsAsync(SymbolType symbolType, string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinPosition[]>> GetPositionsAsync(SymbolType symbolType, string? symbol = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", symbolType);
             parameters.AddOptional("instId", symbol);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/account/positions", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinPosition>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinPosition[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -81,7 +81,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public async Task<WebCallResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default)
         {
-#warning Doesn't work for spot, only works for futures?
             var parameters = new ParameterCollection();
             parameters.Add("OrderSysID", $"{orderId}");
             parameters.AddOptional("price", price);
@@ -154,7 +153,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinUserTrade>>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinUserTrade[]>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", symbolType);
@@ -166,7 +165,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptionalMilliseconds("end", endTime);
             parameters.AddOptional("limit", limit);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/fills", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinUserTrade>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinUserTrade[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -219,7 +218,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Closed Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinOrder>>> GetClosedOrdersAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, OrderType? orderType = null, OrderStatus? status = null, string? afterId = null, string? beforeId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinOrder[]>> GetClosedOrdersAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, OrderType? orderType = null, OrderStatus? status = null, string? afterId = null, string? beforeId = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddEnum("instType", symbolType);
@@ -231,7 +230,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptional("before", beforeId);
             parameters.AddOptional("limit", limit);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/orders-history", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinOrder>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -240,7 +239,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Open Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<DeepCoinOrder>>> GetOpenOrdersAsync(string symbol, int? page = null, int? pageSize = null, string? orderId = null, CancellationToken ct = default)
+        public async Task<WebCallResult<DeepCoinOrder[]>> GetOpenOrdersAsync(string symbol, int? page = null, int? pageSize = null, string? orderId = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("instId", symbol);
@@ -248,7 +247,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.AddOptional("limit", pageSize);
             parameters.AddOptional("ordId", orderId);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/v2/orders-pending", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinOrder>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 

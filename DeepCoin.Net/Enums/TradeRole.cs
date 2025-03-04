@@ -13,12 +13,12 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Taker
         /// </summary>
-        [Map("T")]
+        [Map("T", "1")]
         Taker,
         /// <summary>
         /// Maker
         /// </summary>
-        [Map("M")]
+        [Map("M", "0")]
         Maker
     }
 }

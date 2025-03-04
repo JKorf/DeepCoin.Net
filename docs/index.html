@@ -97,7 +97,7 @@
         <section id="idocs_intro">
 			<h1>DeepCoin.Net</h1>
 			
-		<p>DeepCoin.Net is a client library for accessing the <a href="DeepCoin" target="_blank">DeepCoin REST and Websocket API</a>. </p>
+		<p>DeepCoin.Net is a client library for accessing the <a href="https://www.deepcoin.com/docs/authentication" target="_blank">DeepCoin REST and Websocket API</a>. </p>
 		<h4>Features</h4>
 		<ul>
 			<li>Response data is mapped to descriptive models</li>
@@ -197,14 +197,14 @@ builder.Services.AddDeepCoin(builder.Configuration.GetSection("DeepCoin"));
 		  
  builder.Services.AddDeepCoin(options => {
   // Configure options in code
-  options.ApiCredentials = new ApiCredentials("APIKEY", "APISECRET");
+  options.ApiCredentials = new DeepCoinApiCredentials("APIKEY", "APISECRET", "APIPASS");
 });</code></pre>
 		  
 		  <p>The <code>IDeepCoinRestClient</code> and <code>IDeepCoinSocketClient</code> can then be injected.</p>
 		  <p>Alternatively the rest and socket client can be constructed directly</p>
 		  <pre><code>var restClient = new DeepCoinRestClient(options => {
   // Options can be configured here, for example:
-  options.ApiCredentials = new ApiCredentials("APIKEY", "APISECRET");
+  options.ApiCredentials = new DeepCoinApiCredentials("APIKEY", "APISECRET", "APIPASS");
 });
 var socketClient = new DeepCoinSocketClient();</code></pre>
 		  
@@ -217,8 +217,49 @@ var socketClient = new DeepCoinSocketClient();</code></pre>
           
 		  <b id="idocs_example_symbols">Get Symbols</b><br />
 		  <p>Get a list of supported symbols on DeepCoin</p>
-		  <pre><code>await DeepCoinClient.SpotApi.ExchangeData.GetSymbolsAsync();</code></pre>
+		  <pre><code>var deepCoinClient = new DeepCoinRestClient();
 		  
+await deepCoinClient.ExchangeApi.ExchangeData.GetSymbolsAsync();</code></pre>
+		  		  
+		  <b id="idocs_example_symbols">Get Symbol Tickers</b><br />
+		  <p>Get the 24h price ticker of all spot symbols</p>
+		  <pre><code>var deepCoinClient = new DeepCoinRestClient();
+
+var result = await deepCoinClient.ExchangeApi.ExchangeData.GetTickersAsync(SymbolType.Spot);</code></pre>
+
+			<b id="idocs_example_symbols">Get Balances</b><br />
+		  <p>Get asset balances of the USDT swap account</p>
+		  <pre><code>var deepCoinClient = new DeepCoinRestClient(options => {
+    options.ApiCredentials = new DeepCoinApiCredentials("KEY", "SECRET", "PASS");
+});
+
+var result = await deepCoinClient.ExchangeApi.Account.GetBalancesAsync(SymbolType.Swap);</code></pre>
+
+			<b id="idocs_example_symbols">Place Limit Order</b><br />
+		  <p>Place a new limit order for buying 0.1 ETH at a price of 2000 USDT</p>
+		  <pre><code>var deepCoinClient = new DeepCoinRestClient(options => {
+    options.ApiCredentials = new DeepCoinApiCredentials("KEY", "SECRET", "PASS");
+});
+
+var result = await deepCoinClient.ExchangeApi.Trading.PlaceOrderAsync(
+    "ETH-USDT",
+    OrderSide.Buy,
+    OrderType.Limit,
+    0.1m,
+    2000);</code></pre>
+			
+			<b id="idocs_example_symbols">Place Market Order</b><br />
+		  <p>Place a new market order for buying 50 USDT worth of ETH at the best available price</p>
+		  <pre><code>var deepCoinClient = new DeepCoinRestClient(options => {
+    options.ApiCredentials = new DeepCoinApiCredentials("KEY", "SECRET", "PASS");
+});
+
+var result = await deepCoinRestClient.ExchangeApi.Trading.PlaceOrderAsync(
+    "ETH-USDT",
+    OrderSide.Buy,
+    OrderType.Market,
+    50,
+    quantityType: QuantityType.QuoteAsset);</code></pre>
         </section>
         		
       </div>

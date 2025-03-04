@@ -14,7 +14,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Orders failed to cancel
         /// </summary>
         [JsonPropertyName("errorList")]
-        public IEnumerable<DeepCoinCancellationResultEntry> ErrorList { get; set; } = Array.Empty<DeepCoinCancellationResultEntry>();
+        public DeepCoinCancellationResultEntry[] ErrorList { get; set; } = Array.Empty<DeepCoinCancellationResultEntry>();
     }
 
     /// <summary>

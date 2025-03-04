@@ -25,9 +25,9 @@ namespace DeepCoin.Net.UnitTests
                 "/api/v3/order",
                 (uriParams, bodyParams, headers) =>
                 {
-                    return bodyParams["signature"].ToString();
+                    return headers["DC-ACCESS-SIGN"].ToString();
                 },
-                "c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71",
+                "Vf4Agvnq70YtbqrjZVCcJUmbqgK8L6ONwb5ldafaptQ=",
                 new Dictionary<string, object>
                 {
                     { "symbol", "LTCBTC" },

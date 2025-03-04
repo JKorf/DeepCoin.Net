@@ -117,7 +117,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
                 onOrderMessage: update =>
                 {
-                    var futuresOrders = update.Data.Where(x => x.Symbol.Contains("-SWAP"));
+                    var futuresOrders = update.Data.Where(x => !x.Symbol.Contains("/"));
                     if (!futuresOrders.Any())
                         return;
 
@@ -166,7 +166,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
                 onOrderMessage: update =>
                 {
-                    var futuresOrders = update.Data.Where(x => !x.Symbol.Contains("-SWAP"));
+                    var futuresOrders = update.Data.Where(x => x.Symbol.Contains("/"));
                     if (!futuresOrders.Any())
                         return;
 
@@ -182,7 +182,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                             AveragePrice = x.AverageFillPrice,
                             OrderPrice = x.OrderPrice,
                             TimeInForce = x.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
-#warning Check quantities
                             Quantity = x.Quantity,
                             QuantityFilled = x.QuantityFilled,
                             QuoteQuantityFilled = x.Turnover,

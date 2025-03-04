@@ -1,0 +1,37 @@
+> { "SendTopicAction": { "Action": "1", "FilterValue": "DeepCoin_ETHUSDT", "LocalNo": "|1|", "ResumeNo": -2, "TopicID": "7" }}
+< {"action":"RecvTopicAction","requestNo":0,"errorCode":0,"errorMsg":"Success","result":[{"table":"TopicAction","data":{"Action":"1","LocalNo":|1|,"TopicID":"7","FilterValue":"DeepCoin_ETHUSDT","ResumeNo":0,"Token":"","LocalID":""}}]}
+= 
+{
+  "action": "PushMarketDataOverView",
+  "localNo": |1|,
+  "index": "DeepCoin_ETHUSDT",
+  "seq": 509280,
+  "bNo": 0,
+  "changeType": "3",
+  "result": [
+    {
+      "table": "MarketDataOverView",
+      "data": {
+        "ExchangeID": "DeepCoin",
+        "InstrumentID": "ETHUSDT",
+        "ProductGroup": "SwapU",
+        "UpdateTime": 1693381189,
+        "UpdateMilliSecond": 131,
+        "UpperLimitPrice": 328.15,
+        "LowerLimitPrice": 109.39,
+        "UnderlyingPrice": 218.76848,
+        "MarkedPrice": 218.7,
+        "PositionFeeRate": -0.0001,
+        "HighestPrice": 228.13,
+        "LowestPrice": 206.74,
+        "LastPrice": 218.66,
+        "Volume": 17250632,
+        "Turnover": 204717188.5239931,
+        "OpenInterest": 9418782,
+        "OpenPrice": 207.48,
+        "InstrumentStatus": "2",
+        "PrePositionFeeRate": -0.00029782
+      }
+    }
+  ]
+}

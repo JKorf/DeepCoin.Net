@@ -152,6 +152,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return "pong";
 
             var action = message.GetValue<string>(_actionPath);
+            if (action == null)
+                return null;
+
             if (action.Equals("RecvTopicAction", StringComparison.InvariantCulture))
             {
                 var id = message.GetValue<int?>(_actionIdPath);
@@ -159,11 +162,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             }
 
             var index = message.GetValue<string>(_indexPath);
-            if (index == null)
-            {
-                // ErrorMsg field contains first snapshot data..? {"action":"PushMarketOrder","requestNo":0,"errorCode":0,"errorMsg":"DeepCoin_ETHUSDT","result": [] }
-                index = message.GetValue<string>(_errorMsgPath);
-            }
+            // ErrorMsg field contains first snapshot data..? {"action":"PushMarketOrder","requestNo":0,"errorCode":0,"errorMsg":"DeepCoin_ETHUSDT","result": [] }
+            index ??= message.GetValue<string>(_errorMsgPath);
 
             return action + index;
         }

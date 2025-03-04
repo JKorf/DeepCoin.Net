@@ -11,7 +11,7 @@ var provider = collection.BuildServiceProvider();
 var trackerFactory = provider.GetRequiredService<IDeepCoinTrackerFactory>();
 
 // Create and start the tracker, keep track of the last 10 minutes
-var tracker = trackerFactory.CreateTradeTracker(new SharedSymbol(TradingMode.Spot, "ETH", "USDT"), period: TimeSpan.FromMinutes(10));
+var tracker = trackerFactory.CreateTradeTracker(new SharedSymbol(TradingMode.PerpetualLinear, "ETH", "USDT"), period: TimeSpan.FromMinutes(10));
 var result = await tracker.StartAsync();
 if (!result.Success)
 {

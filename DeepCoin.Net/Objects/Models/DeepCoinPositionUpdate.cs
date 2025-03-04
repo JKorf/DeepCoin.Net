@@ -30,7 +30,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Open price
         /// </summary>
         [JsonPropertyName("OP")]
-        public decimal OpenPrice { get; set; }
+        public decimal? OpenPrice { get; set; }
         /// <summary>
         /// Position size
         /// </summary>
@@ -60,7 +60,6 @@ namespace DeepCoin.Net.Objects.Models
         /// PositionSide
         /// </summary>
         [JsonPropertyName("p")]
-#warning check correct mapping
         public PositionSide PositionSide { get; set; }
         /// <summary>
         /// Margin used

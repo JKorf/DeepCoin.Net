@@ -15,7 +15,7 @@ namespace DeepCoin.Net.Objects.Models
         /// Data
         /// </summary>
         [JsonPropertyName("data")]
-        public IEnumerable<DeepCoinTransfer> Data { get; set; } = Array.Empty<DeepCoinTransfer>();
+        public DeepCoinTransfer[] Data { get; set; } = Array.Empty<DeepCoinTransfer>();
         /// <summary>
         /// Total results
         /// </summary>

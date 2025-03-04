@@ -2,7 +2,7 @@
 
 [![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/DeepCoin.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/DeepCoin.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/DeepCoin.Net?style=for-the-badge)
 
-DeepCoin.Net is a client library for accessing the [DeepCoin REST and Websocket API](DeepCoin). 
+DeepCoin.Net is a client library for accessing the [DeepCoin REST and Websocket API](https://www.deepcoin.com/docs/authentication). 
 
 ## Features
 * Response data is mapped to descriptive models
@@ -47,14 +47,15 @@ The NuGet package files are added along side the source with the latest GitHub r
 	```csharp
 	// Get the ETH/USDT ticker via rest request
 	var restClient = new DeepCoinRestClient();
-	var tickerResult = await restClient.SpotApi.ExchangeData.GetTickerAsync("ETH-USDT");
-	var lastPrice = tickerResult.Data.LastPrice;
+    var tickerResult = await restClient.ExchangeApi.ExchangeData.GetTickersAsync(SymbolType.Spot);
+    var ticker = tickerResult.Data.Single(x => x.Symbol == "ETH-USDT");
+    var lastPrice = ticker.LastPrice;
 	```
 * Websocket streams
 	```csharp
 	// Subscribe to ETH/USDT ticker updates via the websocket API
 	var socketClient = new DeepCoinSocketClient();
-	var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsync("ETH-USDT", (update) => 
+	var tickerSubscriptionResult = socketClient.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETH-USDT", (update) => 
 	{
 	  var lastPrice = update.Data.LastPrice;
 	});
@@ -98,17 +99,29 @@ A Discord server is available [here](https://discord.gg/MSpeEtSY8t). For discuss
 
 ## Supported functionality
 
-### Spot
+### REST
 |API|Supported|Location|
 |--|--:|--|
-|TODO|✓|`restClient.SpotApi.Account`|
-### Futures
+|DeepCoinAccount|✓|`restClient.ExchangeApi.Account`|
+|DeepCoinMarket|✓|`restClient.ExchangeApi.ExchangeData`|
+|DeepCoinTrade|✓|`restClient.ExchangeApi.Trading`|
+|CopyTrade|X||
+|Internal Transfer|X|(API not available)|
+|Rebate|X||
+|Assets|✓|`restClient.ExchangeApi.Account`|
+
+### WebSocket
 |API|Supported|Location|
 |--|--:|--|
-|TODO|✓|`restClient.FuturesApi.ExchangeData`|
+|Private websocket|✓|`restClient.ExchangeApi.ExchangeData`|
+|Public websocket|✓|`restClient.ExchangeApi.ExchangeData`|
 
 ## Support the project
 Any support is greatly appreciated.
+
+### Referal
+If you do not yet have an account please consider using this referal link to sign up:  
+[Link](https://s.deepcoin.com/jddhfca)
 
 ### Donate
 Make a one time donation in a crypto currency of your choice. If you prefer to donate a currency not listed here please contact me.
