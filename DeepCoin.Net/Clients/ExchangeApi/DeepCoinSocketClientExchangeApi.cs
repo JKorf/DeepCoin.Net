@@ -78,8 +78,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default)
         {
-            var path = symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase) ? "public/ws" : "public/spotws";
-            symbol = symbol.Replace("SWAP", "").Replace("-", "");
+            string path;
+            if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                path = "public/ws";
+                symbol = symbol.Replace("-SWAP", "").Replace("-", "");
+            }
+            else
+            {
+                path = "public/spotws";
+                symbol = symbol.Replace("-", "/");
+            }
+
             var subscription = new DeepCoinSubscription<DeepCoinSymbolUpdate>(_logger, "PushMarketDataOverView", "MarketDataOverView", "DeepCoin_" + symbol, "7", x => onMessage(x.As(x.Data.First().Data).WithSymbol(x.Data.First().Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
@@ -87,8 +97,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default)
         {
-            var path = symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase) ? "public/ws" : "public/spotws";
-            symbol = symbol.Replace("SWAP", "").Replace("-", "");
+            string path;
+            if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                path = "public/ws";
+                symbol = symbol.Replace("-SWAP", "").Replace("-", "");
+            }
+            else
+            {
+                path = "public/spotws";
+                symbol = symbol.Replace("-", "/");
+            }
+
             var subscription = new DeepCoinSubscription<DeepCoinTradeUpdate>(_logger, "PushMarketTrade", "MarketTrade", "DeepCoin_" + symbol, "2", x => onMessage(
                 x.As(x.Data.First().Data)
                 .WithSymbol(x.Data.First().Data.Symbol)
@@ -100,8 +120,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default)
         {
-            var path = symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase) ? "public/ws" : "public/spotws";
-            symbol = symbol.Replace("SWAP", "").Replace("-", "");
+            string path;
+            if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                path = "public/ws";
+                symbol = symbol.Replace("-SWAP", "").Replace("-", "");
+            }
+            else
+            {
+                path = "public/spotws";
+                symbol = symbol.Replace("-", "/");
+            }
+
             var topic = "DeepCoin_" + symbol + "_1m";
             var subscription = new DeepCoinSubscription<DeepCoinKlineUpdate>(_logger, "PushKLine", "LastKLine", topic, "11", x => onMessage(
                 x.As(x.Data.First().Data)
