@@ -134,6 +134,10 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.0.3 - 04 Mar 2025
+    * Fixed Volume and QuoteVolume properties being inversed on DeepCoinTicker model
+    * Fixed DeepCoinOrderBookFactory Create with SharedSymbol parameter not formatting correctly
+
 * Version 1.0.2 - 04 Mar 2025
     * Fix for spot websocket subscriptions not getting updates
 
