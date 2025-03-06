@@ -201,7 +201,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         {
             var parameters = new ParameterCollection();
             parameters.Add("listenkey", listenKey);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/listenkey/extend", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/listenkey/extend", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinListenKey>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
