@@ -1,11 +1,10 @@
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
-using CryptoExchange.Net.Converters.JsonNet;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net.Http;
 using DeepCoin.Net.Clients;
-using DeepCoin.Net.Objects;
+using CryptoExchange.Net.Converters.SystemTextJson;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -15,7 +14,7 @@ namespace DeepCoin.Net.UnitTests
         [Test]
         public void CheckSignatureExample1()
         {
-            var authProvider = new DeepCoinAuthenticationProvider(new DeepCoinApiCredentials("XXX", "XXX", "XXX"));
+            var authProvider = new DeepCoinAuthenticationProvider(new ApiCredentials("XXX", "XXX", "XXX"));
             var client = (RestApiClient)new DeepCoinRestClient().ExchangeApi;
 
             CryptoExchange.Net.Testing.TestHelpers.CheckSignature(
@@ -32,7 +31,7 @@ namespace DeepCoin.Net.UnitTests
                 {
                     { "symbol", "LTCBTC" },
                 },
-                DateTimeConverter.ParseFromLong(1499827319559),
+                DateTimeConverter.ParseFromDouble(1499827319559),
                 true,
                 false);
         }

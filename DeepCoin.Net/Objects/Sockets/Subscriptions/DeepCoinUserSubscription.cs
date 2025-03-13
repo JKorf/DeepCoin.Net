@@ -93,7 +93,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             if (message.Data is SocketUpdate<DeepCoinTriggerOrderUpdate> triggerOrderUpdate)
                 _triggerUpdateHandler?.Invoke(message.As(triggerOrderUpdate.Result.Select(x => x.Data).ToArray()).WithSymbol(triggerOrderUpdate.Result.First().Data.Symbol).WithDataTimestamp(triggerOrderUpdate.Result.Max(x => x.Data.UpdateTime)));
 
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

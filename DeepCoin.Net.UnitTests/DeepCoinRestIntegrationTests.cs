@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DeepCoin.Net.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects;
+using CryptoExchange.Net.Authentication;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -26,7 +27,7 @@ namespace DeepCoin.Net.UnitTests
             {
                 AutoTimestamp = false,
                 OutputOriginalData = true,
-                ApiCredentials = Authenticated ? new DeepCoinApiCredentials(key, sec, pass) : null
+                ApiCredentials = Authenticated ? new ApiCredentials(key, sec, pass) : null
             }));
         }
 

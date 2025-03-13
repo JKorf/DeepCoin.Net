@@ -1,5 +1,4 @@
 using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Interfaces.CommonClients;
 using System;
 
 namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
@@ -25,7 +24,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         public IDeepCoinRestClientExchangeApiTrading Trading { get; }
 
         /// <summary>
-        /// Get the shared rest requests client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+        /// Get the shared rest requests client. This interface is shared with other exchanges to allow for a common implementation for different exchanges.
         /// </summary>
         public IDeepCoinRestClientExchangeApiShared SharedClient { get; }
     }

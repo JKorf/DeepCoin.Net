@@ -1,4 +1,5 @@
-﻿using DeepCoin.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using DeepCoin.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Ticker price info
     /// </summary>
+    [SerializationModel]
     public record DeepCoinTicker
     {
         /// <summary>

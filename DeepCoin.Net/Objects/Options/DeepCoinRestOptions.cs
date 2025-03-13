@@ -5,7 +5,7 @@ namespace DeepCoin.Net.Objects.Options
     /// <summary>
     /// Options for the DeepCoinRestClient
     /// </summary>
-    public class DeepCoinRestOptions : RestExchangeOptions<DeepCoinEnvironment, DeepCoinApiCredentials>
+    public class DeepCoinRestOptions : RestExchangeOptions<DeepCoinEnvironment>
     {
         /// <summary>
         /// Default options for new clients

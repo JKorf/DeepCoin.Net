@@ -73,7 +73,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
-            => new DeepCoinAuthenticationProvider((DeepCoinApiCredentials)credentials);
+            => new DeepCoinAuthenticationProvider(credentials);
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default)

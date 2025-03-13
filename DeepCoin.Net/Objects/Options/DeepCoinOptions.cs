@@ -10,7 +10,7 @@ namespace DeepCoin.Net.Objects.Options
     /// <summary>
     /// DeepCoin options
     /// </summary>
-    public class DeepCoinOptions: LibraryOptions<DeepCoinRestOptions, DeepCoinSocketOptions, DeepCoinApiCredentials, DeepCoinEnvironment>
+    public class DeepCoinOptions: LibraryOptions<DeepCoinRestOptions, DeepCoinSocketOptions, ApiCredentials, DeepCoinEnvironment>
     {
     }
 }

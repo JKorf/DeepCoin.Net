@@ -1,4 +1,4 @@
-﻿using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +9,7 @@ namespace DeepCoin.Net.Objects.Internal
     /// <summary>
     /// DeepCoin response
     /// </summary>
+    [SerializationModel]
     internal record DeepCoinResponse
     {
         [JsonPropertyName("code")]
@@ -17,6 +18,7 @@ namespace DeepCoin.Net.Objects.Internal
         public string? Message { get; set; }
     }
 
+    [SerializationModel]
     internal record DeepCoinResponse<T> : DeepCoinResponse
     {
         [JsonPropertyName("data")]

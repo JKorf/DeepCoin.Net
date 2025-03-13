@@ -1,4 +1,5 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -8,6 +9,7 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Transfer result
     /// </summary>
+    [SerializationModel]
     public record DeepCoinTransferResult
     {
         /// <summary>

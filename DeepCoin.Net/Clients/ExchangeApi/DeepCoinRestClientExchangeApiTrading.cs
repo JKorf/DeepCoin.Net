@@ -125,7 +125,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         public async Task<WebCallResult<DeepCoinCancellationResult>> CancelOrdersAsync(IEnumerable<string> orderIds, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
-            parameters.Add("OrderSysIDs", orderIds);
+            parameters.Add("OrderSysIDs", orderIds.ToArray());
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/batch-cancel-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinCancellationResult>(request, parameters, ct).ConfigureAwait(false);
             return result;
@@ -180,7 +180,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.Add("instId", symbol);
             parameters.Add("ordId", orderId);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/orderByID", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinOrder>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
             if (!result)
                 return result.As<DeepCoinOrder>(default);
 
@@ -202,7 +202,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.Add("instId", symbol);
             parameters.Add("ordId", orderId);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/finishOrderByID", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<DeepCoinOrder>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
             if (!result)
                 return result.As<DeepCoinOrder>(default);
 

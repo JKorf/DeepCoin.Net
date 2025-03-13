@@ -53,7 +53,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
-            => new DeepCoinAuthenticationProvider((DeepCoinApiCredentials)credentials);
+            => new DeepCoinAuthenticationProvider(credentials);
 
         internal Task<WebCallResult> SendAsync(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
             => SendToAddressAsync(BaseAddress, definition, parameters, cancellationToken, weight);
