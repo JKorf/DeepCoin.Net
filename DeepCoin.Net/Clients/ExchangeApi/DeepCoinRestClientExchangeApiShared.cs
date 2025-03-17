@@ -464,7 +464,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             // Get next token
             FromIdToken? nextToken = null;
             if (orders.Data.Any())
-                nextToken = new FromIdToken(orders.Data.Min(o => o.OrderId));
+                nextToken = new FromIdToken(orders.Data.Min(o => o.OrderId)!);
 
             return orders.AsExchangeResult<SharedSpotOrder[]>(Exchange, TradingMode.Spot, orders.Data.Select(x => new SharedSpotOrder(
                 ExchangeSymbolCache.ParseSymbol(_topicSpotId, x.Symbol), 
@@ -881,7 +881,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             // Get next token
             FromIdToken? nextToken = null;
             if (orders.Data.Any())
-                nextToken = new FromIdToken(orders.Data.Min(o => o.OrderId));
+                nextToken = new FromIdToken(orders.Data.Min(o => o.OrderId)!);
 
             return orders.AsExchangeResult<SharedFuturesOrder[]>(Exchange, request.Symbol.TradingMode, orders.Data.Select(x => new SharedFuturesOrder(
                 ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol), 
