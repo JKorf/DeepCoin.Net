@@ -137,11 +137,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                             AveragePrice = x.AverageFillPrice,
                             OrderPrice = x.OrderPrice,
                             TimeInForce = x.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
-                            Quantity = x.Quantity,
-                            QuantityFilled = x.QuantityFilled,
+                            OrderQuantity = new SharedOrderQuantity(contractQuantity: x.Quantity),
+                            QuantityFilled = new SharedOrderQuantity(quoteAssetQuantity: x.Turnover, contractQuantity: x.QuantityFilled),
                             UpdateTime = x.UpdateTime,
                             Leverage = x.Leverage,
-                            QuoteQuantityFilled = x.Turnover,
                             PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                         }
                     ).ToArray()));
@@ -187,9 +186,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                             AveragePrice = x.AverageFillPrice,
                             OrderPrice = x.OrderPrice,
                             TimeInForce = x.OrderType == OrderType.ImmediateOrCancel ? SharedTimeInForce.ImmediateOrCancel : null,
-                            Quantity = x.Quantity,
-                            QuantityFilled = x.QuantityFilled,
-                            QuoteQuantityFilled = x.Turnover,
+                            OrderQuantity = new SharedOrderQuantity(x.Quantity),
+                            QuantityFilled = new SharedOrderQuantity(x.QuantityFilled, x.Turnover),
                             UpdateTime = x.UpdateTime,
                             
                         }
