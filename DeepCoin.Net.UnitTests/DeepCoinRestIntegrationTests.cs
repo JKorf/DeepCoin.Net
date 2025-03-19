@@ -8,6 +8,7 @@ using DeepCoin.Net.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects;
 using CryptoExchange.Net.Authentication;
+using DeepCoin.Net.SymbolOrderBooks;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -73,6 +74,12 @@ namespace DeepCoin.Net.UnitTests
             await RunAndCheckResult(client => client.ExchangeApi.Trading.GetUserTradesAsync(Enums.SymbolType.Spot, default, default, default, default, default, default, default, default), true);
             await RunAndCheckResult(client => client.ExchangeApi.Trading.GetOpenOrdersAsync("ETH-USDT", default, default, default, default), true);
             await RunAndCheckResult(client => client.ExchangeApi.Trading.GetClosedOrdersAsync(Enums.SymbolType.Spot, "ETH-USDT", default, default, default, default, default, default, default), true);
+        }
+
+        [Test]
+        public async Task TestOrderBooks()
+        {
+            await TestOrderBook(new DeepCoinSymbolOrderBook("ETH-USDT"));
         }
     }
 }

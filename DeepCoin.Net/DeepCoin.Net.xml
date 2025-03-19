@@ -3367,6 +3367,11 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
+        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
         <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketResponse">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.

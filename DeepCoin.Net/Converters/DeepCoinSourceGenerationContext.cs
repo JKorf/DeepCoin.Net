@@ -8,6 +8,8 @@ using System.Text.Json.Serialization;
 namespace CryptoCom.Net.Converters
 {
     [JsonSerializable(typeof(string[]))]
+    [JsonSerializable(typeof(SocketRequest))]
+
     // End manual defined attributes
 
     [JsonSerializable(typeof(DeepCoinResponse<DeepCoinBalance[]>))]
