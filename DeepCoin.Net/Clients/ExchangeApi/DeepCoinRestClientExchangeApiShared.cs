@@ -728,7 +728,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         string IFuturesOrderRestClient.GenerateClientOrderId() => ExchangeHelpers.RandomString(32);
 
-        PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions()
+        PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(false)
         {
             RequiredOptionalParameters = new List<ParameterDescription>
             {
@@ -753,6 +753,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
             var positionType = ExchangeParameters.GetValue<PositionType?>(request.ExchangeParameters, Exchange, "PositionType");
+
+#warning what does the tpTriggerPx/sl parameters do?
 
             var result = await Trading.PlaceOrderAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
