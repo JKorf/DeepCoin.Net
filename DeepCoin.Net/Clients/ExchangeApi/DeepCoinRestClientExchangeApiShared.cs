@@ -289,6 +289,31 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #endregion
 
+        #region Book Ticker client
+
+        EndpointOptions<GetBookTickerRequest> IBookTickerRestClient.GetBookTickerOptions { get; } = new EndpointOptions<GetBookTickerRequest>(false);
+        async Task<ExchangeWebResult<SharedBookTicker>> IBookTickerRestClient.GetBookTickerAsync(GetBookTickerRequest request, CancellationToken ct)
+        {
+            var validationError = ((IBookTickerRestClient)this).GetBookTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedBookTicker>(Exchange, validationError);
+
+            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var resultTicker = await ExchangeData.GetOrderBookAsync(symbol, 1, ct: ct).ConfigureAwait(false);
+            if (!resultTicker)
+                return resultTicker.AsExchangeResult<SharedBookTicker>(Exchange, null, default);
+
+            return resultTicker.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedBookTicker(
+                ExchangeSymbolCache.ParseSymbol(request.Symbol.TradingMode == TradingMode.Spot ? _topicSpotId : _topicFuturesId, symbol),
+                symbol,
+                resultTicker.Data.Asks[0].Price,
+                resultTicker.Data.Asks[0].Quantity,
+                resultTicker.Data.Bids[0].Price,
+                resultTicker.Data.Bids[0].Quantity));
+        }
+
+        #endregion
+
         #region Spot Symbol client
         EndpointOptions<GetSymbolsRequest> ISpotSymbolRestClient.GetSpotSymbolsOptions { get; } = new EndpointOptions<GetSymbolsRequest>(false);
 
@@ -394,7 +419,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 QuantityFilled = new SharedOrderQuantity(order.Data.QuantityFilled),                
                 UpdateTime = order.Data.UpdateTime,
                 Fee = order.Data.Fee,
-                FeeAsset = order.Data.FeeAsset,
+                FeeAsset = order.Data.FeeAsset
             });
         }
 
@@ -810,7 +835,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 Fee = order.Data.Fee,
                 FeeAsset = order.Data.FeeAsset,
                 Leverage = order.Data.Leverage,
-                PositionSide = order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long: SharedPositionSide.Short
+                PositionSide = order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long: SharedPositionSide.Short,
+                TakeProfitPrice = order.Data.TpTriggerPrice,
+                StopLossPrice = order.Data.SlTriggerPrice
             });
         }
 
@@ -851,7 +878,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 Fee = x.Fee,
                 FeeAsset = x.FeeAsset,
                 Leverage = x.Leverage,
-                PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short
+                PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
+                TakeProfitPrice = x.TpTriggerPrice,
+                StopLossPrice = x.SlTriggerPrice
             }).ToArray());
         }
 
@@ -900,7 +929,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 Fee = x.Fee,
                 FeeAsset = x.FeeAsset,
                 Leverage = x.Leverage,
-                PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short
+                PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
+                TakeProfitPrice = x.TpTriggerPrice,
+                StopLossPrice = x.SlTriggerPrice
             }).ToArray(), nextToken);
         }
 
