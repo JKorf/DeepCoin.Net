@@ -753,7 +753,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         string IFuturesOrderRestClient.GenerateClientOrderId() => ExchangeHelpers.RandomString(32);
 
-        PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(false)
+        PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(true)
         {
             RequiredOptionalParameters = new List<ParameterDescription>
             {
@@ -779,8 +779,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             var positionType = ExchangeParameters.GetValue<PositionType?>(request.ExchangeParameters, Exchange, "PositionType");
 
-#warning what does the tpTriggerPx/sl parameters do?
-
             var result = await Trading.PlaceOrderAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
                 request.Side == SharedOrderSide.Buy ? Enums.OrderSide.Buy : Enums.OrderSide.Sell,
@@ -791,6 +789,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 tradeMode: request.MarginMode == null ? null: request.MarginMode == SharedMarginMode.Isolated ? TradeMode.Isolated : TradeMode.Cross,
                 positionSide: request.PositionSide == null? null: request.PositionSide == SharedPositionSide.Long? PositionSide.Long: PositionSide.Short,
                 positionType: positionType ?? PositionType.Merge,
+                tpTriggerPrice: request.TakeProfitPrice,
+                slTriggerPrice: request.StopLossPrice,
                 ct: ct).ConfigureAwait(false);
 
             if (!result)
@@ -813,7 +813,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 order = await Trading.GetClosedOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
 
                 if (!order)
-                    return order.AsExchangeResult<SharedFuturesOrder>(Exchange, null, default);
+                {
+                    // NOTE: Market orders seem to return the incorrect order id when placing the order
+                    // Place order endpoint returns order id X while the actually order id which can be retrieved is X + 1
+                    order = await Trading.GetClosedOrderAsync(symbol, (long.Parse(request.OrderId) + 1).ToString(), ct: ct).ConfigureAwait(false);
+                    if (!order)
+                        return order.AsExchangeResult<SharedFuturesOrder>(Exchange, null, default);
+                }
             }
 
             return order.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedFuturesOrder(

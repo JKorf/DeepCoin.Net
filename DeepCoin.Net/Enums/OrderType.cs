@@ -13,12 +13,12 @@ namespace DeepCoin.Net.Enums
         /// <summary>
         /// Limit order
         /// </summary>
-        [Map("limit")]
+        [Map("limit", "1")]
         Limit,
         /// <summary>
         /// Market order
         /// </summary>
-        [Map("market")]
+        [Map("market", "0")]
         Market,
         /// <summary>
         /// Post only order
