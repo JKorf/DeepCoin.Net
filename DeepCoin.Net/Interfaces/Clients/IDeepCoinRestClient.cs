@@ -9,10 +9,11 @@ namespace DeepCoin.Net.Interfaces.Clients
     /// Client for accessing the DeepCoin Rest API. 
     /// </summary>
     public interface IDeepCoinRestClient : IRestClient
-    {        
+    {
         /// <summary>
         /// Exchange API endpoints
         /// </summary>
+        /// <see cref="IDeepCoinRestClientExchangeApi"/>
         public IDeepCoinRestClientExchangeApi ExchangeApi { get; }
 
         /// <summary>

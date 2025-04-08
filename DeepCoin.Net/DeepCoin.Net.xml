@@ -793,16 +793,19 @@
             <summary>
             Endpoints related to account settings, info or actions
             </summary>
+            <see cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount"/>
         </member>
         <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.ExchangeData">
             <summary>
             Endpoints related to retrieving market and system data
             </summary>
+            <see cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData"/>
         </member>
         <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.Trading">
             <summary>
             Endpoints related to orders and trades
             </summary>
+            <see cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading"/>
         </member>
         <member name="P:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi.SharedClient">
             <summary>
@@ -1168,6 +1171,7 @@
             <summary>
             Exchange API endpoints
             </summary>
+            <see cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi"/>
         </member>
         <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
             <summary>
@@ -1190,6 +1194,7 @@
             <summary>
             Exchange API endpoints
             </summary>
+            <see cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi"/>
         </member>
         <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
             <summary>

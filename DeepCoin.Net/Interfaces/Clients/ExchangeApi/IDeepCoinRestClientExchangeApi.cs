@@ -11,16 +11,19 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <summary>
         /// Endpoints related to account settings, info or actions
         /// </summary>
+        /// <see cref="IDeepCoinRestClientExchangeApiAccount"/>
         public IDeepCoinRestClientExchangeApiAccount Account { get; }
 
         /// <summary>
         /// Endpoints related to retrieving market and system data
         /// </summary>
+        /// <see cref="IDeepCoinRestClientExchangeApiExchangeData"/>
         public IDeepCoinRestClientExchangeApiExchangeData ExchangeData { get; }
 
         /// <summary>
         /// Endpoints related to orders and trades
         /// </summary>
+        /// <see cref="IDeepCoinRestClientExchangeApiTrading"/>
         public IDeepCoinRestClientExchangeApiTrading Trading { get; }
 
         /// <summary>

@@ -12,6 +12,7 @@ namespace DeepCoin.Net.Interfaces.Clients
         /// <summary>
         /// Exchange API endpoints
         /// </summary>
+        /// <see cref="IDeepCoinSocketClientExchangeApi"/>
         public IDeepCoinSocketClientExchangeApi ExchangeApi { get; }
 
         /// <summary>
