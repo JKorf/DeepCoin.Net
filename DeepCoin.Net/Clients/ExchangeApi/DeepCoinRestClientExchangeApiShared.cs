@@ -685,7 +685,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!resultTicker)
                 return resultTicker.AsExchangeResult<SharedFuturesTicker>(Exchange, null, default);
 
-            var symbol = resultTicker.Data.SingleOrDefault(x => x.Symbol == request.Symbol.GetSymbol(FormatSymbol));
+            var symbol = resultTicker.Data.FirstOrDefault(x => x.Symbol == request.Symbol.GetSymbol(FormatSymbol));
             if (symbol == null)
                 return resultTicker.AsExchangeError<SharedFuturesTicker>(Exchange, new ServerError("Symbol not found"));
 

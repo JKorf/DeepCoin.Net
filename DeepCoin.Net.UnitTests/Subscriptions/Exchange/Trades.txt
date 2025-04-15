@@ -1,0 +1,25 @@
+> { "SendTopicAction": { "Action": "1", "FilterValue": "DeepCoin_ETHUSDT", "LocalNo": "|1|", "ResumeNo": -2, "TopicID": "2" }}
+< {"action":"RecvTopicAction","requestNo":0,"errorCode":0,"errorMsg":"Success","result":[{"table":"TopicAction","data":{"Action":"1","LocalNo":|1|,"TopicID":"2","FilterValue":"DeepCoin_ETHUSDT","ResumeNo":0,"Token":"","LocalID":""}}]}
+= 
+{
+  "action": "PushMarketTrade",
+  "localNo": 9,
+  "index": "DeepCoin_ETHUSDT",
+  "seq": 701702,
+  "bNo": 1,
+  "changeType": "3",
+  "result": [
+    {
+      "table": "MarketTrade",
+      "data": {
+        "TradeID": "1000266401528748",
+        "ExchangeID": "DeepCoin",
+        "InstrumentID": "ETHUSDT",
+        "Direction": "0",
+        "Price": 29419.7,
+        "Volume": 30.0,
+        "TradeTime": 1691991787
+      }
+    }
+  ]
+}
