@@ -14,7 +14,7 @@ namespace DeepCoin.Net
 {
     internal class DeepCoinAuthenticationProvider : AuthenticationProvider
     {
-        private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange.SerializerContext));
+        private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
         public DeepCoinAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
