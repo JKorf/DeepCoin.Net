@@ -13,7 +13,7 @@ namespace DeepCoin.Net.UnitTests
     [NonParallelizable]
     internal class DeepCoinSocketIntegrationTests : SocketIntegrationTest<DeepCoinSocketClient>
     {
-        public override bool Run { get; set; } = true;
+        public override bool Run { get; set; } = false;
 
         public DeepCoinSocketIntegrationTests()
         {

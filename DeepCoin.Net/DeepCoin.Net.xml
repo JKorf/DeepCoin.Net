@@ -419,16 +419,6 @@
             Inverse contract
             </summary>
         </member>
-        <member name="T:DeepCoin.Net.Enums.DeepCoinEnum">
-            <summary>
-            XXX
-            </summary>
-        </member>
-        <member name="F:DeepCoin.Net.Enums.DeepCoinEnum.XXX">
-            <summary>
-            XXX
-            </summary>
-        </member>
         <member name="T:DeepCoin.Net.Enums.DepositStatus">
             <summary>
             Deposit status
