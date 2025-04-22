@@ -135,6 +135,24 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.0.0-beta1 - 22 Apr 2025
+    * Updated CryptoExchange.Net to version 9.0.0-beta1, see https://github.com/JKorf/CryptoExchange.Net/releases/
+    * Added support for Native AOT compilation
+    * Added RateLimitUpdated event
+    * Added SharedSymbol response property to all Shared interfaces response models returning a symbol name
+    * Added GenerateClientOrderId method to ExchangeApi Shared clients
+    * Added IBookTickerRestClient implementation to ExchangeApi Shared client
+    * Added takeProfitPrice, stopLossPrice support to ExchangeApi Shared PlaceFuturesOrderAsync
+    * Added TakeProfitPrice, StopLossPrice properties to SharedFuturesOrder model
+    * Added MaxLongLeverage, MaxShortLeverage to SharedFuturesSymbol model
+    * Added OptionalExchangeParameters and Supported properties to EndpointOptions
+    * Refactored Shared clients quantity parameters and responses to use SharedQuantity
+    * Replaced DeepCoinApiCredentials with ApiCredentials
+    * Updated all IEnumerable response and model types to array response types
+    * Removed Newtonsoft.Json dependency
+    * Fixed parsing of order types
+    * Fixed some typos
+
 * Version 1.0.5 - 06 Mar 2025
     * Fixed restClient.ExchangeApi.Account.KeepAliveUserStreamAsync endpoint
 
