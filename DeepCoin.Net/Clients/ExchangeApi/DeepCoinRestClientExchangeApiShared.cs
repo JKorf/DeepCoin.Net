@@ -39,7 +39,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<SharedBalance[]>(Exchange, null, default);
 
-            return result.AsExchangeResult<SharedBalance[]>(Exchange, TradingMode.Spot, result.Data.Select(x => new SharedBalance(x.Asset, x.AvailableBalance, x.Balance)).ToArray());
+            return result.AsExchangeResult<SharedBalance[]>(Exchange, type == SymbolType.Spot ? [TradingMode.Spot] : SupportedTradingModes.Where(x => x != TradingMode.Spot).ToArray(), result.Data.Select(x => new SharedBalance(x.Asset, x.AvailableBalance, x.Balance)).ToArray());
         }
 
         #endregion
@@ -167,7 +167,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<string>(Exchange, null, default);
 
-            return result.AsExchangeResult(Exchange, TradingMode.Spot, result.Data.ListenKey);
+            return result.AsExchangeResult(Exchange, SupportedTradingModes, result.Data.ListenKey);
         }
         EndpointOptions<KeepAliveListenKeyRequest> IListenKeyRestClient.KeepAliveOptions { get; } = new EndpointOptions<KeepAliveListenKeyRequest>(true);
         async Task<ExchangeWebResult<string>> IListenKeyRestClient.KeepAliveListenKeyAsync(KeepAliveListenKeyRequest request, CancellationToken ct)
@@ -181,7 +181,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<string>(Exchange, null, default);
 
-            return result.AsExchangeResult(Exchange, TradingMode.Spot, request.ListenKey);
+            return result.AsExchangeResult(Exchange, SupportedTradingModes, request.ListenKey);
         }
 
         EndpointOptions<StopListenKeyRequest> IListenKeyRestClient.StopOptions { get; } = new EndpointOptions<StopListenKeyRequest>(true);
@@ -703,7 +703,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<SharedFuturesTicker[]>(Exchange, null, default);
 
-            return result.AsExchangeResult<SharedFuturesTicker[]>(Exchange, TradingMode.Spot, result.Data.Select(x => new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))).ToArray());
+            return result.AsExchangeResult<SharedFuturesTicker[]>(Exchange, SupportedTradingModes.Where(x => x != TradingMode.Spot).ToArray(), result.Data.Select(x => new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))).ToArray());
         }
 
         #endregion
@@ -721,7 +721,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<SharedFuturesSymbol[]>(Exchange, null, default);
 
-            var response = result.AsExchangeResult<SharedFuturesSymbol[]>(Exchange, TradingMode.Spot, result.Data.Select(s => 
+            var response = result.AsExchangeResult<SharedFuturesSymbol[]>(Exchange, SupportedTradingModes.Where(x => x != TradingMode.Spot).ToArray(), result.Data.Select(s => 
             new SharedFuturesSymbol(s.QuoteAsset.Equals("USD") ? TradingMode.PerpetualInverse : TradingMode.PerpetualLinear, s.BaseAsset, s.QuoteAsset, s.Symbol, s.Status == Enums.SymbolStatus.Live)
             {
                 MaxTradeQuantity = Math.Min(s.MaxLimitQuantity, s.MaxMarketQuantity),
@@ -796,7 +796,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<SharedId>(Exchange, null, default);
 
-            return result.AsExchangeResult(Exchange, TradingMode.Spot, new SharedId(result.Data.OrderId.ToString()));
+            return result.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedId(result.Data.OrderId.ToString()));
         }
 
         EndpointOptions<GetOrderRequest> IFuturesOrderRestClient.GetFuturesOrderOptions { get; } = new EndpointOptions<GetOrderRequest>(true);
@@ -956,7 +956,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!orders)
                 return orders.AsExchangeResult<SharedUserTrade[]>(Exchange, null, default);
 
-            return orders.AsExchangeResult<SharedUserTrade[]>(Exchange, TradingMode.Spot, orders.Data.Select(x => new SharedUserTrade(
+            return orders.AsExchangeResult<SharedUserTrade[]>(Exchange, request.Symbol.TradingMode, orders.Data.Select(x => new SharedUserTrade(
                 ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol), 
                 x.Symbol,
                 x.OrderId.ToString(),
