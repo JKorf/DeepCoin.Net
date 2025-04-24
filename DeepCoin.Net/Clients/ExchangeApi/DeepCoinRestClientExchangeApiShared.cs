@@ -272,7 +272,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             return result.AsExchangeResult(Exchange, TradingMode.Spot, new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, symbol.Symbol), symbol.Symbol, symbol.LastPrice, symbol.HighPrice, symbol.LowPrice, symbol.Volume, symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3))
             {
-                QuoteVolume = symbol.QuoteVolume
+                // Value is incorrect from the API
+                // QuoteVolume = symbol.QuoteVolume
             });
         }
 
@@ -289,7 +290,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             return result.AsExchangeResult<SharedSpotTicker[]>(Exchange, TradingMode.Spot, result.Data.Select(x => new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))
             {
-                QuoteVolume = x.QuoteVolume
+                // Value is incorrect from the API
+                // QuoteVolume = symbol.QuoteVolume
             }).ToArray());
         }
 
