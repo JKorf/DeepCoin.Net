@@ -49,6 +49,12 @@ namespace DeepCoin.Net
          };
 
         /// <summary>
+        /// Available environment names
+        /// </summary>
+        /// <returns></returns>
+        public static string[] All => [Live.Name];
+
+        /// <summary>
         /// Live environment
         /// </summary>
         public static DeepCoinEnvironment Live { get; }

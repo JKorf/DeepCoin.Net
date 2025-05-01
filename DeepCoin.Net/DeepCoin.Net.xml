@@ -255,6 +255,12 @@
             Get the DeepCoin environment by name
             </summary>
         </member>
+        <member name="P:DeepCoin.Net.DeepCoinEnvironment.All">
+            <summary>
+            Available environment names
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:DeepCoin.Net.DeepCoinEnvironment.Live">
             <summary>
             Live environment
