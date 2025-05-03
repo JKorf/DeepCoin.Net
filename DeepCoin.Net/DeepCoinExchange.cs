@@ -30,7 +30,7 @@ namespace DeepCoin.Net
         /// <summary>
         /// Url to exchange image
         /// </summary>
-        public static string ImageUrl { get; } = "https://github.com/JKorf/DeepCoin.Net/blob/4155bac6d2050a42479659c4cc3031726376a0cf/DeepCoin.Net/Icon/icon.png";
+        public static string ImageUrl { get; } = "https://raw.githubusercontent.com/JKorf/DeepCoin.Net/master/DeepCoin.Net/Icon/icon.png";
 
         /// <summary>
         /// Url to the main website
