@@ -9,6 +9,7 @@ using System.Text;
 using CryptoExchange.Net.SharedApis;
 using System.Text.Json.Serialization;
 using CryptoCom.Net.Converters;
+using CryptoExchange.Net.Converters;
 
 namespace DeepCoin.Net
 {
@@ -49,7 +50,7 @@ namespace DeepCoin.Net
         /// </summary>
         public static ExchangeType Type { get; } = ExchangeType.CEX;
 
-        internal static JsonSerializerContext _serializerContext = new DeepCoinSourceGenerationContext();
+        internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<DeepCoinSourceGenerationContext>();
 
         /// <summary>
         /// Format a base and quote asset to an DeepCoin recognized symbol 
