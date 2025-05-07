@@ -173,11 +173,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
                 onOrderMessage: update =>
                 {
-                    var futuresOrders = update.Data.Where(x => x.Symbol.Contains("/"));
-                    if (!futuresOrders.Any())
+                    var spotOrders = update.Data.Where(x => x.Symbol.Contains("/"));
+                    if (!spotOrders.Any())
                         return;
 
-                    handler(update.AsExchangeEvent<SharedSpotOrder[]>(Exchange, futuresOrders.Select(x =>
+                    handler(update.AsExchangeEvent<SharedSpotOrder[]>(Exchange, spotOrders.Select(x =>
                         new SharedSpotOrder(
                             ExchangeSymbolCache.ParseSymbol(_topicSpotId, x.Symbol),
                             x.Symbol,

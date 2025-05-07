@@ -343,7 +343,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 QuantityStep = s.LotSize
             }).ToArray());
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicSpotId, response.Data);
+            var symbolInfo = response.Data.Concat(response.Data.Select(x => new SharedSpotSymbol(x.BaseAsset, x.QuoteAsset, x.BaseAsset + "/" + x.QuoteAsset, x.Trading)));
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicSpotId, symbolInfo.ToArray());
             return response;
         }
 
@@ -356,8 +357,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         SharedOrderType[] ISpotOrderRestClient.SpotSupportedOrderTypes { get; } = new[] { SharedOrderType.Limit, SharedOrderType.Market, SharedOrderType.LimitMaker };
         SharedTimeInForce[] ISpotOrderRestClient.SpotSupportedTimeInForce { get; } = new[] { SharedTimeInForce.GoodTillCanceled, SharedTimeInForce.ImmediateOrCancel };
         SharedQuantitySupport ISpotOrderRestClient.SpotSupportedOrderQuantity { get; } = new SharedQuantitySupport(
-                SharedQuantityType.BaseAndQuoteAsset,
-                SharedQuantityType.BaseAndQuoteAsset,
+                SharedQuantityType.BaseAsset,
+                SharedQuantityType.BaseAsset,
                 SharedQuantityType.BaseAndQuoteAsset,
                 SharedQuantityType.BaseAndQuoteAsset);
 
@@ -383,7 +384,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 request.OrderType == SharedOrderType.Limit ? (request.TimeInForce == SharedTimeInForce.ImmediateOrCancel ? Enums.OrderType.ImmediateOrCancel : Enums.OrderType.Limit) : request.OrderType == SharedOrderType.Market ? Enums.OrderType.Market : Enums.OrderType.PostOnly,
                 quantity: request.Quantity?.QuantityInBaseAsset ?? request.Quantity?.QuantityInQuoteAsset ?? 0,
                 price: request.Price,
-                quantityType: request.Quantity?.QuantityInQuoteAsset != null ? Enums.QuantityType.BaseAsset : Enums.QuantityType.QuoteAsset,
+                quantityType: request.Quantity?.QuantityInBaseAsset != null ? Enums.QuantityType.BaseAsset : Enums.QuantityType.QuoteAsset,
                 clientOrderId: request.ClientOrderId,
                 ct: ct).ConfigureAwait(false);
 
