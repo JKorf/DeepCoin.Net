@@ -11,7 +11,7 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Kline info
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter<DeepCoinKline, DeepCoinSourceGenerationContext>))]
+    [JsonConverter(typeof(ArrayConverter<DeepCoinKline>))]
     [SerializationModel]
     public record DeepCoinKline
     {

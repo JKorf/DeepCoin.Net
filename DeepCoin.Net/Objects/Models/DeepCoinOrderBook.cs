@@ -30,7 +30,7 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Order book entry
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter<DeepCoinOrderBookEntry, DeepCoinSourceGenerationContext>))]
+    [JsonConverter(typeof(ArrayConverter<DeepCoinOrderBookEntry>))]
     [SerializationModel]
     public record DeepCoinOrderBookEntry : ISymbolOrderBookEntry
     {
