@@ -21,7 +21,8 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         ILeverageRestClient,
         IFuturesTickerRestClient,
         IFuturesSymbolRestClient,
-        IFuturesOrderRestClient
+        IFuturesOrderRestClient,
+        IBookTickerRestClient
     {
     }
 }

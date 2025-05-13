@@ -90,7 +90,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             {
                 // Cache this incomplete update, we need the next message to complete it
                 _incompleteUpdate = update;
-                return new CallResult(null);
+                return CallResult.SuccessResult;
             }
 
             if (_incompleteUpdate != null)
@@ -119,7 +119,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             }
 
             _handler.Invoke(message.As(update, data.Action, data.Result.First().Data.Symbol, data.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

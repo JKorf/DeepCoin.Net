@@ -12,12 +12,14 @@ using DeepCoin.Net.Objects;
 
 namespace DeepCoin.Net
 {
-    internal class DeepCoinAuthenticationProvider : AuthenticationProvider<DeepCoinApiCredentials>
+    internal class DeepCoinAuthenticationProvider : AuthenticationProvider
     {
-        private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer();
+        private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
-        public DeepCoinAuthenticationProvider(DeepCoinApiCredentials credentials) : base(credentials)
+        public DeepCoinAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
+            if (string.IsNullOrEmpty(credentials.Pass))
+                throw new ArgumentNullException(nameof(ApiCredentials.Pass), "Passphrase is required for DeepCoin authentication");
         }
 
         public override void AuthenticateRequest(
@@ -47,7 +49,7 @@ namespace DeepCoin.Net
             headers.Add("DC-ACCESS-KEY", ApiKey);
             headers.Add("DC-ACCESS-SIGN", sign);
             headers.Add("DC-ACCESS-TIMESTAMP", timestampString);
-            headers.Add("DC-ACCESS-PASSPHRASE", _credentials.PassPhrase);
+            headers.Add("DC-ACCESS-PASSPHRASE", _credentials.Pass!);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CryptoExchange.Net.Converters;
+using CryptoCom.Net.Converters;
+using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using System;
@@ -11,6 +12,7 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Order book
     /// </summary>
+    [SerializationModel]
     public record DeepCoinOrderBook
     {
         /// <summary>
@@ -28,7 +30,8 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Order book entry
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter))]
+    [JsonConverter(typeof(ArrayConverter<DeepCoinOrderBookEntry>))]
+    [SerializationModel]
     public record DeepCoinOrderBookEntry : ISymbolOrderBookEntry
     {
         /// <summary>

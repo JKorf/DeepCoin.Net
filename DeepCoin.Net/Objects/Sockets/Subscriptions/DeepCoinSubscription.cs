@@ -18,7 +18,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public override HashSet<string> ListenerIdentifiers { get; set; }
 
-        private readonly Action<DataEvent<IEnumerable<TableData<T>>>> _handler;
+        private readonly Action<DataEvent<TableData<T>[]>> _handler;
         private readonly string _pushAction;
         private readonly string _filter;
         private readonly string _topic;
@@ -34,7 +34,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <summary>
         /// ctor
         /// </summary>
-        public DeepCoinSubscription(ILogger logger, string pushAction, string table, string filter, string topic, Action<DataEvent<IEnumerable<TableData<T>>>> handler, bool auth) : base(logger, auth)
+        public DeepCoinSubscription(ILogger logger, string pushAction, string table, string filter, string topic, Action<DataEvent<TableData<T>[]>> handler, bool auth) : base(logger, auth)
         {
             _handler = handler;
             _pushAction = pushAction;
@@ -76,8 +76,8 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
         {
             var data = (SocketUpdate<T>)message.Data!;
-            _handler.Invoke(message.As(data.Result.Where(x => x.Table.Equals(_table)), data.Action, null, SocketUpdateType.Update));
-            return new CallResult(null);
+            _handler.Invoke(message.As(data.Result.Where(x => x.Table.Equals(_table)).ToArray(), data.Action, null, SocketUpdateType.Update));
+            return CallResult.SuccessResult;
         }
     }
 }

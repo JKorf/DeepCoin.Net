@@ -10,6 +10,7 @@ using NUnit.Framework.Constraints;
 using DeepCoin.Net.Objects;
 using System.Linq;
 using System.Drawing;
+using CryptoExchange.Net.Authentication;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -22,9 +23,9 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new DeepCoinApiCredentials("123", "456", "789");
+                opts.ApiCredentials = new ApiCredentials("123", "456", "789");
             });
-            var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Account", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data", stjCompare: true);
+            var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Account", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetBalancesAsync(SymbolType.Spot), "GetBalances", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetBillsAsync(SymbolType.Spot), "GetBills", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.SetLeverageAsync("123", 0.1m, TradeMode.Cross, PositionType.Merge), "SetLeverage", nestedJsonProperty: "data");
@@ -40,9 +41,9 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new DeepCoinApiCredentials("123", "456", "789");
+                opts.ApiCredentials = new ApiCredentials("123", "456", "789");
             });
-            var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/ExchangeData", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data", stjCompare: true);
+            var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/ExchangeData", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetTickersAsync(Enums.SymbolType.Spot), "GetTickers", ignoreProperties: ["lastSz", "sodUtc0", "sodUtc8"]);
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetSymbolsAsync(SymbolType.Swap), "GetSymbols", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetKlinesAsync("123", KlineInterval.FiveMinutes), "GetKlines", nestedJsonProperty: "data");
@@ -56,9 +57,9 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new DeepCoinApiCredentials("123", "456", "789");
+                opts.ApiCredentials = new ApiCredentials("123", "456", "789");
             });
-            var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Trading", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data", stjCompare: true);
+            var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Trading", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetPositionsAsync(SymbolType.Swap), "GetPositions", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.PlaceOrderAsync("123", OrderSide.Buy, OrderType.Limit, 0.1m), "PlaceOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.EditOrderAsync("123"), "EditOrder", nestedJsonProperty: "data");

@@ -1,0 +1,30 @@
+> { "SendTopicAction": { "Action": "1", "FilterValue": "DeepCoin_ETHUSDT", "LocalNo": "|1|", "ResumeNo": -2, "TopicID": "11" }}
+< {"action":"RecvTopicAction","requestNo":0,"errorCode":0,"errorMsg":"Success","result":[{"table":"TopicAction","data":{"Action":"1","LocalNo":|1|,"TopicID":"11","FilterValue":"DeepCoin_ETHUSDT","ResumeNo":0,"Token":"","LocalID":""}}]}
+= 
+{
+  "action": "PushKLine",
+  "localNo": |1|,
+  "index": "DeepCoin_ETHUSDT_1m",
+  "seq": 325303,
+  "bNo": 1,
+  "changeType": "3",
+  "result": [
+    {
+      "table": "LastKLine",
+      "data": {
+        "ExchangeID": "DeepCoin",
+        "InstrumentID": "BTCUSDT",
+        "PeriodID": "1m",
+        "BeginTime": 1691992620,
+        "OpenPrice": 29437.2,
+        "ClosePrice": 29437.2,
+        "HighestPrice": 29437.2,
+        "LowestPrice": 29437.1,
+        "Volume": 2554.0,
+        "Turnover": 75182.5694,
+        "TimeZone": 57600,
+        "UpdateTime": 1691992641
+      }
+    }
+  ]
+}

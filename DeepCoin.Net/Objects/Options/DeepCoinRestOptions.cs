@@ -5,7 +5,7 @@ namespace DeepCoin.Net.Objects.Options
     /// <summary>
     /// Options for the DeepCoinRestClient
     /// </summary>
-    public class DeepCoinRestOptions : RestExchangeOptions<DeepCoinEnvironment, DeepCoinApiCredentials>
+    public class DeepCoinRestOptions : RestExchangeOptions<DeepCoinEnvironment>
     {
         /// <summary>
         /// Default options for new clients
@@ -22,20 +22,16 @@ namespace DeepCoin.Net.Objects.Options
         {
             Default?.Set(this);
         }
-
-        
-         /// <summary>
+                
+        /// <summary>
         /// Exchange API options
         /// </summary>
         public RestApiOptions ExchangeOptions { get; private set; } = new RestApiOptions();
 
-
         internal DeepCoinRestOptions Set(DeepCoinRestOptions targetOptions)
         {
-            targetOptions = base.Set<DeepCoinRestOptions>(targetOptions);
-            
+            targetOptions = base.Set<DeepCoinRestOptions>(targetOptions);            
             targetOptions.ExchangeOptions = ExchangeOptions.Set(targetOptions.ExchangeOptions);
-
             return targetOptions;
         }
     }

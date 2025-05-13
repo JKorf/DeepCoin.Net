@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CryptoExchange.Net.SharedApis;
+using System.Text.Json.Serialization;
+using CryptoCom.Net.Converters;
+using CryptoExchange.Net.Converters;
 
 namespace DeepCoin.Net
 {
@@ -28,7 +31,7 @@ namespace DeepCoin.Net
         /// <summary>
         /// Url to exchange image
         /// </summary>
-        public static string ImageUrl { get; } = "https://github.com/JKorf/DeepCoin.Net/blob/4155bac6d2050a42479659c4cc3031726376a0cf/DeepCoin.Net/Icon/icon.png";
+        public static string ImageUrl { get; } = "https://raw.githubusercontent.com/JKorf/DeepCoin.Net/master/DeepCoin.Net/Icon/icon.png";
 
         /// <summary>
         /// Url to the main website
@@ -46,6 +49,8 @@ namespace DeepCoin.Net
         /// Type of exchange
         /// </summary>
         public static ExchangeType Type { get; } = ExchangeType.CEX;
+
+        internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<DeepCoinSourceGenerationContext>();
 
         /// <summary>
         /// Format a base and quote asset to an DeepCoin recognized symbol 
@@ -95,6 +100,11 @@ namespace DeepCoin.Net
         /// </summary>
         public event Action<RateLimitEvent> RateLimitTriggered;
 
+        /// <summary>
+        /// Event when the rate limit is updated. Note that it's only updated when a request is send, so there are no specific updates when the current usage is decaying.
+        /// </summary>
+        public event Action<RateLimitUpdateEvent> RateLimitUpdated;
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         internal DeepCoinRateLimiters()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -106,6 +116,7 @@ namespace DeepCoin.Net
         {
             DeepCoin = new RateLimitGate("DeepCoin");
             DeepCoin.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
+            DeepCoin.RateLimitUpdated += (x) => RateLimitUpdated?.Invoke(x);
         }
 
         internal IRateLimitGate DeepCoin { get; private set; }

@@ -5,7 +5,7 @@ namespace DeepCoin.Net.Objects.Options
     /// <summary>
     /// Options for the DeepCoinSocketClient
     /// </summary>
-    public class DeepCoinSocketOptions : SocketExchangeOptions<DeepCoinEnvironment, DeepCoinApiCredentials>
+    public class DeepCoinSocketOptions : SocketExchangeOptions<DeepCoinEnvironment>
     {
         /// <summary>
         /// Default options for new clients
@@ -16,7 +16,6 @@ namespace DeepCoin.Net.Objects.Options
             SocketSubscriptionsCombineTarget = 10
         };
 
-
         /// <summary>
         /// ctor
         /// </summary>
@@ -25,20 +24,15 @@ namespace DeepCoin.Net.Objects.Options
             Default?.Set(this);
         }
 
-
-        
-         /// <summary>
+        /// <summary>
         /// Exchange API options
         /// </summary>
         public SocketApiOptions ExchangeOptions { get; private set; } = new SocketApiOptions();
 
-
         internal DeepCoinSocketOptions Set(DeepCoinSocketOptions targetOptions)
         {
-            targetOptions = base.Set<DeepCoinSocketOptions>(targetOptions);
-            
+            targetOptions = base.Set<DeepCoinSocketOptions>(targetOptions);            
             targetOptions.ExchangeOptions = ExchangeOptions.Set(targetOptions.ExchangeOptions);
-
             return targetOptions;
         }
     }

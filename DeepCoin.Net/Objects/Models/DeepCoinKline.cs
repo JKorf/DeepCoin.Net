@@ -1,4 +1,5 @@
-﻿using CryptoExchange.Net.Converters;
+using CryptoCom.Net.Converters;
+using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ namespace DeepCoin.Net.Objects.Models
     /// <summary>
     /// Kline info
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter))]
+    [JsonConverter(typeof(ArrayConverter<DeepCoinKline>))]
+    [SerializationModel]
     public record DeepCoinKline
     {
         /// <summary>
