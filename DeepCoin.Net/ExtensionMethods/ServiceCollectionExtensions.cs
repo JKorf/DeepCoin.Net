@@ -120,6 +120,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
             services.AddTransient<IDeepCoinOrderBookFactory, DeepCoinOrderBookFactory>();
             services.AddTransient<IDeepCoinTrackerFactory, DeepCoinTrackerFactory>();
+            services.AddSingleton<IDeepCoinUserClientProvider, DeepCoinUserClientProvider>(x =>
+            new DeepCoinUserClientProvider(
+                x.GetRequiredService<HttpClient>(),
+                x.GetRequiredService<ILoggerFactory>(),
+                x.GetRequiredService<IOptions<DeepCoinRestOptions>>(),
+                x.GetRequiredService<IOptions<DeepCoinSocketOptions>>()));
 
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IDeepCoinRestClient>().ExchangeApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IDeepCoinSocketClient>().ExchangeApi.SharedClient);

@@ -67,6 +67,29 @@
         <member name="M:DeepCoin.Net.Clients.DeepCoinSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
+        <member name="T:DeepCoin.Net.Clients.DeepCoinUserClientProvider">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.#ctor(System.Action{DeepCoin.Net.Objects.Options.DeepCoinOptions})">
+            <summary>
+            ctor
+            </summary>
+            <param name="optionsDelegate">Options to use for created clients</param>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Options.IOptions{DeepCoin.Net.Objects.Options.DeepCoinRestOptions},Microsoft.Extensions.Options.IOptions{DeepCoin.Net.Objects.Options.DeepCoinSocketOptions})">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.GetSocketClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
+            <inheritdoc />
+        </member>
         <member name="T:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi">
             <inheritdoc cref="T:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApi" />
         </member>
@@ -1202,6 +1225,35 @@
             Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.
             </summary>
             <param name="credentials">The credentials to set</param>
+        </member>
+        <member name="T:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider">
+            <summary>
+            Provider for clients with credentials for specific users
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
+            <summary>
+            Initialize a client for the specified user identifier. This can be used so to initialize a client for a user so ApiCredentials do not need to be passed later.
+            </summary>
+            <param name="userIdentifier">The identifier for the user</param>
+            <param name="credentials">The credentials for the user</param>
+            <param name="environment">The environment to use</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
+            <summary>
+            Get the Rest client for a specific user. In case the client does not exist yet it will be created and the <paramref name="credentials"/> should be provided, unless <see cref="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)" /> has been called prior for this user.
+            </summary>
+            <param name="userIdentifier">The identifier for user</param>
+            <param name="credentials">The credentials for the user. Required the first time a client is requested for this user unless <see cref="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)" /> has been called prior for this user.</param>
+            <param name="environment">The environment to use</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.GetSocketClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
+            <summary>
+            Get the Socket client for a specific user. In case the client does not exist yet it will be created and the <paramref name="credentials"/> should be provided, unless <see cref="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)" /> has been called prior for this user.
+            </summary>
+            <param name="userIdentifier">The identifier for user</param>
+            <param name="credentials">The credentials for the user. Required the first time a client is requested for this user unless <see cref="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)" /> has been called prior for this user.</param>
+            <param name="environment">The environment to use</param>
         </member>
         <member name="T:DeepCoin.Net.Interfaces.IDeepCoinOrderBookFactory">
             <summary>
