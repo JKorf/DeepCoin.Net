@@ -22,6 +22,7 @@ using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects.Sockets;
 using DeepCoin.Net.Enums;
 using System.Collections;
+using System.Net.WebSockets;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -67,7 +68,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
+        protected override IByteMessageAccessor CreateAccessor(WebSocketMessageType type) => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
@@ -178,7 +179,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public override string? GetListenerIdentifier(IMessageAccessor message)
         {
-            if (!message.IsJson)
+            if (!message.IsValid)
                 return "pong";
 
             var action = message.GetValue<string>(_actionPath);
