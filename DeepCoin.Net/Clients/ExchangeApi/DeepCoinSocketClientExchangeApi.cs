@@ -47,6 +47,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             base(logger, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
             KeepAliveInterval = TimeSpan.Zero;
+            ProcessUnparsableMessages = true;
 
             RegisterPeriodicQuery("ping",
                 TimeSpan.FromSeconds(30), 
