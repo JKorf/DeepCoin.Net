@@ -9,17 +9,15 @@ namespace DeepCoin.Net.Objects.Sockets
 {
     internal class DeepCoinQuery : Query<SocketResponse>
     {
-        public override HashSet<string> ListenerIdentifiers { get; set; }
-
         public DeepCoinQuery(SocketRequest request, bool authenticated, int weight = 1) : base(new Dictionary<string, object>
         {
             { "SendTopicAction", request }
         }, authenticated, weight)
         {
-            ListenerIdentifiers = new HashSet<string> { request.RequestId.ToString() };
+            MessageMatcher = MessageMatcher.Create<SocketResponse>(request.RequestId.ToString(), HandleMessage);
         }
 
-        public override CallResult<SocketResponse> HandleMessage(SocketConnection connection, DataEvent<SocketResponse> message)
+        public CallResult<SocketResponse> HandleMessage(SocketConnection connection, DataEvent<SocketResponse> message)
         {
             var result = message.Data;
             if (result.ErrorCode != 0)

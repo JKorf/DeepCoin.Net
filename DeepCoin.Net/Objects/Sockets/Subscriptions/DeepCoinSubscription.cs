@@ -15,21 +15,12 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
     /// <inheritdoc />
     internal class DeepCoinSubscription<T> : Subscription<SocketResponse, SocketResponse>
     {
-        /// <inheritdoc />
-        public override HashSet<string> ListenerIdentifiers { get; set; }
-
         private readonly Action<DataEvent<TableData<T>[]>> _handler;
         private readonly string _pushAction;
         private readonly string _filter;
         private readonly string _topic;
         private readonly string _table;
         private int _subId;
-
-        /// <inheritdoc />
-        public override Type? GetMessageType(IMessageAccessor message)
-        {
-            return typeof(SocketUpdate<T>);
-        }
 
         /// <summary>
         /// ctor
@@ -42,7 +33,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _topic = topic;
             _table = table;
 
-            ListenerIdentifiers = new HashSet<string>() { pushAction + filter, pushAction + "SwapU," + filter, pushAction + "Spot," + filter, pushAction + "Swap," + filter };
+            MessageMatcher = MessageMatcher.Create<SocketUpdate<T>>([pushAction + filter, pushAction + "SwapU," + filter, pushAction + "Spot," + filter, pushAction + "Swap," + filter], DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -73,10 +64,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<T>> message)
         {
-            var data = (SocketUpdate<T>)message.Data!;
-            _handler.Invoke(message.As(data.Result.Where(x => x.Table.Equals(_table)).ToArray(), data.Action, null, SocketUpdateType.Update));
+            _handler.Invoke(message.As(message.Data.Result.Where(x => x.Table.Equals(_table)).ToArray(), message.Data.Action, null, SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

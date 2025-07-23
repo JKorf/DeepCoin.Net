@@ -10,17 +10,10 @@ namespace DeepCoin.Net.Objects.Sockets
 {
     internal class DeepCoinPingQuery : Query<string>
     {
-        public override HashSet<string> ListenerIdentifiers { get; set; }
-
         public DeepCoinPingQuery() : base("ping", false, 1)
         {
-            ListenerIdentifiers = new HashSet<string> { "pong" };
+            MessageMatcher = MessageMatcher.Create<string>("pong");
             RequestTimeout = TimeSpan.FromSeconds(5);
-        }
-
-        public override CallResult<string> HandleMessage(SocketConnection connection, DataEvent<string> message)
-        {
-            return message.ToCallResult();
         }
     }
 }

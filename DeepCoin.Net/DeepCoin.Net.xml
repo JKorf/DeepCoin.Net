@@ -3070,12 +3070,6 @@
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription">
             <inheritdoc />
         </member>
-        <member name="P:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.ListenerIdentifiers">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Boolean)">
             <summary>
             ctor
@@ -3087,16 +3081,10 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry}})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1">
-            <inheritdoc />
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.ListenerIdentifiers">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.TableData{`0}[]}},System.Boolean)">
@@ -3110,16 +3098,10 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{`0}})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription">
-            <inheritdoc />
-        </member>
-        <member name="P:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.ListenerIdentifiers">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}})">
@@ -3133,7 +3115,7 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate}})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory">
