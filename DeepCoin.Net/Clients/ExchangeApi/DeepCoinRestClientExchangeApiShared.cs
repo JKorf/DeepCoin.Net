@@ -116,7 +116,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!Enum.IsDefined(typeof(Enums.KlineInterval), interval))
                 return new ExchangeWebResult<SharedKline[]>(Exchange, new ArgumentError("Interval not supported"));
 
-            var validationError = ((IKlineRestClient)this).GetKlinesOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IKlineRestClient)this).GetKlinesOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedKline[]>(Exchange, validationError);
 
@@ -130,7 +130,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             // Get data
             var result = await ExchangeData.GetKlinesAsync(
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 interval,
                 endTime,
                 limit,
@@ -195,12 +195,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         GetOrderBookOptions IOrderBookRestClient.GetOrderBookOptions { get; } = new GetOrderBookOptions(1, 400, false);
         async Task<ExchangeWebResult<SharedOrderBook>> IOrderBookRestClient.GetOrderBookAsync(GetOrderBookRequest request, CancellationToken ct)
         {
-            var validationError = ((IOrderBookRestClient)this).GetOrderBookOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IOrderBookRestClient)this).GetOrderBookOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedOrderBook>(Exchange, validationError);
 
             var result = await ExchangeData.GetOrderBookAsync(
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 depth: request.Limit,
                 ct: ct).ConfigureAwait(false);
             if (!result)
@@ -258,7 +258,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetTickerRequest> ISpotTickerRestClient.GetSpotTickerOptions { get; } = new EndpointOptions<GetTickerRequest>(false);
         async Task<ExchangeWebResult<SharedSpotTicker>> ISpotTickerRestClient.GetSpotTickerAsync(GetTickerRequest request, CancellationToken ct)
         {
-            var validationError = ((ISpotTickerRestClient)this).GetSpotTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ISpotTickerRestClient)this).GetSpotTickerOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedSpotTicker>(Exchange, validationError);
 
@@ -266,7 +266,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result)
                 return result.AsExchangeResult<SharedSpotTicker>(Exchange, null, default);
 
-            var symbol = result.Data.SingleOrDefault(x => x.Symbol == request.Symbol.GetSymbol(FormatSymbol));
+            var symbol = result.Data.SingleOrDefault(x => x.Symbol == request.Symbol!.GetSymbol(FormatSymbol));
             if (symbol == null)
                 return result.AsExchangeError<SharedSpotTicker>(Exchange, new ServerError("Symbol not found"));
 
@@ -302,11 +302,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetBookTickerRequest> IBookTickerRestClient.GetBookTickerOptions { get; } = new EndpointOptions<GetBookTickerRequest>(false);
         async Task<ExchangeWebResult<SharedBookTicker>> IBookTickerRestClient.GetBookTickerAsync(GetBookTickerRequest request, CancellationToken ct)
         {
-            var validationError = ((IBookTickerRestClient)this).GetBookTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IBookTickerRestClient)this).GetBookTickerOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedBookTicker>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var resultTicker = await ExchangeData.GetOrderBookAsync(symbol, 1, ct: ct).ConfigureAwait(false);
             if (!resultTicker)
                 return resultTicker.AsExchangeResult<SharedBookTicker>(Exchange, null, default);
@@ -370,7 +370,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var validationError = ((ISpotOrderRestClient)this).PlaceSpotOrderOptions.ValidateRequest(
                 Exchange,
                 request,
-                request.Symbol.TradingMode,
+                request.TradingMode,
                 SupportedTradingModes,
                 ((ISpotOrderRestClient)this).SpotSupportedOrderTypes,
                 ((ISpotOrderRestClient)this).SpotSupportedTimeInForce,
@@ -379,7 +379,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
             var result = await Trading.PlaceOrderAsync(
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 request.Side == SharedOrderSide.Buy ? Enums.OrderSide.Buy : Enums.OrderSide.Sell,
                 request.OrderType == SharedOrderType.Limit ? (request.TimeInForce == SharedTimeInForce.ImmediateOrCancel ? Enums.OrderType.ImmediateOrCancel : Enums.OrderType.Limit) : request.OrderType == SharedOrderType.Market ? Enums.OrderType.Market : Enums.OrderType.PostOnly,
                 quantity: request.Quantity?.QuantityInBaseAsset ?? request.Quantity?.QuantityInQuoteAsset ?? 0,
@@ -397,11 +397,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetOrderRequest> ISpotOrderRestClient.GetSpotOrderOptions { get; } = new EndpointOptions<GetOrderRequest>(true);
         async Task<ExchangeWebResult<SharedSpotOrder>> ISpotOrderRestClient.GetSpotOrderAsync(GetOrderRequest request, CancellationToken ct)
         {
-            var validationError = ((ISpotOrderRestClient)this).GetSpotOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ISpotOrderRestClient)this).GetSpotOrderOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedSpotOrder>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var order = await Trading.GetOpenOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
             if (!order) 
             {
@@ -475,7 +475,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         PaginatedEndpointOptions<GetClosedOrdersRequest> ISpotOrderRestClient.GetClosedSpotOrdersOptions { get; } = new PaginatedEndpointOptions<GetClosedOrdersRequest>(SharedPaginationSupport.Descending, false, 100, true);
         async Task<ExchangeWebResult<SharedSpotOrder[]>> ISpotOrderRestClient.GetClosedSpotOrdersAsync(GetClosedOrdersRequest request, INextPageToken? pageToken, CancellationToken ct)
         {
-            var validationError = ((ISpotOrderRestClient)this).GetClosedSpotOrdersOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ISpotOrderRestClient)this).GetClosedSpotOrdersOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedSpotOrder[]>(Exchange, validationError);
 
@@ -486,7 +486,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             // Get data
             var orders = await Trading.GetClosedOrdersAsync(SymbolType.Spot,
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 limit: request.Limit ?? 100,
                 beforeId: fromId,
                 ct: ct).ConfigureAwait(false);
@@ -522,13 +522,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetOrderTradesRequest> ISpotOrderRestClient.GetSpotOrderTradesOptions { get; } = new EndpointOptions<GetOrderTradesRequest>(true);
         async Task<ExchangeWebResult<SharedUserTrade[]>> ISpotOrderRestClient.GetSpotOrderTradesAsync(GetOrderTradesRequest request, CancellationToken ct)
         {
-            var validationError = ((ISpotOrderRestClient)this).GetSpotOrderTradesOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ISpotOrderRestClient)this).GetSpotOrderTradesOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedUserTrade[]>(Exchange, validationError);
 
             var orders = await Trading.GetUserTradesAsync(
                 SymbolType.Spot,
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 orderId: request.OrderId, 
                 ct: ct).ConfigureAwait(false);
             if (!orders)
@@ -553,7 +553,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         PaginatedEndpointOptions<GetUserTradesRequest> ISpotOrderRestClient.GetSpotUserTradesOptions { get; } = new PaginatedEndpointOptions<GetUserTradesRequest>(SharedPaginationSupport.Descending, true, 100, true);
         async Task<ExchangeWebResult<SharedUserTrade[]>> ISpotOrderRestClient.GetSpotUserTradesAsync(GetUserTradesRequest request, INextPageToken? pageToken, CancellationToken ct)
         {
-            var validationError = ((ISpotOrderRestClient)this).GetSpotUserTradesOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ISpotOrderRestClient)this).GetSpotUserTradesOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedUserTrade[]>(Exchange, validationError);
 
@@ -565,7 +565,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             // Get data
             var orders = await Trading.GetUserTradesAsync(
                 SymbolType.Spot,
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 startTime: request.StartTime,
                 endTime: fromTimestamp ?? request.EndTime,
                 limit: request.Limit ?? 100,
@@ -598,11 +598,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<CancelOrderRequest> ISpotOrderRestClient.CancelSpotOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
         async Task<ExchangeWebResult<SharedId>> ISpotOrderRestClient.CancelSpotOrderAsync(CancelOrderRequest request, CancellationToken ct)
         {
-            var validationError = ((ISpotOrderRestClient)this).CancelSpotOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ISpotOrderRestClient)this).CancelSpotOrderOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
-            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), request.OrderId, ct: ct).ConfigureAwait(false);
+            var order = await Trading.CancelOrderAsync(request.Symbol!.GetSymbol(FormatSymbol), request.OrderId, ct: ct).ConfigureAwait(false);
             if (!order)
                 return order.AsExchangeResult<SharedId>(Exchange, null, default);
 
@@ -631,11 +631,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetLeverageRequest> ILeverageRestClient.GetLeverageOptions { get; } = new EndpointOptions<GetLeverageRequest>(true);
         async Task<ExchangeWebResult<SharedLeverage>> ILeverageRestClient.GetLeverageAsync(GetLeverageRequest request, CancellationToken ct)
         {
-            var validationError = ((ILeverageRestClient)this).GetLeverageOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ILeverageRestClient)this).GetLeverageOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedLeverage>(Exchange, validationError);
 
-            var result = await Trading.GetPositionsAsync(SymbolType.Swap, symbol: request.Symbol.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
+            var result = await Trading.GetPositionsAsync(SymbolType.Swap, symbol: request.Symbol!.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
             if (!result)
                 return result.AsExchangeResult<SharedLeverage>(Exchange, null, default);
 
@@ -662,14 +662,14 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         async Task<ExchangeWebResult<SharedLeverage>> ILeverageRestClient.SetLeverageAsync(SetLeverageRequest request, CancellationToken ct)
         {
-            var validationError = ((ILeverageRestClient)this).SetLeverageOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ILeverageRestClient)this).SetLeverageOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedLeverage>(Exchange, validationError);
 
             var positionType = ExchangeParameters.GetValue<PositionType?>(request.ExchangeParameters, Exchange, "PositionType");
 
             var result = await Account.SetLeverageAsync(
-                symbol: request.Symbol.GetSymbol(FormatSymbol), 
+                symbol: request.Symbol!.GetSymbol(FormatSymbol), 
                 request.Leverage,
                 tradeMode: request.MarginMode == SharedMarginMode.Cross ? TradeMode.Cross : TradeMode.Isolated,
                 positionType ?? PositionType.Merge,
@@ -686,7 +686,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetTickerRequest> IFuturesTickerRestClient.GetFuturesTickerOptions { get; } = new EndpointOptions<GetTickerRequest>(false);
         async Task<ExchangeWebResult<SharedFuturesTicker>> IFuturesTickerRestClient.GetFuturesTickerAsync(GetTickerRequest request, CancellationToken ct)
         {
-            var validationError = ((IFuturesTickerRestClient)this).GetFuturesTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesTickerRestClient)this).GetFuturesTickerOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedFuturesTicker>(Exchange, validationError);
 
@@ -694,11 +694,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!resultTicker)
                 return resultTicker.AsExchangeResult<SharedFuturesTicker>(Exchange, null, default);
 
-            var symbol = resultTicker.Data.FirstOrDefault(x => x.Symbol == request.Symbol.GetSymbol(FormatSymbol));
+            var symbol = resultTicker.Data.FirstOrDefault(x => x.Symbol == request.Symbol!.GetSymbol(FormatSymbol));
             if (symbol == null)
                 return resultTicker.AsExchangeError<SharedFuturesTicker>(Exchange, new ServerError("Symbol not found"));
 
-            return resultTicker.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, symbol.Symbol), symbol.Symbol, symbol.LastPrice, symbol.HighPrice, symbol.LowPrice, symbol.Volume, symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3)));
+            return resultTicker.AsExchangeResult(Exchange, request.TradingMode, new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, symbol.Symbol), symbol.Symbol, symbol.LastPrice, symbol.HighPrice, symbol.LowPrice, symbol.Volume, symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3)));
         }
 
         EndpointOptions<GetTickersRequest> IFuturesTickerRestClient.GetFuturesTickersOptions { get; } = new EndpointOptions<GetTickersRequest>(false);
@@ -778,7 +778,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var validationError = ((IFuturesOrderRestClient)this).PlaceFuturesOrderOptions.ValidateRequest(
                 Exchange,
                 request,
-                request.Symbol.TradingMode,
+                request.TradingMode,
                 SupportedTradingModes,
                 ((IFuturesOrderRestClient)this).FuturesSupportedOrderTypes,
                 ((IFuturesOrderRestClient)this).FuturesSupportedTimeInForce,
@@ -789,7 +789,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var positionType = ExchangeParameters.GetValue<PositionType?>(request.ExchangeParameters, Exchange, "PositionType");
 
             var result = await Trading.PlaceOrderAsync(
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 request.Side == SharedOrderSide.Buy ? Enums.OrderSide.Buy : Enums.OrderSide.Sell,
                 request.OrderType == SharedOrderType.Limit ? (request.TimeInForce == SharedTimeInForce.ImmediateOrCancel ? Enums.OrderType.ImmediateOrCancel : Enums.OrderType.Limit) : request.OrderType == SharedOrderType.Market ? Enums.OrderType.Market : Enums.OrderType.PostOnly,
                 quantity: request.Quantity?.QuantityInContracts ?? 0,
@@ -811,11 +811,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetOrderRequest> IFuturesOrderRestClient.GetFuturesOrderOptions { get; } = new EndpointOptions<GetOrderRequest>(true);
         async Task<ExchangeWebResult<SharedFuturesOrder>> IFuturesOrderRestClient.GetFuturesOrderAsync(GetOrderRequest request, CancellationToken ct)
         {
-            var validationError = ((IFuturesOrderRestClient)this).GetFuturesOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesOrderRestClient)this).GetFuturesOrderOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedFuturesOrder>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var order = await Trading.GetOpenOrderAsync(symbol, request.OrderId, ct: ct).ConfigureAwait(false);
             if (!order)
             {
@@ -902,7 +902,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         PaginatedEndpointOptions<GetClosedOrdersRequest> IFuturesOrderRestClient.GetClosedFuturesOrdersOptions { get; } = new PaginatedEndpointOptions<GetClosedOrdersRequest>(SharedPaginationSupport.Descending, true, 100, true);
         async Task<ExchangeWebResult<SharedFuturesOrder[]>> IFuturesOrderRestClient.GetClosedFuturesOrdersAsync(GetClosedOrdersRequest request, INextPageToken? pageToken, CancellationToken ct)
         {
-            var validationError = ((IFuturesOrderRestClient)this).GetClosedFuturesOrdersOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesOrderRestClient)this).GetClosedFuturesOrdersOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedFuturesOrder[]>(Exchange, validationError);
 
@@ -913,7 +913,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             // Get data
             var orders = await Trading.GetClosedOrdersAsync(SymbolType.Swap,
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 limit: request.Limit ?? 100,
                 beforeId: fromId,
                 ct: ct).ConfigureAwait(false);
@@ -953,13 +953,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<GetOrderTradesRequest> IFuturesOrderRestClient.GetFuturesOrderTradesOptions { get; } = new EndpointOptions<GetOrderTradesRequest>(true);
         async Task<ExchangeWebResult<SharedUserTrade[]>> IFuturesOrderRestClient.GetFuturesOrderTradesAsync(GetOrderTradesRequest request, CancellationToken ct)
         {
-            var validationError = ((IFuturesOrderRestClient)this).GetFuturesOrderTradesOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesOrderRestClient)this).GetFuturesOrderTradesOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedUserTrade[]>(Exchange, validationError);
 
             var orders = await Trading.GetUserTradesAsync(
                 SymbolType.Swap,
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 orderId: request.OrderId,
                 ct: ct).ConfigureAwait(false);
             if (!orders)
@@ -984,7 +984,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         PaginatedEndpointOptions<GetUserTradesRequest> IFuturesOrderRestClient.GetFuturesUserTradesOptions { get; } = new PaginatedEndpointOptions<GetUserTradesRequest>(SharedPaginationSupport.Descending, true, 100, true);
         async Task<ExchangeWebResult<SharedUserTrade[]>> IFuturesOrderRestClient.GetFuturesUserTradesAsync(GetUserTradesRequest request, INextPageToken? pageToken, CancellationToken ct)
         {
-            var validationError = ((IFuturesOrderRestClient)this).GetFuturesUserTradesOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesOrderRestClient)this).GetFuturesUserTradesOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedUserTrade[]>(Exchange, validationError);
 
@@ -996,7 +996,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             // Get data
             var orders = await Trading.GetUserTradesAsync(
                 SymbolType.Spot,
-                request.Symbol.GetSymbol(FormatSymbol),
+                request.Symbol!.GetSymbol(FormatSymbol),
                 startTime: request.StartTime,
                 endTime: fromTimestamp ?? request.EndTime,
                 limit: request.Limit ?? 100,
@@ -1029,11 +1029,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<CancelOrderRequest> IFuturesOrderRestClient.CancelFuturesOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
         async Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.CancelFuturesOrderAsync(CancelOrderRequest request, CancellationToken ct)
         {
-            var validationError = ((IFuturesOrderRestClient)this).CancelFuturesOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesOrderRestClient)this).CancelFuturesOrderOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
-            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), request.OrderId, ct: ct).ConfigureAwait(false);
+            var order = await Trading.CancelOrderAsync(request.Symbol!.GetSymbol(FormatSymbol), request.OrderId, ct: ct).ConfigureAwait(false);
             if (!order)
                 return order.AsExchangeResult<SharedId>(Exchange, null, default);
 
@@ -1075,11 +1075,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         };
         async Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.ClosePositionAsync(ClosePositionRequest request, CancellationToken ct)
         {
-            var validationError = ((IFuturesOrderRestClient)this).ClosePositionOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IFuturesOrderRestClient)this).ClosePositionOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await Trading.PlaceOrderAsync(
                 symbol,
                 request.PositionSide == SharedPositionSide.Long ? OrderSide.Sell : OrderSide.Buy,

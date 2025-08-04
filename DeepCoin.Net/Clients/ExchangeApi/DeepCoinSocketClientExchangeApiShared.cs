@@ -31,11 +31,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if(request.Interval != SharedKlineInterval.OneMinute)
                 return new ExchangeResult<UpdateSubscription>(Exchange, new ArgumentError("Interval not supported"));
 
-            var validationError = ((IKlineSocketClient)this).SubscribeKlineOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((IKlineSocketClient)this).SubscribeKlineOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(DeepCoinExchange.FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
             var result = await SubscribeToKlineUpdatesAsync(symbol, update => handler(update.AsExchangeEvent(Exchange, new SharedKline(update.Data.OpenTime, update.Data.ClosePrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.OpenPrice, update.Data.Volume))), ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
@@ -47,11 +47,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<SubscribeTickerRequest> ITickerSocketClient.SubscribeTickerOptions { get; } = new EndpointOptions<SubscribeTickerRequest>(false);
         async Task<ExchangeResult<UpdateSubscription>> ITickerSocketClient.SubscribeToTickerUpdatesAsync(SubscribeTickerRequest request, Action<ExchangeEvent<SharedSpotTicker>> handler, CancellationToken ct)
         {
-            var validationError = ((ITickerSocketClient)this).SubscribeTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ITickerSocketClient)this).SubscribeTickerOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(DeepCoinExchange.FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
             var result = await SubscribeToSymbolUpdatesAsync(symbol, update => handler(update.AsExchangeEvent(Exchange, new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, symbol), symbol, update.Data.LastPrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.Volume, update.Data.OpenPrice == null ? null : Math.Round((update.Data.LastPrice ?? 0) / update.Data.OpenPrice.Value * 100 - 100, 3))
             {
                 // Value is incorrect for spot symbols
@@ -68,11 +68,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<SubscribeTradeRequest> ITradeSocketClient.SubscribeTradeOptions { get; } = new EndpointOptions<SubscribeTradeRequest>(false);
         async Task<ExchangeResult<UpdateSubscription>> ITradeSocketClient.SubscribeToTradeUpdatesAsync(SubscribeTradeRequest request, Action<ExchangeEvent<SharedTrade[]>> handler, CancellationToken ct)
         {
-            var validationError = ((ITradeSocketClient)this).SubscribeTradeOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            var validationError = ((ITradeSocketClient)this).SubscribeTradeOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
-            var symbol = request.Symbol.GetSymbol(DeepCoinExchange.FormatSymbol);
+            var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
             var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.AsExchangeEvent<SharedTrade[]>(Exchange, new[] { new SharedTrade(update.Data.Quantity, update.Data.Price, update.Data.Timestamp)
             {
                 Side = update.Data.Side == Enums.OrderSide.Sell ? SharedOrderSide.Sell : SharedOrderSide.Buy
