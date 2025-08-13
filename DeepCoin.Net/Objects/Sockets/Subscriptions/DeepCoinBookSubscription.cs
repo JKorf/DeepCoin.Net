@@ -10,12 +10,14 @@ using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using System.Linq;
 using System.Diagnostics;
+using CryptoExchange.Net.Clients;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
     internal class DeepCoinBookSubscription : Subscription<SocketResponse, SocketResponse>
     {
+        private readonly SocketApiClient _client;
         private readonly Action<DataEvent<DeepCoinOrderBookUpdate>> _handler;
         private readonly string _filter;
         private readonly string _topic;
@@ -26,8 +28,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <summary>
         /// ctor
         /// </summary>
-        public DeepCoinBookSubscription(ILogger logger, string pushAction, string table, string filter, string topic, Action<DataEvent<DeepCoinOrderBookUpdate>> handler, bool auth) : base(logger, auth)
+        public DeepCoinBookSubscription(ILogger logger, SocketApiClient client, string pushAction, string table, string filter, string topic, Action<DataEvent<DeepCoinOrderBookUpdate>> handler, bool auth) : base(logger, auth)
         {
+            _client = client;
             _handler = handler;
             _filter = filter;
             _topic = topic;
@@ -40,7 +43,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public override Query? GetSubQuery(SocketConnection connection)
         {
             _subId = ExchangeHelpers.NextId();
-            return new DeepCoinQuery(new Internal.SocketRequest
+            return new DeepCoinQuery(_client, new Internal.SocketRequest
             {
                 Action = "1",
                 RequestId = _subId,
@@ -53,7 +56,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public override Query? GetUnsubQuery()
         {
-            return new DeepCoinQuery(new Internal.SocketRequest
+            return new DeepCoinQuery(_client, new Internal.SocketRequest
             {
                 Action = "2",
                 RequestId = _subId,

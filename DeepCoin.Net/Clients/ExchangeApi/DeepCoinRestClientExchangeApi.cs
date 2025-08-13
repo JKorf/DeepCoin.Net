@@ -15,6 +15,8 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.SharedApis;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Converters.MessageParsing;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -23,6 +25,31 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
+
+        protected override ErrorCollection ErrorMapping { get; } = new ErrorCollection([
+
+            new ErrorInfo(ErrorType.Unauthorized, false, "API access frozen, contact customer service", "50100"),
+            new ErrorInfo(ErrorType.Unauthorized, false, "API environment not correct", "50101"),
+            new ErrorInfo(ErrorType.Unauthorized, false, "Incorrect passphrase", "50105"),
+            new ErrorInfo(ErrorType.Unauthorized, false, "IP address not allowed", "50110"),
+            new ErrorInfo(ErrorType.Unauthorized, false, "Invalid API key", "50113"),
+
+            new ErrorInfo(ErrorType.TimestampInvalid, false, "Request timestamp expired", "50102"),
+            new ErrorInfo(ErrorType.TimestampInvalid, false, "Invalid timestamp", "50112"),
+
+            new ErrorInfo(ErrorType.TimestampInvalid, false, "Invalid signature", "50111"),
+
+            new ErrorInfo(ErrorType.UnknownSymbol, false, "Unknown symbol", "50"),
+
+            new ErrorInfo(ErrorType.BalanceInsufficient, false, "Insufficient balance", "36"),
+
+            new ErrorInfo(ErrorType.PriceInvalid, false, "Invalid price", "175"),
+
+            new ErrorInfo(ErrorType.QuantityInvalid, false, "Order quantity tick invalid", "44"),
+            new ErrorInfo(ErrorType.QuantityInvalid, false, "Order quantity too large", "193"),
+            new ErrorInfo(ErrorType.QuantityInvalid, false, "Order quantity too small", "194"),
+
+            ]);
         #endregion
 
         #region Api clients
@@ -77,9 +104,29 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return result.As<T>(default);
 
             if (result.Data.Code != 0)
-                return result.AsError<T>(new ServerError(result.Data.Code, result.Data.Message!));
+                return result.AsError<T>(new ServerError(result.Data.Code, GetErrorInfo(result.Data.Code, result.Data.Message!)));
 
             return result.As<T>(result.Data.Data);
+        }
+
+        /// <inheritdoc />
+        protected override Error? TryParseError(KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor)
+        {
+            if (!accessor.IsValid)
+                return new ServerError(ErrorInfo.Unknown);
+
+            var code = accessor.GetValue<int?>(MessagePath.Get().Property("code"));
+            if (code == 0)
+                return null;
+
+            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
+            if (msg == null)
+                return new ServerError(ErrorInfo.Unknown);
+
+            if (code == null)
+                return new ServerError(ErrorInfo.Unknown with { Message = msg });
+
+            return new ServerError(code.Value, GetErrorInfo(code.Value, msg));
         }
 
         /// <inheritdoc />

@@ -70,7 +70,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/account/set-leverage", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinLeverage>(request, parameters, ct).ConfigureAwait(false);
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinLeverage>(new ServerError(result.Data.ResultCode, result.Data.ResultMessage!));
+                return result.AsError<DeepCoinLeverage>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
 
             return result;
         }
