@@ -26,30 +26,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
 
-        protected override ErrorCollection ErrorMapping { get; } = new ErrorCollection([
-
-            new ErrorInfo(ErrorType.Unauthorized, false, "API access frozen, contact customer service", "50100"),
-            new ErrorInfo(ErrorType.Unauthorized, false, "API environment not correct", "50101"),
-            new ErrorInfo(ErrorType.Unauthorized, false, "Incorrect passphrase", "50105"),
-            new ErrorInfo(ErrorType.Unauthorized, false, "IP address not allowed", "50110"),
-            new ErrorInfo(ErrorType.Unauthorized, false, "Invalid API key", "50113"),
-
-            new ErrorInfo(ErrorType.TimestampInvalid, false, "Request timestamp expired", "50102"),
-            new ErrorInfo(ErrorType.TimestampInvalid, false, "Invalid timestamp", "50112"),
-
-            new ErrorInfo(ErrorType.TimestampInvalid, false, "Invalid signature", "50111"),
-
-            new ErrorInfo(ErrorType.UnknownSymbol, false, "Unknown symbol", "50"),
-
-            new ErrorInfo(ErrorType.BalanceInsufficient, false, "Insufficient balance", "36"),
-
-            new ErrorInfo(ErrorType.PriceInvalid, false, "Invalid price", "175"),
-
-            new ErrorInfo(ErrorType.QuantityInvalid, false, "Order quantity tick invalid", "44"),
-            new ErrorInfo(ErrorType.QuantityInvalid, false, "Order quantity too large", "193"),
-            new ErrorInfo(ErrorType.QuantityInvalid, false, "Order quantity too small", "194"),
-
-            ]);
+        protected override ErrorCollection ErrorMapping => DeepCoinErrors.Errors;
         #endregion
 
         #region Api clients
