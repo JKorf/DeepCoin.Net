@@ -9,7 +9,7 @@ namespace DeepCoin.Net
 {
     internal static class DeepCoinErrors
     {
-        public static ErrorCollection Errors { get; } = new ErrorCollection([
+        public static ErrorMapping Errors { get; } = new ErrorMapping([
 
             new ErrorInfo(ErrorType.Unauthorized, false, "API access frozen, contact customer service", "50100"),
             new ErrorInfo(ErrorType.Unauthorized, false, "API environment not correct", "50101"),

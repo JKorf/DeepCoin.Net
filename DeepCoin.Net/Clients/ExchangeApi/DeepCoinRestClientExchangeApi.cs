@@ -26,7 +26,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
 
-        protected override ErrorCollection ErrorMapping => DeepCoinErrors.Errors;
+        protected override ErrorMapping ErrorMapping => DeepCoinErrors.Errors;
         #endregion
 
         #region Api clients
