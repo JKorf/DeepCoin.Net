@@ -11,6 +11,7 @@ using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net.RateLimiting.Guards;
 using System.Drawing;
 using System.Linq;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -69,7 +70,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return result;
 
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, result.Data.ResultMessage!));
+                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
             
             return result;
         }
@@ -91,7 +92,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return result;
 
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, result.Data.ResultMessage!));
+                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
 
             return result;
         }
@@ -112,7 +113,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return result;
 
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, result.Data.ResultMessage!));
+                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
 
             return result;
         }
@@ -186,7 +187,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             var order = result.Data.SingleOrDefault();
             if (order == null)
-                return result.AsError<DeepCoinOrder>(new ServerError("Order not found"));            
+                return result.AsError<DeepCoinOrder>(new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
 
             return result.As(order);
         }
@@ -208,7 +209,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             var order = result.Data.SingleOrDefault();
             if (order == null)
-                return result.AsError<DeepCoinOrder>(new ServerError("Order not found"));
+                return result.AsError<DeepCoinOrder>(new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
 
             return result.As(order);
         }

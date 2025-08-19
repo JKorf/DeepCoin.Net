@@ -15,6 +15,8 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.SharedApis;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Converters.MessageParsing;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -23,6 +25,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
+
+        protected override ErrorMapping ErrorMapping => DeepCoinErrors.Errors;
         #endregion
 
         #region Api clients
@@ -77,9 +81,29 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return result.As<T>(default);
 
             if (result.Data.Code != 0)
-                return result.AsError<T>(new ServerError(result.Data.Code, result.Data.Message!));
+                return result.AsError<T>(new ServerError(result.Data.Code, GetErrorInfo(result.Data.Code, result.Data.Message!)));
 
             return result.As<T>(result.Data.Data);
+        }
+
+        /// <inheritdoc />
+        protected override Error? TryParseError(KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor)
+        {
+            if (!accessor.IsValid)
+                return new ServerError(ErrorInfo.Unknown);
+
+            var code = accessor.GetValue<int?>(MessagePath.Get().Property("code"));
+            if (code == 0)
+                return null;
+
+            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
+            if (msg == null)
+                return new ServerError(ErrorInfo.Unknown);
+
+            if (code == null)
+                return new ServerError(ErrorInfo.Unknown with { Message = msg });
+
+            return new ServerError(code.Value, GetErrorInfo(code.Value, msg));
         }
 
         /// <inheritdoc />

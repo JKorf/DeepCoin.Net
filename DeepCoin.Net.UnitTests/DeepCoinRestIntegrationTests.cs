@@ -9,6 +9,7 @@ using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects;
 using CryptoExchange.Net.Authentication;
 using DeepCoin.Net.SymbolOrderBooks;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -41,7 +42,8 @@ namespace DeepCoin.Net.UnitTests
             var result = await CreateClient().ExchangeApi.ExchangeData.GetOrderBookAsync("TSTTST", default);
 
             Assert.That(result.Success, Is.False);
-            Assert.That(result.Error.Code, Is.EqualTo(50));
+            Assert.That(result.Error.ErrorCode, Is.EqualTo("50"));
+            Assert.That(result.Error.ErrorType, Is.EqualTo(ErrorType.UnknownSymbol));
         }
 
         [Test]

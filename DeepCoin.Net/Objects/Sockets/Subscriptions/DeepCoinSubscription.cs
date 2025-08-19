@@ -9,12 +9,14 @@ using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using System.Linq;
+using CryptoExchange.Net.Clients;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
     internal class DeepCoinSubscription<T> : Subscription<SocketResponse, SocketResponse>
     {
+        private readonly SocketApiClient _client;
         private readonly Action<DataEvent<TableData<T>[]>> _handler;
         private readonly string _pushAction;
         private readonly string _filter;
@@ -25,8 +27,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <summary>
         /// ctor
         /// </summary>
-        public DeepCoinSubscription(ILogger logger, string pushAction, string table, string filter, string topic, Action<DataEvent<TableData<T>[]>> handler, bool auth) : base(logger, auth)
+        public DeepCoinSubscription(ILogger logger, SocketApiClient client, string pushAction, string table, string filter, string topic, Action<DataEvent<TableData<T>[]>> handler, bool auth) : base(logger, auth)
         {
+            _client = client;
             _handler = handler;
             _pushAction = pushAction;
             _filter = filter;
@@ -40,7 +43,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public override Query? GetSubQuery(SocketConnection connection)
         {
             _subId = ExchangeHelpers.NextId();
-            return new DeepCoinQuery(new Internal.SocketRequest
+            return new DeepCoinQuery(_client, new Internal.SocketRequest
             {
                 Action = "1",
                 RequestId = _subId,
@@ -53,7 +56,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public override Query? GetUnsubQuery()
         {
-            return new DeepCoinQuery(new Internal.SocketRequest
+            return new DeepCoinQuery(_client, new Internal.SocketRequest
             {
                 Action = "2",
                 RequestId = _subId,
