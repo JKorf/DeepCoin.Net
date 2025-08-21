@@ -106,6 +106,21 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             return new ServerError(code.Value, GetErrorInfo(code.Value, msg));
         }
 
+        protected override Error ParseErrorResponse(int httpStatusCode, KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor, Exception? exception) {
+            if (!accessor.IsValid)
+                return new ServerError(ErrorInfo.Unknown, exception);
+
+            var code = accessor.GetValue<int?>(MessagePath.Get().Property("code"));
+            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
+            if (msg == null)
+                return new ServerError(ErrorInfo.Unknown, exception);
+
+            if (code == null)
+                return new ServerError(ErrorInfo.Unknown with { Message = msg }, exception);
+
+            return new ServerError(code.Value, GetErrorInfo(code.Value, msg), exception);
+        }
+
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync() => throw new NotImplementedException();
 
