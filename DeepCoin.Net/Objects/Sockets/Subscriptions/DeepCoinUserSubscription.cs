@@ -56,10 +56,10 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public override Query? GetSubQuery(SocketConnection connection) => null;
+        protected override Query? GetSubQuery(SocketConnection connection) => null;
 
         /// <inheritdoc />
-        public override Query? GetUnsubQuery() => null;
+        protected override Query? GetUnsubQuery(SocketConnection connection) => null;
 
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinOrderUpdate>> message)

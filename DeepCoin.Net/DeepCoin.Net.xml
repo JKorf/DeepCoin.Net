@@ -84,6 +84,9 @@
         <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
             <inheritdoc />
         </member>
+        <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.ClearUserClients(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
             <inheritdoc />
         </member>
@@ -114,7 +117,7 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.TryParseError(System.Collections.Generic.KeyValuePair{System.String,System.String[]}[],CryptoExchange.Net.Interfaces.IMessageAccessor)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.TryParseError(CryptoExchange.Net.Objects.RequestDefinition,System.Collections.Generic.KeyValuePair{System.String,System.String[]}[],CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.GetServerTimestampAsync">
@@ -1241,6 +1244,11 @@
             <param name="userIdentifier">The identifier for the user</param>
             <param name="credentials">The credentials for the user</param>
             <param name="environment">The environment to use</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.ClearUserClients(System.String)">
+            <summary>
+            Reset the cached clients for a user. This can be useful when a user changes API credentials.
+            </summary>
         </member>
         <member name="M:DeepCoin.Net.Interfaces.Clients.IDeepCoinUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,DeepCoin.Net.DeepCoinEnvironment)">
             <summary>
@@ -3081,7 +3089,7 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry}})">
@@ -3098,7 +3106,7 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{`0}})">
@@ -3115,7 +3123,7 @@
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate}})">

@@ -40,7 +40,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public override Query? GetSubQuery(SocketConnection connection)
+        protected override Query? GetSubQuery(SocketConnection connection)
         {
             _subId = ExchangeHelpers.NextId();
             return new DeepCoinQuery(_client, new Internal.SocketRequest
@@ -54,7 +54,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public override Query? GetUnsubQuery()
+        protected override Query? GetUnsubQuery(SocketConnection connection)
         {
             return new DeepCoinQuery(_client, new Internal.SocketRequest
             {
