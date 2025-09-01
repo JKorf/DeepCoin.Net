@@ -7,9 +7,9 @@
   <PropertyGroup>
     <PackageId>DeepCoin.Net</PackageId>
     <Authors>JKorf</Authors>
-    <PackageVersion>2.6.0</PackageVersion>
-    <AssemblyVersion>2.6.0</AssemblyVersion>
-    <FileVersion>2.6.0</FileVersion>
+    <PackageVersion>2.7.0</PackageVersion>
+    <AssemblyVersion>2.7.0</AssemblyVersion>
+    <FileVersion>2.7.0</FileVersion>
     <Description>DeepCoin.Net is a client library for accessing the DeepCoin REST and Websocket API. All data is mapped to readable models and enum values. Additional features include an implementation for maintaining a client side order book, easy integration with other exchange client libraries and more.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>DeepCoin;DeepCoin.Net;DeepCoin.com;DeepCoin Client;DeepCoin API;CryptoCurrency;CryptoCurrency Exchange;CryptoExchange.Net</PackageTags>
