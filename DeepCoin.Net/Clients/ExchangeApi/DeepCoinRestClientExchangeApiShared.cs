@@ -188,7 +188,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         EndpointOptions<StopListenKeyRequest> IListenKeyRestClient.StopOptions { get; } = new EndpointOptions<StopListenKeyRequest>(true);
         Task<ExchangeWebResult<string>> IListenKeyRestClient.StopListenKeyAsync(StopListenKeyRequest request, CancellationToken ct)
         {            
-            return Task.FromResult(new ExchangeWebResult<string>(Exchange, SupportedTradingModes, null, null, null, null, null, null, null, null, null, null, ResultDataSource.Server, request.ListenKey, null));
+            return Task.FromResult(new ExchangeWebResult<string>(Exchange, SupportedTradingModes, null, null, null, null, null, null, null, null, null, null, null, ResultDataSource.Server, request.ListenKey, null));
         }
         #endregion
 
