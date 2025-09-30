@@ -103,6 +103,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
             services.AddTransient<IDeepCoinOrderBookFactory, DeepCoinOrderBookFactory>();
             services.AddTransient<IDeepCoinTrackerFactory, DeepCoinTrackerFactory>();
+            services.AddTransient<ITrackerFactory, DeepCoinTrackerFactory>();
             services.AddSingleton<IDeepCoinUserClientProvider, DeepCoinUserClientProvider>(x =>
             new DeepCoinUserClientProvider(
                 x.GetRequiredService<HttpClient>(),

@@ -32,6 +32,16 @@ namespace DeepCoin.Net
         }
 
         /// <inheritdoc />
+        public bool CanCreateKlineTracker(SharedSymbol symbol, SharedKlineInterval interval)
+        {
+            var client = (_serviceProvider?.GetRequiredService<IDeepCoinSocketClient>() ?? new DeepCoinSocketClient());
+            return client.ExchangeApi.SharedClient.SubscribeKlineOptions.IsSupported(interval);
+        }
+
+        /// <inheritdoc />
+        public bool CanCreateTradeTracker(SharedSymbol symbol) => true;
+
+        /// <inheritdoc />
         public IKlineTracker CreateKlineTracker(SharedSymbol symbol, SharedKlineInterval interval, int? limit = null, TimeSpan? period = null)
         {
             var restClient = _serviceProvider?.GetRequiredService<IDeepCoinRestClient>() ?? new DeepCoinRestClient();
