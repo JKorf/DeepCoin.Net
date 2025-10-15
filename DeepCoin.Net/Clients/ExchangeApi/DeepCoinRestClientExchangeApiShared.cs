@@ -26,15 +26,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
 
         #region Balance client
-        EndpointOptions<GetBalancesRequest> IBalanceRestClient.GetBalancesOptions { get; } = new EndpointOptions<GetBalancesRequest>(true);
+        GetBalancesOptions IBalanceRestClient.GetBalancesOptions { get; } = new GetBalancesOptions(AccountTypeFilter.Spot, AccountTypeFilter.Futures);
 
         async Task<ExchangeWebResult<SharedBalance[]>> IBalanceRestClient.GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
         {
-            var validationError = ((IBalanceRestClient)this).GetBalancesOptions.ValidateRequest(Exchange, request, request.TradingMode, SupportedTradingModes);
+            var validationError = ((IBalanceRestClient)this).GetBalancesOptions.ValidateRequest(Exchange, request, SupportedTradingModes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedBalance[]>(Exchange, validationError);
 
-            var type = (request.TradingMode == null || request.TradingMode == TradingMode.Spot) ? Enums.SymbolType.Spot : Enums.SymbolType.Swap;
+            var type = (request.AccountType == null || request.AccountType == SharedAccountType.Spot) ? Enums.SymbolType.Spot : Enums.SymbolType.Swap;
 
             var result = await Account.GetBalancesAsync(type, ct: ct).ConfigureAwait(false);
             if (!result)
@@ -545,6 +545,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 x.Price,
                 x.Timestamp)
             {
+                ClientOrderId = x.ClientOrderId,
                 Fee = x.Fee,
                 FeeAsset = x.FeeAsset,
                 Role = x.Role == TradeRole.Maker ? SharedRole.Maker : SharedRole.Taker
@@ -590,6 +591,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 x.Price,
                 x.Timestamp)
             {
+                ClientOrderId = x.ClientOrderId,
                 Fee = x.Fee,
                 FeeAsset = x.FeeAsset,
                 Role = x.Role == TradeRole.Maker ? SharedRole.Maker : SharedRole.Taker
