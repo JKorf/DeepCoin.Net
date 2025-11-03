@@ -53,6 +53,16 @@ namespace DeepCoin.Net
         internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<DeepCoinSourceGenerationContext>();
 
         /// <summary>
+        /// Aliases for DeepCoin assets
+        /// </summary>
+        public static AssetAliasConfiguration AssetAliases { get; } = new AssetAliasConfiguration
+        {
+            Aliases = [
+                new AssetAlias("USDT", SharedSymbol.UsdOrStable.ToUpperInvariant(), AliasType.OnlyToExchange)
+            ]
+        };
+
+        /// <summary>
         /// Format a base and quote asset to an DeepCoin recognized symbol 
         /// </summary>
         /// <param name="baseAsset">Base asset</param>
@@ -62,6 +72,9 @@ namespace DeepCoin.Net
         /// <returns></returns>
         public static string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null)
         {
+            baseAsset = AssetAliases.CommonToExchangeName(baseAsset.ToUpperInvariant());
+            quoteAsset = AssetAliases.CommonToExchangeName(quoteAsset.ToUpperInvariant());
+
             if (tradingMode == TradingMode.Spot)
                 return baseAsset + "-" + quoteAsset;
 
