@@ -142,8 +142,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var parameters = new ParameterCollection();
             parameters.Add("instrumentID", symbol);
             parameters.AddEnum("ProductGroup", productGroup);
-            parameters.Add("IsCrossMargin", tradeMode == TradeMode.Cross);
-            parameters.Add("IsMergeMode", positionType);
+            parameters.Add("IsCrossMargin", tradeMode == TradeMode.Cross ? "1" : "0");
+            parameters.Add("IsMergeMode", positionType == PositionType.Merge ? "1" : "0");
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/swap/cancel-all", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinCancellationResult>(request, parameters, ct).ConfigureAwait(false);
             return result;
