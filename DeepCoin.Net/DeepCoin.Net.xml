@@ -70,6 +70,9 @@
         <member name="T:DeepCoin.Net.Clients.DeepCoinUserClientProvider">
             <inheritdoc />
         </member>
+        <member name="P:DeepCoin.Net.Clients.DeepCoinUserClientProvider.ExchangeName">
+            <inheritdoc />
+        </member>
         <member name="M:DeepCoin.Net.Clients.DeepCoinUserClientProvider.#ctor(System.Action{DeepCoin.Net.Objects.Options.DeepCoinOptions})">
             <summary>
             ctor
@@ -3125,6 +3128,9 @@
             <summary>
             DeepCoin order book factory
             </summary>
+        </member>
+        <member name="P:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.ExchangeName">
+            <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory.#ctor(System.IServiceProvider)">
             <summary>

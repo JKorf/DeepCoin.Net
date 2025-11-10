@@ -8,7 +8,7 @@ namespace DeepCoin.Net.Interfaces
     /// <summary>
     /// DeepCoin local order book factory
     /// </summary>
-    public interface IDeepCoinOrderBookFactory
+    public interface IDeepCoinOrderBookFactory : IExchangeService
     {
         
         /// <summary>
