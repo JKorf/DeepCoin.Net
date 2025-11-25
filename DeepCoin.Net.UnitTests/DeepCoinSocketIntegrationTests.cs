@@ -13,13 +13,13 @@ namespace DeepCoin.Net.UnitTests
     [NonParallelizable]
     internal class DeepCoinSocketIntegrationTests : SocketIntegrationTest<DeepCoinSocketClient>
     {
-        public override bool Run { get; set; } = false;
+        public override bool Run { get; set; } = true;
 
         public DeepCoinSocketIntegrationTests()
         {
         }
 
-        public override DeepCoinSocketClient GetClient(ILoggerFactory loggerFactory)
+        public override DeepCoinSocketClient GetClient(ILoggerFactory loggerFactory, bool useUpdatedDeserialization)
         {
             var key = Environment.GetEnvironmentVariable("APIKEY");
             var sec = Environment.GetEnvironmentVariable("APISECRET");
@@ -28,11 +28,12 @@ namespace DeepCoin.Net.UnitTests
             return new DeepCoinSocketClient(Options.Create(new DeepCoinSocketOptions
             {
                 OutputOriginalData = true,
+                UseUpdatedDeserialization = useUpdatedDeserialization,
                 ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null
             }), loggerFactory);
         }
 
-        private DeepCoinRestClient GetRestClient()
+        private DeepCoinRestClient GetRestClient(bool useUpdatedDeserialization)
         {
             var key = Environment.GetEnvironmentVariable("APIKEY");
             var sec = Environment.GetEnvironmentVariable("APISECRET");
@@ -40,16 +41,18 @@ namespace DeepCoin.Net.UnitTests
             Authenticated = key != null && sec != null;
             return new DeepCoinRestClient(x =>
             {
+                x.UseUpdatedDeserialization = useUpdatedDeserialization;
                 x.ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null;
             });
         }
 
-        [Test]
-        public async Task TestSubscriptions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestSubscriptions(bool useUpdatedDeserialization)
         {
-            var listenKey = await GetRestClient().ExchangeApi.Account.StartUserStreamAsync();
-            await RunAndCheckUpdate<DeepCoinTicker>((client, updateHandler) => client.ExchangeApi.SubscribeToUserDataUpdatesAsync(listenKey.Data.ListenKey, default, default, default, default, default, default, default), false, true);
-            await RunAndCheckUpdate<DeepCoinSymbolUpdate>((client, updateHandler) => client.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETH-USDT", updateHandler, default), true, false);
+            var listenKey = await GetRestClient(useUpdatedDeserialization).ExchangeApi.Account.StartUserStreamAsync();
+            await RunAndCheckUpdate<DeepCoinTicker>(useUpdatedDeserialization , (client, updateHandler) => client.ExchangeApi.SubscribeToUserDataUpdatesAsync(listenKey.Data.ListenKey, default, default, default, default, default, default, default), false, true);
+            await RunAndCheckUpdate<DeepCoinSymbolUpdate>(useUpdatedDeserialization , (client, updateHandler) => client.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETH-USDT", updateHandler, default), true, false);
         } 
     }
 }

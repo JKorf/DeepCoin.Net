@@ -17,6 +17,9 @@ using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Converters.MessageParsing;
+using System.Net.Http.Headers;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
+using CryptoCom.Net.Clients.MessageHandlers;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -27,6 +30,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
 
         protected override ErrorMapping ErrorMapping => DeepCoinErrors.Errors;
+
+        protected override IRestMessageHandler MessageHandler => new DeepCoinRestMessageHandler(DeepCoinErrors.Errors);
         #endregion
 
         #region Api clients
@@ -87,7 +92,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         /// <inheritdoc />
-        protected override Error? TryParseError(RequestDefinition request, KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor)
+        protected override Error? TryParseError(RequestDefinition request, HttpResponseHeaders responseHeaders, IMessageAccessor accessor)
         {
             if (!accessor.IsValid)
                 return new ServerError(ErrorInfo.Unknown);
@@ -106,7 +111,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             return new ServerError(code.Value, GetErrorInfo(code.Value, msg));
         }
 
-        protected override Error ParseErrorResponse(int httpStatusCode, KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor, Exception? exception) {
+        protected override Error ParseErrorResponse(int httpStatusCode, HttpResponseHeaders responseHeaders, IMessageAccessor accessor, Exception? exception) {
             if (!accessor.IsValid)
                 return new ServerError(ErrorInfo.Unknown, exception);
 

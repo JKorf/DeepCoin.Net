@@ -14,14 +14,16 @@ namespace DeepCoin.Net.UnitTests
     [TestFixture]
     public class SocketSubscriptionTests
     {
-        [Test]
-        public async Task ValidateExchangeSubscriptions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateExchangeSubscriptions(bool useUpdatedDeserialization)
         {
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TraceLoggerProvider());
             var client = new DeepCoinSocketClient(Options.Create(new Objects.Options.DeepCoinSocketOptions
             {
                 OutputOriginalData = true,
+                UseUpdatedDeserialization = useUpdatedDeserialization,
                 ApiCredentials = new ApiCredentials("123", "456", "789")
             }), loggerFactory);
             var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/Exchange", "wss://stream.deepcoin.com");

@@ -62,35 +62,57 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         protected override Query? GetUnsubQuery(SocketConnection connection) => null;
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinOrderUpdate>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinOrderUpdate> message)
         {
-            _orderUpdateHandler?.Invoke(message.As(message.Data.Result.Select(x => x.Data).ToArray()).WithSymbol(message.Data.Result.First().Data.Symbol).WithDataTimestamp(message.Data.Result.Max(x => x.Data.UpdateTime)));
+            _orderUpdateHandler?.Invoke(
+                new DataEvent<DeepCoinOrderUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                    .WithSymbol(message.Result.First().Data.Symbol)
+                    .WithDataTimestamp(message.Result.Max(x => x.Data.UpdateTime))
+                );
             return CallResult.SuccessResult;
         }
 
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinBalanceUpdate>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinBalanceUpdate> message)
         {
-            _balanceUpdateHandler?.Invoke(message.As(message.Data.Result.Select(x => x.Data).ToArray()));
+            _balanceUpdateHandler?.Invoke(
+                new DataEvent<DeepCoinBalanceUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                );
             return CallResult.SuccessResult;
         }
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinPositionUpdate>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinPositionUpdate> message)
         {
-            _positionUpdateHandler?.Invoke(message.As(message.Data.Result.Select(x => x.Data).ToArray()).WithSymbol(message.Data.Result.First().Data.Symbol).WithDataTimestamp(message.Data.Result.Max(x => x.Data.UpdateTime)));
+            _positionUpdateHandler?.Invoke(
+                new DataEvent<DeepCoinPositionUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                    .WithSymbol(message.Result.First().Data.Symbol)
+                    .WithDataTimestamp(message.Result.Max(x => x.Data.UpdateTime))
+                );
             return CallResult.SuccessResult;
         }
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinUserTradeUpdate>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinUserTradeUpdate> message)
         {
-            _userTradeUpdateHandler?.Invoke(message.As(message.Data.Result.Select(x => x.Data).ToArray()).WithSymbol(message.Data.Result.First().Data.Symbol).WithDataTimestamp(message.Data.Result.Max(x => x.Data.TradeTime)));
+            _userTradeUpdateHandler?.Invoke(
+                new DataEvent<DeepCoinUserTradeUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                    .WithSymbol(message.Result.First().Data.Symbol)
+                    .WithDataTimestamp(message.Result.Max(x => x.Data.TradeTime))
+                );
             return CallResult.SuccessResult;
         }
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinAccountUpdate>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinAccountUpdate> message)
         {
-            _accountUpdateHandler?.Invoke(message.As(message.Data.Result.Select(x => x.Data).ToArray()).WithDataTimestamp(message.Data.Result.Max(x => x.Data.CreateTime)));
+            _accountUpdateHandler?.Invoke(
+                new DataEvent<DeepCoinAccountUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                    .WithSymbol(message.Result.First().Data.Symbol)
+                    .WithDataTimestamp(message.Result.Max(x => x.Data.CreateTime))
+                );
             return CallResult.SuccessResult;
         }
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinTriggerOrderUpdate>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinTriggerOrderUpdate> message)
         {
-            _triggerUpdateHandler?.Invoke(message.As(message.Data.Result.Select(x => x.Data).ToArray()).WithSymbol(message.Data.Result.First().Data.Symbol).WithDataTimestamp(message.Data.Result.Max(x => x.Data.UpdateTime)));
+            _triggerUpdateHandler?.Invoke(
+                new DataEvent<DeepCoinTriggerOrderUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                    .WithSymbol(message.Result.First().Data.Symbol)
+                    .WithDataTimestamp(message.Result.Max(x => x.Data.CreateTime))
+                );
             return CallResult.SuccessResult;
         }
     }

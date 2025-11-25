@@ -17,12 +17,14 @@ namespace DeepCoin.Net.UnitTests
     [TestFixture]
     public class RestRequestTests
     {
-        [Test]
-        public async Task ValidateAccountCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateAccountCalls(bool useUpdatedDeserialization)
         {
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
+                opts.UseUpdatedDeserialization = useUpdatedDeserialization;
                 opts.ApiCredentials = new ApiCredentials("123", "456", "789");
             });
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Account", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
@@ -35,12 +37,14 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(), "GetWithdrawHistory", nestedJsonProperty: "data");
         }
 
-        [Test]
-        public async Task ValidateExchangeDataCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateExchangeDataCalls(bool useUpdatedDeserialization)
         {
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
+                opts.UseUpdatedDeserialization = useUpdatedDeserialization;
                 opts.ApiCredentials = new ApiCredentials("123", "456", "789");
             });
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/ExchangeData", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
@@ -51,12 +55,14 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetFundingRateAsync(ProductGroup.USDTMargined), "GetFundingRate", nestedJsonProperty: "data");
         }
 
-        [Test]
-        public async Task ValidateTradingCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateTradingCalls(bool useUpdatedDeserialization)
         {
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
+                opts.UseUpdatedDeserialization = useUpdatedDeserialization;
                 opts.ApiCredentials = new ApiCredentials("123", "456", "789");
             });
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Trading", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
