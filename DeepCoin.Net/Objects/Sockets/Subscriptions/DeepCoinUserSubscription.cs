@@ -53,6 +53,15 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 new MessageHandlerLink<SocketUpdate<DeepCoinAccountUpdate>>("PushAccountDetail", DoHandleMessage),
                 new MessageHandlerLink<SocketUpdate<DeepCoinTriggerOrderUpdate>>("PushTriggerOrder", DoHandleMessage)
                 ]);
+
+            MessageRouter = MessageRouter.Create([
+                new MessageRoute<SocketUpdate<DeepCoinOrderUpdate>>("PushOrder", (string?)null, DoHandleMessage),
+                new MessageRoute<SocketUpdate<DeepCoinBalanceUpdate>>("PushAccount", (string?)null, DoHandleMessage),
+                new MessageRoute<SocketUpdate<DeepCoinPositionUpdate>>("PushPosition", (string?)null, DoHandleMessage),
+                new MessageRoute<SocketUpdate<DeepCoinUserTradeUpdate>>("PushTrade", (string?)null, DoHandleMessage),
+                new MessageRoute<SocketUpdate<DeepCoinAccountUpdate>>("PushAccountDetail", (string?)null, DoHandleMessage),
+                new MessageRoute<SocketUpdate<DeepCoinTriggerOrderUpdate>>("PushTriggerOrder", (string?)null, DoHandleMessage)
+                ]);
         }
 
         /// <inheritdoc />

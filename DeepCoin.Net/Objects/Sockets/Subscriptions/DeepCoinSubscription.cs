@@ -41,6 +41,12 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 pushAction + "SwapU," + filter,
                 pushAction + "Spot," + filter,
                 pushAction + "Swap," + filter], DoHandleMessage);
+
+            MessageRouter = MessageRouter.Create<SocketUpdate<T>>(
+                [pushAction + filter,
+                pushAction + "SwapU," + filter,
+                pushAction + "Spot," + filter,
+                pushAction + "Swap," + filter], DoHandleMessage);
         }
 
         /// <inheritdoc />
