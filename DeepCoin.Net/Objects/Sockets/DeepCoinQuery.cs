@@ -20,7 +20,7 @@ namespace DeepCoin.Net.Objects.Sockets
         {
             _client = client;
             MessageMatcher = MessageMatcher.Create<SocketResponse>(request.RequestId.ToString(), HandleMessage);
-            MessageRouter = MessageRouter.Create<SocketResponse>(request.RequestId.ToString(), HandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketResponse>(request.RequestId.ToString(), HandleMessage);
         }
 
         public CallResult<SocketResponse> HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketResponse message)

@@ -15,7 +15,7 @@ using CryptoExchange.Net.Clients;
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class DeepCoinBookSubscription : Subscription<SocketResponse, SocketResponse>
+    internal class DeepCoinBookSubscription : Subscription
     {
         private readonly SocketApiClient _client;
         private readonly Action<DataEvent<DeepCoinOrderBookUpdate>> _handler;
@@ -37,7 +37,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _table = table;
 
             MessageMatcher = MessageMatcher.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + filter, pushAction + "SwapU," + filter], DoHandleMessage);
-            MessageRouter = MessageRouter.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + filter, pushAction + "SwapU," + filter], DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + filter, pushAction + "SwapU," + filter], DoHandleMessage);
         }
 
         /// <inheritdoc />

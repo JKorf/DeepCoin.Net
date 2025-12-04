@@ -14,7 +14,7 @@ using CryptoExchange.Net.Clients;
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class DeepCoinSubscription<T> : Subscription<SocketResponse, SocketResponse>
+    internal class DeepCoinSubscription<T> : Subscription
     {
         private readonly SocketApiClient _client;
         private readonly Action<DateTime, string?, SocketUpdate<T>> _handler;
@@ -42,7 +42,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 pushAction + "Spot," + filter,
                 pushAction + "Swap," + filter], DoHandleMessage);
 
-            MessageRouter = MessageRouter.Create<SocketUpdate<T>>(
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketUpdate<T>>(
                 [pushAction + filter,
                 pushAction + "SwapU," + filter,
                 pushAction + "Spot," + filter,

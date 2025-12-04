@@ -14,7 +14,7 @@ using CryptoExchange.Net.Converters.MessageParsing;
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class DeepCoinUserSubscription : Subscription<SocketResponse, SocketResponse>
+    internal class DeepCoinUserSubscription : Subscription
     {
         private static readonly MessagePath _actionPath = MessagePath.Get().Property("action");
 
@@ -55,12 +55,12 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 ]);
 
             MessageRouter = MessageRouter.Create([
-                new MessageRoute<SocketUpdate<DeepCoinOrderUpdate>>("PushOrder", (string?)null, DoHandleMessage),
-                new MessageRoute<SocketUpdate<DeepCoinBalanceUpdate>>("PushAccount", (string?)null, DoHandleMessage),
-                new MessageRoute<SocketUpdate<DeepCoinPositionUpdate>>("PushPosition", (string?)null, DoHandleMessage),
-                new MessageRoute<SocketUpdate<DeepCoinUserTradeUpdate>>("PushTrade", (string?)null, DoHandleMessage),
-                new MessageRoute<SocketUpdate<DeepCoinAccountUpdate>>("PushAccountDetail", (string?)null, DoHandleMessage),
-                new MessageRoute<SocketUpdate<DeepCoinTriggerOrderUpdate>>("PushTriggerOrder", (string?)null, DoHandleMessage)
+                MessageRoute<SocketUpdate<DeepCoinOrderUpdate>>.CreateWithoutTopicFilter("PushOrder", DoHandleMessage),
+                MessageRoute<SocketUpdate<DeepCoinBalanceUpdate>>.CreateWithoutTopicFilter("PushAccount", DoHandleMessage),
+                MessageRoute<SocketUpdate<DeepCoinPositionUpdate>>.CreateWithoutTopicFilter("PushPosition", DoHandleMessage),
+                MessageRoute<SocketUpdate<DeepCoinUserTradeUpdate>>.CreateWithoutTopicFilter("PushTrade", DoHandleMessage),
+                MessageRoute<SocketUpdate<DeepCoinAccountUpdate>>.CreateWithoutTopicFilter("PushAccountDetail", DoHandleMessage),
+                MessageRoute<SocketUpdate<DeepCoinTriggerOrderUpdate>>.CreateWithoutTopicFilter("PushTriggerOrder", DoHandleMessage)
                 ]);
         }
 

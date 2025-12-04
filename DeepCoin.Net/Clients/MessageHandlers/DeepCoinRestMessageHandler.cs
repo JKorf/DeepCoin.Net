@@ -35,14 +35,13 @@ namespace CryptoCom.Net.Clients.MessageHandlers
 
         public override async ValueTask<Error> ParseErrorResponse(
             int httpStatusCode,
-            object? state,
             HttpResponseHeaders responseHeaders,
             Stream responseStream)
         {
             if (httpStatusCode == 401 || httpStatusCode == 403)
                 return new ServerError(new ErrorInfo(ErrorType.Unauthorized, "Unauthorized"));
 
-            var (jsonError, jsonDocument) = await GetJsonDocument(responseStream, state).ConfigureAwait(false);
+            var (jsonError, jsonDocument) = await GetJsonDocument(responseStream).ConfigureAwait(false);
             if (jsonError != null)
                 return jsonError;
 
