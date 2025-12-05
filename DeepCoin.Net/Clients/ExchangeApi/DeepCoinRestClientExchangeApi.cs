@@ -19,7 +19,7 @@ using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Converters.MessageParsing;
 using System.Net.Http.Headers;
 using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
-using CryptoCom.Net.Clients.MessageHandlers;
+using DeepCoin.Net.Clients.MessageHandlers;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {

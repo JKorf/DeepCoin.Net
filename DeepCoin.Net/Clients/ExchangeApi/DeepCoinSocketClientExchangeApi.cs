@@ -25,7 +25,7 @@ using System.Collections;
 using System.Net.WebSockets;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
-using CryptoCom.Net.Clients.MessageHandlers;
+using DeepCoin.Net.Clients.MessageHandlers;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {

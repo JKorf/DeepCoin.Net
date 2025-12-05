@@ -1,4 +1,4 @@
-using CryptoCom.Net.Converters;
+using DeepCoin.Net.Converters;
 using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;

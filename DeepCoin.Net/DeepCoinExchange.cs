@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using CryptoExchange.Net.SharedApis;
 using System.Text.Json.Serialization;
-using CryptoCom.Net.Converters;
+using DeepCoin.Net.Converters;
 using CryptoExchange.Net.Converters;
 
 namespace DeepCoin.Net

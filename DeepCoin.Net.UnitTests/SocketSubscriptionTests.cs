@@ -1,19 +1,41 @@
+using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Testing;
-using NUnit.Framework;
-using System.Threading.Tasks;
 using DeepCoin.Net.Clients;
 using DeepCoin.Net.Objects;
 using DeepCoin.Net.Objects.Models;
-using CryptoExchange.Net.Authentication;
-using Microsoft.Extensions.Options;
+using DeepCoin.Net.Objects.Options;
 using Microsoft.Extensions.Logging;
-using CryptoExchange.Net.Objects;
+using Microsoft.Extensions.Options;
+using NUnit.Framework;
+using System;
+using System.Threading.Tasks;
 
 namespace DeepCoin.Net.UnitTests
 {
     [TestFixture]
     public class SocketSubscriptionTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateConcurrentSpotSubscriptions(bool newDeserialization)
+        {
+            var logger = new LoggerFactory();
+            logger.AddProvider(new TraceLoggerProvider());
+
+            var client = new DeepCoinSocketClient(Options.Create(new DeepCoinSocketOptions
+            {
+                OutputOriginalData = true,
+                UseUpdatedDeserialization = newDeserialization
+            }), logger);
+
+            var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/Exchange", "wss://stream.crypto.com");
+            await tester.ValidateConcurrentAsync<DeepCoinKlineUpdate>(
+                (client, handler) => client.ExchangeApi.SubscribeToKlineUpdatesAsync("ETHUSDT", handler),
+                (client, handler) => client.ExchangeApi.SubscribeToKlineUpdatesAsync("BTCUSDT", handler),
+                "Concurrent");
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public async Task ValidateExchangeSubscriptions(bool useUpdatedDeserialization)

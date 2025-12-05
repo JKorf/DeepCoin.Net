@@ -5,7 +5,7 @@ using System;
 using System.Net.WebSockets;
 using System.Text.Json;
 
-namespace CryptoCom.Net.Clients.MessageHandlers
+namespace DeepCoin.Net.Clients.MessageHandlers
 {
     internal class DeepCoinSocketMessageHandler : JsonSocketMessageHandler
     {
