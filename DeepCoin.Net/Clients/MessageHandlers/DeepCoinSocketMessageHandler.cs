@@ -11,42 +11,38 @@ namespace DeepCoin.Net.Clients.MessageHandlers
     {
         public override JsonSerializerOptions Options { get; } = SerializerOptions.WithConverters(DeepCoinExchange._serializerContext);
 
-        protected override MessageEvaluator[] TypeEvaluators { get; } = [
+        protected override MessageTypeDefinition[] TypeEvaluators { get; } = [
 
-            new MessageEvaluator {
-                Priority = 1,
+            new MessageTypeDefinition {
                 Fields = [
-                    new PropertyFieldReference("action") { Constraint = x => x!.Equals("RecvTopicAction", StringComparison.Ordinal) },
+                    new PropertyFieldReference("action").WithEqualContstraint("RecvTopicAction"),
                     new PropertyFieldReference("LocalNo") { Depth = 4 }
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("LocalNo")!
+                TypeIdentifierCallback = x => x.FieldValue("LocalNo")!
             },
 
-            new MessageEvaluator {
-                Priority = 2,
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("action"),
                     new PropertyFieldReference("index"),
                 ],
-                IdentifyMessageCallback = x => $"{x.FieldValue("action")}{x.FieldValue("index")}"
+                TypeIdentifierCallback = x => $"{x.FieldValue("action")}{x.FieldValue("index")}"
             },
 
 
-            new MessageEvaluator {
-                Priority = 3,
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("action"),
                     new PropertyFieldReference("errorMsg"),
                 ],
-                IdentifyMessageCallback = x => $"{x.FieldValue("action")}{x.FieldValue("errorMsg")}"
+                TypeIdentifierCallback = x => $"{x.FieldValue("action")}{x.FieldValue("errorMsg")}"
             },
 
-            new MessageEvaluator {
-                Priority = 4,
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("action"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("action")!
+                TypeIdentifierCallback = x => x.FieldValue("action")!
             }
         ];
 
