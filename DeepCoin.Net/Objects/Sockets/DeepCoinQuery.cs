@@ -1,11 +1,10 @@
 using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using System.Collections.Generic;
-using DeepCoin.Net.Objects.Models;
 using DeepCoin.Net.Objects.Internal;
 using CryptoExchange.Net.Clients;
 using System;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Objects.Sockets
 {

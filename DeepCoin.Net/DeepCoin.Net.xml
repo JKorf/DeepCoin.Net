@@ -253,7 +253,7 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SharedClient">
@@ -3890,13 +3890,13 @@
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1">
@@ -3907,13 +3907,13 @@
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{`0})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{`0})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription">
@@ -3924,13 +3924,13 @@
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory">
@@ -3995,14 +3995,14 @@
             Extensions for the ICryptoRestClient and ICryptoSocketClient interfaces
             </summary>
         </member>
-        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.ICryptoRestClient)">
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.Clients.ICryptoRestClient)">
             <summary>
             Get the DeepCoin REST Api client
             </summary>
             <param name="baseClient"></param>
             <returns></returns>
         </member>
-        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.ICryptoSocketClient)">
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.Clients.ICryptoSocketClient)">
             <summary>
             Get the DeepCoin Websocket Api client
             </summary>

@@ -15,17 +15,15 @@ using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
 using DeepCoin.Net.Objects.Models;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects.Sockets.Subscriptions;
-using DeepCoin.Net.Objects;
 using System.Linq;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects.Sockets;
-using DeepCoin.Net.Enums;
-using System.Collections;
 using System.Net.WebSockets;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using DeepCoin.Net.Clients.MessageHandlers;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {

@@ -1,16 +1,14 @@
-using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using System.Linq;
-using System.Diagnostics;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {

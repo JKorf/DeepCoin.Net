@@ -9,7 +9,6 @@ using DeepCoin.Net.Clients;
 using DeepCoin.Net.Interfaces.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects.Models;
-using System.Linq;
 
 namespace DeepCoin.Net.SymbolOrderBooks
 {

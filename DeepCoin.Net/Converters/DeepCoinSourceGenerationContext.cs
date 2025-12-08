@@ -1,4 +1,3 @@
-using CryptoExchange.Net.Objects;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects.Models;
 using System;

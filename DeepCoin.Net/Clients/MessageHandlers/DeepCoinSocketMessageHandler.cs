@@ -1,6 +1,6 @@
 ﻿using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Converters.SystemTextJson;
-using DeepCoin.Net;
+using CryptoExchange.Net.Converters.SystemTextJson.MessageHandlers;
 using System;
 using System.Net.WebSockets;
 using System.Text.Json;

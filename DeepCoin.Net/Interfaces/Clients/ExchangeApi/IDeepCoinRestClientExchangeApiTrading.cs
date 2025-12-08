@@ -4,7 +4,6 @@ using System.Threading;
 using CryptoExchange.Net.Objects;
 using DeepCoin.Net.Enums;
 using DeepCoin.Net.Objects.Models;
-using System.Drawing;
 using System;
 
 namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi

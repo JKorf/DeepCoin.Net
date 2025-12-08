@@ -9,7 +9,6 @@ using System;
 using DeepCoin.Net.Enums;
 using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net.RateLimiting.Guards;
-using System.Drawing;
 using System.Linq;
 using CryptoExchange.Net.Objects.Errors;
 
