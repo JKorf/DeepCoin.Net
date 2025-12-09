@@ -12,6 +12,7 @@ namespace DeepCoin.Net
     {
         private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
+        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.Hmac];
         public DeepCoinAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
             if (string.IsNullOrEmpty(credentials.Pass))
