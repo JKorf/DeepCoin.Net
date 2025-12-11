@@ -15,7 +15,7 @@ namespace DeepCoin.Net.Clients.MessageHandlers
 
             new MessageTypeDefinition {
                 Fields = [
-                    new PropertyFieldReference("action").WithEqualContstraint("RecvTopicAction"),
+                    new PropertyFieldReference("action").WithEqualConstraint("RecvTopicAction"),
                     new PropertyFieldReference("LocalNo") { Depth = 4 }
                 ],
                 TypeIdentifierCallback = x => x.FieldValue("LocalNo")!
