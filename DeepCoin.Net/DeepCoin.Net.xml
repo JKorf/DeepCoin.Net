@@ -3899,7 +3899,7 @@
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,CryptoExchange.Net.Clients.SocketApiClient,System.String,System.String,System.String,System.String,System.Action{System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{`0}},System.Boolean)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,CryptoExchange.Net.Clients.SocketApiClient,System.String,System.String,System.String,System.Action{System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{`0}},System.Boolean)">
             <summary>
             ctor
             </summary>

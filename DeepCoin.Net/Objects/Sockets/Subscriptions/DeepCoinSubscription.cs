@@ -17,32 +17,27 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         private readonly string _pushAction;
         private readonly string _filter;
         private readonly string _topic;
-        private readonly string _table;
         private int _subId;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public DeepCoinSubscription(ILogger logger, SocketApiClient client, string pushAction, string table, string filter, string topic, Action<DateTime, string?, SocketUpdate<T>> handler, bool auth) : base(logger, auth)
+        public DeepCoinSubscription(ILogger logger, SocketApiClient client, string pushAction, string filter, string topic, Action<DateTime, string?, SocketUpdate<T>> handler, bool auth) : base(logger, auth)
         {
             _client = client;
             _handler = handler;
             _pushAction = pushAction;
-            _filter = filter;
+            _filter = "DeepCoin_" + filter;
             _topic = topic;
-            _table = table;
 
             MessageMatcher = MessageMatcher.Create<SocketUpdate<T>>(
-                [pushAction + filter, 
-                pushAction + "SwapU," + filter,
-                pushAction + "Spot," + filter,
-                pushAction + "Swap," + filter], DoHandleMessage);
+                [pushAction + _filter, 
+                pushAction + "SwapU," + _filter,
+                pushAction + "Spot," + _filter,
+                pushAction + "Swap," + _filter], DoHandleMessage);
 
-            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketUpdate<T>>(
-                [pushAction + filter,
-                pushAction + "SwapU," + filter,
-                pushAction + "Spot," + filter,
-                pushAction + "Swap," + filter], DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<T>>(
+                pushAction, filter, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -76,7 +71,6 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<T> message)
         {
             _handler.Invoke(receiveTime, originalData, message);
-            //_handler.Invoke(message.As(message.Data.Result.Where(x => x.Table.Equals(_table)).ToArray(), message.Data.Action, null, SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

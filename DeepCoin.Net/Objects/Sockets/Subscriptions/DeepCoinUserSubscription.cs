@@ -72,7 +72,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinOrderUpdate> message)
         {
             _orderUpdateHandler?.Invoke(
-                new DataEvent<DeepCoinOrderUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                new DataEvent<DeepCoinOrderUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(message.Result.Max(x => x.Data.UpdateTime))
                 );
@@ -82,14 +82,14 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinBalanceUpdate> message)
         {
             _balanceUpdateHandler?.Invoke(
-                new DataEvent<DeepCoinBalanceUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                new DataEvent<DeepCoinBalanceUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                 );
             return CallResult.SuccessResult;
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinPositionUpdate> message)
         {
             _positionUpdateHandler?.Invoke(
-                new DataEvent<DeepCoinPositionUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                new DataEvent<DeepCoinPositionUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(message.Result.Max(x => x.Data.UpdateTime))
                 );
@@ -98,7 +98,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinUserTradeUpdate> message)
         {
             _userTradeUpdateHandler?.Invoke(
-                new DataEvent<DeepCoinUserTradeUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                new DataEvent<DeepCoinUserTradeUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(message.Result.Max(x => x.Data.TradeTime))
                 );
@@ -107,7 +107,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinAccountUpdate> message)
         {
             _accountUpdateHandler?.Invoke(
-                new DataEvent<DeepCoinAccountUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                new DataEvent<DeepCoinAccountUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(message.Result.Max(x => x.Data.CreateTime))
                 );
@@ -116,7 +116,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinTriggerOrderUpdate> message)
         {
             _triggerUpdateHandler?.Invoke(
-                new DataEvent<DeepCoinTriggerOrderUpdate[]>(message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
+                new DataEvent<DeepCoinTriggerOrderUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(message.Result.Max(x => x.Data.CreateTime))
                 );

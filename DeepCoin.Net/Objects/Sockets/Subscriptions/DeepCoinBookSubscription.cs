@@ -30,12 +30,12 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         {
             _client = client;
             _handler = handler;
-            _filter = filter;
+            _filter = "DeepCoin_" + filter;
             _topic = topic;
             _table = table;
 
-            MessageMatcher = MessageMatcher.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + filter, pushAction + "SwapU," + filter], DoHandleMessage);
-            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + filter, pushAction + "SwapU," + filter], DoHandleMessage);
+            MessageMatcher = MessageMatcher.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + _filter, pushAction + "SwapU," + _filter], DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<DeepCoinOrderBookUpdateEntry>>(pushAction, filter, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -90,7 +90,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 if (_incompleteUpdate.SequenceNumber != update.SequenceNumber)
                 {
                     // We have a cached update, but the next message is not the same sequence?
-                    _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(update, receiveTime, originalData)
+                    _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(DeepCoinExchange.ExchangeName, update, receiveTime, originalData)
                         .WithStreamId(message.Action)
                         .WithSymbol(message.Result.First().Data.Symbol)
                         .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
@@ -113,7 +113,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 }
             }
 
-            _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(update, receiveTime, originalData)
+            _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(DeepCoinExchange.ExchangeName, update, receiveTime, originalData)
                 .WithStreamId(message.Action)
                 .WithSymbol(message.Result.First().Data.Symbol)
                 .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
