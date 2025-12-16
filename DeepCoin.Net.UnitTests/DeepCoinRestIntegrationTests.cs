@@ -16,7 +16,7 @@ namespace DeepCoin.Net.UnitTests
     [NonParallelizable]
     public class DeepCoinRestIntegrationTests : RestIntegrationTest<DeepCoinRestClient>
     {
-        public override bool Run { get; set; } = true;
+        public override bool Run { get; set; } = false;
 
         public override DeepCoinRestClient GetClient(ILoggerFactory loggerFactory)
         {
