@@ -19,7 +19,6 @@ namespace DeepCoin.Net.Clients.MessageHandlers
             AddTopicMapping<SocketUpdate<DeepCoinSymbolUpdate>>(x => x.Result.First().Data.Symbol);
             AddTopicMapping<SocketUpdate<DeepCoinTradeUpdate>>(x => x.Result.First().Data.Symbol);
             AddTopicMapping<SocketUpdate<DeepCoinKlineUpdate>>(x => x.Result.First().Data.Symbol + "_1m");
-            //AddTopicMapping<SocketUpdate<DeepCoinOrderBookUpdate>>(x => x.Result.First().Data.Symbol);
         }
 
         protected override MessageTypeDefinition[] TypeEvaluators { get; } = [
@@ -31,23 +30,6 @@ namespace DeepCoin.Net.Clients.MessageHandlers
                 ],
                 TypeIdentifierCallback = x => x.FieldValue("LocalNo")!
             },
-
-            //new MessageTypeDefinition {
-            //    Fields = [
-            //        new PropertyFieldReference("action"),
-            //        new PropertyFieldReference("index"),
-            //    ],
-            //    TypeIdentifierCallback = x => $"{x.FieldValue("action")}{x.FieldValue("index")}"
-            //},
-
-
-            //new MessageTypeDefinition {
-            //    Fields = [
-            //        new PropertyFieldReference("action"),
-            //        new PropertyFieldReference("errorMsg").WithNotEqualConstraint("Success"),
-            //    ],
-            //    TypeIdentifierCallback = x => $"{x.FieldValue("action")}{x.FieldValue("errorMsg")}"
-            //},
 
             new MessageTypeDefinition {
                 Fields = [
