@@ -1,14 +1,10 @@
-using CryptoExchange.Net;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
-using DeepCoin.Net.Objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 
 namespace DeepCoin.Net
 {
@@ -16,6 +12,7 @@ namespace DeepCoin.Net
     {
         private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
+        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.Hmac];
         public DeepCoinAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
             if (string.IsNullOrEmpty(credentials.Pass))
@@ -28,11 +25,12 @@ namespace DeepCoin.Net
                 return;
 
             var timestamp = GetTimestamp(apiClient).ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-            var queryParams = request.QueryParameters.Any() ? $"?{request.GetQueryString(false)}" : "";
-            var bodyParams = request.BodyParameters.Any() ? GetSerializedBody(_serializer, request.BodyParameters) : "";
+            var queryParams = request.QueryParameters?.Count > 0 ? $"?{request.GetQueryString(false)}" : "";
+            var bodyParams = request.BodyParameters?.Count > 0 ? GetSerializedBody(_serializer, request.BodyParameters) : "";
             var signStr = $"{timestamp}{request.Method}{request.Path}{queryParams}{bodyParams}";
             var signature = SignHMACSHA256(signStr, SignOutputType.Base64);
 
+            request.Headers ??= new Dictionary<string, string>();
             request.Headers.Add("DC-ACCESS-KEY", ApiKey);
             request.Headers.Add("DC-ACCESS-SIGN", signature);
             request.Headers.Add("DC-ACCESS-TIMESTAMP", timestamp);

@@ -15,15 +15,15 @@ using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
 using DeepCoin.Net.Objects.Models;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects.Sockets.Subscriptions;
-using DeepCoin.Net.Objects;
 using System.Linq;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects.Sockets;
-using DeepCoin.Net.Enums;
-using System.Collections;
 using System.Net.WebSockets;
 using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
+using DeepCoin.Net.Clients.MessageHandlers;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -74,6 +74,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
+        public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new DeepCoinSocketMessageHandler();
+
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
             => new DeepCoinAuthenticationProvider(credentials);
@@ -93,7 +95,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 symbol = symbol.Replace("-", "/");
             }
 
-            var subscription = new DeepCoinSubscription<DeepCoinSymbolUpdate>(_logger, this, "PushMarketDataOverView", "MarketDataOverView", "DeepCoin_" + symbol, "7", x => onMessage(x.As(x.Data.First().Data).WithSymbol(x.Data.First().Data.Symbol)), false);
+            var handler = new Action<DateTime, string?, SocketUpdate<DeepCoinSymbolUpdate>>((receiveTime, originalData, data) =>
+            {
+                onMessage(
+                    new DataEvent<DeepCoinSymbolUpdate>(DeepCoinExchange.ExchangeName, data.Result.Where(x => x.Table.Equals("MarketDataOverView")).First().Data, receiveTime, originalData)
+                        .WithUpdateType(SocketUpdateType.Update)
+                        .WithStreamId(data.Action)
+                    );
+            });
+            var subscription = new DeepCoinSubscription<DeepCoinSymbolUpdate>(_logger, this, "PushMarketDataOverView", symbol, "7", handler, false);
             return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
 
@@ -112,11 +122,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 symbol = symbol.Replace("-", "/");
             }
 
-            var subscription = new DeepCoinSubscription<DeepCoinTradeUpdate>(_logger, this, "PushMarketTrade", "MarketTrade", "DeepCoin_" + symbol, "2", x => onMessage(
-                x.As(x.Data.First().Data)
-                .WithSymbol(x.Data.First().Data.Symbol)
-                .WithDataTimestamp(x.Data.Max(x => x.Data.Timestamp))
-                ), false);
+            var handler = new Action<DateTime, string?, SocketUpdate<DeepCoinTradeUpdate>>((receiveTime, originalData, data) =>
+            {
+                var updateData = data.Result.Where(x => x.Table.Equals("MarketTrade")).First().Data;
+                onMessage(
+                    new DataEvent<DeepCoinTradeUpdate>(DeepCoinExchange.ExchangeName, updateData, receiveTime, originalData)
+                        .WithUpdateType(SocketUpdateType.Update)
+                        .WithStreamId(data.Action)
+                        .WithSymbol(updateData.Symbol)
+                        .WithDataTimestamp(updateData.Timestamp)
+                    );
+            });
+            var subscription = new DeepCoinSubscription<DeepCoinTradeUpdate>(_logger, this, "PushMarketTrade", symbol, "2", handler, false);
             return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
 
@@ -135,12 +152,19 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 symbol = symbol.Replace("-", "/");
             }
 
-            var topic = "DeepCoin_" + symbol + "_1m";
-            var subscription = new DeepCoinSubscription<DeepCoinKlineUpdate>(_logger, this, "PushKLine", "LastKLine", topic, "11", x => onMessage(
-                x.As(x.Data.First().Data)
-                .WithSymbol(x.Data.First().Data.Symbol)
-                .WithDataTimestamp(x.Data.Max(x => x.Data.UpdateTime))
-                ), false);
+            var handler = new Action<DateTime, string?, SocketUpdate<DeepCoinKlineUpdate>>((receiveTime, originalData, data) =>
+            {
+                var updateData = data.Result.Where(x => x.Table.Equals("KLine") || x.Table.Equals("LastKLine")).First().Data;
+                onMessage(
+                    new DataEvent<DeepCoinKlineUpdate>(DeepCoinExchange.ExchangeName, updateData, receiveTime, originalData)
+                        .WithUpdateType(SocketUpdateType.Update)
+                        .WithStreamId(data.Action)
+                        .WithSymbol(updateData.Symbol)
+                        .WithDataTimestamp(updateData.UpdateTime)
+                    );
+            });
+            var topic = symbol + "_1m";
+            var subscription = new DeepCoinSubscription<DeepCoinKlineUpdate>(_logger, this, "PushKLine", topic, "11", handler, false);
             return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
 
@@ -159,7 +183,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 symbol = symbol.Replace("-", "/");
             }
 
-            var subscription = new DeepCoinBookSubscription(_logger, this, "PushMarketOrder", "MarketOrder", "DeepCoin_" + symbol, "25", onMessage, false);
+            var subscription = new DeepCoinBookSubscription(_logger, this, "PushMarketOrder", "MarketOrder", symbol, "25", onMessage, false);
             return await SubscribeAsync(BaseAddress.AppendPath(path), subscription, ct).ConfigureAwait(false);
         }
 

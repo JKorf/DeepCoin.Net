@@ -1,0 +1,7 @@
+>1 { "SendTopicAction": { "Action": "1", "FilterValue": "DeepCoin_ETHUSDT", "LocalNo": "|1|", "ResumeNo": -2, "TopicID": "11" }}
+>2 { "SendTopicAction": { "Action": "1", "FilterValue": "DeepCoin_BTCUSDT", "LocalNo": "|1|", "ResumeNo": -2, "TopicID": "11" }}
+<1 {"action":"RecvTopicAction","requestNo":0,"errorCode":0,"errorMsg":"Success","result":[{"table":"TopicAction","data":{"Action":"1","LocalNo":|SendTopicAction.LocalNo|,"TopicID":"11","FilterValue":"DeepCoin_ETHUSDT","ResumeNo":0,"Token":"","LocalID":""}}]}
+<2 {"action":"RecvTopicAction","requestNo":0,"errorCode":0,"errorMsg":"Success","result":[{"table":"TopicAction","data":{"Action":"1","LocalNo":|SendTopicAction.LocalNo|,"TopicID":"11","FilterValue":"DeepCoin_BTCUSDT","ResumeNo":0,"Token":"","LocalID":""}}]}
+=1 { "action": "PushKLine", "LocalNo": |SendTopicAction.LocalNo|, "index": "DeepCoin_ETHUSDT_1m", "seq": 325303, "bNo": 1, "changeType": "3", "result": [{ "table": "LastKLine", "data": { "ExchangeID": "DeepCoin", "InstrumentID": "ETHUSDT" } } ]}
+=2 { "action": "PushKLine", "LocalNo": |SendTopicAction.LocalNo|, "index": "DeepCoin_BTCUSDT_1m", "seq": 325303, "bNo": 1, "changeType": "3", "result": [{ "table": "LastKLine", "data": { "ExchangeID": "DeepCoin", "InstrumentID": "BTCUSDT" } } ]}
+

@@ -2,10 +2,9 @@ using CryptoExchange.Net.Objects;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects.Sockets;
 using DeepCoin.Net.Objects.Models;
-using DeepCoin.Net.Enums;
+using CryptoExchange.Net.Interfaces.Clients;
 
 namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 {

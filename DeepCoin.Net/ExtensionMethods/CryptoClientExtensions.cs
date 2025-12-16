@@ -1,4 +1,4 @@
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Interfaces.Clients;
 using DeepCoin.Net.Clients;
 using DeepCoin.Net.Interfaces.Clients;
 

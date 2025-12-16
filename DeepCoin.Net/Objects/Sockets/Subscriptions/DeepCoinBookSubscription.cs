@@ -1,21 +1,19 @@
-using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
 using System.Linq;
-using System.Diagnostics;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class DeepCoinBookSubscription : Subscription<SocketResponse, SocketResponse>
+    internal class DeepCoinBookSubscription : Subscription
     {
         private readonly SocketApiClient _client;
         private readonly Action<DataEvent<DeepCoinOrderBookUpdate>> _handler;
@@ -32,11 +30,12 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         {
             _client = client;
             _handler = handler;
-            _filter = filter;
+            _filter = "DeepCoin_" + filter;
             _topic = topic;
             _table = table;
 
-            MessageMatcher = MessageMatcher.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + filter, pushAction + "SwapU," + filter], DoHandleMessage);
+            MessageMatcher = MessageMatcher.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + _filter, pushAction + "SwapU," + _filter], DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<DeepCoinOrderBookUpdateEntry>>(pushAction, filter, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -67,18 +66,18 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<DeepCoinOrderBookUpdateEntry>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinOrderBookUpdateEntry> message)
         {
             var update = new DeepCoinOrderBookUpdate
             {
-                SequenceNumber = message.Data.BusinessNumber,
-                Asks = message.Data.Result.Where(x => x.Table.Equals(_table) && x.Data.Direction == Enums.OrderSide.Sell).Select(x => x.Data).ToArray(),
-                Bids = message.Data.Result.Where(x => x.Table.Equals(_table) && x.Data.Direction == Enums.OrderSide.Buy).Select(x => x.Data).ToArray()
+                SequenceNumber = message.BusinessNumber,
+                Asks = message.Result.Where(x => x.Table.Equals(_table) && x.Data.Direction == Enums.OrderSide.Sell).Select(x => x.Data).ToArray(),
+                Bids = message.Result.Where(x => x.Table.Equals(_table) && x.Data.Direction == Enums.OrderSide.Buy).Select(x => x.Data).ToArray()
             };
 
             // An update only seems to be complete when the last table is of the "CurrentTime" table.
             // If an update doesn't have that there will be another update message with the same sequence number
-            var complete = message.Data.Result.Any(x => x.Table == "CurrentTime") || message.Data.BusinessNumber == 0;
+            var complete = message.Result.Any(x => x.Table == "CurrentTime") || message.BusinessNumber == 0;
             if (!complete)
             {
                 // Cache this incomplete update, we need the next message to complete it
@@ -91,7 +90,10 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 if (_incompleteUpdate.SequenceNumber != update.SequenceNumber)
                 {
                     // We have a cached update, but the next message is not the same sequence?
-                    _handler.Invoke(message.As(update, message.Data.Action, message.Data.Result.First().Data.Symbol, message.Data.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
+                    _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(DeepCoinExchange.ExchangeName, update, receiveTime, originalData)
+                        .WithStreamId(message.Action)
+                        .WithSymbol(message.Result.First().Data.Symbol)
+                        .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
                     _incompleteUpdate = null;
                 }
                 else
@@ -111,7 +113,10 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 }
             }
 
-            _handler.Invoke(message.As(update, message.Data.Action, message.Data.Result.First().Data.Symbol, message.Data.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
+            _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(DeepCoinExchange.ExchangeName, update, receiveTime, originalData)
+                .WithStreamId(message.Action)
+                .WithSymbol(message.Result.First().Data.Symbol)
+                .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

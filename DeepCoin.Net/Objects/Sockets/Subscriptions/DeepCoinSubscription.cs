@@ -1,42 +1,43 @@
-using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net;
 using DeepCoin.Net.Objects.Internal;
-using System.Linq;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class DeepCoinSubscription<T> : Subscription<SocketResponse, SocketResponse>
+    internal class DeepCoinSubscription<T> : Subscription
     {
         private readonly SocketApiClient _client;
-        private readonly Action<DataEvent<TableData<T>[]>> _handler;
+        private readonly Action<DateTime, string?, SocketUpdate<T>> _handler;
         private readonly string _pushAction;
         private readonly string _filter;
         private readonly string _topic;
-        private readonly string _table;
         private int _subId;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public DeepCoinSubscription(ILogger logger, SocketApiClient client, string pushAction, string table, string filter, string topic, Action<DataEvent<TableData<T>[]>> handler, bool auth) : base(logger, auth)
+        public DeepCoinSubscription(ILogger logger, SocketApiClient client, string pushAction, string filter, string topic, Action<DateTime, string?, SocketUpdate<T>> handler, bool auth) : base(logger, auth)
         {
             _client = client;
             _handler = handler;
             _pushAction = pushAction;
-            _filter = filter;
+            _filter = "DeepCoin_" + filter;
             _topic = topic;
-            _table = table;
 
-            MessageMatcher = MessageMatcher.Create<SocketUpdate<T>>([pushAction + filter, pushAction + "SwapU," + filter, pushAction + "Spot," + filter, pushAction + "Swap," + filter], DoHandleMessage);
+            MessageMatcher = MessageMatcher.Create<SocketUpdate<T>>(
+                [pushAction + _filter, 
+                pushAction + "SwapU," + _filter,
+                pushAction + "Spot," + _filter,
+                pushAction + "Swap," + _filter], DoHandleMessage);
+
+            MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<T>>(
+                pushAction, filter, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -67,9 +68,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<SocketUpdate<T>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<T> message)
         {
-            _handler.Invoke(message.As(message.Data.Result.Where(x => x.Table.Equals(_table)).ToArray(), message.Data.Action, null, SocketUpdateType.Update));
+            _handler.Invoke(receiveTime, originalData, message);
             return CallResult.SuccessResult;
         }
     }

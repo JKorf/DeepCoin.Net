@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Net;
 using System.Net.Http;
 using DeepCoin.Net;
 using DeepCoin.Net.Clients;
@@ -13,6 +12,7 @@ using DeepCoin.Net.Interfaces;
 using DeepCoin.Net.Interfaces.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.SymbolOrderBooks;
+using CryptoExchange.Net.Interfaces.Clients;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

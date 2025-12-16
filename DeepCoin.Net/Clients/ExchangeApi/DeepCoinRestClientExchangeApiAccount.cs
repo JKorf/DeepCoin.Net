@@ -1,7 +1,5 @@
 using CryptoExchange.Net.Objects;
-using DeepCoin.Net.Clients.ExchangeApi;
 using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;

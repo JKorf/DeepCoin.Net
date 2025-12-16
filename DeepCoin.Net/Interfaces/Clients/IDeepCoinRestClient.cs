@@ -1,5 +1,5 @@
 using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Interfaces.Clients;
 using CryptoExchange.Net.Objects.Options;
 using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
 

@@ -120,9 +120,6 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.TryParseError(CryptoExchange.Net.Objects.RequestDefinition,System.Collections.Generic.KeyValuePair{System.String,System.String[]}[],CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
@@ -253,7 +250,7 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SharedClient">
@@ -261,6 +258,815 @@
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.Boolean">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.Decimal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableDecimal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.AccountType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.BillType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.ContractType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableContractType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DepositStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.KlineInterval">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.OrderSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.OrderStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.OrderType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.PositionSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullablePositionSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.PositionType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.PriceType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullablePriceType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.ProductGroup">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.QuantityType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableQuantityType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SymbolStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SymbolType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TradeMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TradeRole">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableTradeRole">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TransferStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.WithdrawStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponse">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinBalanceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinBillArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinCancellationResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinDepositPage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinFundingRateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinLeverage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinListenKey">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinOrderResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinPositionArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinSymbolArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinTransferPage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinTransferResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinUserTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinWithdrawPage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketResponse">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinAccountUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinBalanceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinOrderBookUpdateEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinPositionUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinSymbolUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinTriggerOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinUserTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinAccountUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinAccountUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinBalanceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinBalanceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinKlineUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderBookUpdateEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderBookUpdateEntryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinPositionUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinPositionUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinSymbolUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinSymbolUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTriggerOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTriggerOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinUserTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinUserTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinAccountUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinAccountUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalance">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalanceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalanceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalanceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBill">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBillArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResultEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResultEntryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDeposit">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDepositArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDepositPage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDepositPageArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinFundingRate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinFundingRateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKlineUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinLeverage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinLeverageArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinListenKey">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinListenKeyArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookEntryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdateEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdateEntryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPosition">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPositionArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPositionUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPositionUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbol">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbolArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbolUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbolUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransfer">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferPage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferPageArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTriggerOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTriggerOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawalArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawPage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawPageArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DictionaryStringObject">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.IDictionaryStringObject">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.DateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableDateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.Int32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableInt32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.Int64">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.NullableInt64">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.Object">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.StringArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DeepCoin.Net.Converters.DeepCoinSourceGenerationContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
         </member>
         <member name="T:DeepCoin.Net.DeepCoinEnvironment">
             <summary>
@@ -3081,30 +3887,30 @@
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry}})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinBookSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdateEntry})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,CryptoExchange.Net.Clients.SocketApiClient,System.String,System.String,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.TableData{`0}[]}},System.Boolean)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,CryptoExchange.Net.Clients.SocketApiClient,System.String,System.String,System.String,System.Action{System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{`0}},System.Boolean)">
             <summary>
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.GetUnsubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{`0}})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{`0})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription">
@@ -3115,13 +3921,13 @@
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate}})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,DeepCoin.Net.Objects.Internal.SocketUpdate{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate})">
             <inheritdoc />
         </member>
         <member name="T:DeepCoin.Net.SymbolOrderBooks.DeepCoinOrderBookFactory">
@@ -3181,828 +3987,19 @@
         <member name="M:DeepCoin.Net.SymbolOrderBooks.DeepCoinSymbolOrderBook.Dispose(System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.Boolean">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.Decimal">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableDecimal">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.AccountType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.BillType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.ContractType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableContractType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DepositStatus">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.KlineInterval">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.OrderSide">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.OrderStatus">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.OrderType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.PositionSide">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullablePositionSide">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.PositionType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.PriceType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullablePriceType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.ProductGroup">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.QuantityType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableQuantityType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SymbolStatus">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SymbolType">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TradeMode">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TradeRole">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableTradeRole">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TransferStatus">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.WithdrawStatus">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponse">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinBalanceArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinBillArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinCancellationResult">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinDepositPage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinFundingRateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinKlineArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinLeverage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinListenKey">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinOrderArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinOrderBook">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinOrderResult">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinPositionArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinSymbolArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinTickerArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinTransferPage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinTransferResult">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinUserTradeArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinResponseDeepCoinWithdrawPage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketRequest">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketResponse">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinAccountUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinBalanceUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinKlineUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinOrderBookUpdateEntry">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinOrderUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinPositionUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinSymbolUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinTradeUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinTriggerOrderUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.SocketUpdateDeepCoinUserTradeUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinAccountUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinAccountUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinBalanceUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinBalanceUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinKlineUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinKlineUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderBookUpdateEntry">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderBookUpdateEntryArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinOrderUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinPositionUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinPositionUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinSymbolUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinSymbolUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTradeUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTradeUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTriggerOrderUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinTriggerOrderUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinUserTradeUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.TableDataDeepCoinUserTradeUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinAccountUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinAccountUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalance">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalanceArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalanceUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBalanceUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBill">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinBillArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResult">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResultArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResultEntry">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinCancellationResultEntryArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDeposit">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDepositArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDepositPage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinDepositPageArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinFundingRate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinFundingRateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKline">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKlineArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKlineUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinKlineUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinLeverage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinLeverageArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinListenKey">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinListenKeyArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrder">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBook">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookEntry">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookEntryArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdateEntry">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderBookUpdateEntryArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderResult">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderResultArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinOrderUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPosition">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPositionArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPositionUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinPositionUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbol">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbolArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbolUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinSymbolUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTicker">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTickerArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTradeUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTradeUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransfer">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferPage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferPageArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferResult">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTransferResultArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTriggerOrderUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinTriggerOrderUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTrade">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTradeArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTradeUpdate">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinUserTradeUpdateArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawal">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawalArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawPage">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DeepCoinWithdrawPageArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DictionaryStringObject">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.IDictionaryStringObject">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.DateTime">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableDateTime">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.Int32">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableInt32">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.Int64">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.NullableInt64">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.Object">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.String">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.StringArray">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.Default">
-            <summary>
-            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
-            </summary>
-        </member>
-        <member name="P:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.GeneratedSerializerOptions">
-            <summary>
-            The source-generated options associated with this context.
-            </summary>
-        </member>
-        <member name="M:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.#ctor">
-            <inheritdoc/>
-        </member>
-        <member name="M:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.#ctor(System.Text.Json.JsonSerializerOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CryptoCom.Net.Converters.DeepCoinSourceGenerationContext.GetTypeInfo(System.Type)">
-            <inheritdoc/>
-        </member>
         <member name="T:CryptoExchange.Net.Interfaces.CryptoClientExtensions">
             <summary>
             Extensions for the ICryptoRestClient and ICryptoSocketClient interfaces
             </summary>
         </member>
-        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.ICryptoRestClient)">
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.Clients.ICryptoRestClient)">
             <summary>
             Get the DeepCoin REST Api client
             </summary>
             <param name="baseClient"></param>
             <returns></returns>
         </member>
-        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.ICryptoSocketClient)">
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.DeepCoin(CryptoExchange.Net.Interfaces.Clients.ICryptoSocketClient)">
             <summary>
             Get the DeepCoin Websocket Api client
             </summary>
@@ -4032,6 +4029,9 @@
         </member>
         <member name="M:Microsoft.Extensions.Configuration.Binder.SourceGeneration.BindingExtensions.Bind_DeepCoinOptions(Microsoft.Extensions.Configuration.IConfiguration,System.Object)">
             <summary>Attempts to bind the given object instance to configuration values by matching property names against configuration keys recursively.</summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Binder.SourceGeneration.BindingExtensions.TryGetConfigurationValue(Microsoft.Extensions.Configuration.IConfiguration,System.String,System.String@)">
+            <summary>Tries to get the configuration value for the specified key.</summary>
         </member>
         <member name="M:Microsoft.Extensions.Configuration.Binder.SourceGeneration.BindingExtensions.ValidateConfigurationKeys(System.Type,System.Lazy{System.Collections.Generic.HashSet{System.String}},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Configuration.BinderOptions)">
             <summary>If required by the binder options, validates that there are no unknown keys in the input configuration object.</summary>

@@ -1,10 +1,10 @@
 using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using System.Collections.Generic;
-using DeepCoin.Net.Objects.Models;
 using DeepCoin.Net.Objects.Internal;
 using CryptoExchange.Net.Clients;
+using System;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace DeepCoin.Net.Objects.Sockets
 {
@@ -19,15 +19,15 @@ namespace DeepCoin.Net.Objects.Sockets
         {
             _client = client;
             MessageMatcher = MessageMatcher.Create<SocketResponse>(request.RequestId.ToString(), HandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketResponse>(request.RequestId.ToString(), HandleMessage);
         }
 
-        public CallResult<SocketResponse> HandleMessage(SocketConnection connection, DataEvent<SocketResponse> message)
+        public CallResult<SocketResponse> HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketResponse message)
         {
-            var result = message.Data;
-            if (result.ErrorCode != 0)
-                return message.ToCallResult<SocketResponse>(new ServerError(result.ErrorCode, _client.GetErrorInfo(result.ErrorCode, result.ErrorMessage)));
+            if (message.ErrorCode != 0)
+                return new CallResult<SocketResponse>(new ServerError(message.ErrorCode, _client.GetErrorInfo(message.ErrorCode, message.ErrorMessage)));
 
-            return message.ToCallResult();
+            return new CallResult<SocketResponse>(message, originalData, null);
         }
     }
 }

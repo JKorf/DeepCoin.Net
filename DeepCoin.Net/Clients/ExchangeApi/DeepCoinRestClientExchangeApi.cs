@@ -1,9 +1,7 @@
-using CryptoExchange.Net;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,9 +12,11 @@ using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.SharedApis;
 using DeepCoin.Net.Objects.Internal;
-using DeepCoin.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Converters.MessageParsing;
+using System.Net.Http.Headers;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
+using DeepCoin.Net.Clients.MessageHandlers;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -27,6 +27,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
 
         protected override ErrorMapping ErrorMapping => DeepCoinErrors.Errors;
+
+        protected override IRestMessageHandler MessageHandler => new DeepCoinRestMessageHandler(DeepCoinErrors.Errors);
         #endregion
 
         #region Api clients
@@ -84,41 +86,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return result.AsError<T>(new ServerError(result.Data.Code, GetErrorInfo(result.Data.Code, result.Data.Message!)));
 
             return result.As<T>(result.Data.Data);
-        }
-
-        /// <inheritdoc />
-        protected override Error? TryParseError(RequestDefinition request, KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor)
-        {
-            if (!accessor.IsValid)
-                return new ServerError(ErrorInfo.Unknown);
-
-            var code = accessor.GetValue<int?>(MessagePath.Get().Property("code"));
-            if (code == 0)
-                return null;
-
-            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
-            if (msg == null)
-                return new ServerError(ErrorInfo.Unknown);
-
-            if (code == null)
-                return new ServerError(ErrorInfo.Unknown with { Message = msg });
-
-            return new ServerError(code.Value, GetErrorInfo(code.Value, msg));
-        }
-
-        protected override Error ParseErrorResponse(int httpStatusCode, KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor, Exception? exception) {
-            if (!accessor.IsValid)
-                return new ServerError(ErrorInfo.Unknown, exception);
-
-            var code = accessor.GetValue<int?>(MessagePath.Get().Property("code"));
-            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
-            if (msg == null)
-                return new ServerError(ErrorInfo.Unknown, exception);
-
-            if (code == null)
-                return new ServerError(ErrorInfo.Unknown with { Message = msg }, exception);
-
-            return new ServerError(code.Value, GetErrorInfo(code.Value, msg), exception);
         }
 
         /// <inheritdoc />
