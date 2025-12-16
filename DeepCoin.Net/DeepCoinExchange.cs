@@ -88,7 +88,12 @@ namespace DeepCoin.Net
         public static string FormatWebsocketSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null)
         {
             if (tradingMode == TradingMode.Spot)
+            {
+                if (quoteAsset.Equals(SharedSymbol.UsdOrStable))
+                    quoteAsset = AssetAliases.CommonToExchangeName(SharedSymbol.UsdOrStable.ToUpperInvariant());
+
                 return baseAsset + "/" + quoteAsset;
+            }
 
             return baseAsset + quoteAsset;
         }
