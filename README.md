@@ -142,6 +142,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 3.0.2 - 17 Dec 2025
+    * Fix SharedSymbol.UsdOrStable mapping when using order book factory for spot asset
+
 * Version 3.0.1 - 16 Dec 2025
     * Fixed release
 
