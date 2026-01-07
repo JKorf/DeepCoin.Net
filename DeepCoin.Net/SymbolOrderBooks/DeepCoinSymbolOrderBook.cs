@@ -81,9 +81,9 @@ namespace DeepCoin.Net.SymbolOrderBooks
         private void HandleUpdate(DataEvent<DeepCoinOrderBookUpdate> data)
         {
             if (data.UpdateType == SocketUpdateType.Snapshot)
-                SetInitialOrderBook(data.Data.SequenceNumber, data.Data.Bids, data.Data.Asks);
+                SetInitialOrderBook(data.Data.SequenceNumber, data.Data.Bids, data.Data.Asks, data.DataTime, data.DataTimeLocal);
             else
-                UpdateOrderBook(data.Data.SequenceNumber, data.Data.Bids, data.Data.Asks);
+                UpdateOrderBook(data.Data.SequenceNumber, data.Data.Bids, data.Data.Asks, data.DataTime, data.DataTimeLocal);
         }
 
         /// <inheritdoc />

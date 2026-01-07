@@ -1,6 +1,7 @@
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using DeepCoin.Net.Enums;
+using System;
 using System.Text.Json.Serialization;
 
 namespace DeepCoin.Net.Objects.Models
@@ -61,5 +62,10 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("Orders")]
         public int Orders { get; set; }
+
+        [JsonInclude, JsonPropertyName("Seconds")]
+        internal DateTime? Timestamp { get; set; }
+        [JsonInclude, JsonPropertyName("MilliSecond")]
+        internal long? Ms { get; set; }
     }
 }

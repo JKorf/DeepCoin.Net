@@ -123,9 +123,6 @@
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.GetTimeSyncInfo">
-            <inheritdoc />
-        </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
@@ -248,9 +245,6 @@
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SharedClient">
@@ -3916,7 +3910,7 @@
         <member name="T:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}})">
+        <member name="M:DeepCoin.Net.Objects.Sockets.Subscriptions.DeepCoinUserSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}})">
             <summary>
             ctor
             </summary>

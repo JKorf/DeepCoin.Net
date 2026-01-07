@@ -77,7 +77,8 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 
             // An update only seems to be complete when the last table is of the "CurrentTime" table.
             // If an update doesn't have that there will be another update message with the same sequence number
-            var complete = message.Result.Any(x => x.Table == "CurrentTime") || message.BusinessNumber == 0;
+            var currentTimeTable = message.Result.SingleOrDefault(x => x.Table == "CurrentTime");
+            var complete = currentTimeTable != null || message.BusinessNumber == 0;
             if (!complete)
             {
                 // Cache this incomplete update, we need the next message to complete it
@@ -113,10 +114,18 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 }
             }
 
+            DateTime? timestamp = null;
+            if (currentTimeTable != null)
+            {
+                timestamp = currentTimeTable!.Data.Timestamp!.Value.AddMilliseconds(currentTimeTable.Data.Ms!.Value);
+                _client.UpdateTimeOffset(timestamp.Value);
+            }
+
             _handler.Invoke(new DataEvent<DeepCoinOrderBookUpdate>(DeepCoinExchange.ExchangeName, update, receiveTime, originalData)
                 .WithStreamId(message.Action)
                 .WithSymbol(message.Result.First().Data.Symbol)
-                .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
+                .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
+                .WithDataTimestamp(timestamp, _client.GetTimeOffset()));
             return CallResult.SuccessResult;
         }
     }

@@ -24,8 +24,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     internal partial class DeepCoinRestClientExchangeApi : RestApiClient, IDeepCoinRestClientExchangeApi
     {
         #region fields 
-        internal static TimeSyncState _timeSyncState = new TimeSyncState("Exchange Api");
-
+        
         protected override ErrorMapping ErrorMapping => DeepCoinErrors.Errors;
 
         protected override IRestMessageHandler MessageHandler => new DeepCoinRestMessageHandler(DeepCoinErrors.Errors);
@@ -91,13 +90,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync() => throw new NotImplementedException();
 
-        /// <inheritdoc />
-        public override TimeSyncInfo? GetTimeSyncInfo() => null;
 
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null) 
             => DeepCoinExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
-        public override TimeSpan? GetTimeOffset() => default;
 
         /// <inheritdoc />
         public IDeepCoinRestClientExchangeApiShared SharedClient => this;
