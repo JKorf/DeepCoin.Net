@@ -125,7 +125,8 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 .WithStreamId(message.Action)
                 .WithSymbol(message.Result.First().Data.Symbol)
                 .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
-                .WithDataTimestamp(timestamp, _client.GetTimeOffset()));
+                .WithDataTimestamp(timestamp, _client.GetTimeOffset())
+                .WithSequenceNumber(message.BusinessNumber));
             return CallResult.SuccessResult;
         }
     }
