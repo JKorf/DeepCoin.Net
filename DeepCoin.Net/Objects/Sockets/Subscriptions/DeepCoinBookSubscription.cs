@@ -34,7 +34,6 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _topic = topic;
             _table = table;
 
-            MessageMatcher = MessageMatcher.Create<SocketUpdate<DeepCoinOrderBookUpdateEntry>>([pushAction + _filter, pushAction + "SwapU," + _filter], DoHandleMessage);
             MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<DeepCoinOrderBookUpdateEntry>>(pushAction, filter, DoHandleMessage);
         }
 

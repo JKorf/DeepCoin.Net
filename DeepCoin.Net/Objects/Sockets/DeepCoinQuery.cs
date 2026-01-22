@@ -18,7 +18,6 @@ namespace DeepCoin.Net.Objects.Sockets
         }, authenticated, weight)
         {
             _client = client;
-            MessageMatcher = MessageMatcher.Create<SocketResponse>(request.RequestId.ToString(), HandleMessage);
             MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketResponse>(request.RequestId.ToString(), HandleMessage);
         }
 

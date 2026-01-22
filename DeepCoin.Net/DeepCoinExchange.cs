@@ -15,6 +15,19 @@ namespace DeepCoin.Net
     public static class DeepCoinExchange
     {
         /// <summary>
+        /// Platform metadata
+        /// </summary>
+        public static PlatformInfo Metadata { get; } = new PlatformInfo(
+                "DeepCoin",
+                "DeepCoin",
+                "https://raw.githubusercontent.com/JKorf/DeepCoin.Net/master/DeepCoin.Net/Icon/icon.png",
+                "https://www.deepcoin.com/",
+                ["https://www.deepcoin.com/docs/authentication"],
+                PlatformType.CryptoCurrencyExchange,
+                CentralizationType.Centralized
+                );
+
+        /// <summary>
         /// Exchange name
         /// </summary>
         public static string ExchangeName => "DeepCoin";

@@ -111,9 +111,6 @@
         <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.ExchangeName">
             <inheritdoc />
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateAccessor">
-            <inheritdoc />
-        </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinRestClientExchangeApi.CreateSerializer">
             <inheritdoc />
         </member>
@@ -220,9 +217,6 @@
             ctor
             </summary>
         </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.CreateAccessor(System.Net.WebSockets.WebSocketMessageType)">
-            <inheritdoc />
-        </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.CreateSerializer">
             <inheritdoc />
         </member>
@@ -242,9 +236,6 @@
             <inheritdoc />
         </member>
         <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SubscribeToUserDataUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinBalanceUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinPositionUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinUserTradeUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinAccountUpdate[]}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTriggerOrderUpdate[]}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="P:DeepCoin.Net.Clients.ExchangeApi.DeepCoinSocketClientExchangeApi.SharedClient">
@@ -1110,6 +1101,11 @@
         <member name="T:DeepCoin.Net.DeepCoinExchange">
             <summary>
             DeepCoin exchange information and configuration
+            </summary>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinExchange.Metadata">
+            <summary>
+            Platform metadata
             </summary>
         </member>
         <member name="P:DeepCoin.Net.DeepCoinExchange.ExchangeName">

@@ -15,7 +15,6 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
     /// <inheritdoc />
     internal class DeepCoinUserSubscription : Subscription
     {
-        private static readonly MessagePath _actionPath = MessagePath.Get().Property("action");
         private readonly DeepCoinSocketClientExchangeApi _client;
 
         private readonly Action<DataEvent<DeepCoinOrderUpdate[]>>? _orderUpdateHandler;
@@ -47,15 +46,6 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _userTradeUpdateHandler = userTradeUpdate;
             _accountUpdateHandler = accountUpdate;
             _triggerUpdateHandler = triggerUpdateHandler;
-
-            MessageMatcher = MessageMatcher.Create([
-                new MessageHandlerLink<SocketUpdate<DeepCoinOrderUpdate>>("PushOrder", DoHandleMessage),
-                new MessageHandlerLink<SocketUpdate<DeepCoinBalanceUpdate>>("PushAccount", DoHandleMessage),
-                new MessageHandlerLink<SocketUpdate<DeepCoinPositionUpdate>>("PushPosition", DoHandleMessage),
-                new MessageHandlerLink<SocketUpdate<DeepCoinUserTradeUpdate>>("PushTrade", DoHandleMessage),
-                new MessageHandlerLink<SocketUpdate<DeepCoinAccountUpdate>>("PushAccountDetail", DoHandleMessage),
-                new MessageHandlerLink<SocketUpdate<DeepCoinTriggerOrderUpdate>>("PushTriggerOrder", DoHandleMessage)
-                ]);
 
             MessageRouter = MessageRouter.Create([
                 MessageRoute<SocketUpdate<DeepCoinOrderUpdate>>.CreateWithoutTopicFilter("PushOrder", DoHandleMessage),

@@ -30,12 +30,6 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _filter = "DeepCoin_" + filter;
             _topic = topic;
 
-            MessageMatcher = MessageMatcher.Create<SocketUpdate<T>>(
-                [pushAction + _filter, 
-                pushAction + "SwapU," + _filter,
-                pushAction + "Spot," + _filter,
-                pushAction + "Swap," + _filter], DoHandleMessage);
-
             MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<T>>(
                 pushAction, filter, DoHandleMessage);
         }

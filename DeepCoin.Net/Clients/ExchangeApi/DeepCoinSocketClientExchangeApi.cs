@@ -32,13 +32,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     /// </summary>
     internal partial class DeepCoinSocketClientExchangeApi : SocketApiClient, IDeepCoinSocketClientExchangeApi
     {
-        #region fields
-        private static readonly MessagePath _actionPath = MessagePath.Get().Property("action");
-        private static readonly MessagePath _errorMsgPath = MessagePath.Get().Property("errorMsg");
-        private static readonly MessagePath _actionIdPath = MessagePath.Get().Property("result").Index(0).Property("data").Property("LocalNo");
-        private static readonly MessagePath _indexPath = MessagePath.Get().Property("index");
-        #endregion
-
         #region constructor/destructor
 
         /// <summary>
@@ -48,7 +41,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             base(logger, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
             KeepAliveInterval = TimeSpan.Zero;
-            ProcessUnparsableMessages = true;
 
             RegisterPeriodicQuery("ping",
                 TimeSpan.FromSeconds(30), 
@@ -69,8 +61,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
         #endregion
 
-        /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor(WebSocketMessageType type) => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
@@ -207,29 +197,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         {
             var subscription = new DeepCoinUserSubscription(_logger, this, onOrderMessage, onBalanceMessage, onPositionMessage, onUserTradeMessage, onAccountMessage, onTriggerOrderMessage);
             return await SubscribeAsync(BaseAddress.AppendPath("v1/private?listenKey=" + listenKey), subscription, ct).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
-        public override string? GetListenerIdentifier(IMessageAccessor message)
-        {
-            if (!message.IsValid)
-                return "pong";
-
-            var action = message.GetValue<string>(_actionPath);
-            if (action == null)
-                return null;
-
-            if (action.Equals("RecvTopicAction", StringComparison.InvariantCulture))
-            {
-                var id = message.GetValue<int?>(_actionIdPath);
-                return id?.ToString();
-            }
-
-            var index = message.GetValue<string>(_indexPath);
-            // ErrorMsg field contains first snapshot data..? {"action":"PushMarketOrder","requestNo":0,"errorCode":0,"errorMsg":"DeepCoin_ETHUSDT","result": [] }
-            index ??= message.GetValue<string>(_errorMsgPath);
-
-            return action + index;
         }
 
         /// <inheritdoc />
