@@ -222,6 +222,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 onPositionMessage: update => handler(update.ToType<SharedPosition[]>(update.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicSpotId, x.Symbol), x.Symbol, x.PositionSize, x.UpdateTime)
                 {
                     AverageOpenPrice = x.OpenPrice,
+                    PositionMode = SharedPositionMode.HedgeMode,
                     PositionSide = x.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
                     Leverage = x.Leverage
                 }).ToArray())),

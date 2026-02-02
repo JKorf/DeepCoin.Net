@@ -1139,7 +1139,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             {
                 LiquidationPrice = x.LiquidationPrice == 0 ? null : x.LiquidationPrice,
                 Leverage = x.Leverage,
-                AverageOpenPrice = x.AveragePrice,                
+                AverageOpenPrice = x.AveragePrice,
+                PositionMode = SharedPositionMode.HedgeMode,
                 PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short
             }).ToArray());
         }
