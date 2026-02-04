@@ -784,7 +784,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 MaxShortLeverage = s.MaxLeverage
             }).ToArray());
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicFuturesId, response.Data);
+            // Also register [BaseAsset][QuoteAsset] as they might be returned for websocket updates
+            var symbolRegistrations = response.Data
+               .Concat(response.Data.Select(x => new SharedSpotSymbol(x.BaseAsset, x.QuoteAsset, x.BaseAsset + x.QuoteAsset, x.Trading, x.TradingMode))).ToArray();
+
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicFuturesId, symbolRegistrations);
             return response;
         }
         async Task<ExchangeResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)

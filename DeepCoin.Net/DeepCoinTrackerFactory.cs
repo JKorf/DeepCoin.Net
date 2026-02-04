@@ -1,12 +1,16 @@
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Trackers.Klines;
 using CryptoExchange.Net.Trackers.Trades;
+using CryptoExchange.Net.Trackers.UserData.Interfaces;
+using CryptoExchange.Net.Trackers.UserData.Objects;
+using DeepCoin.Net.Clients;
 using DeepCoin.Net.Interfaces;
 using DeepCoin.Net.Interfaces.Clients;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
-using DeepCoin.Net.Clients;
 
 namespace DeepCoin.Net
 {
@@ -71,6 +75,64 @@ namespace DeepCoin.Net
                 symbol,
                 limit,
                 period
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserSpotDataTracker CreateUserSpotDataTracker(SpotUserDataTrackerConfig config)
+        {
+            var restClient = _serviceProvider?.GetRequiredService<IDeepCoinRestClient>() ?? new DeepCoinRestClient();
+            var socketClient = _serviceProvider?.GetRequiredService<IDeepCoinSocketClient>() ?? new DeepCoinSocketClient();
+            return new DeepCoinUserSpotDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<DeepCoinUserSpotDataTracker>>() ?? new NullLogger<DeepCoinUserSpotDataTracker>(),
+                restClient,
+                socketClient,
+                null,
+                config
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, SpotUserDataTrackerConfig config, ApiCredentials credentials, DeepCoinEnvironment? environment = null)
+        {
+            var clientProvider = _serviceProvider?.GetRequiredService<IDeepCoinUserClientProvider>() ?? new DeepCoinUserClientProvider();
+            var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);
+            var socketClient = clientProvider.GetSocketClient(userIdentifier, credentials, environment);
+            return new DeepCoinUserSpotDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<DeepCoinUserSpotDataTracker>>() ?? new NullLogger<DeepCoinUserSpotDataTracker>(),
+                restClient,
+                socketClient,
+                userIdentifier,
+                config
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserFuturesDataTracker CreateUserFuturesDataTracker(FuturesUserDataTrackerConfig config)
+        {
+            var restClient = _serviceProvider?.GetRequiredService<IDeepCoinRestClient>() ?? new DeepCoinRestClient();
+            var socketClient = _serviceProvider?.GetRequiredService<IDeepCoinSocketClient>() ?? new DeepCoinSocketClient();
+            return new DeepCoinUserFuturesDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<DeepCoinUserFuturesDataTracker>>() ?? new NullLogger<DeepCoinUserFuturesDataTracker>(),
+                restClient,
+                socketClient,
+                null,
+                config
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserFuturesDataTracker CreateUserFuturesDataTracker(string userIdentifier, FuturesUserDataTrackerConfig config, ApiCredentials credentials, DeepCoinEnvironment? environment = null)
+        {
+            var clientProvider = _serviceProvider?.GetRequiredService<IDeepCoinUserClientProvider>() ?? new DeepCoinUserClientProvider();
+            var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);
+            var socketClient = clientProvider.GetSocketClient(userIdentifier, credentials, environment);
+            return new DeepCoinUserFuturesDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<DeepCoinUserFuturesDataTracker>>() ?? new NullLogger<DeepCoinUserFuturesDataTracker>(),
+                restClient,
+                socketClient,
+                userIdentifier,
+                config
                 );
         }
     }
