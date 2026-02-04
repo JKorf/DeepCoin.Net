@@ -86,7 +86,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (result.Data.Total > (result.Data.Page * result.Data.PageSize))
                 nextToken = new PageToken(page++, pageSize);
 
-            return result.AsExchangeResult<SharedDeposit[]>(Exchange, TradingMode.Spot, result.Data.Data.Select(x => new SharedDeposit(x.Asset, x.Quantity, x.DepositStatus == Enums.DepositStatus.Success, x.CreateTime)
+            return result.AsExchangeResult<SharedDeposit[]>(Exchange, TradingMode.Spot, result.Data.Data.Select(x => 
+            new SharedDeposit(
+                x.Asset,
+                x.Quantity,
+                x.DepositStatus == Enums.DepositStatus.Success,
+                x.CreateTime,
+                x.DepositStatus == DepositStatus.Success ? SharedTransferStatus.Completed
+                : x.DepositStatus == DepositStatus.Confirming ? SharedTransferStatus.InProgress
+                : SharedTransferStatus.Failed)
             {
                 TransactionId = x.TransactionHash,
                 Network = x.NetworkName,
