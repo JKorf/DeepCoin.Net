@@ -86,7 +86,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (result.Data.Total > (result.Data.Page * result.Data.PageSize))
                 nextToken = new PageToken(page++, pageSize);
 
-            return result.AsExchangeResult<SharedDeposit[]>(Exchange, TradingMode.Spot, result.Data.Data.Select(x => new SharedDeposit(x.Asset, x.Quantity, x.DepositStatus == Enums.DepositStatus.Success, x.CreateTime)
+            return result.AsExchangeResult<SharedDeposit[]>(Exchange, TradingMode.Spot, result.Data.Data.Select(x => 
+            new SharedDeposit(
+                x.Asset,
+                x.Quantity,
+                x.DepositStatus == Enums.DepositStatus.Success,
+                x.CreateTime,
+                x.DepositStatus == DepositStatus.Success ? SharedTransferStatus.Completed
+                : x.DepositStatus == DepositStatus.Confirming ? SharedTransferStatus.InProgress
+                : SharedTransferStatus.Failed)
             {
                 TransactionId = x.TransactionHash,
                 Network = x.NetworkName,
@@ -350,6 +358,44 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             return response;
         }
 
+        async Task<ExchangeResult<SharedSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsForBaseAssetAsync(string baseAsset)
+        {
+            if (!ExchangeSymbolCache.HasCached(_topicSpotId))
+            {
+                var symbols = await ((ISpotSymbolRestClient)this).GetSpotSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
+                if (!symbols)
+                    return new ExchangeResult<SharedSymbol[]>(Exchange, symbols.Error!);
+            }
+
+            return new ExchangeResult<SharedSymbol[]>(Exchange, ExchangeSymbolCache.GetSymbolsForBaseAsset(_topicSpotId, baseAsset));
+        }
+
+        async Task<ExchangeResult<bool>> ISpotSymbolRestClient.SupportsSpotSymbolAsync(SharedSymbol symbol)
+        {
+            if (symbol.TradingMode != TradingMode.Spot)
+                throw new ArgumentException(nameof(symbol), "Only Spot symbols allowed");
+
+            if (!ExchangeSymbolCache.HasCached(_topicSpotId))
+            {
+                var symbols = await ((ISpotSymbolRestClient)this).GetSpotSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
+                if (!symbols)
+                    return new ExchangeResult<bool>(Exchange, symbols.Error!);
+            }
+
+            return new ExchangeResult<bool>(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicSpotId, symbol));
+        }
+
+        async Task<ExchangeResult<bool>> ISpotSymbolRestClient.SupportsSpotSymbolAsync(string symbolName)
+        {
+            if (!ExchangeSymbolCache.HasCached(_topicSpotId))
+            {
+                var symbols = await ((ISpotSymbolRestClient)this).GetSpotSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
+                if (!symbols)
+                    return new ExchangeResult<bool>(Exchange, symbols.Error!);
+            }
+
+            return new ExchangeResult<bool>(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicSpotId, symbolName));
+        }
         #endregion
 
         #region Spot Order Client
@@ -746,10 +792,51 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 MaxShortLeverage = s.MaxLeverage
             }).ToArray());
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicFuturesId, response.Data);
+            // Also register [BaseAsset][QuoteAsset] as they might be returned for websocket updates
+            var symbolRegistrations = response.Data
+               .Concat(response.Data.Select(x => new SharedSpotSymbol(x.BaseAsset, x.QuoteAsset, x.BaseAsset + x.QuoteAsset, x.Trading, x.TradingMode))).ToArray();
+
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicFuturesId, symbolRegistrations);
             return response;
         }
+        async Task<ExchangeResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)
+        {
+            if (!ExchangeSymbolCache.HasCached(_topicFuturesId))
+            {
+                var symbols = await ((IFuturesSymbolRestClient)this).GetFuturesSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
+                if (!symbols)
+                    return new ExchangeResult<SharedSymbol[]>(Exchange, symbols.Error!);
+            }
 
+            return new ExchangeResult<SharedSymbol[]>(Exchange, ExchangeSymbolCache.GetSymbolsForBaseAsset(_topicFuturesId, baseAsset));
+        }
+
+        async Task<ExchangeResult<bool>> IFuturesSymbolRestClient.SupportsFuturesSymbolAsync(SharedSymbol symbol)
+        {
+            if (symbol.TradingMode == TradingMode.Spot)
+                throw new ArgumentException(nameof(symbol), "Spot symbols not allowed");
+
+            if (!ExchangeSymbolCache.HasCached(_topicFuturesId))
+            {
+                var symbols = await ((IFuturesSymbolRestClient)this).GetFuturesSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
+                if (!symbols)
+                    return new ExchangeResult<bool>(Exchange, symbols.Error!);
+            }
+
+            return new ExchangeResult<bool>(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicFuturesId, symbol));
+        }
+
+        async Task<ExchangeResult<bool>> IFuturesSymbolRestClient.SupportsFuturesSymbolAsync(string symbolName)
+        {
+            if (!ExchangeSymbolCache.HasCached(_topicFuturesId))
+            {
+                var symbols = await ((IFuturesSymbolRestClient)this).GetFuturesSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
+                if (!symbols)
+                    return new ExchangeResult<bool>(Exchange, symbols.Error!);
+            }
+
+            return new ExchangeResult<bool>(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicFuturesId, symbolName));
+        }
         #endregion
 
         #region Futures Order Client
@@ -1064,7 +1151,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             {
                 LiquidationPrice = x.LiquidationPrice == 0 ? null : x.LiquidationPrice,
                 Leverage = x.Leverage,
-                AverageOpenPrice = x.AveragePrice,                
+                AverageOpenPrice = x.AveragePrice,
+                PositionMode = SharedPositionMode.HedgeMode,
                 PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short
             }).ToArray());
         }

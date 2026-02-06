@@ -1209,6 +1209,37 @@
         <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateTradeTracker(CryptoExchange.Net.SharedApis.SharedSymbol,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
             <inheritdoc />
         </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateUserSpotDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateUserSpotDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig,DeepCoin.Net.DeepCoinEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateUserFuturesDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinTrackerFactory.CreateUserFuturesDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig,DeepCoin.Net.DeepCoinEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeepCoin.Net.DeepCoinUserSpotDataTracker">
+            <inheritdoc/>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinUserSpotDataTracker.#ctor(Microsoft.Extensions.Logging.ILogger{DeepCoin.Net.DeepCoinUserSpotDataTracker},DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient,DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient,System.String,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="T:DeepCoin.Net.DeepCoinUserFuturesDataTracker">
+            <inheritdoc/>
+        </member>
+        <member name="P:DeepCoin.Net.DeepCoinUserFuturesDataTracker.WebsocketPositionUpdatesAreFullSnapshots">
+            <inheritdoc/>
+        </member>
+        <member name="M:DeepCoin.Net.DeepCoinUserFuturesDataTracker.#ctor(Microsoft.Extensions.Logging.ILogger{DeepCoin.Net.DeepCoinUserFuturesDataTracker},DeepCoin.Net.Interfaces.Clients.IDeepCoinRestClient,DeepCoin.Net.Interfaces.Clients.IDeepCoinSocketClient,System.String,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
+            <summary>
+            ctor
+            </summary>
+        </member>
         <member name="T:DeepCoin.Net.Enums.AccountType">
             <summary>
             Account type
@@ -2103,6 +2134,36 @@
             <summary>
             Tracker factory
             </summary>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory.CreateUserSpotDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig,DeepCoin.Net.DeepCoinEnvironment)">
+            <summary>
+            Create a new Spot user data tracker
+            </summary>
+            <param name="userIdentifier">User identifier</param>
+            <param name="config">Configuration</param>
+            <param name="credentials">Credentials</param>
+            <param name="environment">Environment</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory.CreateUserSpotDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig)">
+            <summary>
+            Create a new spot user data tracker
+            </summary>
+            <param name="config">Configuration</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory.CreateUserFuturesDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig,DeepCoin.Net.DeepCoinEnvironment)">
+            <summary>
+            Create a new futures user data tracker
+            </summary>
+            <param name="userIdentifier">User identifier</param>
+            <param name="config">Configuration</param>
+            <param name="credentials">Credentials</param>
+            <param name="environment">Environment</param>
+        </member>
+        <member name="M:DeepCoin.Net.Interfaces.IDeepCoinTrackerFactory.CreateUserFuturesDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
+            <summary>
+            Create a new futures user data tracker
+            </summary>
+            <param name="config">Configuration</param>
         </member>
         <member name="T:DeepCoin.Net.Objects.DeepCoinApiAddresses">
             <summary>

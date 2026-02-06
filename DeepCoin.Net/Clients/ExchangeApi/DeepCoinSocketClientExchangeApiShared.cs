@@ -219,9 +219,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
-                onPositionMessage: update => handler(update.ToType<SharedPosition[]>(update.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicSpotId, x.Symbol), x.Symbol, x.PositionSize, x.UpdateTime)
+                onPositionMessage: update => handler(update.ToType<SharedPosition[]>(update.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol), x.Symbol, x.PositionSize, x.UpdateTime)
                 {
                     AverageOpenPrice = x.OpenPrice,
+                    PositionMode = SharedPositionMode.HedgeMode,
                     PositionSide = x.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
                     Leverage = x.Leverage
                 }).ToArray())),
@@ -251,7 +252,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 request.ListenKey!,
                 onUserTradeMessage: update => handler(update.ToType<SharedUserTrade[]>(update.Data.Select(x =>
                     new SharedUserTrade(
-                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicSpotId, x.Symbol),
+                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, x.Symbol),
                         x.Symbol,
                         x.OrderId.ToString(),
                         x.TradeId.ToString(),
