@@ -12,8 +12,8 @@ namespace DeepCoin.Net.Clients
     /// <inheritdoc />
     public class DeepCoinUserClientProvider : IDeepCoinUserClientProvider
     {
-        private static ConcurrentDictionary<string, IDeepCoinRestClient> _restClients = new ConcurrentDictionary<string, IDeepCoinRestClient>();
-        private static ConcurrentDictionary<string, IDeepCoinSocketClient> _socketClients = new ConcurrentDictionary<string, IDeepCoinSocketClient>();
+        private ConcurrentDictionary<string, IDeepCoinRestClient> _restClients = new ConcurrentDictionary<string, IDeepCoinRestClient>();
+        private ConcurrentDictionary<string, IDeepCoinSocketClient> _socketClients = new ConcurrentDictionary<string, IDeepCoinSocketClient>();
 
         private readonly IOptions<DeepCoinRestOptions> _restOptions;
         private readonly IOptions<DeepCoinSocketOptions> _socketOptions;
