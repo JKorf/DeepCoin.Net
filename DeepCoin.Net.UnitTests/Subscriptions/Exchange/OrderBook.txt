@@ -13,7 +13,7 @@
       "table": "MarketOrder",
       "data": {
         "ExchangeID": "DeepCoin",
-        "InstrumentID": "BTCUSDT",
+        "InstrumentID": "ETHUSDT",
         "Direction": "0",
         "Price": 29408.5,
         "Volume": 6161.0,
@@ -24,7 +24,7 @@
       "table": "MarketOrder",
       "data": {
         "ExchangeID": "DeepCoin",
-        "InstrumentID": "BTCUSDT",
+        "InstrumentID": "ETHUSDT",
         "Direction": "0",
         "Price": 29408.4,
         "Volume": 3022.0,

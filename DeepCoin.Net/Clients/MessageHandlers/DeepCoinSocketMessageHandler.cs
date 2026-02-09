@@ -18,6 +18,7 @@ namespace DeepCoin.Net.Clients.MessageHandlers
         {
             AddTopicMapping<SocketUpdate<DeepCoinSymbolUpdate>>(x => x.Result.First().Data.Symbol);
             AddTopicMapping<SocketUpdate<DeepCoinTradeUpdate>>(x => x.Result.First().Data.Symbol);
+            AddTopicMapping<SocketUpdate<DeepCoinOrderBookUpdateEntry>>(x => x.Result.First().Data.Symbol);
             AddTopicMapping<SocketUpdate<DeepCoinKlineUpdate>>(x => x.Result.First().Data.Symbol + "_1m");
         }
 
