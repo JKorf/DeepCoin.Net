@@ -137,8 +137,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("coin", asset);
             parameters.AddOptional("txHash", transactionHash);
-            parameters.AddOptionalMillisecondsString("startTime", startTime);
-            parameters.AddOptionalMillisecondsString("endTime", endTime);
+            parameters.AddOptionalSecondsString("startTime", startTime);
+            parameters.AddOptionalSecondsString("endTime", endTime);
             parameters.AddOptional("page", page);
             parameters.AddOptional("size", pageSize);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/asset/deposit-list", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
@@ -162,8 +162,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("coin", asset);
             parameters.AddOptional("txHash", transactionHash);
-            parameters.AddOptionalMillisecondsString("startTime", startTime);
-            parameters.AddOptionalMillisecondsString("endTime", endTime);
+            parameters.AddOptionalSecondsString("startTime", startTime);
+            parameters.AddOptionalSecondsString("endTime", endTime);
             parameters.AddOptional("page", page);
             parameters.AddOptional("size", pageSize);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/asset/withdraw-list", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
