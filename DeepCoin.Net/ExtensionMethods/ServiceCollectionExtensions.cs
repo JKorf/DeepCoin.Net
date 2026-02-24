@@ -13,6 +13,7 @@ using DeepCoin.Net.Interfaces.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.SymbolOrderBooks;
 using CryptoExchange.Net.Interfaces.Clients;
+using System.Threading;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -95,8 +96,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new DeepCoinRestClient(client, serviceProvider.GetRequiredService<ILoggerFactory>(), serviceProvider.GetRequiredService<IOptions<DeepCoinRestOptions>>());
             }).ConfigurePrimaryHttpMessageHandler((serviceProvider) => {
                 var options = serviceProvider.GetRequiredService<IOptions<DeepCoinRestOptions>>().Value;
-                return LibraryHelpers.CreateHttpClientMessageHandler(options.Proxy, options.HttpKeepAliveInterval);
-            });
+                return LibraryHelpers.CreateHttpClientMessageHandler(options);
+            }).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
             services.Add(new ServiceDescriptor(typeof(IDeepCoinSocketClient), x => { return new DeepCoinSocketClient(x.GetRequiredService<IOptions<DeepCoinSocketOptions>>(), x.GetRequiredService<ILoggerFactory>()); }, socketClientLifeTime ?? ServiceLifetime.Singleton));
 
             services.AddTransient<ICryptoRestClient, CryptoRestClient>();
@@ -106,7 +107,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<ITrackerFactory, DeepCoinTrackerFactory>();
             services.AddSingleton<IDeepCoinUserClientProvider, DeepCoinUserClientProvider>(x =>
             new DeepCoinUserClientProvider(
-                x.GetRequiredService<HttpClient>(),
+                x.GetRequiredService<IHttpClientFactory>().CreateClient(typeof(IDeepCoinRestClient).Name),
                 x.GetRequiredService<ILoggerFactory>(),
                 x.GetRequiredService<IOptions<DeepCoinRestOptions>>(),
                 x.GetRequiredService<IOptions<DeepCoinSocketOptions>>()));
