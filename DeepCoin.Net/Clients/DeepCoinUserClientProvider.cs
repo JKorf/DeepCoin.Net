@@ -42,6 +42,7 @@ namespace DeepCoin.Net.Clients
             IOptions<DeepCoinSocketOptions> socketOptions)
         {
             _httpClient = httpClient ?? new HttpClient();
+            _httpClient.Timeout = restOptions.Value.RequestTimeout;
             _loggerFactory = loggerFactory;
             _restOptions = restOptions;
             _socketOptions = socketOptions;
