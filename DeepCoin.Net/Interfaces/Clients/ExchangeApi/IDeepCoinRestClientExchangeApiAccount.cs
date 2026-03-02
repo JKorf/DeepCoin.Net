@@ -14,7 +14,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     {
         /// <summary>
         /// Get account balances
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBalance" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBalance" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/account/balances
+        /// </para>
         /// </summary>
         /// <param name="accountType">Account type</param>
         /// <param name="asset">Filter by asset, for example `ETH`</param>
@@ -23,7 +28,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// 
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBills" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBills" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/account/bills
+        /// </para>
         /// </summary>
         /// <param name="accountType">Account type</param>
         /// <param name="asset">The asset, for example `ETH`</param>
@@ -36,7 +46,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Set leverage for a symbol
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountSetLeverage" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountSetLeverage" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/account/set-leverage
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="leverage">Leverage</param>
@@ -83,7 +98,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get deposit history
-        /// <para><a href="https://www.deepcoin.com/docs/assets/deposit" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/assets/deposit" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/asset/deposit-list
+        /// </para>
         /// </summary>
         /// <param name="asset">Filter by asset, for example `ETH`</param>
         /// <param name="transactionHash">Filter by transaction hash</param>
@@ -96,7 +116,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get withdrawal history
-        /// <para><a href="https://www.deepcoin.com/docs/assets/withdraw" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/assets/withdraw" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/asset/withdraw-list
+        /// </para>
         /// </summary>
         /// <param name="asset">Filter by asset, for example `ETH`</param>
         /// <param name="transactionHash">Filter by transaction hash</param>
@@ -109,14 +134,24 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Start the user stream and return the listen key which can be used to subscribe to updates in the socket client
-        /// <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/privateWS/subscribe" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/listenkey/acquire
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinListenKey>> StartUserStreamAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Extend the lifetime of a listen key
-        /// <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/privateWS/subscribe" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/listenkey/extend
+        /// </para>
         /// </summary>
         /// <param name="listenKey">Listen key to extend</param>
         /// <param name="ct">Cancellation token</param>

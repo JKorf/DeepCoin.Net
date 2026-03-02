@@ -1691,7 +1691,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.GetBalancesAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
             <summary>
             Get account balances
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBalance" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBalance" /><br />
+            Endpoint:<br />
+            GET /deepcoin/account/balances
+            </para>
             </summary>
             <param name="accountType">Account type</param>
             <param name="asset">Filter by asset, for example `ETH`</param>
@@ -1700,7 +1705,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.GetBillsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Nullable{DeepCoin.Net.Enums.BillType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBills" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAccountBills" /><br />
+            Endpoint:<br />
+            GET /deepcoin/account/bills
+            </para>
             </summary>
             <param name="accountType">Account type</param>
             <param name="asset">The asset, for example `ETH`</param>
@@ -1713,7 +1723,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.SetLeverageAsync(System.String,System.Decimal,DeepCoin.Net.Enums.TradeMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
             <summary>
             Set leverage for a symbol
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountSetLeverage" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountSetLeverage" /><br />
+            Endpoint:<br />
+            POST /deepcoin/account/set-leverage
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="leverage">Leverage</param>
@@ -1724,7 +1739,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.GetDepositHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get deposit history
-            <para><a href="https://www.deepcoin.com/docs/assets/deposit" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/assets/deposit" /><br />
+            Endpoint:<br />
+            GET /deepcoin/asset/deposit-list
+            </para>
             </summary>
             <param name="asset">Filter by asset, for example `ETH`</param>
             <param name="transactionHash">Filter by transaction hash</param>
@@ -1737,7 +1757,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.GetWithdrawHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get withdrawal history
-            <para><a href="https://www.deepcoin.com/docs/assets/withdraw" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/assets/withdraw" /><br />
+            Endpoint:<br />
+            GET /deepcoin/asset/withdraw-list
+            </para>
             </summary>
             <param name="asset">Filter by asset, for example `ETH`</param>
             <param name="transactionHash">Filter by transaction hash</param>
@@ -1750,14 +1775,24 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
             <summary>
             Start the user stream and return the listen key which can be used to subscribe to updates in the socket client
-            <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/privateWS/subscribe" /><br />
+            Endpoint:<br />
+            GET /deepcoin/listenkey/acquire
+            </para>
             </summary>
             <param name="ct">Cancellation token</param>
         </member>
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Extend the lifetime of a listen key
-            <para><a href="https://www.deepcoin.com/docs/privateWS/subscribe" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/privateWS/subscribe" /><br />
+            Endpoint:<br />
+            GET /deepcoin/listenkey/extend
+            </para>
             </summary>
             <param name="listenKey">Listen key to extend</param>
             <param name="ct">Cancellation token</param>
@@ -1770,7 +1805,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetTickersAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
             <summary>
             Get ticker price info
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getMarketTickers" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getMarketTickers" /><br />
+            Endpoint:<br />
+            GET /deepcoin/market/tickers
+            </para>
             </summary>
             <param name="symbolType">Type of symbol</param>
             <param name="underlying">Filter by underlying (swap only)</param>
@@ -1780,7 +1820,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetSymbolsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Get symbols list
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getBaseInfo" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getBaseInfo" /><br />
+            Endpoint:<br />
+            GET /deepcoin/market/instruments
+            </para>
             </summary>
             <param name="type">Symbol type</param>
             <param name="underlying">Filter by underlying</param>
@@ -1790,7 +1835,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetKlinesAsync(System.String,DeepCoin.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get kline/candlestick data
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getKlineData" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getKlineData" /><br />
+            Endpoint:<br />
+            GET /deepcoin/market/candles
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="interval">Kline interval</param>
@@ -1801,7 +1851,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get order book
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/marketBooks" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinMarket/marketBooks" /><br />
+            Endpoint:<br />
+            GET /deepcoin/market/books
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="depth">Number of order book rows, max 400</param>
@@ -1810,7 +1865,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiExchangeData.GetFundingRateAsync(DeepCoin.Net.Enums.ProductGroup,System.String,System.Threading.CancellationToken)">
             <summary>
             Get funding rate
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/fundingRate" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/fundingRate" /><br />
+            Endpoint:<br />
+            GET /deepcoin/trade/funding-rate
+            </para>
             </summary>
             <param name="type">Contract type</param>
             <param name="symbol">Filter by symbol, for example `ETH-USDT-SWAP`</param>
@@ -1829,7 +1889,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetPositionsAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.Threading.CancellationToken)">
             <summary>
             Get positions list
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountPositions" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountPositions" /><br />
+            Endpoint:<br />
+            GET /deepcoin/account/positions
+            </para>
             </summary>
             <param name="symbolType">Symbol type</param>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
@@ -1838,7 +1903,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.PlaceOrderAsync(System.String,DeepCoin.Net.Enums.OrderSide,DeepCoin.Net.Enums.OrderType,System.Decimal,System.Nullable{System.Decimal},System.Nullable{DeepCoin.Net.Enums.TradeMode},System.String,System.String,System.Nullable{DeepCoin.Net.Enums.QuantityType},System.Nullable{DeepCoin.Net.Enums.PositionSide},System.Nullable{DeepCoin.Net.Enums.PositionType},System.String,System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <summary>
             Place a new order
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/order" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/order" /><br />
+            Endpoint:<br />
+            POST /deepcoin/trade/order
+            </para>
             </summary>
             <param name="symbol">Symbol name, for example `ETH-USDT`</param>
             <param name="side">Order side</param>
@@ -1860,7 +1930,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.EditOrderAsync(System.String,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <summary>
             Edit an existing order. Spot not supported.
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceOrder" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceOrder" /><br />
+            Endpoint:<br />
+            POST /deepcoin/trade/replace-order
+            </para>
             </summary>
             <param name="orderId">Order id</param>
             <param name="price">New price</param>
@@ -1870,7 +1945,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.CancelOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Cancel an open order
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelOrder" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelOrder" /><br />
+            Endpoint:<br />
+            POST /deepcoin/trade/cancel-order
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id</param>
@@ -1879,7 +1959,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.CancelOrdersAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
             Cancel multiple orders. Make sure to check the result data of the call to see if orders actually successfully canceled
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/batchCancelOrder" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/batchCancelOrder" /><br />
+            Endpoint:<br />
+            POST /deepcoin/trade/batch-cancel-order
+            </para>
             </summary>
             <param name="orderIds">Ids of orders to cancel</param>
             <param name="ct">Cancellation token</param>
@@ -1887,7 +1972,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.CancelAllOrdersAsync(System.String,DeepCoin.Net.Enums.ProductGroup,DeepCoin.Net.Enums.TradeMode,DeepCoin.Net.Enums.PositionType,System.Threading.CancellationToken)">
             <summary>
             Cancel all orders matching the parameters
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelAllOrder" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelAllOrder" /><br />
+            Endpoint:<br />
+            POST /deepcoin/trade/swap/cancel-all
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="productGroup">Product group</param>
@@ -1898,7 +1988,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetUserTradesAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.String,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get user trades
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/tradeFills" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/tradeFills" /><br />
+            Endpoint:<br />
+            GET /deepcoin/trade/fills
+            </para>
             </summary>
             <param name="symbolType">Symbol type</param>
             <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
@@ -1913,7 +2008,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetOpenOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Get a open order by id
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/orderByID" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/orderByID" /><br />
+            Endpoint:<br />
+            GET /deepcoin/trade/orderByID
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id</param>
@@ -1922,7 +2022,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetClosedOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Get closed order by id
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/finishOrderByID" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/finishOrderByID" /><br />
+            Endpoint:<br />
+            GET /deepcoin/trade/finishOrderByID
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id</param>
@@ -1931,7 +2036,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetClosedOrdersAsync(DeepCoin.Net.Enums.SymbolType,System.String,System.String,System.Nullable{DeepCoin.Net.Enums.OrderType},System.Nullable{DeepCoin.Net.Enums.OrderStatus},System.String,System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get closed order history
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersHistory" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersHistory" /><br />
+            Endpoint:<br />
+            GET /deepcoin/trade/orders-history
+            </para>
             </summary>
             <param name="symbolType">Symbol type</param>
             <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
@@ -1946,7 +2056,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.GetOpenOrdersAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
             <summary>
             Get open orders
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersPendingV2" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersPendingV2" /><br />
+            Endpoint:<br />
+            GET /deepcoin/trade/v2/orders-pending
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="page">Page index</param>
@@ -1957,7 +2072,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinRestClientExchangeApiTrading.SetTpSlAsync(System.String,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <summary>
             Set take profit / stop loss trigger price
-            <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceTPSL" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceTPSL" /><br />
+            Endpoint:<br />
+            POST /deepcoin/trade/replace-order-sltp
+            </para>
             </summary>
             <param name="orderId">Order id</param>
             <param name="takeProfitTriggerPrice">Take profit trigger price</param>
@@ -1972,7 +2092,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToSymbolUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinSymbolUpdate}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to symbol/ticker updates for a symbol
-            <para><a href="https://www.deepcoin.com/docs/publicWS/latestMarketData" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/publicWS/latestMarketData" /><br />
+            Endpoint:<br />
+            public/ws (swap), public/spotws (spot)
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
@@ -1982,7 +2107,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinTradeUpdate}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to live trade updates for a symbol
-            <para><a href="https://www.deepcoin.com/docs/publicWS/lastTransactions" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/publicWS/lastTransactions" /><br />
+            Endpoint:<br />
+            public/ws (swap), public/spotws (spot)
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
@@ -1992,7 +2122,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToKlineUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinKlineUpdate}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to kline/candlestick updates for a symbol. Only 1 minute klines supported.
-            <para><a href="https://www.deepcoin.com/docs/publicWS/KLines" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/publicWS/KLines" /><br />
+            Endpoint:<br />
+            public/ws (swap), public/spotws (spot)
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
@@ -2002,7 +2137,12 @@
         <member name="M:DeepCoin.Net.Interfaces.Clients.ExchangeApi.IDeepCoinSocketClientExchangeApi.SubscribeToOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{DeepCoin.Net.Objects.Models.DeepCoinOrderBookUpdate}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to 25-level incremental order book updates
-            <para><a href="https://www.deepcoin.com/docs/publicWS/25LevelIncrementalMarketData" /></para>
+            <para>
+            Docs:<br />
+            <a href="https://www.deepcoin.com/docs/publicWS/25LevelIncrementalMarketData" /><br />
+            Endpoint:<br />
+            public/ws (swap), public/spotws (spot)
+            </para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>

@@ -15,7 +15,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     {
         /// <summary>
         /// Subscribe to symbol/ticker updates for a symbol
-        /// <para><a href="https://www.deepcoin.com/docs/publicWS/latestMarketData" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/publicWS/latestMarketData" /><br />
+        /// Endpoint:<br />
+        /// public/ws (swap), public/spotws (spot)
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -25,7 +30,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Subscribe to live trade updates for a symbol
-        /// <para><a href="https://www.deepcoin.com/docs/publicWS/lastTransactions" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/publicWS/lastTransactions" /><br />
+        /// Endpoint:<br />
+        /// public/ws (swap), public/spotws (spot)
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -35,7 +45,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Subscribe to kline/candlestick updates for a symbol. Only 1 minute klines supported.
-        /// <para><a href="https://www.deepcoin.com/docs/publicWS/KLines" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/publicWS/KLines" /><br />
+        /// Endpoint:<br />
+        /// public/ws (swap), public/spotws (spot)
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -45,7 +60,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Subscribe to 25-level incremental order book updates
-        /// <para><a href="https://www.deepcoin.com/docs/publicWS/25LevelIncrementalMarketData" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/publicWS/25LevelIncrementalMarketData" /><br />
+        /// Endpoint:<br />
+        /// public/ws (swap), public/spotws (spot)
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>

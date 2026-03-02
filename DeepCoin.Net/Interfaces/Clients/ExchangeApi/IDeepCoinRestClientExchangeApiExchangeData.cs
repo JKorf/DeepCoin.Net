@@ -14,7 +14,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     {
         /// <summary>
         /// Get ticker price info
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getMarketTickers" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getMarketTickers" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/tickers
+        /// </para>
         /// </summary>
         /// <param name="symbolType">Type of symbol</param>
         /// <param name="underlying">Filter by underlying (swap only)</param>
@@ -24,7 +29,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get symbols list
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getBaseInfo" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getBaseInfo" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/instruments
+        /// </para>
         /// </summary>
         /// <param name="type">Symbol type</param>
         /// <param name="underlying">Filter by underlying</param>
@@ -34,7 +44,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get kline/candlestick data
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/getKlineData" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getKlineData" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/candles
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">Kline interval</param>
@@ -45,7 +60,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get order book
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinMarket/marketBooks" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/marketBooks" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/books
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="depth">Number of order book rows, max 400</param>
@@ -54,7 +74,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get funding rate
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/fundingRate" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/fundingRate" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/funding-rate
+        /// </para>
         /// </summary>
         /// <param name="type">Contract type</param>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT-SWAP`</param>

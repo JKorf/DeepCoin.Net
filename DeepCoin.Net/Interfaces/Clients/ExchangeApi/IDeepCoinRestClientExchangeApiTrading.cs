@@ -15,7 +15,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     {
         /// <summary>
         /// Get positions list
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountPositions" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinAccount/accountPositions" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/account/positions
+        /// </para>
         /// </summary>
         /// <param name="symbolType">Symbol type</param>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
@@ -24,7 +29,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Place a new order
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/order" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/order" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/trade/order
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
         /// <param name="side">Order side</param>
@@ -46,7 +56,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         
         /// <summary>
         /// Edit an existing order. Spot not supported.
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceOrder" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceOrder" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/trade/replace-order
+        /// </para>
         /// </summary>
         /// <param name="orderId">Order id</param>
         /// <param name="price">New price</param>
@@ -56,7 +71,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Cancel an open order
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelOrder" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelOrder" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/trade/cancel-order
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id</param>
@@ -65,7 +85,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Cancel multiple orders. Make sure to check the result data of the call to see if orders actually successfully canceled
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/batchCancelOrder" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/batchCancelOrder" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/trade/batch-cancel-order
+        /// </para>
         /// </summary>
         /// <param name="orderIds">Ids of orders to cancel</param>
         /// <param name="ct">Cancellation token</param>
@@ -73,7 +98,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Cancel all orders matching the parameters
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelAllOrder" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/cancelAllOrder" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/trade/swap/cancel-all
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="productGroup">Product group</param>
@@ -84,7 +114,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get user trades
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/tradeFills" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/tradeFills" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/fills
+        /// </para>
         /// </summary>
         /// <param name="symbolType">Symbol type</param>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
@@ -99,7 +134,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get a open order by id
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/orderByID" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/orderByID" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/orderByID
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id</param>
@@ -108,7 +148,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get closed order by id
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/finishOrderByID" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/finishOrderByID" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/finishOrderByID
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id</param>
@@ -117,7 +162,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get closed order history
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersHistory" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersHistory" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/orders-history
+        /// </para>
         /// </summary>
         /// <param name="symbolType">Symbol type</param>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
@@ -132,7 +182,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Get open orders
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersPendingV2" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/ordersPendingV2" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/v2/orders-pending
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="page">Page index</param>
@@ -143,7 +198,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 
         /// <summary>
         /// Set take profit / stop loss trigger price
-        /// <para><a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceTPSL" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/replaceTPSL" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/trade/replace-order-sltp
+        /// </para>
         /// </summary>
         /// <param name="orderId">Order id</param>
         /// <param name="takeProfitTriggerPrice">Take profit trigger price</param>
