@@ -21,8 +21,8 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// GET /deepcoin/account/balances
         /// </para>
         /// </summary>
-        /// <param name="accountType">Account type</param>
-        /// <param name="asset">Filter by asset, for example `ETH`</param>
+        /// <param name="accountType">["<c>instType</c>"] Account type</param>
+        /// <param name="asset">["<c>ccy</c>"] Filter by asset, for example `ETH`</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinBalance[]>> GetBalancesAsync(SymbolType accountType, string? asset = null, CancellationToken ct = default);
 
@@ -35,12 +35,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// GET /deepcoin/account/bills
         /// </para>
         /// </summary>
-        /// <param name="accountType">Account type</param>
-        /// <param name="asset">The asset, for example `ETH`</param>
-        /// <param name="billType">Filter by bill type</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max number of results, max 100</param>
+        /// <param name="accountType">["<c>instType</c>"] Account type</param>
+        /// <param name="asset">["<c>ccy</c>"] The asset, for example `ETH`</param>
+        /// <param name="billType">["<c>type</c>"] Filter by bill type</param>
+        /// <param name="startTime">["<c>after</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>before</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max number of results, max 100</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinBill[]>> GetBillsAsync(SymbolType accountType, string? asset = null, BillType? billType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
@@ -53,10 +53,10 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// POST /deepcoin/account/set-leverage
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
-        /// <param name="leverage">Leverage</param>
-        /// <param name="tradeMode">Margin mode</param>
-        /// <param name="positionType">Position type</param>
+        /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
+        /// <param name="leverage">["<c>lever</c>"] Leverage</param>
+        /// <param name="tradeMode">["<c>mgnMode</c>"] Margin mode</param>
+        /// <param name="positionType">["<c>mrgPosition</c>"] Position type</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default);
 
@@ -105,12 +105,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// GET /deepcoin/asset/deposit-list
         /// </para>
         /// </summary>
-        /// <param name="asset">Filter by asset, for example `ETH`</param>
-        /// <param name="transactionHash">Filter by transaction hash</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="page">Page</param>
-        /// <param name="pageSize">Page size</param>
+        /// <param name="asset">["<c>coin</c>"] Filter by asset, for example `ETH`</param>
+        /// <param name="transactionHash">["<c>txHash</c>"] Filter by transaction hash</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="page">["<c>page</c>"] Page</param>
+        /// <param name="pageSize">["<c>size</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinDepositPage>> GetDepositHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
@@ -123,12 +123,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// GET /deepcoin/asset/withdraw-list
         /// </para>
         /// </summary>
-        /// <param name="asset">Filter by asset, for example `ETH`</param>
-        /// <param name="transactionHash">Filter by transaction hash</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="page">Page</param>
-        /// <param name="pageSize">Page size</param>
+        /// <param name="asset">["<c>coin</c>"] Filter by asset, for example `ETH`</param>
+        /// <param name="transactionHash">["<c>txHash</c>"] Filter by transaction hash</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="page">["<c>page</c>"] Page</param>
+        /// <param name="pageSize">["<c>size</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinWithdrawPage>> GetWithdrawHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
@@ -153,7 +153,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// GET /deepcoin/listenkey/extend
         /// </para>
         /// </summary>
-        /// <param name="listenKey">Listen key to extend</param>
+        /// <param name="listenKey">["<c>listenkey</c>"] Listen key to extend</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<DeepCoinListenKey>> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
     }
