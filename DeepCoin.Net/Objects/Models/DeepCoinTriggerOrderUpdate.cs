@@ -12,87 +12,87 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinTriggerOrderUpdate
     {
         /// <summary>
-        /// Account id
+        /// ["<c>A</c>"] Account id
         /// </summary>
         [JsonPropertyName("A")]
         public string AccountId { get; set; } = string.Empty;
         /// <summary>
-        /// Order side
+        /// ["<c>D</c>"] Order side
         /// </summary>
         [JsonPropertyName("D")]
         public OrderSide OrderSide { get; set; }
         /// <summary>
-        /// Symbol name
+        /// ["<c>I</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("I")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Create time
+        /// ["<c>IT</c>"] Create time
         /// </summary>
         [JsonPropertyName("IT")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// User id
+        /// ["<c>M</c>"] User id
         /// </summary>
         [JsonPropertyName("M")]
         public string UserId { get; set; } = string.Empty;
         /// <summary>
-        /// O
+        /// ["<c>O</c>"] O
         /// </summary>
         [JsonPropertyName("O")]
         public decimal O { get; set; }
         /// <summary>
-        /// Order id
+        /// ["<c>OS</c>"] Order id
         /// </summary>
         [JsonPropertyName("OS")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Order type
+        /// ["<c>OT</c>"] Order type
         /// </summary>
         [JsonPropertyName("OT")]
         public OrderType OrderType { get; set; }
         /// <summary>
-        /// Trigger order type
+        /// ["<c>TO</c>"] Trigger order type
         /// </summary>
         [JsonPropertyName("TO")]
         public string TriggerOrderType { get; set; } = string.Empty;
         /// <summary>
-        /// Take profit price
+        /// ["<c>TP</c>"] Take profit price
         /// </summary>
         [JsonPropertyName("TP")]
         public decimal? TpPrice { get; set; }
         /// <summary>
-        /// Take profit trigger price
+        /// ["<c>TPT</c>"] Take profit trigger price
         /// </summary>
         [JsonPropertyName("TPT")]
         public decimal? TpTriggerPrice { get; set; }
         /// <summary>
-        /// Trigger status
+        /// ["<c>TS</c>"] Trigger status
         /// </summary>
         [JsonPropertyName("TS")]
         public string TriggerStatus { get; set; } = string.Empty;
         /// <summary>
-        /// Position id
+        /// ["<c>TU</c>"] Position id
         /// </summary>
         [JsonPropertyName("TU")]
         public long PositionId { get; set; }
         /// <summary>
-        /// Take profit price type
+        /// ["<c>Tr</c>"] Take profit price type
         /// </summary>
         [JsonPropertyName("Tr")]
         public string TpPriceType { get; set; } = string.Empty;
         /// <summary>
-        /// Update time
+        /// ["<c>U</c>"] Update time
         /// </summary>
         [JsonPropertyName("U")]
         public DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// Leverage
+        /// ["<c>l</c>"] Leverage
         /// </summary>
         [JsonPropertyName("l")]
         public decimal Leverage { get; set; }
         /// <summary>
-        /// OffsetFlag
+        /// ["<c>o</c>"] OffsetFlag
         /// </summary>
         [JsonPropertyName("o")]
         public string OffsetFlag { get; set; } = string.Empty;

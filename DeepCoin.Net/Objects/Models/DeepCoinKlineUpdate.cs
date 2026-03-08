@@ -12,62 +12,62 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinKlineUpdate
     {
         /// <summary>
-        /// Exchange id
+        /// ["<c>ExchangeID</c>"] Exchange id
         /// </summary>
         [JsonPropertyName("ExchangeID")]
         public string ExchangeId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol name
+        /// ["<c>InstrumentID</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("InstrumentID")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Interval
+        /// ["<c>PeriodID</c>"] Interval
         /// </summary>
         [JsonPropertyName("PeriodID")]
         public KlineInterval Interval { get; set; }
         /// <summary>
-        /// Open timestamp
+        /// ["<c>BeginTime</c>"] Open timestamp
         /// </summary>
         [JsonPropertyName("BeginTime")]
         public DateTime OpenTime { get; set; }
         /// <summary>
-        /// Open price
+        /// ["<c>OpenPrice</c>"] Open price
         /// </summary>
         [JsonPropertyName("OpenPrice")]
         public decimal OpenPrice { get; set; }
         /// <summary>
-        /// Close price
+        /// ["<c>ClosePrice</c>"] Close price
         /// </summary>
         [JsonPropertyName("ClosePrice")]
         public decimal ClosePrice { get; set; }
         /// <summary>
-        /// High price
+        /// ["<c>HighestPrice</c>"] High price
         /// </summary>
         [JsonPropertyName("HighestPrice")]
         public decimal HighPrice { get; set; }
         /// <summary>
-        /// Low price
+        /// ["<c>LowestPrice</c>"] Low price
         /// </summary>
         [JsonPropertyName("LowestPrice")]
         public decimal LowPrice { get; set; }
         /// <summary>
-        /// Volume in base asset
+        /// ["<c>Volume</c>"] Volume in base asset
         /// </summary>
         [JsonPropertyName("Volume")]
         public decimal Volume { get; set; }
         /// <summary>
-        /// Turnover
+        /// ["<c>Turnover</c>"] Turnover
         /// </summary>
         [JsonPropertyName("Turnover")]
         public decimal Turnover { get; set; }
         /// <summary>
-        /// TimeZone
+        /// ["<c>TimeZone</c>"] TimeZone
         /// </summary>
         [JsonPropertyName("TimeZone")]
         public int TimeZone { get; set; }
         /// <summary>
-        /// Update timestamp
+        /// ["<c>UpdateTime</c>"] Update timestamp
         /// </summary>
         [JsonPropertyName("UpdateTime")]
         public DateTime UpdateTime { get; set; }

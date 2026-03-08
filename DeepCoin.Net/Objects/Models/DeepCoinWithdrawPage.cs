@@ -12,22 +12,22 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinWithdrawPage
     {
         /// <summary>
-        /// Data
+        /// ["<c>data</c>"] Data
         /// </summary>
         [JsonPropertyName("data")]
         public DeepCoinWithdrawal[] Data { get; set; } = Array.Empty<DeepCoinWithdrawal>();
         /// <summary>
-        /// Total count
+        /// ["<c>count</c>"] Total count
         /// </summary>
         [JsonPropertyName("count")]
         public int Total { get; set; }
         /// <summary>
-        /// Page
+        /// ["<c>page</c>"] Page
         /// </summary>
         [JsonPropertyName("page")]
         public int Page { get; set; }
         /// <summary>
-        /// Page size
+        /// ["<c>size</c>"] Page size
         /// </summary>
         [JsonPropertyName("size")]
         public int PageSize { get; set; }
@@ -40,32 +40,32 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinWithdrawal
     {
         /// <summary>
-        /// Create time
+        /// ["<c>createTime</c>"] Create time
         /// </summary>
         [JsonPropertyName("createTime")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Transaction hash
+        /// ["<c>txHash</c>"] Transaction hash
         /// </summary>
         [JsonPropertyName("txHash")]
         public string TransactionHash { get; set; } = string.Empty;
         /// <summary>
-        /// Address
+        /// ["<c>address</c>"] Address
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; } = string.Empty;
         /// <summary>
-        /// Quantity
+        /// ["<c>amount</c>"] Quantity
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Withdraw status
+        /// ["<c>status</c>"] Withdraw status
         /// </summary>
         [JsonPropertyName("status")]
         public WithdrawStatus DepositStatus { get; set; }

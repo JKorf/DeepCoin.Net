@@ -12,77 +12,77 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinUserTrade
     {
         /// <summary>
-        /// Symbol type
+        /// ["<c>instType</c>"] Symbol type
         /// </summary>
         [JsonPropertyName("instType")]
         public SymbolType SymbolType { get; set; }
         /// <summary>
-        /// Symbol name
+        /// ["<c>instId</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("instId")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Trade id
+        /// ["<c>tradeId</c>"] Trade id
         /// </summary>
         [JsonPropertyName("tradeId")]
         public string TradeId { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>ordId</c>"] Order id
         /// </summary>
         [JsonPropertyName("ordId")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Client order id
+        /// ["<c>clOrdId</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clOrdId")]
         public string? ClientOrderId { get; set; }
         /// <summary>
-        /// Bill id
+        /// ["<c>billId</c>"] Bill id
         /// </summary>
         [JsonPropertyName("billId")]
         public string BillId { get; set; } = string.Empty;
         /// <summary>
-        /// Tag
+        /// ["<c>tag</c>"] Tag
         /// </summary>
         [JsonPropertyName("tag")]
         public string? Tag { get; set; }
         /// <summary>
-        /// Price
+        /// ["<c>fillPx</c>"] Price
         /// </summary>
         [JsonPropertyName("fillPx")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>fillSz</c>"] Quantity
         /// </summary>
         [JsonPropertyName("fillSz")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Order side
+        /// ["<c>side</c>"] Order side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide OrderSide { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>posSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("posSide")]
         public PositionSide? PositionSide { get; set; }
         /// <summary>
-        /// Trade role
+        /// ["<c>execType</c>"] Trade role
         /// </summary>
         [JsonPropertyName("execType")]
         public TradeRole? Role { get; set; }
         /// <summary>
-        /// Fee asset
+        /// ["<c>feeCcy</c>"] Fee asset
         /// </summary>
         [JsonPropertyName("feeCcy")]
         public string FeeAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Fee
+        /// ["<c>fee</c>"] Fee
         /// </summary>
         [JsonPropertyName("fee")]
         public decimal Fee { get; set; }
         /// <summary>
-        /// Timestamp
+        /// ["<c>ts</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("ts")]
         public DateTime Timestamp { get; set; }

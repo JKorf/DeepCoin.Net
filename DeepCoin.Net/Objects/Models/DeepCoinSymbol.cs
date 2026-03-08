@@ -12,87 +12,87 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinSymbol
     {
         /// <summary>
-        /// Symbol type
+        /// ["<c>instType</c>"] Symbol type
         /// </summary>
         [JsonPropertyName("instType")]
         public SymbolType SymbolType { get; set; }
         /// <summary>
-        /// Symbol name
+        /// ["<c>instId</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("instId")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Underlying
+        /// ["<c>uly</c>"] Underlying
         /// </summary>
         [JsonPropertyName("uly")]
         public string? Underlying { get; set; }
         /// <summary>
-        /// Base asset
+        /// ["<c>baseCcy</c>"] Base asset
         /// </summary>
         [JsonPropertyName("baseCcy")]
         public string BaseAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Quote asset
+        /// ["<c>quoteCcy</c>"] Quote asset
         /// </summary>
         [JsonPropertyName("quoteCcy")]
         public string QuoteAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Size of a single contract
+        /// ["<c>ctVal</c>"] Size of a single contract
         /// </summary>
         [JsonPropertyName("ctVal")]
         public decimal? ContractSize { get; set; }
         /// <summary>
-        /// Asset the contract size is in
+        /// ["<c>ctValCcy</c>"] Asset the contract size is in
         /// </summary>
         [JsonPropertyName("ctValCcy")]
         public string? ContractSizeAsset { get; set; }
         /// <summary>
-        /// List time
+        /// ["<c>listTime</c>"] List time
         /// </summary>
         [JsonPropertyName("listTime")]
         public DateTime? ListTime { get; set; }
         /// <summary>
-        /// Max leverage
+        /// ["<c>lever</c>"] Max leverage
         /// </summary>
         [JsonPropertyName("lever")]
         public decimal? MaxLeverage { get; set; }
         /// <summary>
-        /// Tick quantity
+        /// ["<c>tickSz</c>"] Tick quantity
         /// </summary>
         [JsonPropertyName("tickSz")]
         public decimal TickSize { get; set; }
         /// <summary>
-        /// Lot quantity
+        /// ["<c>lotSz</c>"] Lot quantity
         /// </summary>
         [JsonPropertyName("lotSz")]
         public decimal LotSize { get; set; }
         /// <summary>
-        /// Min order quantity
+        /// ["<c>minSz</c>"] Min order quantity
         /// </summary>
         [JsonPropertyName("minSz")]
         public decimal MinQuantity { get; set; }
         /// <summary>
-        /// Contract type
+        /// ["<c>ctType</c>"] Contract type
         /// </summary>
         [JsonPropertyName("ctType")]
         public ContractType? ContractType { get; set; }
         /// <summary>
-        /// Alias
+        /// ["<c>alias</c>"] Alias
         /// </summary>
         [JsonPropertyName("alias")]
         public string? Alias { get; set; }
         /// <summary>
-        /// Status
+        /// ["<c>state</c>"] Status
         /// </summary>
         [JsonPropertyName("state")]
         public SymbolStatus Status { get; set; }
         /// <summary>
-        /// Max limit order quantity
+        /// ["<c>maxLmtSz</c>"] Max limit order quantity
         /// </summary>
         [JsonPropertyName("maxLmtSz")]
         public decimal MaxLimitQuantity { get; set; }
         /// <summary>
-        /// Max market order quantity
+        /// ["<c>maxMktSz</c>"] Max market order quantity
         /// </summary>
         [JsonPropertyName("maxMktSz")]
         public decimal MaxMarketQuantity { get; set; }

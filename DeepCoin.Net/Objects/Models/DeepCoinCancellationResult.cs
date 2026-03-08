@@ -11,7 +11,7 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinCancellationResult
     {
         /// <summary>
-        /// Orders failed to cancel
+        /// ["<c>errorList</c>"] Orders failed to cancel
         /// </summary>
         [JsonPropertyName("errorList")]
         public DeepCoinCancellationResultEntry[] ErrorList { get; set; } = Array.Empty<DeepCoinCancellationResultEntry>();
@@ -24,27 +24,27 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinCancellationResultEntry
     {
         /// <summary>
-        /// User id
+        /// ["<c>memberId</c>"] User id
         /// </summary>
         [JsonPropertyName("memberId")]
         public string UserId { get; set; } = string.Empty;
         /// <summary>
-        /// Account id
+        /// ["<c>accountId</c>"] Account id
         /// </summary>
         [JsonPropertyName("accountId")]
         public string AccountId { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>orderSysId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderSysId")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Error code
+        /// ["<c>errorCode</c>"] Error code
         /// </summary>
         [JsonPropertyName("errorCode")]
         public int ErrorCode { get; set; }
         /// <summary>
-        /// Error message
+        /// ["<c>errorMsg</c>"] Error message
         /// </summary>
         [JsonPropertyName("errorMsg")]
         public string ErrorMessage { get; set; } = string.Empty;

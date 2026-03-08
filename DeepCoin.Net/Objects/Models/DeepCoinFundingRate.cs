@@ -11,17 +11,17 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinFundingRate
     {
         /// <summary>
-        /// Settle interval
+        /// ["<c>settleInterval</c>"] Settle interval
         /// </summary>
         [JsonPropertyName("settleInterval")]
         public int SettleInterval { get; set; }
         /// <summary>
-        /// Instrument id
+        /// ["<c>instrumentID</c>"] Instrument id
         /// </summary>
         [JsonPropertyName("instrumentID")]
         public string InstrumentId { get; set; } = string.Empty;
         /// <summary>
-        /// Next settle time
+        /// ["<c>nextSettleTime</c>"] Next settle time
         /// </summary>
         [JsonPropertyName("nextSettleTime")]
         public DateTime NextSettleTime { get; set; }

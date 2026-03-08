@@ -10,12 +10,12 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinTransferResult
     {
         /// <summary>
-        /// Message
+        /// ["<c>message</c>"] Message
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public string? OrderId { get; set; }

@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinListenKey
     {
         /// <summary>
-        /// Listen key
+        /// ["<c>listenkey</c>"] Listen key
         /// </summary>
         [JsonPropertyName("listenkey")]
         public string ListenKey { get; set; } = string.Empty;
         /// <summary>
-        /// Expire time
+        /// ["<c>expire_time</c>"] Expire time
         /// </summary>
         [JsonPropertyName("expire_time")]
         public DateTime ExpireTime { get; set; }

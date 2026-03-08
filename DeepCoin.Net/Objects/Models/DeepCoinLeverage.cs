@@ -11,32 +11,32 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinLeverage
     {
         /// <summary>
-        /// Symbol name
+        /// ["<c>instId</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("instId")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Leverage
+        /// ["<c>lever</c>"] Leverage
         /// </summary>
         [JsonPropertyName("lever")]
         public decimal Leverage { get; set; }
         /// <summary>
-        /// Margin mode
+        /// ["<c>mgnMode</c>"] Margin mode
         /// </summary>
         [JsonPropertyName("mgnMode")]
         public TradeMode TradeMode { get; set; }
         /// <summary>
-        /// Position type
+        /// ["<c>mrgPosition</c>"] Position type
         /// </summary>
         [JsonPropertyName("mrgPosition")]
         public PositionType PositionType { get; set; }
         /// <summary>
-        /// Result code
+        /// ["<c>sCode</c>"] Result code
         /// </summary>
         [JsonPropertyName("sCode")]
         public int ResultCode { get; set; }
         /// <summary>
-        /// Result message
+        /// ["<c>sMsg</c>"] Result message
         /// </summary>
         [JsonPropertyName("sMsg")]
         public string? ResultMessage { get; set; }

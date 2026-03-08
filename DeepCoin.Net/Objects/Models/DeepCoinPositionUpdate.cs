@@ -12,32 +12,32 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinPositionUpdate
     {
         /// <summary>
-        /// Account id
+        /// ["<c>A</c>"] Account id
         /// </summary>
         [JsonPropertyName("A")]
         public string AccountId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol name
+        /// ["<c>I</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("I")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// User id
+        /// ["<c>M</c>"] User id
         /// </summary>
         [JsonPropertyName("M")]
         public string UserId { get; set; } = string.Empty;
         /// <summary>
-        /// Open price
+        /// ["<c>OP</c>"] Open price
         /// </summary>
         [JsonPropertyName("OP")]
         public decimal? OpenPrice { get; set; }
         /// <summary>
-        /// Position size
+        /// ["<c>Po</c>"] Position size
         /// </summary>
         [JsonPropertyName("Po")]
         public decimal PositionSize { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>U</c>"] Update time
         /// </summary>
         [JsonPropertyName("U")]
         public DateTime UpdateTime { get; set; }
@@ -47,22 +47,22 @@ namespace DeepCoin.Net.Objects.Models
         //[JsonPropertyName("c")]
         //public decimal C { get; set; }
         /// <summary>
-        /// Is cross margin
+        /// ["<c>i</c>"] Is cross margin
         /// </summary>
         [JsonPropertyName("i")]
         public bool IsCrossMargin { get; set; }
         /// <summary>
-        /// Leverage
+        /// ["<c>l</c>"] Leverage
         /// </summary>
         [JsonPropertyName("l")]
         public decimal Leverage { get; set; }
         /// <summary>
-        /// PositionSide
+        /// ["<c>p</c>"] PositionSide
         /// </summary>
         [JsonPropertyName("p")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Margin used
+        /// ["<c>u</c>"] Margin used
         /// </summary>
         [JsonPropertyName("u")]
         public decimal MarginUsed { get; set; }

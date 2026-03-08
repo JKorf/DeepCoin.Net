@@ -12,22 +12,22 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinTransferPage
     {
         /// <summary>
-        /// Data
+        /// ["<c>data</c>"] Data
         /// </summary>
         [JsonPropertyName("data")]
         public DeepCoinTransfer[] Data { get; set; } = Array.Empty<DeepCoinTransfer>();
         /// <summary>
-        /// Total results
+        /// ["<c>count</c>"] Total results
         /// </summary>
         [JsonPropertyName("count")]
         public int Total { get; set; }
         /// <summary>
-        /// Page
+        /// ["<c>page</c>"] Page
         /// </summary>
         [JsonPropertyName("page")]
         public int Page { get; set; }
         /// <summary>
-        /// Page size
+        /// ["<c>size</c>"] Page size
         /// </summary>
         [JsonPropertyName("size")]
         public int PageSize { get; set; }
@@ -40,52 +40,52 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinTransfer
     {
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Receiver account type
+        /// ["<c>receiverAccountType</c>"] Receiver account type
         /// </summary>
         [JsonPropertyName("receiverAccountType")]
         public AccountType ReceiverAccountType { get; set; }
         /// <summary>
-        /// Receiver account
+        /// ["<c>receiverAccount</c>"] Receiver account
         /// </summary>
         [JsonPropertyName("receiverAccount")]
         public string? ReceiverAccount { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Quantity
+        /// ["<c>amount</c>"] Quantity
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Transfer way
+        /// ["<c>transferWay</c>"] Transfer way
         /// </summary>
         [JsonPropertyName("transferWay")]
         public string TransferWay { get; set; } = string.Empty;
         /// <summary>
-        /// Status
+        /// ["<c>status</c>"] Status
         /// </summary>
         [JsonPropertyName("status")]
         public TransferStatus Status { get; set; }
         /// <summary>
-        /// Receiver id
+        /// ["<c>receiverUID</c>"] Receiver id
         /// </summary>
         [JsonPropertyName("receiverUID")]
         public decimal ReceiverID { get; set; }
         /// <summary>
-        /// Create time
+        /// ["<c>createTime</c>"] Create time
         /// </summary>
         [JsonPropertyName("createTime")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>updateTime</c>"] Update time
         /// </summary>
         [JsonPropertyName("updateTime")]
         public DateTime? UpdateTime { get; set; }

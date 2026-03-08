@@ -12,97 +12,97 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinSymbolUpdate
     {
         /// <summary>
-        /// Exchange Id
+        /// ["<c>ExchangeID</c>"] Exchange Id
         /// </summary>
         [JsonPropertyName("ExchangeID")]
         public string ExchangeId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol
+        /// ["<c>InstrumentID</c>"] Symbol
         /// </summary>
         [JsonPropertyName("InstrumentID")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Product group
+        /// ["<c>ProductGroup</c>"] Product group
         /// </summary>
         [JsonPropertyName("ProductGroup")]
         public ProductGroup ProductGroup { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>UpdateTime</c>"] Update time
         /// </summary>
         [JsonPropertyName("UpdateTime")]
         public DateTime UpdateTime { get; set; }
         /// <summary>
-        /// Update millisecond
+        /// ["<c>UpdateMilliSecond</c>"] Update millisecond
         /// </summary>
         [JsonPropertyName("UpdateMilliSecond")]
         public int UpdateMilliSecond { get; set; }
         /// <summary>
-        /// Upper limit price
+        /// ["<c>UpperLimitPrice</c>"] Upper limit price
         /// </summary>
         [JsonPropertyName("UpperLimitPrice")]
         public decimal UpperLimitPrice { get; set; }
         /// <summary>
-        /// Lower limit price
+        /// ["<c>LowerLimitPrice</c>"] Lower limit price
         /// </summary>
         [JsonPropertyName("LowerLimitPrice")]
         public decimal LowerLimitPrice { get; set; }
         /// <summary>
-        /// Underlying price
+        /// ["<c>UnderlyingPrice</c>"] Underlying price
         /// </summary>
         [JsonPropertyName("UnderlyingPrice")]
         public decimal UnderlyingPrice { get; set; }
         /// <summary>
-        /// Marked price
+        /// ["<c>MarkedPrice</c>"] Marked price
         /// </summary>
         [JsonPropertyName("MarkedPrice")]
         public decimal? MarkedPrice { get; set; }
         /// <summary>
-        /// Position fee rate
+        /// ["<c>PositionFeeRate</c>"] Position fee rate
         /// </summary>
         [JsonPropertyName("PositionFeeRate")]
         public decimal PositionFeeRate { get; set; }
         /// <summary>
-        /// High price
+        /// ["<c>HighestPrice</c>"] High price
         /// </summary>
         [JsonPropertyName("HighestPrice")]
         public decimal? HighPrice { get; set; }
         /// <summary>
-        /// Low price
+        /// ["<c>LowestPrice</c>"] Low price
         /// </summary>
         [JsonPropertyName("LowestPrice")]
         public decimal? LowPrice { get; set; }
         /// <summary>
-        /// Last price
+        /// ["<c>LastPrice</c>"] Last price
         /// </summary>
         [JsonPropertyName("LastPrice")]
         public decimal? LastPrice { get; set; }
         /// <summary>
-        /// Volume
+        /// ["<c>Volume</c>"] Volume
         /// </summary>
         [JsonPropertyName("Volume")]
         public decimal Volume { get; set; }
         /// <summary>
-        /// Turnover
+        /// ["<c>Turnover</c>"] Turnover
         /// </summary>
         [JsonPropertyName("Turnover")]
         public decimal Turnover { get; set; }
         /// <summary>
-        /// Open interest
+        /// ["<c>OpenInterest</c>"] Open interest
         /// </summary>
         [JsonPropertyName("OpenInterest")]
         public decimal OpenInterest { get; set; }
         /// <summary>
-        /// Open price
+        /// ["<c>OpenPrice</c>"] Open price
         /// </summary>
         [JsonPropertyName("OpenPrice")]
         public decimal? OpenPrice { get; set; }
         /// <summary>
-        /// Symbol status
+        /// ["<c>InstrumentStatus</c>"] Symbol status
         /// </summary>
         [JsonPropertyName("InstrumentStatus")]
         public SymbolStatus Status { get; set; }
         /// <summary>
-        /// Pre position fee rate
+        /// ["<c>PrePositionFeeRate</c>"] Pre position fee rate
         /// </summary>
         [JsonPropertyName("PrePositionFeeRate")]
         public decimal PrePositionFeeRate { get; set; }

@@ -12,22 +12,22 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinOrderUpdate
     {
         /// <summary>
-        /// Order side
+        /// ["<c>D</c>"] Order side
         /// </summary>
         [JsonPropertyName("D")]
         public OrderSide OrderSide { get; set; }
         /// <summary>
-        /// Symbol name
+        /// ["<c>I</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("I")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Create time
+        /// ["<c>IT</c>"] Create time
         /// </summary>
         [JsonPropertyName("IT")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// LocalId
+        /// ["<c>L</c>"] LocalId
         /// </summary>
         [JsonPropertyName("L")]
         public string LocalId { get; set; } = string.Empty;
@@ -37,67 +37,67 @@ namespace DeepCoin.Net.Objects.Models
         //[JsonPropertyName("O")]
         //public decimal O { get; set; }
         /// <summary>
-        /// Order id
+        /// ["<c>OS</c>"] Order id
         /// </summary>
         [JsonPropertyName("OS")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Order type
+        /// ["<c>OT</c>"] Order type
         /// </summary>
         [JsonPropertyName("OT")]
         public OrderType OrderType { get; set; }
         /// <summary>
-        /// Order status
+        /// ["<c>Or</c>"] Order status
         /// </summary>
         [JsonPropertyName("Or")]
         public OrderStatus Status { get; set; }
         /// <summary>
-        /// Order price
+        /// ["<c>P</c>"] Order price
         /// </summary>
         [JsonPropertyName("P")]
         public decimal? OrderPrice { get; set; }
         /// <summary>
-        /// Turnover
+        /// ["<c>T</c>"] Turnover
         /// </summary>
         [JsonPropertyName("T")]
         public decimal Turnover { get; set; }
         /// <summary>
-        /// UpdateTime
+        /// ["<c>U</c>"] UpdateTime
         /// </summary>
         [JsonPropertyName("U")]
         public DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// Order quantity
+        /// ["<c>V</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("V")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Is cross margin
+        /// ["<c>i</c>"] Is cross margin
         /// </summary>
         [JsonPropertyName("i")]
         public bool IsCrossMargin { get; set; }
         /// <summary>
-        /// Leverage
+        /// ["<c>l</c>"] Leverage
         /// </summary>
         [JsonPropertyName("l")]
         public decimal Leverage { get; set; }
         /// <summary>
-        /// OffsetFlag
+        /// ["<c>o</c>"] OffsetFlag
         /// </summary>
         [JsonPropertyName("o")]
         public string OffsetFlag { get; set; } = string.Empty;
         /// <summary>
-        /// Position side
+        /// ["<c>p</c>"] Position side
         /// </summary>
         [JsonPropertyName("p")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Average fill price
+        /// ["<c>t</c>"] Average fill price
         /// </summary>
         [JsonPropertyName("t")]
         public decimal? AverageFillPrice { get; set; }
         /// <summary>
-        /// Quantity filled
+        /// ["<c>VT</c>"] Quantity filled
         /// </summary>
         [JsonPropertyName("VT")]
         public decimal QuantityFilled { get; set; }

@@ -10,22 +10,22 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinBalance
     {
         /// <summary>
-        /// Asset
+        /// ["<c>ccy</c>"] Asset
         /// </summary>
         [JsonPropertyName("ccy")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Total balance
+        /// ["<c>bal</c>"] Total balance
         /// </summary>
         [JsonPropertyName("bal")]
         public decimal Balance { get; set; }
         /// <summary>
-        /// Frozen balance
+        /// ["<c>frozenBal</c>"] Frozen balance
         /// </summary>
         [JsonPropertyName("frozenBal")]
         public decimal FrozenBalance { get; set; }
         /// <summary>
-        /// Available balance
+        /// ["<c>availBal</c>"] Available balance
         /// </summary>
         [JsonPropertyName("availBal")]
         public decimal AvailableBalance { get; set; }

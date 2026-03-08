@@ -33,32 +33,32 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinOrderBookUpdateEntry : ISymbolOrderBookEntry
     {
         /// <summary>
-        /// Exchange id
+        /// ["<c>ExchangeID</c>"] Exchange id
         /// </summary>
         [JsonPropertyName("ExchangeID")]
         public string ExchangeId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol name
+        /// ["<c>InstrumentID</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("InstrumentID")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Trade direction
+        /// ["<c>Direction</c>"] Trade direction
         /// </summary>
         [JsonPropertyName("Direction")]
         public OrderSide Direction { get; set; }
         /// <summary>
-        /// Trade price
+        /// ["<c>Price</c>"] Trade price
         /// </summary>
         [JsonPropertyName("Price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Trade quantity
+        /// ["<c>Volume</c>"] Trade quantity
         /// </summary>
         [JsonPropertyName("Volume")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Number of orders
+        /// ["<c>Orders</c>"] Number of orders
         /// </summary>
         [JsonPropertyName("Orders")]
         public int Orders { get; set; }

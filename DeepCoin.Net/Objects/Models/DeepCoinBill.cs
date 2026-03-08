@@ -12,37 +12,37 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinBill
     {
         /// <summary>
-        /// Bill id
+        /// ["<c>billId</c>"] Bill id
         /// </summary>
         [JsonPropertyName("billId")]
         public string BillId { get; set; } = string.Empty;
         /// <summary>
-        /// Asset
+        /// ["<c>ccy</c>"] Asset
         /// </summary>
         [JsonPropertyName("ccy")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Client id
+        /// ["<c>clientId</c>"] Client id
         /// </summary>
         [JsonPropertyName("clientId")]
         public string? ClientId { get; set; }
         /// <summary>
-        /// Balance change
+        /// ["<c>balChg</c>"] Balance change
         /// </summary>
         [JsonPropertyName("balChg")]
         public decimal BalanceChange { get; set; }
         /// <summary>
-        /// Balance
+        /// ["<c>bal</c>"] Balance
         /// </summary>
         [JsonPropertyName("bal")]
         public decimal Balance { get; set; }
         /// <summary>
-        /// Bill type
+        /// ["<c>type</c>"] Bill type
         /// </summary>
         [JsonPropertyName("type")]
         public BillType Type { get; set; }
         /// <summary>
-        /// Timestamp
+        /// ["<c>ts</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("ts")]
         public DateTime Timestamp { get; set; }

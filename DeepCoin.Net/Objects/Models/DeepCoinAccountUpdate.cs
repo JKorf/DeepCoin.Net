@@ -11,62 +11,62 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinAccountUpdate
     {
         /// <summary>
-        /// Account id
+        /// ["<c>A</c>"] Account id
         /// </summary>
         [JsonPropertyName("A")]
         public string AccountId { get; set; } = string.Empty;
         /// <summary>
-        /// Account detail id
+        /// ["<c>AD</c>"] Account detail id
         /// </summary>
         [JsonPropertyName("AD")]
         public string AccountDetailId { get; set; } = string.Empty;
         /// <summary>
-        /// Quantity
+        /// ["<c>Am</c>"] Quantity
         /// </summary>
         [JsonPropertyName("Am")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Static balance
+        /// ["<c>B</c>"] Static balance
         /// </summary>
         [JsonPropertyName("B")]
         public decimal Balance { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>C</c>"] Asset
         /// </summary>
         [JsonPropertyName("C")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol name
+        /// ["<c>I</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("I")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Create time
+        /// ["<c>IT</c>"] Create time
         /// </summary>
         [JsonPropertyName("IT")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// User id
+        /// ["<c>M</c>"] User id
         /// </summary>
         [JsonPropertyName("M")]
         public decimal UserId { get; set; }
         /// <summary>
-        /// Pre-change balance
+        /// ["<c>PB</c>"] Pre-change balance
         /// </summary>
         [JsonPropertyName("PB")]
         public decimal PreBalance { get; set; }
         /// <summary>
-        /// Remark
+        /// ["<c>R</c>"] Remark
         /// </summary>
         [JsonPropertyName("R")]
         public string? Remark { get; set; }
         /// <summary>
-        /// Transaction type
+        /// ["<c>S</c>"] Transaction type
         /// </summary>
         [JsonPropertyName("S")]
         public string TransactionType { get; set; } = string.Empty;
         /// <summary>
-        /// Related change id
+        /// ["<c>r</c>"] Related change id
         /// </summary>
         [JsonPropertyName("r")]
         public string RelatedId { get; set; } = string.Empty;

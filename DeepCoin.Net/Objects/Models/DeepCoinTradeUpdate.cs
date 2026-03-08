@@ -12,37 +12,37 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinTradeUpdate
     {
         /// <summary>
-        /// Trade id
+        /// ["<c>TradeID</c>"] Trade id
         /// </summary>
         [JsonPropertyName("TradeID")]
         public string TradeId { get; set; } = string.Empty;
         /// <summary>
-        /// Exchange id
+        /// ["<c>ExchangeID</c>"] Exchange id
         /// </summary>
         [JsonPropertyName("ExchangeID")]
         public string ExchangeId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol name
+        /// ["<c>InstrumentID</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("InstrumentID")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Trade direction
+        /// ["<c>Direction</c>"] Trade direction
         /// </summary>
         [JsonPropertyName("Direction")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Trade price
+        /// ["<c>Price</c>"] Trade price
         /// </summary>
         [JsonPropertyName("Price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Trade quantity
+        /// ["<c>Volume</c>"] Trade quantity
         /// </summary>
         [JsonPropertyName("Volume")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Trade timestamp
+        /// ["<c>TradeTime</c>"] Trade timestamp
         /// </summary>
         [JsonPropertyName("TradeTime")]
         public DateTime Timestamp { get; set; }

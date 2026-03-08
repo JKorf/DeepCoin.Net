@@ -12,12 +12,12 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinOrderBook
     {
         /// <summary>
-        /// Asks
+        /// ["<c>asks</c>"] Asks
         /// </summary>
         [JsonPropertyName("asks")]
         public DeepCoinOrderBookEntry[] Asks { get; set; } = [];
         /// <summary>
-        /// Bids
+        /// ["<c>bids</c>"] Bids
         /// </summary>
         [JsonPropertyName("bids")]
         public DeepCoinOrderBookEntry[] Bids { get; set; } = [];

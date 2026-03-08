@@ -12,67 +12,67 @@ namespace DeepCoin.Net.Objects.Models
     public record DeepCoinUserTradeUpdate
     {
         /// <summary>
-        /// Account id
+        /// ["<c>A</c>"] Account id
         /// </summary>
         [JsonPropertyName("A")]
         public string AccountId { get; set; } = string.Empty;
         /// <summary>
-        /// Clearing asset
+        /// ["<c>CC</c>"] Clearing asset
         /// </summary>
         [JsonPropertyName("CC")]
         public string ClearingAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Side
+        /// ["<c>D</c>"] Side
         /// </summary>
         [JsonPropertyName("D")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Fee quantity
+        /// ["<c>F</c>"] Fee quantity
         /// </summary>
         [JsonPropertyName("F")]
         public decimal Fee { get; set; }
         /// <summary>
-        /// Symbol name
+        /// ["<c>I</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("I")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Create time
+        /// ["<c>IT</c>"] Create time
         /// </summary>
         [JsonPropertyName("IT")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// User id
+        /// ["<c>M</c>"] User id
         /// </summary>
         [JsonPropertyName("M")]
         public string UserId { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>OS</c>"] Order id
         /// </summary>
         [JsonPropertyName("OS")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Trade price
+        /// ["<c>P</c>"] Trade price
         /// </summary>
         [JsonPropertyName("P")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Turnover
+        /// ["<c>T</c>"] Turnover
         /// </summary>
         [JsonPropertyName("T")]
         public decimal Turnover { get; set; }
         /// <summary>
-        /// Trade id
+        /// ["<c>TI</c>"] Trade id
         /// </summary>
         [JsonPropertyName("TI")]
         public string TradeId { get; set; } = string.Empty;
         /// <summary>
-        /// Trade timestamp
+        /// ["<c>TT</c>"] Trade timestamp
         /// </summary>
         [JsonPropertyName("TT")]
         public DateTime TradeTime { get; set; }
         /// <summary>
-        /// Trade quantity
+        /// ["<c>V</c>"] Trade quantity
         /// </summary>
         [JsonPropertyName("V")]
         public decimal Quantity { get; set; }
@@ -82,22 +82,22 @@ namespace DeepCoin.Net.Objects.Models
         //[JsonPropertyName("c")]
         //public decimal C { get; set; }
         /// <summary>
-        /// Fee asset
+        /// ["<c>f</c>"] Fee asset
         /// </summary>
         [JsonPropertyName("f")]
         public string FeeAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Leverage
+        /// ["<c>l</c>"] Leverage
         /// </summary>
         [JsonPropertyName("l")]
         public decimal Leverage { get; set; }
         /// <summary>
-        /// Trade role
+        /// ["<c>m</c>"] Trade role
         /// </summary>
         [JsonPropertyName("m")]
         public TradeRole TradeRole { get; set; }
         /// <summary>
-        /// OffsetFlag
+        /// ["<c>o</c>"] OffsetFlag
         /// </summary>
         [JsonPropertyName("o")]
         public string OffsetFlag { get; set; } = string.Empty;
