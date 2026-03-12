@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum DepositStatus
     {
         /// <summary>
-        /// Confirming
+        /// ["<c>confirming</c>"] Confirming
         /// </summary>
         [Map("confirming")]
         Confirming,
         /// <summary>
-        /// Success
+        /// ["<c>succeed</c>"] Success
         /// </summary>
         [Map("succeed")]
         Success

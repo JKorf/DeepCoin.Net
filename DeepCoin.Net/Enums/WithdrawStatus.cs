@@ -11,22 +11,22 @@ namespace DeepCoin.Net.Enums
     public enum WithdrawStatus
     {
         /// <summary>
-        /// Auditing
+        /// ["<c>auditing</c>"] Auditing
         /// </summary>
         [Map("auditing")]
         Auditing,
         /// <summary>
-        /// Confirming
+        /// ["<c>confirming</c>"] Confirming
         /// </summary>
         [Map("confirming")]
         Confirming,
         /// <summary>
-        /// Rejected
+        /// ["<c>rejected</c>"] Rejected
         /// </summary>
         [Map("rejected")]
         Rejected,
         /// <summary>
-        /// Success
+        /// ["<c>succeed</c>"] Success
         /// </summary>
         [Map("succeed")]
         Success

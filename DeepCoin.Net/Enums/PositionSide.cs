@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum PositionSide
     {
         /// <summary>
-        /// Long
+        /// ["<c>long</c>"] Long
         /// </summary>
         [Map("long", "0")]
         Long,
         /// <summary>
-        /// Short
+        /// ["<c>short</c>"] Short
         /// </summary>
         [Map("short", "1")]
         Short

@@ -11,17 +11,17 @@ namespace DeepCoin.Net.Enums
     public enum TransferStatus
     {
         /// <summary>
-        /// Processing
+        /// ["<c>1</c>"] Processing
         /// </summary>
         [Map("1", "In Process")]
         Processing,
         /// <summary>
-        /// Approved
+        /// ["<c>2</c>"] Approved
         /// </summary>
         [Map("2")]
         Approved,
         /// <summary>
-        /// Rejected
+        /// ["<c>3</c>"] Rejected
         /// </summary>
         [Map("3")]
         Rejected

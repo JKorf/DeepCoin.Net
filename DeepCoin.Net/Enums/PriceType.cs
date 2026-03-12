@@ -11,17 +11,17 @@ namespace DeepCoin.Net.Enums
     public enum PriceType
     {
         /// <summary>
-        /// Last price
+        /// ["<c>last</c>"] Last price
         /// </summary>
         [Map("last")]
         LastPrice,
         /// <summary>
-        /// Index price
+        /// ["<c>index</c>"] Index price
         /// </summary>
         [Map("index")]
         IndexPrice,
         /// <summary>
-        /// Mark price
+        /// ["<c>mark</c>"] Mark price
         /// </summary>
         [Map("mark")]
         MarkPrice

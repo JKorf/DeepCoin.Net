@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum AccountType
     {
         /// <summary>
-        /// Email
+        /// ["<c>email</c>"] Email
         /// </summary>
         [Map("email")]
         Email,
         /// <summary>
-        /// Phone
+        /// ["<c>phone</c>"] Phone
         /// </summary>
         [Map("phone")]
         Phone

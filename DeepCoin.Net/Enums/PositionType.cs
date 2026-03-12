@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum PositionType
     {
         /// <summary>
-        /// Merge position
+        /// ["<c>merge</c>"] Merge position
         /// </summary>
         [Map("merge")]
         Merge,
         /// <summary>
-        /// Split position
+        /// ["<c>split</c>"] Split position
         /// </summary>
         [Map("split")]
         Split

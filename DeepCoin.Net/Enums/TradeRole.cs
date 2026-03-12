@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum TradeRole
     {
         /// <summary>
-        /// Taker
+        /// ["<c>T</c>"] Taker
         /// </summary>
         [Map("T", "1")]
         Taker,
         /// <summary>
-        /// Maker
+        /// ["<c>M</c>"] Maker
         /// </summary>
         [Map("M", "0")]
         Maker

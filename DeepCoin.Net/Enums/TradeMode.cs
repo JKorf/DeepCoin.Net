@@ -11,17 +11,17 @@ namespace DeepCoin.Net.Enums
     public enum TradeMode
     {
         /// <summary>
-        /// Spot
+        /// ["<c>cash</c>"] Spot
         /// </summary>
         [Map("cash")]
         Spot,
         /// <summary>
-        /// Cross margin
+        /// ["<c>cross</c>"] Cross margin
         /// </summary>
         [Map("cross")]
         Cross,
         /// <summary>
-        /// Isolated margin
+        /// ["<c>isolated</c>"] Isolated margin
         /// </summary>
         [Map("isolated")]
         Isolated

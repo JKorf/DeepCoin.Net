@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum QuantityType
     {
         /// <summary>
-        /// Quantity in base asset
+        /// ["<c>base_ccy</c>"] Quantity in base asset
         /// </summary>
         [Map("base_ccy", "0")]
         BaseAsset,
         /// <summary>
-        /// Quantity in quote asset
+        /// ["<c>quote_ccy</c>"] Quantity in quote asset
         /// </summary>
         [Map("quote_ccy", "1")]
         QuoteAsset

@@ -11,12 +11,12 @@ namespace DeepCoin.Net.Enums
     public enum SymbolType
     {
         /// <summary>
-        /// Spot symbol
+        /// ["<c>SPOT</c>"] Spot symbol
         /// </summary>
         [Map("SPOT")]
         Spot,
         /// <summary>
-        /// Swap symbol
+        /// ["<c>SWAP</c>"] Swap symbol
         /// </summary>
         [Map("SWAP")]
         Swap

@@ -11,17 +11,17 @@ namespace DeepCoin.Net.Enums
     public enum ProductGroup
     {
         /// <summary>
-        /// USDT margined
+        /// ["<c>SwapU</c>"] USDT margined
         /// </summary>
         [Map("SwapU")]
         USDTMargined,
         /// <summary>
-        /// Coin margined
+        /// ["<c>Swap</c>"] Coin margined
         /// </summary>
         [Map("Swap")]
         CoinMargined,
         /// <summary>
-        /// Spot
+        /// ["<c>Spot</c>"] Spot
         /// </summary>
         [Map("Spot")]
         Spot

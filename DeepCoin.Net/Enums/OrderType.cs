@@ -11,22 +11,22 @@ namespace DeepCoin.Net.Enums
     public enum OrderType
     {
         /// <summary>
-        /// Limit order
+        /// ["<c>limit</c>"] Limit order
         /// </summary>
         [Map("limit", "1")]
         Limit,
         /// <summary>
-        /// Market order
+        /// ["<c>market</c>"] Market order
         /// </summary>
         [Map("market", "0")]
         Market,
         /// <summary>
-        /// Post only order
+        /// ["<c>post_only</c>"] Post only order
         /// </summary>
         [Map("post_only")]
         PostOnly,
         /// <summary>
-        /// Immediate or cancel
+        /// ["<c>ioc</c>"] Immediate or cancel
         /// </summary>
         [Map("ioc")]
         ImmediateOrCancel

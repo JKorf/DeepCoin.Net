@@ -11,22 +11,22 @@ namespace DeepCoin.Net.Enums
     public enum BillType
     {
         /// <summary>
-        /// Fund in
+        /// ["<c>2</c>"] Fund in
         /// </summary>
         [Map("2")]
         FundIncome,
         /// <summary>
-        /// Fund out
+        /// ["<c>3</c>"] Fund out
         /// </summary>
         [Map("3")]
         FundExpense,
         /// <summary>
-        /// Fund transfer
+        /// ["<c>4</c>"] Fund transfer
         /// </summary>
         [Map("4")]
         FundTransfer,
         /// <summary>
-        /// Fee
+        /// ["<c>5</c>"] Fee
         /// </summary>
         [Map("5")]
         Fee

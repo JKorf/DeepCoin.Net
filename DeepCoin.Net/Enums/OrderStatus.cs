@@ -11,22 +11,22 @@ namespace DeepCoin.Net.Enums
     public enum OrderStatus
     {
         /// <summary>
-        /// Open order
+        /// ["<c>live</c>"] Open order
         /// </summary>
         [Map("live", "4")]
         Live,
         /// <summary>
-        /// Partially filled open order
+        /// ["<c>partially_filled</c>"] Partially filled open order
         /// </summary>
         [Map("partially_filled")]
         PartiallyFilled,
         /// <summary>
-        /// Canceled
+        /// ["<c>canceled</c>"] Canceled
         /// </summary>
         [Map("canceled", "6")]
         Canceled,
         /// <summary>
-        /// Filled
+        /// ["<c>filled</c>"] Filled
         /// </summary>
         [Map("filled", "1")]
         Filled

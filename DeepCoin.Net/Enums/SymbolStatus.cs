@@ -11,32 +11,32 @@ namespace DeepCoin.Net.Enums
     public enum SymbolStatus
     {
         /// <summary>
-        /// Live
+        /// ["<c>live</c>"] Live
         /// </summary>
         [Map("live", "2")]
         Live,
         /// <summary>
-        /// Suspended
+        /// ["<c>suspend</c>"] Suspended
         /// </summary>
         [Map("suspend", "1")]
         Suspended,
         /// <summary>
-        /// Pre-open
+        /// ["<c>preopen</c>"] Pre-open
         /// </summary>
         [Map("preopen", "0")]
         PreOpen,
         /// <summary>
-        /// Funding fee settling
+        /// ["<c>settlement</c>"] Funding fee settling
         /// </summary>
         [Map("settlement", "3", "4", "5")]
         Settling,
         /// <summary>
-        /// Closing
+        /// ["<c>6</c>"] Closing
         /// </summary>
         [Map("6")]
         Closing,
         /// <summary>
-        /// Inactive
+        /// ["<c>7</c>"] Inactive
         /// </summary>
         [Map("7")]
         Inactive,
