@@ -6,7 +6,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     /// <summary>
     /// DeepCoin Exchange API endpoints
     /// </summary>
-    public interface IDeepCoinRestClientExchangeApi : IRestApiClient, IDisposable
+    public interface IDeepCoinRestClientExchangeApi : IRestApiClient<DeepCoinCredentials>, IDisposable
     {
         /// <summary>
         /// Endpoints related to account settings, info or actions

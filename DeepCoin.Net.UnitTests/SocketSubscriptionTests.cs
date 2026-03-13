@@ -42,7 +42,7 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinSocketClient(Options.Create(new Objects.Options.DeepCoinSocketOptions
             {
                 OutputOriginalData = true,
-                ApiCredentials = new ApiCredentials("123", "456", "789")
+                ApiCredentials = new DeepCoinCredentials("123", "456", "789")
             }), loggerFactory);
             var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/Exchange", "wss://stream.deepcoin.com");
             await tester.ValidateAsync<DeepCoinSymbolUpdate>((client, handler) => client.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETHUSDT", handler), "Symbol", nestedJsonProperty: "result.0.data");

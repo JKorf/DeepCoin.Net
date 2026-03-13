@@ -29,7 +29,7 @@ namespace DeepCoin.Net.UnitTests
             {
                 AutoTimestamp = false,
                 OutputOriginalData = true,
-                ApiCredentials = Authenticated ? new ApiCredentials(key, sec, pass) : null
+                ApiCredentials = Authenticated ? new DeepCoinCredentials(key, sec, pass) : null
             }));
         }
 

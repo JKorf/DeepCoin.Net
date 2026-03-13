@@ -14,7 +14,7 @@ namespace DeepCoin.Net.UnitTests
         [Test]
         public void CheckSignatureExample1()
         {
-            var authProvider = new DeepCoinAuthenticationProvider(new ApiCredentials("XXX", "XXX", "XXX"));
+            var authProvider = new DeepCoinAuthenticationProvider(new DeepCoinCredentials("XXX", "XXX", "XXX"));
             var client = (RestApiClient)new DeepCoinRestClient().ExchangeApi;
 
             CryptoExchange.Net.Testing.TestHelpers.CheckSignature(

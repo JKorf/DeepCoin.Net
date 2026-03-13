@@ -93,7 +93,7 @@ namespace DeepCoin.Net
         }
 
         /// <inheritdoc />
-        public IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, ApiCredentials credentials, SpotUserDataTrackerConfig? config = null, DeepCoinEnvironment? environment = null)
+        public IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, DeepCoinCredentials credentials, SpotUserDataTrackerConfig? config = null, DeepCoinEnvironment? environment = null)
         {
             var clientProvider = _serviceProvider?.GetRequiredService<IDeepCoinUserClientProvider>() ?? new DeepCoinUserClientProvider();
             var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);
@@ -122,7 +122,7 @@ namespace DeepCoin.Net
         }
 
         /// <inheritdoc />
-        public IUserFuturesDataTracker CreateUserFuturesDataTracker(string userIdentifier, ApiCredentials credentials, FuturesUserDataTrackerConfig? config = null, DeepCoinEnvironment? environment = null)
+        public IUserFuturesDataTracker CreateUserFuturesDataTracker(string userIdentifier, DeepCoinCredentials credentials, FuturesUserDataTrackerConfig? config = null, DeepCoinEnvironment? environment = null)
         {
             var clientProvider = _serviceProvider?.GetRequiredService<IDeepCoinUserClientProvider>() ?? new DeepCoinUserClientProvider();
             var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);

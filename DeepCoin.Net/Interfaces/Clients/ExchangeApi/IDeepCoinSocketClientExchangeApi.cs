@@ -11,7 +11,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
     /// <summary>
     /// DeepCoin Exchange streams
     /// </summary>
-    public interface IDeepCoinSocketClientExchangeApi : ISocketApiClient, IDisposable
+    public interface IDeepCoinSocketClientExchangeApi : ISocketApiClient<DeepCoinCredentials>, IDisposable
     {
         /// <summary>
         /// Subscribe to symbol/ticker updates for a symbol

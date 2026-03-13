@@ -30,7 +30,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     /// <summary>
     /// Client providing access to the DeepCoin Exchange websocket Api
     /// </summary>
-    internal partial class DeepCoinSocketClientExchangeApi : SocketApiClient, IDeepCoinSocketClientExchangeApi
+    internal partial class DeepCoinSocketClientExchangeApi : SocketApiClient<DeepCoinEnvironment, DeepCoinAuthenticationProvider, DeepCoinCredentials>, IDeepCoinSocketClientExchangeApi
     {
         #region constructor/destructor
 
@@ -67,7 +67,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new DeepCoinSocketMessageHandler();
 
         /// <inheritdoc />
-        protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
+        protected override DeepCoinAuthenticationProvider CreateAuthenticationProvider(DeepCoinCredentials credentials)
             => new DeepCoinAuthenticationProvider(credentials);
 
         /// <inheritdoc />

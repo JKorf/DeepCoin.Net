@@ -49,7 +49,7 @@ namespace DeepCoin.Net.Clients
         }
 
         /// <inheritdoc />
-        public void InitializeUserClient(string userIdentifier, ApiCredentials credentials, DeepCoinEnvironment? environment = null)
+        public void InitializeUserClient(string userIdentifier, DeepCoinCredentials credentials, DeepCoinEnvironment? environment = null)
         {
             CreateRestClient(userIdentifier, credentials, environment);
             CreateSocketClient(userIdentifier, credentials, environment);
@@ -63,7 +63,7 @@ namespace DeepCoin.Net.Clients
         }
 
         /// <inheritdoc />
-        public IDeepCoinRestClient GetRestClient(string userIdentifier, ApiCredentials? credentials = null, DeepCoinEnvironment? environment = null)
+        public IDeepCoinRestClient GetRestClient(string userIdentifier, DeepCoinCredentials? credentials = null, DeepCoinEnvironment? environment = null)
         {
             if (!_restClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
                 client = CreateRestClient(userIdentifier, credentials, environment);
@@ -72,7 +72,7 @@ namespace DeepCoin.Net.Clients
         }
 
         /// <inheritdoc />
-        public IDeepCoinSocketClient GetSocketClient(string userIdentifier, ApiCredentials? credentials = null, DeepCoinEnvironment? environment = null)
+        public IDeepCoinSocketClient GetSocketClient(string userIdentifier, DeepCoinCredentials? credentials = null, DeepCoinEnvironment? environment = null)
         {
             if (!_socketClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
                 client = CreateSocketClient(userIdentifier, credentials, environment);
@@ -80,7 +80,7 @@ namespace DeepCoin.Net.Clients
             return client;
         }
 
-        private IDeepCoinRestClient CreateRestClient(string userIdentifier, ApiCredentials? credentials, DeepCoinEnvironment? environment)
+        private IDeepCoinRestClient CreateRestClient(string userIdentifier, DeepCoinCredentials? credentials, DeepCoinEnvironment? environment)
         {
             var clientRestOptions = SetRestEnvironment(environment);
             var client = new DeepCoinRestClient(_httpClient, _loggerFactory, clientRestOptions);
@@ -92,7 +92,7 @@ namespace DeepCoin.Net.Clients
             return client;
         }
 
-        private IDeepCoinSocketClient CreateSocketClient(string userIdentifier, ApiCredentials? credentials, DeepCoinEnvironment? environment)
+        private IDeepCoinSocketClient CreateSocketClient(string userIdentifier, DeepCoinCredentials? credentials, DeepCoinEnvironment? environment)
         {
             var clientSocketOptions = SetSocketEnvironment(environment);
             var client = new DeepCoinSocketClient(clientSocketOptions!, _loggerFactory);

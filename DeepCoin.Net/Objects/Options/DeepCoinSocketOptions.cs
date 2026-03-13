@@ -5,7 +5,7 @@ namespace DeepCoin.Net.Objects.Options
     /// <summary>
     /// Options for the DeepCoinSocketClient
     /// </summary>
-    public class DeepCoinSocketOptions : SocketExchangeOptions<DeepCoinEnvironment>
+    public class DeepCoinSocketOptions : SocketExchangeOptions<DeepCoinEnvironment, DeepCoinCredentials>
     {
         /// <summary>
         /// Default options for new clients
@@ -27,7 +27,7 @@ namespace DeepCoin.Net.Objects.Options
         /// <summary>
         /// Exchange API options
         /// </summary>
-        public SocketApiOptions ExchangeOptions { get; private set; } = new SocketApiOptions();
+        public SocketApiOptions<DeepCoinCredentials> ExchangeOptions { get; private set; } = new SocketApiOptions<DeepCoinCredentials>();
 
         internal DeepCoinSocketOptions Set(DeepCoinSocketOptions targetOptions)
         {
