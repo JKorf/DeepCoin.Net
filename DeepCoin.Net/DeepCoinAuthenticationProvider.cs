@@ -31,7 +31,7 @@ namespace DeepCoin.Net
             var signature = SignHMACSHA256(signStr, SignOutputType.Base64);
 
             request.Headers ??= new Dictionary<string, string>();
-            request.Headers.Add("DC-ACCESS-KEY", Credential.PublicKey);
+            request.Headers.Add("DC-ACCESS-KEY", Credential.Key);
             request.Headers.Add("DC-ACCESS-SIGN", signature);
             request.Headers.Add("DC-ACCESS-TIMESTAMP", timestamp);
             request.Headers.Add("DC-ACCESS-PASSPHRASE", Credential.Pass!);
