@@ -96,14 +96,22 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                             x.Quantity,
                             x.DepositStatus == Enums.DepositStatus.Success,
                             x.CreateTime,
-                            x.DepositStatus == DepositStatus.Success ? SharedTransferStatus.Completed
-                            : x.DepositStatus == DepositStatus.Confirming ? SharedTransferStatus.InProgress
-                            : SharedTransferStatus.Failed)
+                            ParseTransferStatus(x.DepositStatus))
                         {
                             TransactionId = x.TransactionHash,
                             Network = x.NetworkName,
                         })
                     .ToArray(), nextPageRequest);
+        }
+
+        private SharedTransferStatus ParseTransferStatus(DepositStatus depositStatus)
+        {
+            if (depositStatus == DepositStatus.Success)
+                return SharedTransferStatus.Completed;
+            if (depositStatus == DepositStatus.Confirming)
+                return SharedTransferStatus.InProgress;
+
+            return SharedTransferStatus.Unknown;
         }
 
         #endregion
@@ -688,7 +696,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         {
             if (status == OrderStatus.Live || status == OrderStatus.PartiallyFilled) return SharedOrderStatus.Open;
             if (status == OrderStatus.Canceled) return SharedOrderStatus.Canceled;
-            return SharedOrderStatus.Filled;
+            if (status == OrderStatus.Filled) return SharedOrderStatus.Filled;
+            return SharedOrderStatus.Unknown;
         }
 
         private SharedOrderType ParseOrderType(OrderType type)
