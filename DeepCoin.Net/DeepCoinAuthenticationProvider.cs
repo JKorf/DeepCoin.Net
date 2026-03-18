@@ -8,12 +8,11 @@ using System.Collections.Generic;
 
 namespace DeepCoin.Net
 {
-    internal class DeepCoinAuthenticationProvider : AuthenticationProvider<DeepCoinCredentials, HMACCredential>
+    internal class DeepCoinAuthenticationProvider : AuthenticationProvider<DeepCoinCredentials, DeepCoinCredentials>
     {
         private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
-        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.HMAC];
-        public DeepCoinAuthenticationProvider(DeepCoinCredentials credentials) : base(credentials)
+        public DeepCoinAuthenticationProvider(DeepCoinCredentials credentials) : base(credentials, credentials)
         {
             if (string.IsNullOrEmpty(Credential.Pass))
                 throw new ArgumentNullException(nameof(Credential.Pass), "Passphrase is required for DeepCoin authentication");

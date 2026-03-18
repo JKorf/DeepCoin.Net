@@ -1,3 +1,4 @@
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Objects.Options;
 
 namespace DeepCoin.Net.Objects.Options
@@ -27,7 +28,7 @@ namespace DeepCoin.Net.Objects.Options
         /// <summary>
         /// Exchange API options
         /// </summary>
-        public SocketApiOptions<DeepCoinCredentials> ExchangeOptions { get; private set; } = new SocketApiOptions<DeepCoinCredentials>();
+        public SocketApiOptions ExchangeOptions { get; private set; } = new SocketApiOptions();
 
         internal DeepCoinSocketOptions Set(DeepCoinSocketOptions targetOptions)
         {
