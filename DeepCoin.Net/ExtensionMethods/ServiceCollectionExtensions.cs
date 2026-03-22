@@ -109,8 +109,6 @@ namespace Microsoft.Extensions.DependencyInjection
             }).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
             services.Add(new ServiceDescriptor(typeof(IDeepCoinSocketClient), x => { return new DeepCoinSocketClient(x.GetRequiredService<IOptions<DeepCoinSocketOptions>>(), x.GetRequiredService<ILoggerFactory>()); }, socketClientLifeTime ?? ServiceLifetime.Singleton));
 
-            services.AddTransient<ICryptoRestClient, CryptoRestClient>();
-            services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
             services.AddTransient<IDeepCoinOrderBookFactory, DeepCoinOrderBookFactory>();
             services.AddTransient<IDeepCoinTrackerFactory, DeepCoinTrackerFactory>();
             services.AddTransient<ITrackerFactory, DeepCoinTrackerFactory>();

@@ -14,8 +14,6 @@ namespace DeepCoin.Net
 
         public DeepCoinAuthenticationProvider(DeepCoinCredentials credentials) : base(credentials, credentials)
         {
-            if (string.IsNullOrEmpty(Credential.Pass))
-                throw new ArgumentNullException(nameof(Credential.Pass), "Passphrase is required for DeepCoin authentication");
         }
 
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
