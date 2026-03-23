@@ -8,15 +8,12 @@ using System.Collections.Generic;
 
 namespace DeepCoin.Net
 {
-    internal class DeepCoinAuthenticationProvider : AuthenticationProvider
+    internal class DeepCoinAuthenticationProvider : AuthenticationProvider<DeepCoinCredentials, DeepCoinCredentials>
     {
         private static readonly IMessageSerializer _serializer = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
-        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.Hmac];
-        public DeepCoinAuthenticationProvider(ApiCredentials credentials) : base(credentials)
+        public DeepCoinAuthenticationProvider(DeepCoinCredentials credentials) : base(credentials, credentials)
         {
-            if (string.IsNullOrEmpty(credentials.Pass))
-                throw new ArgumentNullException(nameof(ApiCredentials.Pass), "Passphrase is required for DeepCoin authentication");
         }
 
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
@@ -31,10 +28,10 @@ namespace DeepCoin.Net
             var signature = SignHMACSHA256(signStr, SignOutputType.Base64);
 
             request.Headers ??= new Dictionary<string, string>();
-            request.Headers.Add("DC-ACCESS-KEY", ApiKey);
+            request.Headers.Add("DC-ACCESS-KEY", Credential.Key);
             request.Headers.Add("DC-ACCESS-SIGN", signature);
             request.Headers.Add("DC-ACCESS-TIMESTAMP", timestamp);
-            request.Headers.Add("DC-ACCESS-PASSPHRASE", _credentials.Pass!);
+            request.Headers.Add("DC-ACCESS-PASSPHRASE", Credential.Pass!);
 
             request.SetQueryString(queryParams);
             request.SetBodyContent(bodyParams);

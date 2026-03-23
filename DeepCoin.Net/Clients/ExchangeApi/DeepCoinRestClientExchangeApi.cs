@@ -21,7 +21,7 @@ using DeepCoin.Net.Clients.MessageHandlers;
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
     /// <inheritdoc cref="IDeepCoinRestClientExchangeApi" />
-    internal partial class DeepCoinRestClientExchangeApi : RestApiClient, IDeepCoinRestClientExchangeApi
+    internal partial class DeepCoinRestClientExchangeApi : RestApiClient<DeepCoinEnvironment, DeepCoinAuthenticationProvider, DeepCoinCredentials>, IDeepCoinRestClientExchangeApi
     {
         #region fields 
         
@@ -55,7 +55,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(DeepCoinExchange._serializerContext));
 
         /// <inheritdoc />
-        protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
+        protected override DeepCoinAuthenticationProvider CreateAuthenticationProvider(DeepCoinCredentials credentials)
             => new DeepCoinAuthenticationProvider(credentials);
 
         internal Task<WebCallResult> SendAsync(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)

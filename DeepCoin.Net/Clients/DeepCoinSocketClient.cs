@@ -12,7 +12,7 @@ using DeepCoin.Net.Clients.ExchangeApi;
 namespace DeepCoin.Net.Clients
 {
     /// <inheritdoc cref="IDeepCoinSocketClient" />
-    public class DeepCoinSocketClient : BaseSocketClient, IDeepCoinSocketClient
+    public class DeepCoinSocketClient : BaseSocketClient<DeepCoinEnvironment, DeepCoinCredentials>, IDeepCoinSocketClient
     {
         #region fields
         #endregion
@@ -49,12 +49,6 @@ namespace DeepCoin.Net.Clients
 
         #endregion
 
-        /// <inheritdoc />
-        public void SetOptions(UpdateOptions options)
-        {
-            ExchangeApi.SetOptions(options);
-        }
-
         /// <summary>
         /// Set the default options to be used when creating new clients
         /// </summary>
@@ -62,14 +56,6 @@ namespace DeepCoin.Net.Clients
         public static void SetDefaultOptions(Action<DeepCoinSocketOptions> optionsDelegate)
         {
             DeepCoinSocketOptions.Default = ApplyOptionsDelegate(optionsDelegate);
-        }
-
-        /// <inheritdoc />
-        public void SetApiCredentials(ApiCredentials credentials)
-        {
-            
-            ExchangeApi.SetApiCredentials(credentials);
-
         }
     }
 }

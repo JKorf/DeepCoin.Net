@@ -1,3 +1,4 @@
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Objects.Options;
 
 namespace DeepCoin.Net.Objects.Options
@@ -5,7 +6,7 @@ namespace DeepCoin.Net.Objects.Options
     /// <summary>
     /// Options for the DeepCoinRestClient
     /// </summary>
-    public class DeepCoinRestOptions : RestExchangeOptions<DeepCoinEnvironment>
+    public class DeepCoinRestOptions : RestExchangeOptions<DeepCoinEnvironment, DeepCoinCredentials>
     {
         /// <summary>
         /// Default options for new clients

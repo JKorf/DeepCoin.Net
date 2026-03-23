@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using CryptoExchange.Net.Authentication;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -29,7 +30,7 @@ namespace DeepCoin.Net.UnitTests
             return new DeepCoinSocketClient(Options.Create(new DeepCoinSocketOptions
             {
                 OutputOriginalData = true,
-                ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec, pass) : null
+                ApiCredentials = Authenticated ? new DeepCoinCredentials(key, sec, pass) : null
             }), loggerFactory);
         }
 
@@ -42,7 +43,7 @@ namespace DeepCoin.Net.UnitTests
             Authenticated = key != null && sec != null;
             return new DeepCoinRestClient(x =>
             {
-                x.ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec, pass) : null;
+                x.ApiCredentials = Authenticated ? new DeepCoinCredentials(key, sec, pass) : null;
             });
         }
 

@@ -23,7 +23,7 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456", "789");
+                opts.ApiCredentials = new DeepCoinCredentials("123", "456", "789");
             });
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Account", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetBalancesAsync(SymbolType.Spot), "GetBalances", nestedJsonProperty: "data");
@@ -41,7 +41,7 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456", "789");
+                opts.ApiCredentials = new DeepCoinCredentials("123", "456", "789");
             });
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/ExchangeData", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetTickersAsync(Enums.SymbolType.Spot), "GetTickers", ignoreProperties: ["lastSz", "sodUtc0", "sodUtc8"]);
@@ -57,7 +57,7 @@ namespace DeepCoin.Net.UnitTests
             var client = new DeepCoinRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456", "789");
+                opts.ApiCredentials = new DeepCoinCredentials("123", "456", "789");
             });
             var tester = new RestRequestValidator<DeepCoinRestClient>(client, "Endpoints/Exchange/Trading", "https://api.deepcoin.com", IsAuthenticated, nestedPropertyForCompare: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetPositionsAsync(SymbolType.Swap), "GetPositions", nestedJsonProperty: "data");
