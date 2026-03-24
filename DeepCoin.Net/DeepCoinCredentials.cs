@@ -46,5 +46,8 @@ namespace DeepCoin.Net
             Pass = pass;
             return this;
         }
+
+        /// <inheritdoc />
+        public override ApiCredentials Copy() => new DeepCoinCredentials(this);
     }
 }
