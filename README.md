@@ -46,23 +46,41 @@ DeepCoin.Net is available on [GitHub packages](https://github.com/JKorf/DeepCoin
 The NuGet package files are added along side the source with the latest GitHub release which can found [here](https://github.com/JKorf/DeepCoin.Net/releases).
 
 ## How to use
-* REST Endpoints
-	```csharp
-	// Get the ETH/USDT ticker via rest request
-	var restClient = new DeepCoinRestClient();
-    var tickerResult = await restClient.ExchangeApi.ExchangeData.GetTickersAsync(SymbolType.Spot);
-    var ticker = tickerResult.Data.Single(x => x.Symbol == "ETH-USDT");
-    var lastPrice = ticker.LastPrice;
-	```
-* Websocket streams
-	```csharp
-	// Subscribe to ETH/USDT ticker updates via the websocket API
-	var socketClient = new DeepCoinSocketClient();
-	var tickerSubscriptionResult = socketClient.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETH-USDT", (update) => 
-	{
-	  var lastPrice = update.Data.LastPrice;
-	});
-	```
+*Basic request:*
+```csharp
+// Get the ETH/USDT ticker via rest request
+var restClient = new DeepCoinRestClient();
+var tickerResult = await restClient.ExchangeApi.ExchangeData.GetTickersAsync(SymbolType.Spot);
+var ticker = tickerResult.Data.Single(x => x.Symbol == "ETH-USDT");
+var lastPrice = ticker.LastPrice;
+```
+	
+*Place order:*
+```csharp
+var restClient = new DeepCoinRestClient(opts => {
+	opts.ApiCredentials = new DeepCoinCredentials("APIKEY", "APISECRET", "PASS");
+});
+
+// Place Limit order to go long for 0.1 ETH at 2000
+var orderResult = await restClient.ExchangeApi.Trading.PlaceOrderAsync(
+    "ETH-USDT-SWAP",
+    OrderSide.Buy,
+    OrderType.Limit,
+    0.1m,
+    price: 2000,
+    tradeMode: TradeMode.Cross,
+    positionSide: PositionSide.Long);
+```
+
+*WebSocket subscription:*
+```csharp
+// Subscribe to ETH/USDT ticker updates via the websocket API
+var socketClient = new DeepCoinSocketClient();
+var tickerSubscriptionResult = socketClient.ExchangeApi.SubscribeToSymbolUpdatesAsync("ETH-USDT", (update) => 
+{
+  var lastPrice = update.Data.LastPrice;
+});
+```
 
 For information on the clients, dependency injection, response processing and more see the [documentation](https://cryptoexchange.jkorf.dev?library=DeepCoin.Net), or have a look at the examples [here](https://github.com/JKorf/DeepCoin.Net/tree/main/Examples) or [here](https://github.com/JKorf/CryptoExchange.Net/tree/master/Examples).
 
