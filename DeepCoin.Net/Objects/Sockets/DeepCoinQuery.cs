@@ -5,6 +5,7 @@ using DeepCoin.Net.Objects.Internal;
 using CryptoExchange.Net.Clients;
 using System;
 using CryptoExchange.Net.Sockets.Default;
+using CryptoExchange.Net.Sockets.Default.Routing;
 
 namespace DeepCoin.Net.Objects.Sockets
 {

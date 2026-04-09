@@ -9,6 +9,7 @@ using DeepCoin.Net.Objects.Internal;
 using System.Linq;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Sockets.Default;
+using CryptoExchange.Net.Sockets.Default.Routing;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
