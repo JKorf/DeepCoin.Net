@@ -1,0 +1,42 @@
+# DeepCoin.Net
+
+> Strongly typed .NET client library for the DeepCoin REST and WebSocket APIs. Supports DeepCoin spot and swap/futures market data, account endpoints, trading endpoints, private user streams, local order book support, and CryptoExchange.Net SharedApis integration.
+
+DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the `WebCallResult<T>` / `CallResult<T>` result pattern, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. Current version in this repository: 3.9.2. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
+
+## Documentation
+
+- [README](https://github.com/JKorf/DeepCoin.Net/blob/main/README.md): Overview, installation, supported features, usage examples, release notes
+- [Documentation Site](https://cryptoexchange.jkorf.dev/DeepCoin.Net/): Full documentation hub including client reference, WebSocket subscriptions, dependency injection, and shared interfaces
+- [AI API Quick Map](https://github.com/JKorf/DeepCoin.Net/blob/main/docs/ai-api-map.md): Table-style intent-to-method map for routing common user requests to the correct client member
+- [Full LLM Context](https://github.com/JKorf/DeepCoin.Net/blob/main/llms-full.txt): Detailed AI/LLM guide with code patterns, endpoint map, common mistakes, and anti-hallucination rules
+- [Claude/Codex Skill](https://github.com/JKorf/DeepCoin.Net/blob/main/CLAUDE.md): Assistant-facing usage guide with examples and pitfalls
+
+## Examples
+
+- [AI-friendly examples directory](https://github.com/JKorf/DeepCoin.Net/tree/main/Examples/ai-friendly): Compact, fully runnable examples optimized for AI assistants and quick onboarding
+- [Spot Quickstart](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/01-spot-quickstart.cs): Client setup, ticker lookup, balances, limit spot order, order status and cancellation
+- [Swap/Futures Trading](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/02-futures.cs): Set leverage, place swap order, retrieve position, reduce-only close
+- [WebSocket Streams](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/03-websocket.cs): Public ticker/trade/kline/order book streams and authenticated user stream
+- [Multi-Exchange Pattern](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/04-multi-exchange.cs): Using CryptoExchange.Net SharedApis for exchange-agnostic code
+- [Error Handling](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/05-error-handling.cs): WebCallResult pattern, retry logic, common errors and their handling
+- [Full Examples Repository](https://github.com/JKorf/DeepCoin.Net/tree/main/Examples): Console, API, order book, and tracker examples
+
+## Critical Rules
+
+- Use `DeepCoinRestClient` for REST and `DeepCoinSocketClient` for WebSocket.
+- Use `DeepCoinCredentials("key", "secret", "pass")`, not generic `ApiCredentials`.
+- Use `restClient.ExchangeApi.ExchangeData`, `.Account`, and `.Trading`; do not invent `SpotApi` or futures-specific root branches.
+- Native DeepCoin methods use symbols such as `ETH-USDT` and `ETH-USDT-SWAP`.
+- Always check `.Success` before reading `.Data`.
+- Use `socketClient.UnsubscribeAsync(subscription.Data)` for teardown.
+- Private WebSocket streams require `restClient.ExchangeApi.Account.StartUserStreamAsync()`.
+- For cross-exchange code, use `CryptoExchange.Net.SharedApis` via `.ExchangeApi.SharedClient`.
+
+## Reference
+
+- [CryptoExchange.Net base library](https://github.com/JKorf/CryptoExchange.Net): Base abstractions used by DeepCoin.Net and other exchange libraries
+- [CryptoClients.Net](https://github.com/JKorf/CryptoClients.Net): Bundle package providing unified access to all exchange libraries
+- [NuGet Package](https://www.nuget.org/packages/DeepCoin.Net): Latest stable release on NuGet
+- [Changelog](https://github.com/JKorf/DeepCoin.Net/blob/main/README.md#release-notes): Version history
+- [Discord Community](https://discord.gg/MSpeEtSY8t): Maintainer-supported Discord for questions and discussion

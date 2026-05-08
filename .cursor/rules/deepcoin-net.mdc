@@ -1,0 +1,120 @@
+---
+description: Conventions for using DeepCoin.Net library when working with the DeepCoin cryptocurrency exchange in C#/.NET. Apply when generating code that interacts with the DeepCoin API.
+globs:
+  - "**/*.cs"
+  - "**/*.csproj"
+alwaysApply: false
+---
+
+# DeepCoin.Net Conventions
+
+This codebase uses **DeepCoin.Net** for DeepCoin cryptocurrency exchange access. Do not write raw `HttpClient` calls to DeepCoin endpoints.
+
+## Client setup pattern
+
+```csharp
+using DeepCoin.Net;
+using DeepCoin.Net.Clients;
+
+var restClient = new DeepCoinRestClient(options =>
+{
+    options.ApiCredentials = new DeepCoinCredentials("API_KEY", "API_SECRET", "API_PASS");
+});
+```
+
+For public market data only, no credentials are needed: `new DeepCoinRestClient()`.
+
+## Result pattern
+
+All methods return `WebCallResult<T>` (REST) or `CallResult<T>` (WebSocket). Always check `.Success` before reading `.Data`:
+
+```csharp
+var tickers = await restClient.ExchangeApi.ExchangeData.GetTickersAsync(SymbolType.Spot);
+if (!tickers.Success) { /* tickers.Error */ return; }
+var eth = tickers.Data.FirstOrDefault(x => x.Symbol == "ETH-USDT");
+```
+
+## API surface
+
+- `restClient.ExchangeApi.ExchangeData` for tickers, symbols, klines, order books, and funding rates
+- `restClient.ExchangeApi.Account` for balances, bills, leverage, deposit/withdraw history, and listen keys
+- `restClient.ExchangeApi.Trading` for positions, orders, user trades, order history, and TP/SL
+- `restClient.ExchangeApi.SharedClient` for shared REST interfaces
+- `socketClient.ExchangeApi` for public and private WebSocket subscriptions
+- `socketClient.ExchangeApi.SharedClient` for shared socket interfaces
+
+## Native symbols and account modes
+
+Use DeepCoin's native hyphenated symbols:
+
+```csharp
+"ETH-USDT"       // spot
+"ETH-USDT-SWAP"  // swap/futures
+```
+
+Use `SymbolType.Spot` for spot data and account balances, `SymbolType.Swap` for swap/futures data and positions. Use `TradeMode.Spot` for spot orders; use `TradeMode.Cross` or `TradeMode.Isolated` for swap/futures orders.
+
+## Order placement
+
+```csharp
+var order = await restClient.ExchangeApi.Trading.PlaceOrderAsync(
+    "ETH-USDT",
+    OrderSide.Buy,
+    OrderType.Limit,
+    quantity: 0.1m,
+    price: 2000m,
+    tradeMode: TradeMode.Spot);
+```
+
+For swap/futures orders include `positionSide: PositionSide.Long` or `PositionSide.Short` when the request is directional.
+
+## WebSocket pattern
+
+```csharp
+var socketClient = new DeepCoinSocketClient();
+var sub = await socketClient.ExchangeApi.SubscribeToSymbolUpdatesAsync(
+    "ETH-USDT",
+    update => { /* update.Data.LastPrice */ });
+if (!sub.Success) { /* sub.Error */ return; }
+
+await socketClient.UnsubscribeAsync(sub.Data);
+```
+
+Private streams require a listen key:
+
+```csharp
+var listenKey = await restClient.ExchangeApi.Account.StartUserStreamAsync();
+if (!listenKey.Success) { return; }
+
+await socketClient.ExchangeApi.SubscribeToUserDataUpdatesAsync(listenKey.Data.ListenKey);
+```
+
+## Multi-exchange code
+
+For exchange-agnostic code, use `CryptoExchange.Net.SharedApis`:
+
+```csharp
+using CryptoExchange.Net.SharedApis;
+
+var shared = new DeepCoinRestClient().ExchangeApi.SharedClient;
+var ticker = await shared.GetSpotTickerAsync(
+    new GetTickerRequest(new SharedSymbol(TradingMode.Spot, "ETH", "USDT")));
+```
+
+## Hard rules
+
+- Never write raw `HttpClient` to DeepCoin endpoints
+- Never use `.Result` or `.Wait()`
+- Never instantiate clients per request
+- Never skip checking `WebCallResult.Success`
+- Never use `DeepCoinClient`; use `DeepCoinRestClient`
+- Never use generic `ApiCredentials`; use `DeepCoinCredentials`
+- Never use Binance-style API branches such as `SpotApi` or `UsdFuturesApi`
+- Use DeepCoin native symbols with hyphens in native methods
+- Always store WebSocket subscriptions and unsubscribe on shutdown
+
+## Reference
+
+- `CLAUDE.md` in repo root has fuller examples
+- `llms.txt` and `llms-full.txt` in repo root for AI context
+- `Examples/ai-friendly/` contains compilable examples
