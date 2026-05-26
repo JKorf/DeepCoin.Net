@@ -12,7 +12,7 @@
     <FileVersion>3.9.2</FileVersion>
     <Description>A high-performance .NET client library for the DeepCoin REST and WebSocket APIs, providing strongly typed models, automatic WebSocket reconnection, client-side rate limiting, local order book support, and seamless integration with other CryptoExchange.Net based clients.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageTags>DeepCoin;DeepCoin.Net;DeepCoin.com;DeepCoin Client;DeepCoin API;CryptoCurrency;CryptoCurrency Exchange;CryptoExchange.Net</PackageTags>
+    <PackageTags>DeepCoin;DeepCoin.Net;DeepCoin.com;DeepCoin Client;DeepCoin API;CryptoCurrency;CryptoCurrency Exchange;CryptoExchange.Net;ccxt</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/JKorf/DeepCoin.Net.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JKorf/DeepCoin.Net</PackageProjectUrl>
