@@ -1,6 +1,7 @@
 # ![DeepCoin.Net](https://raw.githubusercontent.com/JKorf/DeepCoin.Net/main/DeepCoin.Net/Icon/icon.png) DeepCoin.Net  
 
 [![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/DeepCoin.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/DeepCoin.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/DeepCoin.Net?style=for-the-badge)
+![Since](https://img.shields.io/badge/since-2025-brightgreen?style=for-the-badge)
 
 DeepCoin.Net is a client library for accessing the [DeepCoin REST and Websocket API](https://www.deepcoin.com/docs/authentication). 
 
