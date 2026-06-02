@@ -1,3 +1,4 @@
+using DeepCoin.Net;
 using DeepCoin.Net.Interfaces.Clients;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,8 @@ builder.Services.AddDeepCoin();
 /*
 builder.Services.AddDeepCoin(options =>
 {
-    options.ApiCredentials = new DeepCoinApiCredentials("<APIKEY>", "<APISECRET>", "<APIPASS>");
+    options.ApiCredentials = new DeepCoinCredentials()
+        .WithHMAC("<APIKEY>", "<APISECRET>", "<APIPASS>");
     options.Rest.RequestTimeout = TimeSpan.FromSeconds(5);
 });
 */
@@ -27,8 +29,11 @@ app.UseHttpsRedirection();
 app.MapGet("/{Symbol}", async ([FromServices] IDeepCoinRestClient client, string symbol) =>
 {
     var result = await client.ExchangeApi.ExchangeData.GetTickersAsync(DeepCoin.Net.Enums.SymbolType.Spot);
+    if (!result.Success)
+        return Results.Problem(result.Error?.Message, statusCode: 502);
+
     var info = result.Data.SingleOrDefault(x => x.Symbol == symbol);
-    return info?.LastPrice;
+    return Results.Ok(info?.LastPrice);
 })
 .WithOpenApi();
 
@@ -36,7 +41,9 @@ app.MapGet("/{Symbol}", async ([FromServices] IDeepCoinRestClient client, string
 app.MapGet("/Balances", async ([FromServices] IDeepCoinRestClient client) =>
 {
     var result = await client.ExchangeApi.Account.GetBalancesAsync(DeepCoin.Net.Enums.SymbolType.Spot);
-    return (object)(result.Success ? result.Data : result.Error!);
+    return result.Success
+        ? Results.Ok(result.Data)
+        : Results.Problem(result.Error?.Message, statusCode: 502);
 })
 .WithOpenApi();
 

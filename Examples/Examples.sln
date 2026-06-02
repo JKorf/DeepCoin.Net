@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepCoin.Examples.OrderBook
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepCoin.Examples.Tracker", "DeepCoin.Examples.Tracker\DeepCoin.Examples.Tracker.csproj", "{42497D03-064D-4EB8-8EC8-E592E97761E3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepCoin.Examples.OrderPlacement", "DeepCoin.Examples.OrderPlacement\DeepCoin.Examples.OrderPlacement.csproj", "{C9B8C580-4D3B-48A3-9798-95C2D52775F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{42497D03-064D-4EB8-8EC8-E592E97761E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42497D03-064D-4EB8-8EC8-E592E97761E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42497D03-064D-4EB8-8EC8-E592E97761E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9B8C580-4D3B-48A3-9798-95C2D52775F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9B8C580-4D3B-48A3-9798-95C2D52775F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9B8C580-4D3B-48A3-9798-95C2D52775F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9B8C580-4D3B-48A3-9798-95C2D52775F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

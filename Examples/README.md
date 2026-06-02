@@ -1,13 +1,11 @@
 # Examples
 
-### DeepCoin.Examples.Api
-A minimal API showing how to integrate DeepCoin.Net in a web API project
+| Project | Topic |
+|---|---|
+| `DeepCoin.Examples.Api` | Minimal ASP.NET Core API integration, dependency injection, public ticker endpoint, private balances endpoint |
+| `DeepCoin.Examples.Console` | Basic REST ticker request and WebSocket ticker subscription |
+| `DeepCoin.Examples.OrderPlacement` | Spot and swap order placement, order status lookup, and cancellation |
+| `DeepCoin.Examples.OrderBook` | Client-side order book implementation with live console display |
+| `DeepCoin.Examples.Tracker` | Trade tracker with rolling market statistics |
 
-### DeepCoin.Examples.Console
-A simple console client demonstrating basic usage
-
-### DeepCoin.Examples.OrderBook
-Example of using the client side order book implementation
-
-### DeepCoin.Examples.Tracker
-Example of using the trade tracker
+The `ai-friendly` folder contains standalone copy/paste examples intended for quick onboarding and AI coding assistant context.
