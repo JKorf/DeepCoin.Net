@@ -18,13 +18,13 @@ namespace DeepCoin.Net
 
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
         {
-            if (!request.Authenticated)
+            if (!request.RequestDefinition.Authenticated)
                 return;
 
             var timestamp = GetTimestamp(apiClient).ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
             var queryParams = request.QueryParameters?.Count > 0 ? $"?{request.GetQueryString(false)}" : "";
             var bodyParams = request.BodyParameters?.Count > 0 ? GetSerializedBody(_serializer, request.BodyParameters) : "";
-            var signStr = $"{timestamp}{request.Method}{request.Path}{queryParams}{bodyParams}";
+            var signStr = $"{timestamp}{request.RequestDefinition.Method}{request.RequestDefinition.Path}{queryParams}{bodyParams}";
             var signature = SignHMACSHA256(signStr, SignOutputType.Base64);
 
             request.Headers ??= new Dictionary<string, string>();

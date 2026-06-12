@@ -25,7 +25,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="underlying">["<c>uly</c>"] Filter by underlying (swap only)</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<DeepCoinTicker[]>> GetTickersAsync(SymbolType symbolType, string? underlying = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinTicker[]>> GetTickersAsync(SymbolType symbolType, string? underlying = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get symbols list
@@ -40,7 +40,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="underlying">["<c>uly</c>"] Filter by underlying</param>
         /// <param name="symbol">["<c>instId</c>"] Filter by symbol name</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinSymbol[]>> GetSymbolsAsync(SymbolType type, string? underlying = null, string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinSymbol[]>> GetSymbolsAsync(SymbolType type, string? underlying = null, string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get kline/candlestick data
@@ -56,7 +56,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="endTime">["<c>after</c>"] Filter by end time</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results, max 300</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get order book
@@ -70,7 +70,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="depth">["<c>sz</c>"] Number of order book rows, max 400</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrderBook>> GetOrderBookAsync(string symbol, int? depth = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrderBook>> GetOrderBookAsync(string symbol, int? depth = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get funding rate
@@ -84,7 +84,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="type">["<c>instType</c>"] Contract type</param>
         /// <param name="symbol">["<c>instId</c>"] Filter by symbol, for example `ETH-USDT-SWAP`</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinFundingRate[]>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinFundingRate[]>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
 
     }
 }

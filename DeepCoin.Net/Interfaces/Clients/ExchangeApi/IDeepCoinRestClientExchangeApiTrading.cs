@@ -25,7 +25,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="symbolType">["<c>instType</c>"] Symbol type</param>
         /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinPosition[]>> GetPositionsAsync(SymbolType symbolType, string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinPosition[]>> GetPositionsAsync(SymbolType symbolType, string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Place a new order
@@ -52,7 +52,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="tpTriggerPrice">["<c>tpTriggerPx</c>"] Take profit trigger price</param>
         /// <param name="slTriggerPrice">["<c>slTriggerPx</c>"] Stop loss trigger price</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default);
         
         /// <summary>
         /// Edit an existing order. Spot not supported.
@@ -67,7 +67,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="price">["<c>price</c>"] New price</param>
         /// <param name="quantity">["<c>volume</c>"] New quantity</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel an open order
@@ -81,7 +81,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">["<c>ordId</c>"] Order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string orderId, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string orderId, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel multiple orders. Make sure to check the result data of the call to see if orders actually successfully canceled
@@ -94,7 +94,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// </summary>
         /// <param name="orderIds">["<c>OrderSysIDs</c>"] Ids of orders to cancel</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinCancellationResult>> CancelOrdersAsync(IEnumerable<string> orderIds, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinCancellationResult>> CancelOrdersAsync(IEnumerable<string> orderIds, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all orders matching the parameters
@@ -110,7 +110,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="marginMode">Margin mode</param>
         /// <param name="positionType">Position type</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, TradeMode marginMode, PositionType positionType, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, TradeMode marginMode, PositionType positionType, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trades
@@ -130,7 +130,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="endTime">["<c>end</c>"] Filter by end time</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinUserTrade[]>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinUserTrade[]>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get a open order by id
@@ -144,7 +144,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">["<c>ordId</c>"] Order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrder>> GetOpenOrderAsync(string symbol, string orderId, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrder>> GetOpenOrderAsync(string symbol, string orderId, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed order by id
@@ -158,7 +158,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">["<c>ordId</c>"] Order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrder>> GetClosedOrderAsync(string symbol, string orderId, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrder>> GetClosedOrderAsync(string symbol, string orderId, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed order history
@@ -178,7 +178,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="beforeId">["<c>before</c>"] Return results before this id</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results, max 100</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrder[]>> GetClosedOrdersAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, OrderType? orderType = null, OrderStatus? status = null, string? afterId = null, string? beforeId = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrder[]>> GetClosedOrdersAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, OrderType? orderType = null, OrderStatus? status = null, string? afterId = null, string? beforeId = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get open orders
@@ -194,7 +194,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="pageSize">["<c>limit</c>"] Page size</param>
         /// <param name="orderId">["<c>ordId</c>"] Filter by order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinOrder[]>> GetOpenOrdersAsync(string symbol, int? page = null, int? pageSize = null, string? orderId = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrder[]>> GetOpenOrdersAsync(string symbol, int? page = null, int? pageSize = null, string? orderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Set take profit / stop loss trigger price
@@ -209,7 +209,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="takeProfitTriggerPrice">["<c>tpTriggerPx</c>"] Take profit trigger price</param>
         /// <param name="stopLossTriggerPrice">["<c>slTriggerPx</c>"] Stop loss trigger price</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult> SetTpSlAsync(string orderId, decimal? takeProfitTriggerPrice = null, decimal? stopLossTriggerPrice = null, CancellationToken ct = default);
+        Task<HttpResult> SetTpSlAsync(string orderId, decimal? takeProfitTriggerPrice = null, decimal? stopLossTriggerPrice = null, CancellationToken ct = default);
 
     }
 }

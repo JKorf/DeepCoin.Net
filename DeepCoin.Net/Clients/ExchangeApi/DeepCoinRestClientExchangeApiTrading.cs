@@ -30,12 +30,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Positions
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinPosition[]>> GetPositionsAsync(SymbolType symbolType, string? symbol = null, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinPosition[]>> GetPositionsAsync(SymbolType symbolType, string? symbol = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddEnum("instType", symbolType);
-            parameters.AddOptional("instId", symbol);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/account/positions", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instType", symbolType);
+            parameters.Add("instId", symbol);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/account/positions", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinPosition[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -45,31 +45,31 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Place Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("instId", symbol);
-            parameters.AddEnum("side", side);
+            parameters.Add("side", side);
             parameters.Add("ordType", orderType);
-            parameters.AddString("size", quantity);
-            parameters.AddEnum("tdMode", tradeMode ?? TradeMode.Cross);
-            parameters.AddOptionalString("px", price);
-            parameters.AddOptional("ccy", asset);
-            parameters.AddOptional("clOrdId", clientOrderId);
-            parameters.AddOptionalEnum("tgtCcy", quantityType);
-            parameters.AddOptionalEnum("posSide", positionSide);
-            parameters.AddOptionalEnum("mrgPosition", positionType);
-            parameters.AddOptional("closePosId", closePosId);
-            parameters.AddOptional("reduceOnly", reduceOnly);
-            parameters.AddOptionalString("tpTriggerPx", tpTriggerPrice);
-            parameters.AddOptionalString("slTriggerPx", slTriggerPrice);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            parameters.Add("size", quantity);
+            parameters.Add("tdMode", tradeMode ?? TradeMode.Cross);
+            parameters.Add("px", price);
+            parameters.Add("ccy", asset);
+            parameters.Add("clOrdId", clientOrderId);
+            parameters.Add("tgtCcy", quantityType);
+            parameters.Add("posSide", positionSide);
+            parameters.Add("mrgPosition", positionType);
+            parameters.Add("closePosId", closePosId);
+            parameters.Add("reduceOnly", reduceOnly);
+            parameters.Add("tpTriggerPx", tpTriggerPrice);
+            parameters.Add("slTriggerPx", slTriggerPrice);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrderResult>(request, parameters, ct).ConfigureAwait(false);
-            if (!result)
+            if (!result.Success)
                 return result;
 
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
+                return HttpResult.Fail<DeepCoinOrderResult>(result, new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
             
             return result;
         }
@@ -79,19 +79,19 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Edit Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("OrderSysID", $"{orderId}");
-            parameters.AddOptional("price", price);
-            parameters.AddOptional("volume", quantity);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/replace-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            parameters.Add("price", price);
+            parameters.Add("volume", quantity);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/replace-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrderResult>(request, parameters, ct).ConfigureAwait(false);
-            if (!result)
+            if (!result.Success)
                 return result;
 
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
+                return HttpResult.Fail<DeepCoinOrderResult>(result, new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
 
             return result;
         }
@@ -101,18 +101,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Cancel Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string orderId, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string orderId, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("instId", symbol);
             parameters.Add("ordId", orderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/cancel-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/cancel-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrderResult>(request, parameters, ct).ConfigureAwait(false);
-            if (!result)
+            if (!result.Success)
                 return result;
 
             if (result.Data.ResultCode != 0)
-                return result.AsError<DeepCoinOrderResult>(new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
+                return HttpResult.Fail<DeepCoinOrderResult>(result, new ServerError(result.Data.ResultCode, _baseClient.GetErrorInfo(result.Data.ResultCode, result.Data.ResultMessage!)));
 
             return result;
         }
@@ -122,11 +122,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Cancel Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinCancellationResult>> CancelOrdersAsync(IEnumerable<string> orderIds, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinCancellationResult>> CancelOrdersAsync(IEnumerable<string> orderIds, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("OrderSysIDs", orderIds.ToArray());
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/batch-cancel-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/batch-cancel-order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinCancellationResult>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -136,14 +136,14 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Cancel All Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinCancellationResult>> CancelAllOrdersAsync(string symbol, ProductGroup productGroup, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("instrumentID", symbol);
-            parameters.AddEnum("ProductGroup", productGroup);
+            parameters.Add("ProductGroup", productGroup);
             parameters.Add("IsCrossMargin", tradeMode == TradeMode.Cross ? "1" : "0");
             parameters.Add("IsMergeMode", positionType == PositionType.Merge ? "1" : "0");
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/swap/cancel-all", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/swap/cancel-all", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinCancellationResult>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -153,18 +153,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinUserTrade[]>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinUserTrade[]>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddEnum("instType", symbolType);
-            parameters.AddOptional("instId", symbol);
-            parameters.AddOptional("ordId", orderId);
-            parameters.AddOptional("after", afterId);
-            parameters.AddOptional("before", beforeId);
-            parameters.AddOptionalMilliseconds("begin", startTime);
-            parameters.AddOptionalMilliseconds("end", endTime);
-            parameters.AddOptional("limit", limit);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/fills", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instType", symbolType);
+            parameters.Add("instId", symbol);
+            parameters.Add("ordId", orderId);
+            parameters.Add("after", afterId);
+            parameters.Add("before", beforeId);
+            parameters.Add("begin", startTime);
+            parameters.Add("end", endTime);
+            parameters.Add("limit", limit);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/fills", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinUserTrade[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -174,21 +174,21 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Open Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrder>> GetOpenOrderAsync(string symbol, string orderId, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrder>> GetOpenOrderAsync(string symbol, string orderId, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("instId", symbol);
             parameters.Add("ordId", orderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/orderByID", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/orderByID", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
-            if (!result)
-                return result.As<DeepCoinOrder>(default);
+            if (!result.Success)
+                return HttpResult.Fail<DeepCoinOrder>(result);
 
             var order = result.Data.SingleOrDefault();
             if (order == null)
-                return result.AsError<DeepCoinOrder>(new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
+                return HttpResult.Fail<DeepCoinOrder>(result, new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
 
-            return result.As(order);
+            return HttpResult.Ok(result, order);
         }
 
         #endregion
@@ -196,21 +196,21 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Closed Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrder>> GetClosedOrderAsync(string symbol, string orderId, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrder>> GetClosedOrderAsync(string symbol, string orderId, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("instId", symbol);
             parameters.Add("ordId", orderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/finishOrderByID", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/finishOrderByID", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
-            if (!result)
-                return result.As<DeepCoinOrder>(default);
+            if (!result.Success)
+                return HttpResult.Fail<DeepCoinOrder>(result);
 
             var order = result.Data.SingleOrDefault();
             if (order == null)
-                return result.AsError<DeepCoinOrder>(new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
+                return HttpResult.Fail<DeepCoinOrder>(result, new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
 
-            return result.As(order);
+            return HttpResult.Ok(result, order);
         }
 
         #endregion
@@ -218,18 +218,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Closed Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrder[]>> GetClosedOrdersAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, OrderType? orderType = null, OrderStatus? status = null, string? afterId = null, string? beforeId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrder[]>> GetClosedOrdersAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, OrderType? orderType = null, OrderStatus? status = null, string? afterId = null, string? beforeId = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddEnum("instType", symbolType);
-            parameters.AddOptional("instId", symbol);
-            parameters.AddOptional("ordId", orderId);
-            parameters.AddOptionalEnum("ordType", orderType);
-            parameters.AddOptionalEnum("state", status);
-            parameters.AddOptional("after", afterId);
-            parameters.AddOptional("before", beforeId);
-            parameters.AddOptional("limit", limit);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/orders-history", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instType", symbolType);
+            parameters.Add("instId", symbol);
+            parameters.Add("ordId", orderId);
+            parameters.Add("ordType", orderType);
+            parameters.Add("state", status);
+            parameters.Add("after", afterId);
+            parameters.Add("before", beforeId);
+            parameters.Add("limit", limit);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/orders-history", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -239,14 +239,14 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Get Open Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<DeepCoinOrder[]>> GetOpenOrdersAsync(string symbol, int? page = null, int? pageSize = null, string? orderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<DeepCoinOrder[]>> GetOpenOrdersAsync(string symbol, int? page = null, int? pageSize = null, string? orderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("instId", symbol);
             parameters.Add("index", page ?? 1);
-            parameters.AddOptional("limit", pageSize);
-            parameters.AddOptional("ordId", orderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/deepcoin/trade/v2/orders-pending", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            parameters.Add("limit", pageSize);
+            parameters.Add("ordId", orderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/v2/orders-pending", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -256,13 +256,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #region Set Tp Sl
 
         /// <inheritdoc />
-        public async Task<WebCallResult> SetTpSlAsync(string orderId, decimal? takeProfitTriggerPrice = null, decimal? stopLossTriggerPrice = null, CancellationToken ct = default)
+        public async Task<HttpResult> SetTpSlAsync(string orderId, decimal? takeProfitTriggerPrice = null, decimal? stopLossTriggerPrice = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
             parameters.Add("orderSysID", orderId);
-            parameters.AddOptionalString("tpTriggerPx", takeProfitTriggerPrice);
-            parameters.AddOptionalString("slTriggerPx", stopLossTriggerPrice);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/deepcoin/trade/replace-order-sltp", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            parameters.Add("tpTriggerPx", takeProfitTriggerPrice);
+            parameters.Add("slTriggerPx", stopLossTriggerPrice);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/replace-order-sltp", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync(request, parameters, ct).ConfigureAwait(false);
             return result;
         }

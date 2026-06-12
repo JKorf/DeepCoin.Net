@@ -60,6 +60,11 @@ namespace DeepCoin.Net
         public static ExchangeType Type { get; } = ExchangeType.CEX;
 
         internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<DeepCoinSourceGenerationContext>();
+        internal static ParameterSerializationSettings _parameterSerializationSettings = new ParameterSerializationSettings
+        {
+            Decimal = DecimalSerialization.String,
+            DateTimes = DateTimeSerialization.MillisecondsNumber
+        };
 
         /// <summary>
         /// Aliases for DeepCoin assets

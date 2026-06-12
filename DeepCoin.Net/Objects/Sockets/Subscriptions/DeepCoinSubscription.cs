@@ -31,7 +31,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _filter = "DeepCoin_" + filter;
             _topic = topic;
 
-            MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<T>>(
+            MessageRouter = MessageRouter.CreateForEvent<SocketUpdate<T>>(
                 pushAction, filter, DoHandleMessage);
         }
 
@@ -66,7 +66,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<T> message)
         {
             _handler.Invoke(receiveTime, originalData, message);
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

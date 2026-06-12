@@ -74,7 +74,7 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.SetTpSlAsync("123"), "SetTpSl");
         }
 
-        private bool IsAuthenticated(WebCallResult result)
+        private bool IsAuthenticated(IHttpResult result)
         {
             return result.RequestHeaders.Any(x => x.Key == "DC-ACCESS-SIGN");
         }

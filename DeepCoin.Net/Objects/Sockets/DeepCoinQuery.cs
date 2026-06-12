@@ -19,15 +19,15 @@ namespace DeepCoin.Net.Objects.Sockets
         }, authenticated, weight)
         {
             _client = client;
-            MessageRouter = MessageRouter.CreateWithoutTopicFilter<SocketResponse>(request.RequestId.ToString(), HandleMessage);
+            MessageRouter = MessageRouter.CreateForQuery<SocketResponse>(request.RequestId.ToString(), HandleMessage);
         }
 
         public CallResult<SocketResponse> HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketResponse message)
         {
             if (message.ErrorCode != 0)
-                return new CallResult<SocketResponse>(new ServerError(message.ErrorCode, _client.GetErrorInfo(message.ErrorCode, message.ErrorMessage)));
+                return CallResult<SocketResponse>.Fail(new ServerError(message.ErrorCode, _client.GetErrorInfo(message.ErrorCode, message.ErrorMessage)), originalData);
 
-            return new CallResult<SocketResponse>(message, originalData, null);
+            return CallResult<SocketResponse>.Ok(message, originalData);
         }
     }
 }

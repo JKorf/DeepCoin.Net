@@ -24,7 +24,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="accountType">["<c>instType</c>"] Account type</param>
         /// <param name="asset">["<c>ccy</c>"] Filter by asset, for example `ETH`</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinBalance[]>> GetBalancesAsync(SymbolType accountType, string? asset = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinBalance[]>> GetBalancesAsync(SymbolType accountType, string? asset = null, CancellationToken ct = default);
 
         /// <summary>
         /// 
@@ -42,7 +42,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="endTime">["<c>before</c>"] Filter by end time</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results, max 100</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinBill[]>> GetBillsAsync(SymbolType accountType, string? asset = null, BillType? billType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinBill[]>> GetBillsAsync(SymbolType accountType, string? asset = null, BillType? billType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Set leverage for a symbol
@@ -58,7 +58,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="tradeMode">["<c>mgnMode</c>"] Margin mode</param>
         /// <param name="positionType">["<c>mrgPosition</c>"] Position type</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinLeverage>> SetLeverageAsync(string symbol, decimal leverage, TradeMode tradeMode, PositionType positionType, CancellationToken ct = default);
 
         // Transfer endpoints currently not useable
         ///// <summary>
@@ -66,7 +66,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         ///// <para><a href="https://www.deepcoin.com/docs/InternalTransfer/getSupportCoin" /></para>
         ///// </summary>
         ///// <param name="ct">Cancellation token</param>
-        //Task<WebCallResult<DeepCoinTransferableAsset>> GetTransferableAssetsAsync(CancellationToken ct = default);
+        //Task<HttpResult<DeepCoinTransferableAsset>> GetTransferableAssetsAsync(CancellationToken ct = default);
 
         ///// <summary>
         ///// Transfer an asset to another account
@@ -78,7 +78,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         ///// <param name="toAccountType">Account type</param>
         ///// <param name="clientOrderId">Client order id</param>
         ///// <param name="ct">Cancellation token</param>
-        //Task<WebCallResult<DeepCoinTransferResult>> TransferAsync(string asset, decimal quantity, string toAccount, AccountType toAccountType, string? clientOrderId = null, CancellationToken ct = default);
+        //Task<HttpResult<DeepCoinTransferResult>> TransferAsync(string asset, decimal quantity, string toAccount, AccountType toAccountType, string? clientOrderId = null, CancellationToken ct = default);
 
         ///// <summary>
         ///// Get transfer history
@@ -94,7 +94,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         ///// <param name="page">Page number</param>
         ///// <param name="pageSize">Max number of results</param>
         ///// <param name="ct">Cancellation token</param>
-        //Task<WebCallResult<DeepCoinTransferPage>> GetTransferHistoryAsync(string? toAccount = null, string? asset = null, TransferStatus? status = null, string? receiverId = null, string? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        //Task<HttpResult<DeepCoinTransferPage>> GetTransferHistoryAsync(string? toAccount = null, string? asset = null, TransferStatus? status = null, string? receiverId = null, string? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get deposit history
@@ -112,7 +112,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="page">["<c>page</c>"] Page</param>
         /// <param name="pageSize">["<c>size</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinDepositPage>> GetDepositHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinDepositPage>> GetDepositHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get withdrawal history
@@ -130,7 +130,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="page">["<c>page</c>"] Page</param>
         /// <param name="pageSize">["<c>size</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinWithdrawPage>> GetWithdrawHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinWithdrawPage>> GetWithdrawHistoryAsync(string? asset = null, string? transactionHash = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Start the user stream and return the listen key which can be used to subscribe to updates in the socket client
@@ -142,7 +142,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinListenKey>> StartUserStreamAsync(CancellationToken ct = default);
+        Task<HttpResult<DeepCoinListenKey>> StartUserStreamAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Extend the lifetime of a listen key
@@ -155,6 +155,6 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// </summary>
         /// <param name="listenKey">["<c>listenkey</c>"] Listen key to extend</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<DeepCoinListenKey>> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinListenKey>> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
     }
 }

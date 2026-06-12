@@ -38,7 +38,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// ctor
         /// </summary>
         internal DeepCoinSocketClientExchangeApi(ILogger logger, DeepCoinSocketOptions options) :
-            base(logger, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
+            base(logger, DeepCoinExchange.Metadata.Id, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
             KeepAliveInterval = TimeSpan.Zero;
 
@@ -71,7 +71,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             => new DeepCoinAuthenticationProvider(credentials);
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default)
         {
             string path;
             if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
@@ -102,7 +102,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default)
         {
             string path;
             if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
@@ -134,7 +134,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default)
         {
             string path;
             if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
@@ -166,7 +166,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default)
         {
             string path;
             if (symbol.EndsWith("-SWAP", StringComparison.InvariantCultureIgnoreCase))
@@ -185,7 +185,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey,
             Action<DataEvent<DeepCoinOrderUpdate[]>>? onOrderMessage = null, 
             Action<DataEvent<DeepCoinBalanceUpdate[]>>? onBalanceMessage = null, 

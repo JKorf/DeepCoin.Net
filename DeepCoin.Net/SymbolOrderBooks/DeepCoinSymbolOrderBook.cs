@@ -63,22 +63,21 @@ namespace DeepCoin.Net.SymbolOrderBooks
         protected override async Task<CallResult<UpdateSubscription>> DoStartAsync(CancellationToken ct)
         {
             var subResult = await _socketClient.ExchangeApi.SubscribeToOrderBookUpdatesAsync(Symbol, HandleUpdate).ConfigureAwait(false);
-
-            if (!subResult)
-                return new CallResult<UpdateSubscription>(subResult.Error!);
+            if (!subResult.Success)
+                return CallResult.Fail<UpdateSubscription>(subResult.Error!);
 
             if (ct.IsCancellationRequested)
             {
                 await subResult.Data.CloseAsync().ConfigureAwait(false);
-                return subResult.AsError<UpdateSubscription>(new CancellationRequestedError());
+                return CallResult.Fail<UpdateSubscription>(new CancellationRequestedError());
             }
 
             Status = OrderBookStatus.Syncing;
             var setResult = await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
-            if (!setResult)
+            if (!setResult.Success)
                 await subResult.Data.CloseAsync().ConfigureAwait(false);
 
-            return setResult ? subResult : new CallResult<UpdateSubscription>(setResult.Error!);
+            return setResult.Success ? CallResult.Ok(subResult.Data) : CallResult.Fail<UpdateSubscription>(setResult.Error!);
         }
 
         private void HandleUpdate(DataEvent<DeepCoinOrderBookUpdate> data)
@@ -95,7 +94,7 @@ namespace DeepCoin.Net.SymbolOrderBooks
         }
 
         /// <inheritdoc />
-        protected override async Task<CallResult<bool>> DoResyncAsync(CancellationToken ct)
+        protected override async Task<CallResult> DoResyncAsync(CancellationToken ct)
         {
             return await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
         }
