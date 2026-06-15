@@ -37,8 +37,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <summary>
         /// ctor
         /// </summary>
-        internal DeepCoinSocketClientExchangeApi(ILogger logger, DeepCoinSocketOptions options) :
-            base(logger, DeepCoinExchange.Metadata.Id, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
+        internal DeepCoinSocketClientExchangeApi(ILoggerFactory? loggerFactory, DeepCoinSocketOptions options) :
+            base(loggerFactory, DeepCoinExchange.Metadata.Id, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
             KeepAliveInterval = TimeSpan.Zero;
 

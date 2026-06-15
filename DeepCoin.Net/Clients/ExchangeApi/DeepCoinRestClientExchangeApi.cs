@@ -42,12 +42,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region constructor/destructor
-        internal DeepCoinRestClientExchangeApi(ILogger logger, HttpClient? httpClient, DeepCoinRestOptions options)
-            : base(logger, DeepCoinExchange.Metadata.Id, httpClient, options.Environment.RestClientAddress, options, options.ExchangeOptions)
+        internal DeepCoinRestClientExchangeApi(ILoggerFactory? loggerFactory, HttpClient? httpClient, DeepCoinRestOptions options)
+            : base(loggerFactory, DeepCoinExchange.Metadata.Id, httpClient, options.Environment.RestClientAddress, options, options.ExchangeOptions)
         {
             Account = new DeepCoinRestClientExchangeApiAccount(this);
-            ExchangeData = new DeepCoinRestClientExchangeApiExchangeData(logger, this);
-            Trading = new DeepCoinRestClientExchangeApiTrading(logger, this);
+            ExchangeData = new DeepCoinRestClientExchangeApiExchangeData(_logger, this);
+            Trading = new DeepCoinRestClientExchangeApiTrading(_logger, this);
         }
         #endregion
 
