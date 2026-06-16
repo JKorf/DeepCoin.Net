@@ -725,7 +725,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             },
             OptionalExchangeParameters = new List<ParameterDescription>
             {
-                new ParameterDescription("PositionType", typeof(PositionType), "Merge or split position mode", PositionType.Merge)
+                new ParameterDescription(["PositionType", "mrgPosition"], typeof(PositionType), "Merge or split position mode", PositionType.Merge)
             }
         };
 
@@ -735,8 +735,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (validationError != null)
                 return HttpResult.Fail<SharedLeverage>(Exchange, validationError);
 
-            var positionType = ExchangeParameters.GetValue<PositionType?>(request.ExchangeParameters, Exchange, "PositionType");
-
+            var positionType = request.GetParamValue<PositionType?>(Exchange, "PositionType", "mrgPosition");
             var result = await Account.SetLeverageAsync(
                 symbol: request.Symbol!.GetSymbol(FormatSymbol), 
                 request.Leverage,
@@ -880,7 +879,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             },
             OptionalExchangeParameters = new List<ParameterDescription>
             {
-                new ParameterDescription("PositionType", typeof(PositionType), "Merge or split position mode", PositionType.Merge)
+                new ParameterDescription(["PositionType", "mrgPosition"], typeof(PositionType), "Merge or split position mode", PositionType.Merge)
             }
         };
         async Task<HttpResult<SharedId>> IFuturesOrderRestClient.PlaceFuturesOrderAsync(PlaceFuturesOrderRequest request, CancellationToken ct)
@@ -889,8 +888,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (validationError != null)
                 return HttpResult.Fail<SharedId>(Exchange, validationError);
 
-            var positionType = ExchangeParameters.GetValue<PositionType?>(request.ExchangeParameters, Exchange, "PositionType");
-
+            var positionType = request.GetParamValue<PositionType?>(Exchange, "PositionType", "mrgPosition");
             var result = await Trading.PlaceOrderAsync(
                 request.Symbol!.GetSymbol(FormatSymbol),
                 request.Side == SharedOrderSide.Buy ? Enums.OrderSide.Buy : Enums.OrderSide.Sell,

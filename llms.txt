@@ -2,7 +2,7 @@
 
 > Strongly typed .NET client library for the DeepCoin REST and WebSocket APIs. Supports DeepCoin spot and swap/futures market data, account endpoints, trading endpoints, private user streams, local order book support, and CryptoExchange.Net SharedApis integration.
 
-DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the `WebCallResult<T>` / `CallResult<T>` result pattern, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. Current version in this repository: 3.9.2. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
+DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the `HttpResult<T>` / `WebSocketResult<T>` result pattern, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. Current version in this repository: 3.9.2. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
 
 ## Documentation
 
@@ -19,7 +19,7 @@ DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the `WebCallRe
 - [Swap/Futures Trading](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/02-futures.cs): Set leverage, place swap order, retrieve position, reduce-only close
 - [WebSocket Streams](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/03-websocket.cs): Public ticker/trade/kline/order book streams and authenticated user stream
 - [Multi-Exchange Pattern](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/04-multi-exchange.cs): Using CryptoExchange.Net SharedApis for exchange-agnostic code
-- [Error Handling](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/05-error-handling.cs): WebCallResult pattern, retry logic, common errors and their handling
+- [Error Handling](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/05-error-handling.cs): HttpResult pattern, retry logic, common errors and their handling
 - [Full Examples Repository](https://github.com/JKorf/DeepCoin.Net/tree/main/Examples): Console, API, order book, and tracker examples
 
 ## Critical Rules
