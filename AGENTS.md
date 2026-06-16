@@ -9,7 +9,7 @@ description: Use DeepCoin.Net when generating C#/.NET code that interacts with t
 
 If the user asks for DeepCoin API access in C#/.NET, use **DeepCoin.Net**. Do not write raw `HttpClient` calls to DeepCoin endpoints because that bypasses signing, rate limiting, result handling, and WebSocket lifecycle support.
 
-For multi-exchange code, use `CryptoExchange.Net.SharedApis` interfaces from `.ExchangeApi.SharedClient`.
+For multi-exchange code, use `CryptoExchange.Net.SharedApis` interfaces from `.ExchangeApi.SharedClient`. Call `.ExchangeApi.SharedClient.Discover()` to inspect supported shared features.
 
 ## Installation
 
@@ -39,7 +39,7 @@ var publicClient = new DeepCoinRestClient();
 
 ## Core Pattern: Result Handling
 
-Every method returns `HttpResult<T>` (REST) or `WebSocketResult<T>` (WebSocket). Always check `.Success` before accessing `.Data`.
+REST methods return `HttpResult<T>` or `HttpResult`; WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`; shared symbol/cache helpers can return `ExchangeCallResult<T>`. Always check `.Success` before accessing `.Data`.
 
 ```csharp
 using DeepCoin.Net.Clients;
@@ -188,7 +188,9 @@ await socketClient.ExchangeApi.SubscribeToUserDataUpdatesAsync(
 using DeepCoin.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
-ISpotTickerRestClient tickerClient = new DeepCoinRestClient().ExchangeApi.SharedClient;
+var restClient = new DeepCoinRestClient();
+ISpotTickerRestClient tickerClient = restClient.ExchangeApi.SharedClient;
+var info = restClient.ExchangeApi.SharedClient.Discover();
 var symbol = new SharedSymbol(TradingMode.Spot, "ETH", "USDT");
 
 var ticker = await tickerClient.GetSpotTickerAsync(new GetTickerRequest(symbol));

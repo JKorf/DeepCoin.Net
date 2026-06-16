@@ -12,6 +12,7 @@ using DeepCoin.Net.Clients;
 var socketClient = new DeepCoinSocketClient();
 const string symbol = "ETH-USDT";
 
+// Subscription methods return WebSocketResult<UpdateSubscription>.
 // ---- 1. PUBLIC TICKER STREAM ----
 var tickerSub = await socketClient.ExchangeApi.SubscribeToSymbolUpdatesAsync(
     symbol,

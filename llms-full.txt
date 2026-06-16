@@ -25,6 +25,7 @@ Primary documentation:
 - Always check `.Success` before reading `.Data`.
 - REST methods return `HttpResult<T>` or `HttpResult`.
 - WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`.
+- Shared non-I/O symbol/cache helper methods can return `ExchangeCallResult<T>`.
 - Reuse clients. Do not instantiate a REST or socket client per request in production code.
 - Prefer dependency injection for long-running services.
 - Store WebSocket subscriptions and unsubscribe during shutdown.
@@ -32,7 +33,7 @@ Primary documentation:
 - Do not invent endpoint names. If unsure, inspect `DeepCoin.Net/Interfaces/Clients/**`.
 - Do not invent Binance-style branches. DeepCoin has one `ExchangeApi` root.
 - Native DeepCoin methods use hyphenated symbols such as `ETH-USDT` and `ETH-USDT-SWAP`.
-- For multi-exchange code, use `CryptoExchange.Net.SharedApis` interfaces from `.ExchangeApi.SharedClient`.
+- For multi-exchange code, use `CryptoExchange.Net.SharedApis` interfaces from `.ExchangeApi.SharedClient` and call `.Discover()` to inspect supported features.
 
 ## Installation
 
@@ -372,8 +373,11 @@ var userSub = await socketClient.ExchangeApi.SubscribeToUserDataUpdatesAsync(
 using DeepCoin.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
-ISpotTickerRestClient tickerClient = new DeepCoinRestClient().ExchangeApi.SharedClient;
+var restClient = new DeepCoinRestClient();
+ISpotTickerRestClient tickerClient = restClient.ExchangeApi.SharedClient;
 var symbol = new SharedSymbol(TradingMode.Spot, "ETH", "USDT");
+var info = restClient.ExchangeApi.SharedClient.Discover();
+var supportedFeatures = info.Features.Where(x => x.Supported).Select(x => x.EndpointName);
 
 var ticker = await tickerClient.GetSpotTickerAsync(new GetTickerRequest(symbol));
 if (!ticker.Success)
@@ -454,10 +458,10 @@ Examples/ai-friendly/03-websocket.cs
   Public ticker, trade, kline, order book, authenticated user data stream, success checks, teardown.
 
 Examples/ai-friendly/04-multi-exchange.cs
-  CryptoExchange.Net SharedApis REST and socket patterns.
+  CryptoExchange.Net SharedApis REST/socket patterns and capability discovery.
 
 Examples/ai-friendly/05-error-handling.cs
-  HttpResult pattern, transient retry, DeepCoin error categories, symbol validation.
+  HttpResult, WebSocketResult, ExchangeCallResult patterns; transient retry; DeepCoin error categories; symbol validation.
 ```
 
 These files are intended to be copied into a console `Program.cs` after `dotnet add package DeepCoin.Net`.

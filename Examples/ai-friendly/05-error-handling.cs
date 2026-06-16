@@ -1,6 +1,7 @@
 // 05-error-handling.cs
 //
-// Demonstrates: HttpResult patterns, retry logic, common error scenarios.
+// Demonstrates: HttpResult, WebSocketResult, and ExchangeCallResult patterns,
+// retry logic, common error scenarios.
 //
 // Setup: dotnet add package DeepCoin.Net
 
@@ -15,7 +16,9 @@ var client = new DeepCoinRestClient(options =>
 });
 
 // ---- 1. THE BASIC PATTERN ----
-// Every method returns HttpResult<T> (REST) or WebSocketResult<T> (WebSocket).
+// REST methods return HttpResult<T> or HttpResult.
+// WebSocket subscriptions return WebSocketResult<UpdateSubscription>.
+// Some SharedApis symbol helper methods return ExchangeCallResult<T>.
 // .Success is true/false. .Data is the payload, only valid when .Success is true.
 // .Error contains structured error info when .Success is false.
 // .Error.IsTransient hints if a retry might succeed.
