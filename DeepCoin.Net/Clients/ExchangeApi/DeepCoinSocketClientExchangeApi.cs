@@ -24,6 +24,8 @@ using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using DeepCoin.Net.Clients.MessageHandlers;
 using CryptoExchange.Net.Sockets.Default;
+using Microsoft.Extensions.Options;
+using CryptoExchange.Net.TokenManagement;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -32,6 +34,28 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     /// </summary>
     internal partial class DeepCoinSocketClientExchangeApi : SocketApiClient<DeepCoinEnvironment, DeepCoinAuthenticationProvider, DeepCoinCredentials>, IDeepCoinSocketClientExchangeApi
     {
+        private readonly ILoggerFactory? _loggerFactory;
+        private DeepCoinRestClient? _tokenClient;
+        internal TokenManager TokenManager { get; }
+        private DeepCoinRestClient TokenClient
+        {
+            get
+            {
+                if (_tokenClient == null)
+                {
+                    _tokenClient = new DeepCoinRestClient(null, _loggerFactory, Options.Create(new DeepCoinRestOptions
+                    {
+                        ApiCredentials = ApiCredentials,
+                        Environment = ClientOptions.Environment,
+                        Proxy = ClientOptions.Proxy,
+                        OutputOriginalData = ClientOptions.OutputOriginalData
+                    }));
+                }
+
+                return _tokenClient;
+            }
+        }
+
         #region constructor/destructor
 
         /// <summary>
@@ -40,7 +64,17 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         internal DeepCoinSocketClientExchangeApi(ILoggerFactory? loggerFactory, DeepCoinSocketOptions options) :
             base(loggerFactory, DeepCoinExchange.Metadata.Id, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
+            _loggerFactory = loggerFactory;
+
             KeepAliveInterval = TimeSpan.Zero;
+
+            TokenManager = new TokenManager(
+                DeepCoinExchange.Metadata.Id,
+                loggerFactory,
+                TimeSpan.FromMinutes(30),
+                TimeSpan.FromMinutes(60),
+                startToken: StartListenKeyAsync,
+                keepAliveToken: KeepAliveListenKeyAsync);
 
             RegisterPeriodicQuery("ping",
                 TimeSpan.FromSeconds(30), 
@@ -186,7 +220,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         /// <inheritdoc />
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
-            string listenKey,
+            Action<DataEvent<DeepCoinOrderUpdate[]>>? onOrderMessage = null,
+            Action<DataEvent<DeepCoinBalanceUpdate[]>>? onBalanceMessage = null,
+            Action<DataEvent<DeepCoinPositionUpdate[]>>? onPositionMessage = null,
+            Action<DataEvent<DeepCoinUserTradeUpdate[]>>? onUserTradeMessage = null,
+            Action<DataEvent<DeepCoinAccountUpdate[]>>? onAccountMessage = null,
+            Action<DataEvent<DeepCoinTriggerOrderUpdate[]>>? onTriggerOrderMessage = null,
+            CancellationToken ct = default)
+            => await SubscribeToUserDataUpdatesAsync(null, onOrderMessage, onBalanceMessage, onPositionMessage, onUserTradeMessage, onAccountMessage, onTriggerOrderMessage, ct).ConfigureAwait(false);
+
+        /// <inheritdoc />
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+            string? listenKey,
             Action<DataEvent<DeepCoinOrderUpdate[]>>? onOrderMessage = null, 
             Action<DataEvent<DeepCoinBalanceUpdate[]>>? onBalanceMessage = null, 
             Action<DataEvent<DeepCoinPositionUpdate[]>>? onPositionMessage = null, 
@@ -195,8 +240,33 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             Action<DataEvent<DeepCoinTriggerOrderUpdate[]>>? onTriggerOrderMessage = null, 
             CancellationToken ct = default)
         {
-            var subscription = new DeepCoinUserSubscription(_logger, this, onOrderMessage, onBalanceMessage, onPositionMessage, onUserTradeMessage, onAccountMessage, onTriggerOrderMessage);
-            return await SubscribeAsync(BaseAddress.AppendPath("v1/private?listenKey=" + listenKey), subscription, ct).ConfigureAwait(false);
+            if (listenKey == null && !Authenticated)
+                return WebSocketResult.Fail<UpdateSubscription>(Exchange, new NoApiCredentialsError());
+
+            TokenLease? lease = null;
+            if (listenKey == null)
+            {
+                var leaseResult = await TokenManager.AcquireAsync(new TokenScope(
+                    DeepCoinExchange.Metadata.Id,
+                    EnvironmentName,
+                    "Exchange",
+                    ApiCredentials!.Key), ct).ConfigureAwait(false);
+                if (!leaseResult.Success)
+                    return WebSocketResult.Fail<UpdateSubscription>(Exchange, leaseResult.Error);
+
+                lease = leaseResult.Data;
+            }
+
+            var lk = listenKey ?? lease!.Token.Token;
+            var subscription = new DeepCoinUserSubscription(_logger, this, onOrderMessage, onBalanceMessage, onPositionMessage, onUserTradeMessage, onAccountMessage, onTriggerOrderMessage)
+            {
+                TokenLease = lease
+            };
+            var result = await SubscribeAsync(BaseAddress.AppendPath("v1/private?listenKey=" + lk), subscription, ct).ConfigureAwait(false);
+            if (!result.Success && lease != null)
+                await lease.ReleaseAsync().ConfigureAwait(false);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -205,5 +275,37 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null)
             => DeepCoinExchange.FormatWebsocketSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
+
+        protected override async Task<CallResult> RevitalizeRequestAsync(Subscription subscription)
+        {
+            if (subscription.TokenLease == null)
+                return CallResult.Ok(); // Not an authenticated subscription, no need to revitalize
+
+            var scope = new TokenScope(
+                    DeepCoinExchange.Metadata.Id,
+                    EnvironmentName,
+                    "Exchange",
+                    ApiCredentials!.Key);
+
+            return await TokenManager.AcquireAndReplaceAsync(subscription, scope).ConfigureAwait(false);
+        }
+
+        private async Task<CallResult<string>> StartListenKeyAsync(TokenScope tokenScope, CancellationToken ct)
+        {
+            var result = await TokenClient.ExchangeApi.Account.StartUserStreamAsync(ct).ConfigureAwait(false);
+            if (!result.Success)
+                return CallResult.Fail<string>(result.Error);
+
+            return CallResult.Ok(result.Data.ListenKey);
+        }
+
+        private async Task<CallResult> KeepAliveListenKeyAsync(TokenInfo token, CancellationToken ct)
+        {
+            var result = await TokenClient.ExchangeApi.Account.KeepAliveUserStreamAsync(token.Token, ct).ConfigureAwait(false);
+            if (!result.Success)
+                return CallResult.Fail<string>(result.Error);
+
+            return CallResult.Ok();
+        }
     }
 }
