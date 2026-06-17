@@ -296,7 +296,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!token.Success)
                 return null;
 
-            return new Uri(BaseAddress.AppendPath("v1/private?listenKey=" + token.Data.Token.Token);
+            return new Uri(BaseAddress.AppendPath("v1/private?listenKey=" + token.Data.Token.Token));
         }
 
         protected override async Task<CallResult> RevitalizeRequestAsync(Subscription subscription)

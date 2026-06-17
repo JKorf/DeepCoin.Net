@@ -171,48 +171,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #endregion
 
-        #region Listen Key client
-
-        StartListenKeyOptions IListenKeyRestClient.StartOptions { get; } = new StartListenKeyOptions(_exchangeName, true);
-        async Task<HttpResult<string>> IListenKeyRestClient.StartListenKeyAsync(StartListenKeyRequest request, CancellationToken ct)
-        {
-            var validationError = SharedClient.StartOptions.ValidateRequest(request, this);
-            if (validationError != null)
-                return HttpResult.Fail<string>(Exchange, validationError);
-
-            // Get data
-            var result = await Account.StartUserStreamAsync(ct: ct).ConfigureAwait(false);
-            if (!result.Success)
-                return HttpResult.Fail<string>(result);
-
-            return HttpResult.Ok(result, result.Data.ListenKey);
-        }
-        KeepAliveListenKeyOptions IListenKeyRestClient.KeepAliveOptions { get; } = new KeepAliveListenKeyOptions(_exchangeName, true);
-        async Task<HttpResult<string>> IListenKeyRestClient.KeepAliveListenKeyAsync(KeepAliveListenKeyRequest request, CancellationToken ct)
-        {
-            var validationError = SharedClient.KeepAliveOptions.ValidateRequest(request, this);
-            if (validationError != null)
-                return HttpResult.Fail<string>(Exchange, validationError);
-
-            // Get data
-            var result = await Account.KeepAliveUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
-            if (!result.Success)
-                return HttpResult.Fail<string>(result);
-
-            return HttpResult.Ok(result, request.ListenKey);
-        }
-
-        StopListenKeyOptions IListenKeyRestClient.StopOptions { get; } = new StopListenKeyOptions(_exchangeName, true);
-        Task<HttpResult<string>> IListenKeyRestClient.StopListenKeyAsync(StopListenKeyRequest request, CancellationToken ct)
-        {
-            var validationError = SharedClient.StopOptions.ValidateRequest(request, this);
-            if (validationError != null)
-                return Task.FromResult(HttpResult.Fail<string>(Exchange, validationError));
-
-            return Task.FromResult(new HttpResult<string>(Exchange, request.ListenKey, null));
-        }
-        #endregion
-
         #region Order Book client
         GetOrderBookOptions IOrderBookRestClient.GetOrderBookOptions { get; } = new GetOrderBookOptions(_exchangeName, 1, 400, false);
         async Task<HttpResult<SharedOrderBook>> IOrderBookRestClient.GetOrderBookAsync(GetOrderBookRequest request, CancellationToken ct)
