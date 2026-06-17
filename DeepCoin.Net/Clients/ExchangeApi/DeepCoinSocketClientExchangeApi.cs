@@ -26,6 +26,7 @@ using DeepCoin.Net.Clients.MessageHandlers;
 using CryptoExchange.Net.Sockets.Default;
 using Microsoft.Extensions.Options;
 using CryptoExchange.Net.TokenManagement;
+using CryptoExchange.Net.Sockets.Interfaces;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -275,6 +276,28 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null)
             => DeepCoinExchange.FormatWebsocketSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
+
+        protected override async Task<Uri?> GetReconnectUriAsync(ISocketConnection connection)
+        {
+            if (!connection.HasAuthenticatedSubscription)
+                return await base.GetReconnectUriAsync(connection).ConfigureAwait(false);
+
+            var subscriptions = ((SocketConnection)connection).Subscriptions.Where(x => x.TokenLease != null).ToList();
+            if (subscriptions.Count == 0)
+                return await base.GetReconnectUriAsync(connection).ConfigureAwait(false);
+
+            var scope = new TokenScope(
+                    DeepCoinExchange.Metadata.Id,
+                    EnvironmentName,
+                    "Exchange",
+                    ApiCredentials!.Key);
+
+            var token = await TokenManager.AcquireAndReplaceAsync(subscriptions[0], scope).ConfigureAwait(false);
+            if (!token.Success)
+                return null;
+
+            return new Uri(BaseAddress.AppendPath("v1/private?listenKey=" + token.Data.Token.Token);
+        }
 
         protected override async Task<CallResult> RevitalizeRequestAsync(Subscription subscription)
         {
