@@ -226,13 +226,32 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             return HttpResult.Ok(result,
                     ExchangeHelpers.ApplyFilter(result.Data.Data, x => x.CreateTime, request.StartTime, request.EndTime, direction)
                     .Select(x =>
-                        new SharedWithdrawal(x.Asset, x.Address, x.Quantity, x.DepositStatus == Enums.WithdrawStatus.Success, x.CreateTime)
+                        new SharedWithdrawal(
+                            x.Asset,
+                            x.Address,
+                            x.Quantity,
+                            x.DepositStatus == Enums.WithdrawStatus.Success,
+                            x.CreateTime,
+                            GetWithdrawalStatus(x))
                         {
                             Address = x.Address
                         })
                     .ToArray(), nextPageRequest);
         }
 
+        private SharedTransferStatus GetWithdrawalStatus(DeepCoinWithdrawal x)
+        {
+            if (x.DepositStatus == WithdrawStatus.Rejected)
+                return SharedTransferStatus.Failed;
+
+            if (x.DepositStatus == WithdrawStatus.Success)
+                return SharedTransferStatus.Completed;
+
+            if (x.DepositStatus == WithdrawStatus.Auditing || x.DepositStatus == WithdrawStatus.Confirming)
+                return SharedTransferStatus.InProgress;
+
+            return SharedTransferStatus.Unknown;
+        }
         #endregion
 
         #region Spot Ticker client
