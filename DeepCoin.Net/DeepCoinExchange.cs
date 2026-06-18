@@ -117,7 +117,7 @@ namespace DeepCoin.Net
         /// <summary>
         /// Rate limiter configuration for the DeepCoin API
         /// </summary>
-        public static DeepCoinRateLimiters RateLimiter { get; } = new DeepCoinRateLimiters();
+        public static DeepCoinRateLimiters RateLimiter { get; set; } = new DeepCoinRateLimiters();
     }
 
     /// <summary>
@@ -136,13 +136,19 @@ namespace DeepCoin.Net
         public event Action<RateLimitUpdateEvent> RateLimitUpdated;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        internal DeepCoinRateLimiters()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public DeepCoinRateLimiters()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             Initialize();
         }
 
-        private void Initialize()
+        /// <summary>
+        /// Initialize the rate limits
+        /// </summary>
+        protected virtual void Initialize()
         {
             DeepCoin = new RateLimitGate("DeepCoin");
             DeepCoin.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
