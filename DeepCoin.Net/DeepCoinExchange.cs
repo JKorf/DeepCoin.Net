@@ -24,7 +24,8 @@ namespace DeepCoin.Net
                 "https://www.deepcoin.com/",
                 ["https://www.deepcoin.com/docs/authentication"],
                 PlatformType.CryptoCurrencyExchange,
-                CentralizationType.Centralized
+                CentralizationType.Centralized,
+                DeepCoinEnvironment.All
                 );
 
         /// <summary>
