@@ -263,11 +263,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             {
                 TokenLease = lease
             };
-            var result = await SubscribeAsync(BaseAddress.AppendPath("v1/private?listenKey=" + lk), subscription, ct).ConfigureAwait(false);
-            if (!result.Success && lease != null)
-                await lease.ReleaseAsync().ConfigureAwait(false);
-
-            return result;
+            return await SubscribeAsync(BaseAddress.AppendPath("v1/private?listenKey=" + lk), subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

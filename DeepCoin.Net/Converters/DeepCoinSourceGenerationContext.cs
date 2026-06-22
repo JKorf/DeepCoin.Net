@@ -1,3 +1,4 @@
+using CryptoExchange.Net.Objects;
 using DeepCoin.Net.Objects.Internal;
 using DeepCoin.Net.Objects.Models;
 using System;
@@ -77,6 +78,8 @@ namespace DeepCoin.Net.Converters
     [JsonSerializable(typeof(decimal))]
     [JsonSerializable(typeof(DateTime))]
     [JsonSerializable(typeof(DateTime?))]
+    [JsonSerializable(typeof(Parameters))]
+    [JsonSerializable(typeof(Parameters[]))]
     internal partial class DeepCoinSourceGenerationContext : JsonSerializerContext
     {
     }

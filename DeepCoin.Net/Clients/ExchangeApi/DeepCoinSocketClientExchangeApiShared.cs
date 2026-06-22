@@ -92,7 +92,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(
-                onBalanceMessage: update => handler(update.ToType<SharedBalance[]>(update.Data.Select(x => new SharedBalance(x.Asset, x.Available, x.Balance)).ToArray())),
+                onBalanceMessage: update => handler(update.ToType<SharedBalance[]>(update.Data.Select(x =>
+                    new SharedBalance(
+                        SupportedTradingModes, 
+                        x.Asset, 
+                        x.Available,
+                        x.Balance)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return result;
