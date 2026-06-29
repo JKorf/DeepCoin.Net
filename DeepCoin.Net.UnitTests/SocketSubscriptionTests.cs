@@ -27,7 +27,7 @@ namespace DeepCoin.Net.UnitTests
                 OutputOriginalData = true
             }), logger);
 
-            var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/Exchange", "wss://stream.crypto.com");
+            var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/Exchange", "wss://stream.deepcoin.com/public/spotws");
             await tester.ValidateConcurrentAsync<DeepCoinKlineUpdate>(
                 (client, handler) => client.ExchangeApi.SubscribeToKlineUpdatesAsync("ETHUSDT", handler),
                 (client, handler) => client.ExchangeApi.SubscribeToKlineUpdatesAsync("BTCUSDT", handler),

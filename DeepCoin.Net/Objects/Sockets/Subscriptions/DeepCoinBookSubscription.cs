@@ -35,7 +35,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _topic = topic;
             _table = table;
 
-            MessageRouter = MessageRouter.CreateWithTopicFilter<SocketUpdate<DeepCoinOrderBookUpdateEntry>>(pushAction, filter, DoHandleMessage);
+            MessageRouter = MessageRouter.CreateForEvent<SocketUpdate<DeepCoinOrderBookUpdateEntry>>(pushAction, filter, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -83,7 +83,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             {
                 // Cache this incomplete update, we need the next message to complete it
                 _incompleteUpdate = update;
-                return CallResult.SuccessResult;
+                return CallResult.Ok();
             }
 
             if (_incompleteUpdate != null)
@@ -127,7 +127,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                 .WithUpdateType(message.BusinessNumber == 0 ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
                 .WithDataTimestamp(timestamp, _client.GetTimeOffset())
                 .WithSequenceNumber(message.BusinessNumber));
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

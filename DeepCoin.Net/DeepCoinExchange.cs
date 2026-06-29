@@ -24,7 +24,8 @@ namespace DeepCoin.Net
                 "https://www.deepcoin.com/",
                 ["https://www.deepcoin.com/docs/authentication"],
                 PlatformType.CryptoCurrencyExchange,
-                CentralizationType.Centralized
+                CentralizationType.Centralized,
+                DeepCoinEnvironment.All
                 );
 
         /// <summary>
@@ -60,6 +61,11 @@ namespace DeepCoin.Net
         public static ExchangeType Type { get; } = ExchangeType.CEX;
 
         internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<DeepCoinSourceGenerationContext>();
+        internal static ParameterSerializationSettings _parameterSerializationSettings = new ParameterSerializationSettings
+        {
+            Decimal = DecimalSerialization.String,
+            DateTimes = DateTimeSerialization.MillisecondsNumber
+        };
 
         /// <summary>
         /// Aliases for DeepCoin assets
@@ -112,7 +118,7 @@ namespace DeepCoin.Net
         /// <summary>
         /// Rate limiter configuration for the DeepCoin API
         /// </summary>
-        public static DeepCoinRateLimiters RateLimiter { get; } = new DeepCoinRateLimiters();
+        public static DeepCoinRateLimiters RateLimiter { get; set; } = new DeepCoinRateLimiters();
     }
 
     /// <summary>
@@ -131,13 +137,19 @@ namespace DeepCoin.Net
         public event Action<RateLimitUpdateEvent> RateLimitUpdated;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        internal DeepCoinRateLimiters()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public DeepCoinRateLimiters()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             Initialize();
         }
 
-        private void Initialize()
+        /// <summary>
+        /// Initialize the rate limits
+        /// </summary>
+        protected virtual void Initialize()
         {
             DeepCoin = new RateLimitGate("DeepCoin");
             DeepCoin.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);

@@ -6,22 +6,23 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;
 using System.Net.Http;
+using CryptoExchange.Net.Clients;
 
 namespace DeepCoin.Net.Clients
 {
     /// <inheritdoc />
-    public class DeepCoinUserClientProvider : IDeepCoinUserClientProvider
+    public class DeepCoinUserClientProvider : UserClientProvider<
+        IDeepCoinRestClient,
+        IDeepCoinSocketClient,
+        DeepCoinRestOptions,
+        DeepCoinSocketOptions,
+        DeepCoinCredentials,
+        DeepCoinEnvironment
+        >, IDeepCoinUserClientProvider
     {
-        private ConcurrentDictionary<string, IDeepCoinRestClient> _restClients = new ConcurrentDictionary<string, IDeepCoinRestClient>();
-        private ConcurrentDictionary<string, IDeepCoinSocketClient> _socketClients = new ConcurrentDictionary<string, IDeepCoinSocketClient>();
-
-        private readonly IOptions<DeepCoinRestOptions> _restOptions;
-        private readonly IOptions<DeepCoinSocketOptions> _socketOptions;
-        private readonly HttpClient _httpClient;
-        private readonly ILoggerFactory? _loggerFactory;
-
+       
         /// <inheritdoc />
-        public string ExchangeName => DeepCoinExchange.ExchangeName;
+        public override string ExchangeName => DeepCoinExchange.ExchangeName;
 
         /// <summary>
         /// ctor
@@ -40,97 +41,15 @@ namespace DeepCoin.Net.Clients
             ILoggerFactory? loggerFactory,
             IOptions<DeepCoinRestOptions> restOptions,
             IOptions<DeepCoinSocketOptions> socketOptions)
+            : base(httpClient, loggerFactory, restOptions, socketOptions)
         {
-            _httpClient = httpClient ?? new HttpClient();
-            _httpClient.Timeout = restOptions.Value.RequestTimeout;
-            _loggerFactory = loggerFactory;
-            _restOptions = restOptions;
-            _socketOptions = socketOptions;
         }
 
         /// <inheritdoc />
-        public void InitializeUserClient(string userIdentifier, DeepCoinCredentials credentials, DeepCoinEnvironment? environment = null)
-        {
-            CreateRestClient(userIdentifier, credentials, environment);
-            CreateSocketClient(userIdentifier, credentials, environment);
-        }
-
+        protected override IDeepCoinRestClient ConstructRestClient(HttpClient client, ILoggerFactory? loggerFactory, IOptions<DeepCoinRestOptions> options)
+            => new DeepCoinRestClient(client, loggerFactory, options);
         /// <inheritdoc />
-        public void ClearUserClients(string userIdentifier)
-        {
-            _restClients.TryRemove(userIdentifier, out _);
-            _socketClients.TryRemove(userIdentifier, out _);
-        }
-
-        /// <inheritdoc />
-        public IDeepCoinRestClient GetRestClient(string userIdentifier, DeepCoinCredentials? credentials = null, DeepCoinEnvironment? environment = null)
-        {
-            if (!_restClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
-                client = CreateRestClient(userIdentifier, credentials, environment);
-
-            return client;
-        }
-
-        /// <inheritdoc />
-        public IDeepCoinSocketClient GetSocketClient(string userIdentifier, DeepCoinCredentials? credentials = null, DeepCoinEnvironment? environment = null)
-        {
-            if (!_socketClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
-                client = CreateSocketClient(userIdentifier, credentials, environment);
-
-            return client;
-        }
-
-        private IDeepCoinRestClient CreateRestClient(string userIdentifier, DeepCoinCredentials? credentials, DeepCoinEnvironment? environment)
-        {
-            var clientRestOptions = SetRestEnvironment(environment);
-            var client = new DeepCoinRestClient(_httpClient, _loggerFactory, clientRestOptions);
-            if (credentials != null)
-            {
-                client.SetApiCredentials(credentials);
-                _restClients[userIdentifier] = client;
-            }
-            return client;
-        }
-
-        private IDeepCoinSocketClient CreateSocketClient(string userIdentifier, DeepCoinCredentials? credentials, DeepCoinEnvironment? environment)
-        {
-            var clientSocketOptions = SetSocketEnvironment(environment);
-            var client = new DeepCoinSocketClient(clientSocketOptions!, _loggerFactory);
-            if (credentials != null)
-            {
-                client.SetApiCredentials(credentials);
-                _socketClients[userIdentifier] = client;
-            }
-            return client;
-        }
-
-        private IOptions<DeepCoinRestOptions> SetRestEnvironment(DeepCoinEnvironment? environment)
-        {
-            if (environment == null)
-                return _restOptions;
-
-            var newRestClientOptions = new DeepCoinRestOptions();
-            var restOptions = _restOptions.Value.Set(newRestClientOptions);
-            newRestClientOptions.Environment = environment;
-            return Options.Create(newRestClientOptions);
-        }
-
-        private IOptions<DeepCoinSocketOptions> SetSocketEnvironment(DeepCoinEnvironment? environment)
-        {
-            if (environment == null)
-                return _socketOptions;
-
-            var newSocketClientOptions = new DeepCoinSocketOptions();
-            var restOptions = _socketOptions.Value.Set(newSocketClientOptions);
-            newSocketClientOptions.Environment = environment;
-            return Options.Create(newSocketClientOptions);
-        }
-
-        private static T ApplyOptionsDelegate<T>(Action<T>? del) where T : new()
-        {
-            var opts = new T();
-            del?.Invoke(opts);
-            return opts;
-        }
+        protected override IDeepCoinSocketClient ConstructSocketClient(ILoggerFactory? loggerFactory, IOptions<DeepCoinSocketOptions> options)
+            => new DeepCoinSocketClient(options, loggerFactory);
     }
 }

@@ -27,7 +27,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<CallResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to live trade updates for a symbol
@@ -42,7 +42,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to kline/candlestick updates for a symbol. Only 1 minute klines supported.
@@ -57,7 +57,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to 25-level incremental order book updates
@@ -72,7 +72,27 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<CallResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
+        /// Subscribe to user data updates. Listen key is automatically obtained by the client and will be renewed as needed
+        /// </summary>
+        /// <param name="onOrderMessage">The event handler for order updates</param>
+        /// <param name="onBalanceMessage">The event handler for balance updates</param>
+        /// <param name="onPositionMessage">The event handler for position updates</param>
+        /// <param name="onUserTradeMessage">The event handler for user trade updates</param>
+        /// <param name="onAccountMessage">The event handler for account updates</param>
+        /// <param name="onTriggerOrderMessage">The event handler for trigger order updates</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+            Action<DataEvent<DeepCoinOrderUpdate[]>>? onOrderMessage = null,
+            Action<DataEvent<DeepCoinBalanceUpdate[]>>? onBalanceMessage = null,
+            Action<DataEvent<DeepCoinPositionUpdate[]>>? onPositionMessage = null,
+            Action<DataEvent<DeepCoinUserTradeUpdate[]>>? onUserTradeMessage = null,
+            Action<DataEvent<DeepCoinAccountUpdate[]>>? onAccountMessage = null,
+            Action<DataEvent<DeepCoinTriggerOrderUpdate[]>>? onTriggerOrderMessage = null,
+            CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to user data updates
@@ -86,7 +106,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="onTriggerOrderMessage">The event handler for trigger order updates</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey,
             Action<DataEvent<DeepCoinOrderUpdate[]>>? onOrderMessage = null,
             Action<DataEvent<DeepCoinBalanceUpdate[]>>? onBalanceMessage = null,

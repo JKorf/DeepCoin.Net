@@ -44,7 +44,7 @@ namespace DeepCoin.Net.Clients
         {
             Initialize(options.Value);
                         
-            ExchangeApi = AddApiClient(new DeepCoinSocketClientExchangeApi(_logger, options.Value));
+            ExchangeApi = AddApiClient(new DeepCoinSocketClientExchangeApi(loggerFactory, options.Value));
         }
 
         #endregion

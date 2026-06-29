@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using DeepCoin.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Objects;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -27,12 +28,11 @@ namespace DeepCoin.Net.UnitTests
                     return headers["DC-ACCESS-SIGN"].ToString();
                 },
                 "Vf4Agvnq70YtbqrjZVCcJUmbqgK8L6ONwb5ldafaptQ=",
-                new Dictionary<string, object>
+                new Parameters(DeepCoinExchange._parameterSerializationSettings)
                 {
                     { "symbol", "LTCBTC" },
                 },
                 DateTimeConverter.ParseFromDouble(1499827320559),
-                true,
                 false);
         }
 

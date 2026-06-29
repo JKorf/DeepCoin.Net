@@ -49,12 +49,12 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _triggerUpdateHandler = triggerUpdateHandler;
 
             MessageRouter = MessageRouter.Create([
-                MessageRoute<SocketUpdate<DeepCoinOrderUpdate>>.CreateWithoutTopicFilter("PushOrder", DoHandleMessage),
-                MessageRoute<SocketUpdate<DeepCoinBalanceUpdate>>.CreateWithoutTopicFilter("PushAccount", DoHandleMessage),
-                MessageRoute<SocketUpdate<DeepCoinPositionUpdate>>.CreateWithoutTopicFilter("PushPosition", DoHandleMessage),
-                MessageRoute<SocketUpdate<DeepCoinUserTradeUpdate>>.CreateWithoutTopicFilter("PushTrade", DoHandleMessage),
-                MessageRoute<SocketUpdate<DeepCoinAccountUpdate>>.CreateWithoutTopicFilter("PushAccountDetail", DoHandleMessage),
-                MessageRoute<SocketUpdate<DeepCoinTriggerOrderUpdate>>.CreateWithoutTopicFilter("PushTriggerOrder", DoHandleMessage)
+                MessageRoute.CreateForEvent<SocketUpdate<DeepCoinOrderUpdate>>("PushOrder", DoHandleMessage),
+                MessageRoute.CreateForEvent<SocketUpdate<DeepCoinBalanceUpdate>>("PushAccount", DoHandleMessage),
+                MessageRoute.CreateForEvent<SocketUpdate<DeepCoinPositionUpdate>>("PushPosition", DoHandleMessage),
+                MessageRoute.CreateForEvent<SocketUpdate<DeepCoinUserTradeUpdate>>("PushTrade", DoHandleMessage),
+                MessageRoute.CreateForEvent<SocketUpdate<DeepCoinAccountUpdate>>("PushAccountDetail", DoHandleMessage),
+                MessageRoute.CreateForEvent<SocketUpdate<DeepCoinTriggerOrderUpdate>>("PushTriggerOrder", DoHandleMessage)
                 ]);
         }
 
@@ -80,7 +80,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(timestamp, _client.GetTimeOffset())
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
 
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinBalanceUpdate> message)
@@ -88,7 +88,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
             _balanceUpdateHandler?.Invoke(
                 new DataEvent<DeepCoinBalanceUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinPositionUpdate> message)
         {
@@ -100,7 +100,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(timestamp, _client.GetTimeOffset())
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinUserTradeUpdate> message)
         {
@@ -112,7 +112,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(timestamp, _client.GetTimeOffset())
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinAccountUpdate> message)
         {
@@ -124,7 +124,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(timestamp, _client.GetTimeOffset())
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinTriggerOrderUpdate> message)
         {
@@ -136,7 +136,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
                     .WithSymbol(message.Result.First().Data.Symbol)
                     .WithDataTimestamp(timestamp, _client.GetTimeOffset())
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

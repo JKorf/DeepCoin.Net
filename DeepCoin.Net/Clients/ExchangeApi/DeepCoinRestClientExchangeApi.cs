@@ -42,12 +42,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region constructor/destructor
-        internal DeepCoinRestClientExchangeApi(ILogger logger, HttpClient? httpClient, DeepCoinRestOptions options)
-            : base(logger, httpClient, options.Environment.RestClientAddress, options, options.ExchangeOptions)
+        internal DeepCoinRestClientExchangeApi(ILoggerFactory? loggerFactory, HttpClient? httpClient, DeepCoinRestOptions options)
+            : base(loggerFactory, DeepCoinExchange.Metadata.Id, httpClient, options.Environment.RestClientAddress, options, options.ExchangeOptions)
         {
             Account = new DeepCoinRestClientExchangeApiAccount(this);
-            ExchangeData = new DeepCoinRestClientExchangeApiExchangeData(logger, this);
-            Trading = new DeepCoinRestClientExchangeApiTrading(logger, this);
+            ExchangeData = new DeepCoinRestClientExchangeApiExchangeData(_logger, this);
+            Trading = new DeepCoinRestClientExchangeApiTrading(_logger, this);
         }
         #endregion
 
@@ -58,35 +58,25 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         protected override DeepCoinAuthenticationProvider CreateAuthenticationProvider(DeepCoinCredentials credentials)
             => new DeepCoinAuthenticationProvider(credentials);
 
-        internal Task<WebCallResult> SendAsync(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
-            => SendToAddressAsync(BaseAddress, definition, parameters, cancellationToken, weight);
-
-        internal async Task<WebCallResult> SendToAddressAsync(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
+        internal async Task<HttpResult> SendAsync(RequestDefinition definition, Parameters? parameters, CancellationToken cancellationToken, int? weight = null)
         {
-            var result = await base.SendAsync(baseAddress, definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
-
-            // Optional response checking
-
-            return result;
+            return await base.SendAsync<Unit>(definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
         }
 
-        internal Task<WebCallResult<T>> SendAsync<T>(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null) where T : class
-            => SendToAddressAsync<T>(BaseAddress, definition, parameters, cancellationToken, weight);
-
-        internal async Task<WebCallResult<T>> SendToAddressAsync<T>(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null) where T : class
+        internal async Task<HttpResult<T>> SendAsync<T>(RequestDefinition definition, Parameters? parameters, CancellationToken cancellationToken, int? weight = null)
         {
-            var result = await base.SendAsync<DeepCoinResponse<T>>(baseAddress, definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
-            if (!result)
-                return result.As<T>(default);
+            var result = await base.SendAsync<DeepCoinResponse<T>>(definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
+            if (!result.Success)
+                return HttpResult.Fail<T>(result);
 
             if (result.Data.Code != 0)
-                return result.AsError<T>(new ServerError(result.Data.Code, GetErrorInfo(result.Data.Code, result.Data.Message!)));
+                return HttpResult.Fail<T>(result, new ServerError(result.Data.Code, GetErrorInfo(result.Data.Code, result.Data.Message!)));
 
-            return result.As<T>(result.Data.Data);
+            return HttpResult.Ok(result, result.Data.Data!);
         }
 
         /// <inheritdoc />
-        protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync() => throw new NotImplementedException();
+        protected override Task<HttpResult<DateTime>> GetServerTimestampAsync() => throw new NotImplementedException();
 
 
         /// <inheritdoc />

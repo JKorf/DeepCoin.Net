@@ -17,7 +17,10 @@ using DeepCoin.Net.Clients;
 // DeepCoin has one ExchangeApi root. SharedClient implements interfaces like
 // ISpotTickerRestClient, IFuturesOrderRestClient, IBalanceRestClient, etc.
 
-ISpotTickerRestClient deepCoinShared = new DeepCoinRestClient().ExchangeApi.SharedClient;
+var restClient = new DeepCoinRestClient();
+ISpotTickerRestClient deepCoinShared = restClient.ExchangeApi.SharedClient;
+var capabilities = restClient.ExchangeApi.SharedClient.Discover();
+Console.WriteLine($"Shared REST features: {capabilities.Features.Count(x => x.Supported)}");
 
 // To add Binance or OKX, install the package and:
 //   ISpotTickerRestClient binanceShared = new BinanceRestClient().SpotApi.SharedClient;

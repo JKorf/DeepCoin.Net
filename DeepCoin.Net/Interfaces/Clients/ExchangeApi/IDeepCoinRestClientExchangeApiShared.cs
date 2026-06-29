@@ -9,7 +9,6 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         IBalanceRestClient,
         IDepositRestClient,
         IKlineRestClient,
-        IListenKeyRestClient,
         IOrderBookRestClient,
         IWithdrawalRestClient,
         ISpotTickerRestClient,
