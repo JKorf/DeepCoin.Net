@@ -10,6 +10,7 @@ using DeepCoin.Net.Objects;
 using CryptoExchange.Net.Authentication;
 using DeepCoin.Net.SymbolOrderBooks;
 using CryptoExchange.Net.Objects.Errors;
+using System.Collections.Generic;
 
 namespace DeepCoin.Net.UnitTests
 {
@@ -49,33 +50,42 @@ namespace DeepCoin.Net.UnitTests
         [Test]
         public async Task TestAccount()
         {
-            await RunAndCheckResult(client => client.ExchangeApi.Account.GetBalancesAsync(Enums.SymbolType.Spot, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Account.GetBalancesAsync(Enums.SymbolType.Swap, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Account.GetBillsAsync(Enums.SymbolType.Spot, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Account.GetBillsAsync(Enums.SymbolType.Swap, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(default, default, default, default, default, default, default), true);
+            var warnings = new List<Exception>();
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetBalancesAsync(Enums.SymbolType.Spot, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetBalancesAsync(Enums.SymbolType.Swap, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetBillsAsync(Enums.SymbolType.Spot, default, default, default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetBillsAsync(Enums.SymbolType.Swap, default, default, default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(default, default, default, default, default, default, default), true, "data");
+            foreach (var warning in warnings)
+                Assert.Warn(warning.Message);
         }
 
         [Test]
         public async Task TestExchangeData()
         {
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetSymbolsAsync(Enums.SymbolType.Spot, default, default, default), false);
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetSymbolsAsync(Enums.SymbolType.Swap, default, default, default), false);
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetTickersAsync(Enums.SymbolType.Spot, default, default), false);
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetTickersAsync(Enums.SymbolType.Swap, default, default), false);
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default), false);
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetOrderBookAsync("ETH-USDT", 10, default), false);
-            await RunAndCheckResult(client => client.ExchangeApi.ExchangeData.GetFundingRateAsync(Enums.ProductGroup.USDTMargined, default, default), true);
+            var warnings = new List<Exception>();
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetSymbolsAsync(Enums.SymbolType.Spot, default, default, default), false, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetSymbolsAsync(Enums.SymbolType.Swap, default, default, default), false, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetTickersAsync(Enums.SymbolType.Spot, default, default), false, "data", ignoreProperties: ["sodUtc0", "sodUtc8"]);
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetTickersAsync(Enums.SymbolType.Swap, default, default), false, "data", ignoreProperties: ["sodUtc0", "sodUtc8"]);
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default), false, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetOrderBookAsync("ETH-USDT", 10, default), false, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetFundingRateAsync(Enums.ProductGroup.USDTMargined, default, default), true, "data");
+            foreach (var warning in warnings)
+                Assert.Warn(warning.Message);
         }
 
         [Test]
         public async Task TestTrading()
         {
-            await RunAndCheckResult(client => client.ExchangeApi.Trading.GetPositionsAsync(Enums.SymbolType.Swap, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Trading.GetUserTradesAsync(Enums.SymbolType.Spot, default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Trading.GetOpenOrdersAsync("ETH-USDT", default, default, default, default), true);
-            await RunAndCheckResult(client => client.ExchangeApi.Trading.GetClosedOrdersAsync(Enums.SymbolType.Spot, "ETH-USDT", default, default, default, default, default, default, default), true);
+            var warnings = new List<Exception>();
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Trading.GetPositionsAsync(Enums.SymbolType.Swap, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Trading.GetUserTradesAsync(Enums.SymbolType.Spot, default, default, default, default, default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Trading.GetOpenOrdersAsync("ETH-USDT", default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Trading.GetClosedOrdersAsync(Enums.SymbolType.Spot, "ETH-USDT", default, default, default, default, default, default, default), true, "data");
+            foreach (var warning in warnings)
+                Assert.Warn(warning.Message);
         }
 
         [Test]
