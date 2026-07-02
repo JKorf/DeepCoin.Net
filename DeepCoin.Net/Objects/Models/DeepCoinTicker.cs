@@ -27,6 +27,11 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("last")]
         public decimal? LastPrice { get; set; }
         /// <summary>
+        /// ["<c>lastSz</c>"] Last trade quantity
+        /// </summary>
+        [JsonPropertyName("lastSz")]
+        public decimal? LastQuantity { get; set; }
+        /// <summary>
         /// ["<c>askPx</c>"] Best ask price in the order book
         /// </summary>
         [JsonPropertyName("askPx")]
