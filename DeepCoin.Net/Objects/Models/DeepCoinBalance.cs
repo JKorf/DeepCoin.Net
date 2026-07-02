@@ -29,5 +29,15 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("availBal")]
         public decimal AvailableBalance { get; set; }
+        /// <summary>
+        /// ["<c>unrealizedProfit</c>"] Unrealized profit and loss
+        /// </summary>
+        [JsonPropertyName("unrealizedProfit")]
+        public decimal? UnrealizedPnl { get; set; }
+        /// <summary>
+        /// ["<c>equity</c>"] Equity
+        /// </summary>
+        [JsonPropertyName("equity")]
+        public decimal? Equity { get; set; }
     }
 }
