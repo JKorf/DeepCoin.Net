@@ -208,5 +208,25 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
+        #region Get Trade Fee
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinFeeRate[]>> GetTradeFeeAsync(
+            SymbolType symbolType,
+            string? symbol = null,
+            string? symbolFamily = null,
+            CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instType", symbolType);
+            parameters.Add("instId", symbol);
+            parameters.Add("instFamily", symbolFamily);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/account/trade-fee", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinFeeRate[]>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
     }
 }

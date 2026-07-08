@@ -9,6 +9,7 @@ namespace DeepCoin.Net.Converters
 {
     [JsonSerializable(typeof(string[]))]
     [JsonSerializable(typeof(SocketRequest))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinFeeRate[]>))]
 
     // End manual defined attributes
 

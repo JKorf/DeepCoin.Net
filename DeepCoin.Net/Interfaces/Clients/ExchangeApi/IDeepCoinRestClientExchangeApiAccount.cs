@@ -156,5 +156,24 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="listenKey">["<c>listenkey</c>"] Listen key to extend</param>
         /// <param name="ct">Cancellation token</param>
         Task<HttpResult<DeepCoinListenKey>> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get trading fees
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinAccount/getTradeFee" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/account/trade-fee<br />
+        /// </para>
+        /// </summary>
+        /// <param name="symbolType">["<c>instType</c>"] Symbol type</param>
+        /// <param name="symbol">["<c>instId</c>"] Filter by symbol, for example `ETH-USDT-SWAP`</param>
+        /// <param name="symbolFamily">["<c>instFamily</c>"] Filter by symbol family. Only applicable to SWAP, e.g. BTC-USDT</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinFeeRate[]>> GetTradeFeeAsync(
+            SymbolType symbolType,
+            string? symbol = null,
+            string? symbolFamily = null,
+            CancellationToken ct = default);
     }
 }

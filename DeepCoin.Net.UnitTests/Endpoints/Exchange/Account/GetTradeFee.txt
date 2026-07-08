@@ -1,0 +1,25 @@
+GET
+/deepcoin/account/trade-fee
+true
+UriParams: {"instType": "SPOT"}
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "level": "Lv1",
+            "feeGroup": "",
+            "category": "",
+            "instType": "SWAP",
+            "maker": "0.0002",
+            "taker": "0.0005",
+            "makerU": "0.0002",
+            "takerU": "0.0005",
+            "makerUSDC": "",
+            "takerUSDC": "",
+            "delivery": "",
+            "exercise": "",
+            "ts": "1764230400000"
+        }
+    ]
+}

@@ -33,6 +33,7 @@ namespace DeepCoin.Net.UnitTests
             //await tester.ValidateAsync(client => client.ExchangeApi.Account.GetTransferHistoryAsync(), "GetTransferHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetDepositHistoryAsync(), "GetDepositHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(), "GetWithdrawHistory", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.Account.GetTradeFeeAsync(SymbolType.Spot), "GetTradeFee", nestedJsonProperty: "data");
         }
 
         [Test]
