@@ -7,6 +7,7 @@ using System;
 using DeepCoin.Net.Enums;
 using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net.RateLimiting.Guards;
+using System.Collections.Generic;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -228,5 +229,24 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
+        #region Get All Balances
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinAllBalances>> GetAllBalancesAsync(
+            IEnumerable<BalanceType>? accountTypes = null,
+            IEnumerable<string>? assets = null,
+            CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.AddCommaSeparated("accountType", accountTypes);
+            parameters.AddCommaSeparated("ccy", assets);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/account/all-balances", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinAllBalances>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
     }
 }

@@ -10,6 +10,11 @@ namespace DeepCoin.Net.Converters
     [JsonSerializable(typeof(string[]))]
     [JsonSerializable(typeof(SocketRequest))]
     [JsonSerializable(typeof(DeepCoinResponse<DeepCoinFeeRate[]>))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinAllBalances>))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinMarkPrice[]>))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinOpenInterest[]>))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinLongShortRatio[]>))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinTakerBuySellVolume[]>))]
 
     // End manual defined attributes
 

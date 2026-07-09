@@ -53,7 +53,7 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="slTriggerPrice">["<c>slTriggerPx</c>"] Stop loss trigger price</param>
         /// <param name="ct">Cancellation token</param>
         Task<HttpResult<DeepCoinOrderResult>> PlaceOrderAsync(string symbol, OrderSide side, OrderType orderType, decimal quantity, decimal? price = null, TradeMode? tradeMode = null, string? asset = null, string? clientOrderId = null, QuantityType? quantityType = null, PositionSide? positionSide = null, PositionType? positionType = null, string? closePosId = null, bool? reduceOnly = null, decimal? tpTriggerPrice = null, decimal? slTriggerPrice = null, CancellationToken ct = default);
-        
+
         /// <summary>
         /// Edit an existing order. Spot not supported.
         /// <para>
@@ -63,11 +63,12 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// POST /deepcoin/trade/replace-order
         /// </para>
         /// </summary>
-        /// <param name="orderId">["<c>OrderSysID</c>"] Order id</param>
+        /// <param name="orderId">["<c>OrderSysID</c>"] Order id, either this or clientOrderId should be provided</param>
+        /// <param name="clientOrderId">["<c>clOrdId</c>"] Client order id, either this or orderId should be provided</param>
         /// <param name="price">["<c>price</c>"] New price</param>
         /// <param name="quantity">["<c>volume</c>"] New quantity</param>
         /// <param name="ct">Cancellation token</param>
-        Task<HttpResult<DeepCoinOrderResult>> EditOrderAsync(string orderId, decimal? price = null, decimal? quantity = null, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrderResult>> EditOrderAsync(string? orderId = null, string? clientOrderId = null, decimal? price = null, decimal? quantity = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel an open order
@@ -79,9 +80,10 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT`</param>
-        /// <param name="orderId">["<c>ordId</c>"] Order id</param>
+        /// <param name="orderId">["<c>ordId</c>"] Order id, either this or clientOrderId should be provided</param>
+        /// <param name="clientOrderId">["<c>clOrdId</c>"] Client order id, either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
-        Task<HttpResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string orderId, CancellationToken ct = default);
+        Task<HttpResult<DeepCoinOrderResult>> CancelOrderAsync(string symbol, string? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel multiple orders. Make sure to check the result data of the call to see if orders actually successfully canceled

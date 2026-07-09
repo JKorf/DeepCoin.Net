@@ -1,0 +1,15 @@
+GET
+/deepcoin/market/taker-volume
+false
+UriParams: {"instId": "ETH-USDT-SWAP"}
+{
+  "code": "0",
+  "msg": "Success",
+  "data": [
+    {
+      "ts": "1781222400000",
+      "buyVol": "21854633",
+      "sellVol": "20099842"
+    }
+  ]
+}

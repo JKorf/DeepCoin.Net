@@ -4,6 +4,7 @@ using DeepCoin.Net.Objects.Models;
 using CryptoExchange.Net.Objects;
 using DeepCoin.Net.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 {
@@ -175,5 +176,23 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
             string? symbol = null,
             string? symbolFamily = null,
             CancellationToken ct = default);
+
+        /// <summary>
+        /// Get balances on all account types
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinAccount/getAllAccountBalances" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/account/all-balances<br />
+        /// </para>
+        /// </summary>
+        /// <param name="accountTypes">["<c>accountType</c>"] Account type filter</param>
+        /// <param name="assets">["<c>ccy</c>"] Assets filter</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinAllBalances>> GetAllBalancesAsync(
+            IEnumerable<BalanceType>? accountTypes = null,
+            IEnumerable<string>? assets = null,
+            CancellationToken ct = default);
+
     }
 }

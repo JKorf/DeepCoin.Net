@@ -1,0 +1,53 @@
+GET
+/deepcoin/account/all-balances
+true
+UriParams: {}
+{
+    "code": "0",
+    "msg": "",
+    "data": {
+        "uTime": "1777449600000",
+        "summary": {
+            "totalEqUsd": "11845.50",
+            "totalAvailBalByCcy": {
+                "USDT": "11830.00"
+            }
+        },
+        "accounts": [
+            {
+                "accountType": "funding",
+                "accountName": "Funding Account",
+                "enabled": true,
+                "details": [
+                    {
+                        "ccy": "USDT",
+                        "bal": "1930.00",
+                        "availBal": "1930.00",
+                        "frozenBal": "0",
+                        "unrealizedProfit": "0",
+                        "equity": "1930.00",
+                        "eqUsd": "1930.00",
+                        "uTime": "1777449600000"
+                    }
+                ]
+            },
+            {
+                "accountType": "spot",
+                "accountName": "Spot Account",
+                "enabled": true,
+                "details": [
+                    {
+                        "ccy": "USDT",
+                        "bal": "9900.00",
+                        "availBal": "9900.00",
+                        "frozenBal": "0",
+                        "unrealizedProfit": "15.50",
+                        "equity": "9915.50",
+                        "eqUsd": "9915.50",
+                        "uTime": "1777449600000"
+                    }
+                ]
+            }
+        ]
+    }
+}

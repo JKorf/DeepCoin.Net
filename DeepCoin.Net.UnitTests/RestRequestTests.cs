@@ -34,6 +34,7 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetDepositHistoryAsync(), "GetDepositHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(), "GetWithdrawHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetTradeFeeAsync(SymbolType.Spot), "GetTradeFee", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.Account.GetAllBalancesAsync(), "GetAllBalances", nestedJsonProperty: "data");
         }
 
         [Test]
@@ -50,6 +51,10 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetKlinesAsync("123", KlineInterval.FiveMinutes), "GetKlines", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetOrderBookAsync("123"), "GetOrderBook", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetFundingRateAsync(ProductGroup.USDTMargined), "GetFundingRate", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetMarkPricesAsync(SymbolType.Swap), "GetMarkPrice", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetOpenInterestAndVolumeAsync("ETH-USDT-SWAP"), "GetOpenInterestAndVolume", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetLongShortRatioAsync("ETH-USDT-SWAP"), "GetLongShortRatio", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.ExchangeData.GetTakerBuySellVolumeAsync("ETH-USDT-SWAP"), "GetTakerBuySellVolume", nestedJsonProperty: "data");
         }
 
         [Test]

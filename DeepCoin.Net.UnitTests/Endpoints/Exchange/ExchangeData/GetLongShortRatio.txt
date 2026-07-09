@@ -1,0 +1,15 @@
+GET
+/deepcoin/market/open-interest-volume
+true
+UriParams: {"instId": "ETHUSDT"}
+{
+  "code": "0",
+  "msg": "Success",
+  "data": [
+    {
+      "ts": "1781222400000",
+      "oi": "36214521",
+      "vol": "41954711"
+    }
+  ]
+}

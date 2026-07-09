@@ -1,13 +1,14 @@
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.RateLimiting.Guards;
+using DeepCoin.Net.Enums;
+using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
+using DeepCoin.Net.Objects.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.Objects;
-using Microsoft.Extensions.Logging;
-using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
-using DeepCoin.Net.Objects.Models;
-using DeepCoin.Net.Enums;
-using CryptoExchange.Net.RateLimiting.Guards;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -93,6 +94,98 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.Add("instId", symbol);
             var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/funding-rate", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinFundingRate[]>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Mark Price
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinMarkPrice[]>> GetMarkPricesAsync(
+            SymbolType symbolType,
+            string? underlying = null,
+            string? symbol = null,
+            CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instType", symbolType);
+            parameters.Add("uly", underlying);
+            parameters.Add("instId", symbol);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/market/mark-price", DeepCoinExchange.RateLimiter.DeepCoin, 1, false, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinMarkPrice[]>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Open Interest And Volume
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinOpenInterest[]>> GetOpenInterestAndVolumeAsync(
+            string symbol,
+            DataInterval? interval = null,
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            int? limit = null,
+            CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instId", symbol);
+            parameters.Add("bar", interval);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("limit", limit);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/market/open-interest-volume", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinOpenInterest[]>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Long Short Ratio
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinLongShortRatio[]>> GetLongShortRatioAsync(
+            string symbol,
+            DataInterval? interval = null,
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            int? limit = null,
+            CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instId", symbol);
+            parameters.Add("bar", interval);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("limit", limit);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/market/long-short-ratio", DeepCoinExchange.RateLimiter.DeepCoin, 1, false, limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinLongShortRatio[]>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Taker Buy Sell Volume
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinTakerBuySellVolume[]>> GetTakerBuySellVolumeAsync(
+            string symbol,
+            DataInterval? interval = null,
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            int? limit = null,
+            CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instId", symbol);
+            parameters.Add("bar", interval);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("limit", limit);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/market/taker-volume", DeepCoinExchange.RateLimiter.DeepCoin, 1, false, limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinTakerBuySellVolume[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 

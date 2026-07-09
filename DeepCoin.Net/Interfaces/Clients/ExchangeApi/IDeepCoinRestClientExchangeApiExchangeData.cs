@@ -1,9 +1,10 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using CryptoExchange.Net.Objects;
 using DeepCoin.Net.Enums;
 using DeepCoin.Net.Objects.Models;
+using Microsoft.VisualBasic;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
 {
@@ -85,6 +86,94 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         /// <param name="symbol">["<c>instId</c>"] Filter by symbol, for example `ETH-USDT-SWAP`</param>
         /// <param name="ct">Cancellation token</param>
         Task<HttpResult<DeepCoinFundingRate[]>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get mark prices
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/getMarkPrice" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/mark-price<br />
+        /// </para>
+        /// </summary>
+        /// <param name="symbolType">["<c>instType</c>"] Symbol type</param>
+        /// <param name="underlying">["<c>uly</c>"] Filter by underlying</param>
+        /// <param name="symbol">["<c>instId</c>"] Filter by symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinMarkPrice[]>> GetMarkPricesAsync(
+            SymbolType symbolType,
+            string? underlying = null,
+            string? symbol = null,
+            CancellationToken ct = default);
+
+        /// <summary>
+        /// Get open interest and volume
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/openInterestVolume" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/open-interest-volume<br />
+        /// </para>
+        /// </summary>
+        /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT-SWAP`</param>
+        /// <param name="interval">["<c>bar</c>"] Interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max number of results, max 300</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinOpenInterest[]>> GetOpenInterestAndVolumeAsync(
+            string symbol,
+            DataInterval? interval = null,
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            int? limit = null,
+            CancellationToken ct = default);
+
+        /// <summary>
+        /// Get long short ratio
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/longShortRatio" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/long-short-ratio<br />
+        /// </para>
+        /// </summary>
+        /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT-SWAP`</param>
+        /// <param name="interval">["<c>bar</c>"] Data interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max number of results, max 300</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinLongShortRatio[]>> GetLongShortRatioAsync(
+            string symbol,
+            DataInterval? interval = null,
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            int? limit = null,
+            CancellationToken ct = default);
+
+        /// <summary>
+        /// Get taker buy/sell volume
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinMarket/takerVolume" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/market/taker-volume<br />
+        /// </para>
+        /// </summary>
+        /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETHUSDT`</param>
+        /// <param name="interval">["<c>bar</c>"] Data interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max number of results, max 300</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinTakerBuySellVolume[]>> GetTakerBuySellVolumeAsync(
+            string symbol,
+            DataInterval? interval = null,
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            int? limit = null,
+            CancellationToken ct = default);
 
     }
 }

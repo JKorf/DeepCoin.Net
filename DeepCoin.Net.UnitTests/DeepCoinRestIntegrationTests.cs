@@ -73,6 +73,10 @@ namespace DeepCoin.Net.UnitTests
             await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default), false, "data");
             await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetOrderBookAsync("ETH-USDT", 10, default), false, "data");
             await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetFundingRateAsync(Enums.ProductGroup.USDTMargined, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetMarkPricesAsync(Enums.SymbolType.Swap, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetOpenInterestAndVolumeAsync("ETH-USDT-SWAP", default, default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetLongShortRatioAsync("ETH-USDT-SWAP", default, default, default, default, default), true, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.ExchangeData.GetTakerBuySellVolumeAsync("ETH-USDT-SWAP", default, default, default, default, default), true, "data");
             foreach (var warning in warnings)
                 Assert.Warn(warning.Message);
         }
