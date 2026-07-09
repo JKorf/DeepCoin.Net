@@ -1,15 +1,16 @@
 GET
-/deepcoin/market/open-interest-volume
-true
-UriParams: {"instId": "ETHUSDT"}
+/deepcoin/market/long-short-ratio
+false
+UriParams: {"instId": "ETH-USDT-SWAP"}
 {
   "code": "0",
   "msg": "Success",
   "data": [
     {
       "ts": "1781222400000",
-      "oi": "36214521",
-      "vol": "41954711"
+      "longRatio": "0.8325",
+      "shortRatio": "0.1675",
+      "longShortRatio": "4.9711"
     }
   ]
 }

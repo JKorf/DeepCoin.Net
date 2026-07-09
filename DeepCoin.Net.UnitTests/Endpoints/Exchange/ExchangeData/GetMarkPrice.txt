@@ -1,16 +1,16 @@
 GET
-/deepcoin/market/long-short-ratio
+/deepcoin/market/mark-price
 false
 UriParams: {"instId": "ETH-USDT-SWAP"}
 {
-  "code": "0",
-  "msg": "Success",
-  "data": [
-    {
-      "ts": "1781222400000",
-      "longRatio": "0.8325",
-      "shortRatio": "0.1675",
-      "longShortRatio": "4.9711"
-    }
-  ]
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "instId": "ETH-USDT-SWAP",
+            "markPx": "96127.5",
+            "ts": "1739242026000"
+        }
+    ]
 }
