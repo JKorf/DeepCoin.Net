@@ -1,7 +1,7 @@
 GET
 /deepcoin/market/open-interest-volume
 true
-UriParams: {"instId": "ETHUSDT"}
+UriParams: {"instId": "ETH-USDT-SWAP"}
 {
   "code": "0",
   "msg": "Success",
