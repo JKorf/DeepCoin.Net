@@ -81,6 +81,18 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("cTime")]
         public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// ["<c>isLeading</c>"] Is copy trading leading
+        /// </summary>
+        [JsonPropertyName("isLeading")]
+        public bool IsLeading { get; set; }
+        /// <summary>
+        /// ["<c>isFollow</c>"] Is copy trading follow
+        /// </summary>
+        [JsonPropertyName("isFollow")]
+        public bool IsFollow { get; set; }
+
+
     }
 
 
