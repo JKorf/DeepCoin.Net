@@ -179,6 +179,16 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 4.1.0 - 09 Jul 2026
+    * Updated CryptoExchange.Net to v12.1.0
+    * Added UnrealizedPnl and Equity to DeepCoinBalance model
+    * Added LastQuantity to DeepCoinTicker model
+    * Added IsLeading, IsFollow to DeepCoinPosition model
+    * Added restClient.ExchangeApi.Account.GetTradeFeeAsync endpoint
+    * Added restClient.ExchangeApi.ExchangeData.GetMarkPricesAsync, GetOpenInterestAndVolumeAsync, GetLongShortRatioAsync and GetTakerBuySellVolumeAsync endpoints
+    * Added restClient.ExchangeApi.Account.GetAllBalancesAsync endpoint
+    * Updated order endpoints to support clientOrderId parameters
+
 * Version 4.0.0 - 29 Jun 2026
     * Result types:
       * (Web)CallResult types are replaced by HttpResult, WebSocketResult and QueryResult with the same logic
