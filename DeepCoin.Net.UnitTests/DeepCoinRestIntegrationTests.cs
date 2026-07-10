@@ -57,7 +57,7 @@ namespace DeepCoin.Net.UnitTests
             await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetBillsAsync(Enums.SymbolType.Swap, default, default, default, default, default, default), true, "data");
             await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default), true, "data");
             await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(default, default, default, default, default, default, default), true, "data");
-            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetTradeFeeAsync(Enums.SymbolType.Spot, default, default, default), false, "data");
+            await RunAndCheckResult(warnings, client => client.ExchangeApi.Account.GetTradeFeeAsync(Enums.SymbolType.Spot, default, default, default), true, "data");
             foreach (var warning in warnings)
                 Assert.Warn(warning.Message);
         }
