@@ -838,7 +838,12 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 result.BaseAssetType = SharedAssetType.TradFi;
                 result.BaseAssetSubType = SharedAssetSubType.Commodity;
             }
-            else if (LibraryHelpers.IsCryptoCurrency(result.BaseAsset))
+            else if (LibraryHelpers.IsEquity(result.BaseAsset))
+            {
+                result.BaseAssetType = SharedAssetType.TradFi;
+                result.BaseAssetSubType = SharedAssetSubType.Equity;
+            }
+            else
             {
                 result.BaseAssetType = SharedAssetType.Crypto;
             }
