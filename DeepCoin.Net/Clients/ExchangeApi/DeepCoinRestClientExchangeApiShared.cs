@@ -1,15 +1,16 @@
+using CryptoExchange.Net;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.SharedApis;
+using DeepCoin.Net.Enums;
+using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
+using DeepCoin.Net.Objects.Models;
 using System;
 using System.Collections.Generic;
-using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Linq;
-using CryptoExchange.Net.Objects;
-using DeepCoin.Net.Enums;
-using DeepCoin.Net.Objects.Models;
-using CryptoExchange.Net;
-using CryptoExchange.Net.Objects.Errors;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
@@ -329,6 +330,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region Spot Symbol client
+        SharedSymbolCatalog? ISpotSymbolRestClient.SpotSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_exchangeName, _topicSpotId, EnvironmentName, null);
         GetSpotSymbolsOptions ISpotSymbolRestClient.GetSpotSymbolsOptions { get; } = new GetSpotSymbolsOptions(_exchangeName, false);
 
         async Task<HttpResult<SharedSpotSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
@@ -341,17 +343,33 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result.Success)
                 return HttpResult.Fail<SharedSpotSymbol[]>(result);
 
-            var response = HttpResult.Ok(result, result.Data.Select(s => new SharedSpotSymbol(s.BaseAsset, s.QuoteAsset, s.Symbol, s.Status == Enums.SymbolStatus.Live)
+            var data = result.Data
+               .Select(x => ParseSpotSymbol(x))
+               .ToArray();
+
+            var symbolInfo = data!.Concat(data!.Select(x => new SharedSpotSymbol(x.BaseAsset, x.QuoteAsset, x.BaseAsset + "/" + x.QuoteAsset, x.Trading)));
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicSpotId, EnvironmentName, null, symbolInfo.ToArray());
+            return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
+        }
+
+        private SharedSpotSymbol ParseSpotSymbol(DeepCoinSymbol s)
+        {
+            var result = new SharedSpotSymbol(s.BaseAsset, s.QuoteAsset, s.Symbol, s.Status == Enums.SymbolStatus.Live)
             {
                 MaxTradeQuantity = Math.Min(s.MaxLimitQuantity, s.MaxMarketQuantity),
                 MinTradeQuantity = s.MinQuantity,
                 PriceStep = s.TickSize,
-                QuantityStep = s.LotSize
-            }).ToArray());
+                QuantityStep = s.LotSize,
+                DisplayName = s.Symbol,
+                BaseAssetType = SharedAssetType.Crypto,
+                QuoteAssetType = SharedAssetType.Crypto,
+                QuoteAssetSubType = SharedAssetSubType.StableCoin
+            };
 
-            var symbolInfo = response.Data!.Concat(response.Data!.Select(x => new SharedSpotSymbol(x.BaseAsset, x.QuoteAsset, x.BaseAsset + "/" + x.QuoteAsset, x.Trading)));
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicSpotId, EnvironmentName, null, symbolInfo.ToArray());
-            return response;
+            if (LibraryHelpers.IsStableCoin(s.BaseAsset))
+                result.BaseAssetSubType = SharedAssetSubType.StableCoin;
+
+            return result;
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsForBaseAssetAsync(string baseAsset)
@@ -769,6 +787,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Futures Symbol client
 
+        SharedSymbolCatalog? IFuturesSymbolRestClient.FuturesSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_exchangeName, _topicFuturesId, EnvironmentName, null);
         GetFuturesSymbolsOptions IFuturesSymbolRestClient.GetFuturesSymbolsOptions { get; } = new GetFuturesSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedFuturesSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -780,25 +799,58 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result.Success)
                 return HttpResult.Fail<SharedFuturesSymbol[]>(result);
 
-            var response = HttpResult.Ok(result, result.Data.Select(s => 
-            new SharedFuturesSymbol(s.QuoteAsset.Equals("USD") ? TradingMode.PerpetualInverse : TradingMode.PerpetualLinear, s.BaseAsset, s.QuoteAsset, s.Symbol, s.Status == Enums.SymbolStatus.Live)
+            var data = result.Data
+               .Select(x => ParseFuturesSymbol(x))
+               .ToArray();
+
+            // Also register [BaseAsset][QuoteAsset] as they might be returned for websocket updates
+            var symbolInfo = data!.Concat(data!.Select(x => new SharedFuturesSymbol(x.TradingMode, x.BaseAsset, x.QuoteAsset, x.BaseAsset + x.QuoteAsset, x.Trading)));
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicFuturesId, EnvironmentName, null, symbolInfo.ToArray());
+            return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
+        }
+
+        private SharedFuturesSymbol ParseFuturesSymbol(DeepCoinSymbol s)
+        {
+            var result = new SharedFuturesSymbol(s.QuoteAsset.Equals("USD") ? TradingMode.PerpetualInverse : TradingMode.PerpetualLinear, s.BaseAsset, s.QuoteAsset, s.Symbol, s.Status == Enums.SymbolStatus.Live)
             {
                 MaxTradeQuantity = Math.Min(s.MaxLimitQuantity, s.MaxMarketQuantity),
                 MinTradeQuantity = s.MinQuantity,
                 PriceStep = s.TickSize,
                 QuantityStep = s.LotSize,
-                ContractSize = s.ContractSize          ,
+                ContractSize = s.ContractSize,
                 MaxLongLeverage = s.MaxLeverage,
-                MaxShortLeverage = s.MaxLeverage
-            }).ToArray());
+                MaxShortLeverage = s.MaxLeverage,
+                DisplayName = s.Symbol,
+            };
 
-            // Also register [BaseAsset][QuoteAsset] as they might be returned for websocket updates
-            var symbolRegistrations = response.Data!
-               .Concat(response.Data!.Select(x => new SharedSpotSymbol(x.BaseAsset, x.QuoteAsset, x.BaseAsset + x.QuoteAsset, x.Trading, x.TradingMode))).ToArray();
+            if (result.TradingMode.IsInverse())
+            {
+                result.QuoteAssetType = SharedAssetType.Fiat;
+            }
+            else
+            {
+                result.QuoteAssetType = SharedAssetType.Crypto;
+                result.QuoteAssetSubType = SharedAssetSubType.StableCoin;
+            }
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicFuturesId, EnvironmentName, null, symbolRegistrations);
-            return response;
+            if (LibraryHelpers.IsCommodity(result.BaseAsset))
+            {
+                result.BaseAssetType = SharedAssetType.TradFi;
+                result.BaseAssetSubType = SharedAssetSubType.Commodity;
+            }
+            else if (LibraryHelpers.IsEquity(result.BaseAsset))
+            {
+                result.BaseAssetType = SharedAssetType.TradFi;
+                result.BaseAssetSubType = SharedAssetSubType.Equity;
+            }
+            else
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+            }
+
+            return result;
         }
+
         async Task<ExchangeCallResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)
         {
             if (!ExchangeSymbolCache.HasCached(_topicFuturesId, EnvironmentName, null))
