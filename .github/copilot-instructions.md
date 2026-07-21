@@ -51,6 +51,8 @@ Store the returned `UpdateSubscription` and unsubscribe on shutdown via `socketC
 
 For code that needs to work across multiple exchanges, use `CryptoExchange.Net.SharedApis` interfaces accessed via `.ExchangeApi.SharedClient`.
 
+The shared spot/futures symbol interfaces expose `SpotSymbolCatalog` / `FuturesSymbolCatalog`. Returned symbols include `DisplayName` and base/quote asset type and subtype metadata; use the matching `GetSymbolsRequest` filters when callers need a particular asset classification.
+
 ## Avoid
 
 - Legacy or imagined `DeepCoinClient` class; use `DeepCoinRestClient`

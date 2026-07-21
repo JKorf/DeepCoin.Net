@@ -205,6 +205,8 @@ Console.WriteLine(ticker.Data.LastPrice);
 
 Available shared REST interfaces include `IBalanceRestClient`, `IDepositRestClient`, `IKlineRestClient`, `IListenKeyRestClient`, `IOrderBookRestClient`, `IWithdrawalRestClient`, `ISpotTickerRestClient`, `ISpotSymbolRestClient`, `ISpotOrderRestClient`, `ILeverageRestClient`, `IFuturesTickerRestClient`, `IFuturesSymbolRestClient`, `IFuturesOrderRestClient`, and `IBookTickerRestClient`.
 
+The shared symbol clients expose `SpotSymbolCatalog` and `FuturesSymbolCatalog`. Their symbol results include `DisplayName` plus `BaseAssetType`, `BaseAssetSubType`, `QuoteAssetType`, and `QuoteAssetSubType`, and support the corresponding asset type/subtype filters on `GetSymbolsRequest`. DeepCoin classifies crypto and stablecoin assets, fiat quote assets for inverse futures, and commodity/equity base assets where applicable.
+
 Available shared socket interfaces include `IKlineSocketClient`, `ITickerSocketClient`, `ITradeSocketClient`, `IBalanceSocketClient`, `ISpotOrderSocketClient`, `IFuturesOrderSocketClient`, `IUserTradeSocketClient`, and `IPositionSocketClient`.
 
 ## Dependency Injection

@@ -2,7 +2,7 @@
 
 > Strongly typed .NET client library for the DeepCoin REST and WebSocket APIs. Supports DeepCoin spot and swap/futures market data, account endpoints, trading endpoints, private user streams, local order book support, and CryptoExchange.Net SharedApis integration.
 
-DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard CryptoExchange.Net result model, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. REST methods return `HttpResult<T>` / `HttpResult`, WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`, and selected shared helper methods return `ExchangeCallResult<T>`. Current version in this repository: 3.9.2. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
+DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard CryptoExchange.Net result model, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. REST methods return `HttpResult<T>` / `HttpResult`, WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`, and selected shared helper methods return `ExchangeCallResult<T>`. Current version in this repository: 4.2.0. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
 
 ## Documentation
 
@@ -32,6 +32,7 @@ DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard C
 - Use `socketClient.UnsubscribeAsync(subscription.Data)` for teardown.
 - Private WebSocket streams require `restClient.ExchangeApi.Account.StartUserStreamAsync()`.
 - For cross-exchange code, use `CryptoExchange.Net.SharedApis` via `.ExchangeApi.SharedClient` and call `.Discover()` to inspect supported shared features.
+- Shared spot/futures symbol clients expose symbol catalogs and return display names plus base/quote asset type and subtype metadata; `GetSymbolsRequest` can filter on that metadata.
 
 ## Reference
 

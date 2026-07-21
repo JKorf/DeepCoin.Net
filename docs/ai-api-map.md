@@ -106,6 +106,8 @@ Use this file to route common user intents to the correct DeepCoin.Net client me
 | Shared futures ticker REST | `IFuturesTickerRestClient.GetFuturesTickerAsync(new GetTickerRequest(symbol))` |
 | Shared spot symbols REST | `ISpotSymbolRestClient.GetSpotSymbolsAsync(...)` |
 | Shared futures symbols REST | `IFuturesSymbolRestClient.GetFuturesSymbolsAsync(...)` |
+| Shared spot symbol catalog | `ISpotSymbolRestClient.SpotSymbolCatalog` |
+| Shared futures symbol catalog | `IFuturesSymbolRestClient.FuturesSymbolCatalog` |
 | Shared spot order REST | `ISpotOrderRestClient.PlaceSpotOrderAsync(...)` |
 | Shared futures order REST | `IFuturesOrderRestClient.PlaceFuturesOrderAsync(...)` |
 | Shared balance REST | `IBalanceRestClient.GetBalancesAsync(...)` |
@@ -126,6 +128,8 @@ Use this file to route common user intents to the correct DeepCoin.Net client me
 | Shared position socket | `IPositionSocketClient.SubscribeToPositionUpdatesAsync(...)` |
 
 Shared REST methods return `HttpResult<T>` / `HttpResult`; shared socket subscriptions return `WebSocketResult<UpdateSubscription>`; shared symbol/cache helpers such as `SupportsSpotSymbolAsync` and `SupportsFuturesSymbolAsync` can return `ExchangeCallResult<T>`.
+
+Shared spot/futures symbol results include `DisplayName`, `BaseAssetType`, `BaseAssetSubType`, `QuoteAssetType`, and `QuoteAssetSubType`. `GetSymbolsRequest` supports filters for those asset type/subtype fields.
 
 For shared socket subscriptions, keep the concrete socket client and unsubscribe with `await socketClient.UnsubscribeAsync(subscription.Data)`.
 
