@@ -35,7 +35,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
             var result = await SubscribeToKlineUpdatesAsync(symbol, update => handler(update.ToType(
-                new SharedKline(request.Symbol, symbol, update.Data.OpenTime, update.Data.ClosePrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.OpenPrice, update.Data.Volume))), ct).ConfigureAwait(false);
+                new SharedKline(
+                    request.Symbol,
+                    symbol, 
+                    update.Data.OpenTime,
+                    update.Data.ClosePrice,
+                    update.Data.HighPrice,
+                    update.Data.LowPrice, 
+                    update.Data.OpenPrice,
+                    new SharedOrderQuantity(update.Data.Volume, update.Data.Turnover)))), ct).ConfigureAwait(false);
 
             return result;
         }
@@ -51,10 +59,17 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
-            var result = await SubscribeToSymbolUpdatesAsync(symbol, update => handler(update.ToType(new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, symbol), symbol, update.Data.LastPrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.Volume, update.Data.OpenPrice == null ? null : Math.Round((update.Data.LastPrice ?? 0) / update.Data.OpenPrice.Value * 100 - 100, 3))
+            var result = await SubscribeToSymbolUpdatesAsync(symbol, update => handler(update.ToType(
+                new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, symbol),
+                symbol,
+                update.Data.LastPrice,
+                update.Data.HighPrice,
+                update.Data.LowPrice,
+                new SharedOrderQuantity(null, request.TradingMode != TradingMode.Spot ? update.Data.Turnover : null, request.TradingMode != TradingMode.Spot ? update.Data.Volume : null),
+                update.Data.OpenPrice == null ? null : Math.Round((update.Data.LastPrice ?? 0) / update.Data.OpenPrice.Value * 100 - 100, 3))
             {
-                // Value is incorrect for spot symbols
-                QuoteVolume = request.Symbol.TradingMode == TradingMode.Spot ? null : update.Data.Turnover
+                //// Value is incorrect for spot symbols
+                //QuoteVolume = request.Symbol.TradingMode == TradingMode.Spot ? null : update.Data.Turnover
             })), ct: ct).ConfigureAwait(false);
 
             return result;
@@ -72,8 +87,16 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
-            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.ToType<SharedTrade[]>(new[] { 
-                new SharedTrade(request.Symbol, symbol, update.Data.Quantity, update.Data.Price, update.Data.Timestamp)
+            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.ToType<SharedTrade[]>(new[] {
+                new SharedTrade(
+                    request.Symbol,
+                    symbol,
+                    new SharedOrderQuantity(
+                        request.TradingMode == TradingMode.Spot ? update.Data.Quantity : null,
+                        null,
+                        request.TradingMode != TradingMode.Spot ? update.Data.Quantity : null), 
+                    update.Data.Price, 
+                    update.Data.Timestamp)
             {
                 Side = update.Data.Side == Enums.OrderSide.Sell ? SharedOrderSide.Sell : SharedOrderSide.Buy
             } })), ct: ct).ConfigureAwait(false);

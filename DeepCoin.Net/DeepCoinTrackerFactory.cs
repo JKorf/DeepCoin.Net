@@ -67,7 +67,9 @@ namespace DeepCoin.Net
         {
             var restClient = _serviceProvider?.GetRequiredService<IDeepCoinRestClient>() ?? new DeepCoinRestClient();
             var socketClient = _serviceProvider?.GetRequiredService<IDeepCoinSocketClient>() ?? new DeepCoinSocketClient();
-                        
+
+            var tradeType = symbol.TradingMode == TradingMode.Spot ? TradeQuantityType.BaseAsset : TradeQuantityType.Contracts;
+
             return new TradeTracker(
                 _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
                 null,
@@ -76,6 +78,7 @@ namespace DeepCoin.Net
                 symbol,
                 limit,
                 period,
+                tradeType,
                 exchangeParameters
                 );
         }

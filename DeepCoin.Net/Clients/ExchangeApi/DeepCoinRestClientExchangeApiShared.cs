@@ -171,7 +171,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             return HttpResult.Ok(result,
                     ExchangeHelpers.ApplyFilter(result.Data, x => x.OpenTime, request.StartTime, request.EndTime, direction)
                     .Select(x => 
-                        new SharedKline(request.Symbol, symbol, x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume))
+                        new SharedKline(
+                            request.Symbol,
+                            symbol, 
+                            x.OpenTime, 
+                            x.ClosePrice,
+                            x.HighPrice,
+                            x.LowPrice,
+                            x.OpenPrice,
+                            new SharedOrderQuantity(
+                                request.TradingMode != TradingMode.Spot ? null : x.Volume,
+                                x.QuoteVolume,
+                                request.TradingMode == TradingMode.Spot ? null : x.Volume)))
                     .ToArray(), nextPageRequest);
         }
 
@@ -277,10 +288,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (symbol == null)
                 return HttpResult.Fail<SharedSpotTicker>(result, new ServerError(new ErrorInfo(ErrorType.UnknownSymbol, "Symbol not found")));
 
-            return HttpResult.Ok(result, new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, symbol.Symbol), symbol.Symbol, symbol.LastPrice, symbol.HighPrice, symbol.LowPrice, symbol.Volume, symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3))
+            return HttpResult.Ok(result, new SharedSpotTicker(
+                ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, symbol.Symbol),
+                symbol.Symbol, 
+                symbol.LastPrice,
+                symbol.HighPrice,
+                symbol.LowPrice,
+                new SharedOrderQuantity(), // The volumes for spot symbols are incorrect
+                symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3))
             {
-                // Value is incorrect from the API
-                // QuoteVolume = symbol.QuoteVolume
             });
         }
 
@@ -295,11 +311,17 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result.Success)
                 return HttpResult.Fail<SharedSpotTicker[]>(result);
 
-            return HttpResult.Ok(result, result.Data.Select(x => new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))
-            {
-                // Value is incorrect from the API
-                // QuoteVolume = symbol.QuoteVolume
-            }).ToArray());
+            return HttpResult.Ok(result, result.Data.Select(x =>
+                new SharedSpotTicker(
+                    ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, x.Symbol),
+                    x.Symbol,
+                    x.LastPrice, 
+                    x.HighPrice, 
+                    x.LowPrice,
+                    new SharedOrderQuantity(), // The volumes for spot symbols are incorrect
+                    x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))
+                {
+                }).ToArray());
         }
 
         #endregion
@@ -766,7 +788,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (symbol == null)
                 return HttpResult.Fail<SharedFuturesTicker>(resultTicker, new ServerError(new ErrorInfo(ErrorType.UnknownSymbol, "Symbol not found")));
 
-            return HttpResult.Ok(resultTicker, new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, symbol.Symbol), symbol.Symbol, symbol.LastPrice, symbol.HighPrice, symbol.LowPrice, symbol.Volume, symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3)));
+            return HttpResult.Ok(resultTicker, 
+                new SharedFuturesTicker(
+                    ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, symbol.Symbol), 
+                    symbol.Symbol, 
+                    symbol.LastPrice,
+                    symbol.HighPrice, 
+                    symbol.LowPrice,
+                    new SharedOrderQuantity(null, symbol.QuoteVolume, symbol.Volume),
+                    symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3)));
         }
 
         GetFuturesTickersOptions IFuturesTickerRestClient.GetFuturesTickersOptions { get; } = new GetFuturesTickersOptions(_exchangeName);
@@ -780,7 +810,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result.Success)
                 return HttpResult.Fail<SharedFuturesTicker[]>(result);
 
-            return HttpResult.Ok(result, result.Data.Select(x => new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))).ToArray());
+            return HttpResult.Ok(result, result.Data.Select(x => 
+                new SharedFuturesTicker(
+                    ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol),
+                    x.Symbol,
+                    x.LastPrice,
+                    x.HighPrice,
+                    x.LowPrice,
+                    new SharedOrderQuantity(null, x.QuoteVolume, x.Volume), 
+                    x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))).ToArray());
         }
 
         #endregion
