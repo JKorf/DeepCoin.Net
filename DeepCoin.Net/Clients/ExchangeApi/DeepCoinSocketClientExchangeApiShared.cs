@@ -222,13 +222,18 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(
-                onPositionMessage: update => handler(update.ToType<SharedPosition[]>(update.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol), x.Symbol, x.PositionSize, x.UpdateTime)
-                {
-                    AverageOpenPrice = x.OpenPrice,
-                    PositionMode = SharedPositionMode.HedgeMode,
-                    PositionSide = x.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
-                    Leverage = x.Leverage
-                }).ToArray())),
+                onPositionMessage: update => handler(update.ToType<SharedPosition[]>(update.Data.Select(x =>
+                    new SharedPosition(
+                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol),
+                        x.Symbol,
+                        new SharedOrderQuantity(contractQuantity: x.PositionSize),
+                        x.UpdateTime)
+                    {
+                        AverageOpenPrice = x.OpenPrice,
+                        PositionMode = SharedPositionMode.HedgeMode,
+                        PositionSide = x.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
+                        Leverage = x.Leverage
+                    }).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return result;
@@ -253,7 +258,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                         x.OrderId.ToString(),
                         x.TradeId.ToString(),
                         x.Side == OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
-                        x.Quantity,
+                        new SharedOrderQuantity(
+                            x.Symbol.Contains("SWAP") ? null : x.Quantity,
+                            null,
+                            x.Symbol.Contains("SWAP") ? x.Quantity : null),
                         x.Price,
                         x.TradeTime)
                     {

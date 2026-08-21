@@ -203,7 +203,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             if (!result.Success)
                 return HttpResult.Fail<SharedOrderBook>(result);
 
-            return HttpResult.Ok(result, new SharedOrderBook(result.Data.Asks, result.Data.Bids));
+            return HttpResult.Ok(result, new SharedOrderBook(request.TradingMode == TradingMode.Spot ? SharedQuantityType.BaseAsset : SharedQuantityType.Contracts, result.Data.Asks, result.Data.Bids));
         }
 
         #endregion
@@ -344,9 +344,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 ExchangeSymbolCache.ParseSymbol(request.Symbol.TradingMode == TradingMode.Spot ? _topicSpotId : _topicFuturesId, EnvironmentName, null, symbol),
                 symbol,
                 resultTicker.Data.Asks[0].Price,
-                resultTicker.Data.Asks[0].Quantity,
+                new SharedOrderQuantity(resultTicker.Data.Asks[0].Quantity),
                 resultTicker.Data.Bids[0].Price,
-                resultTicker.Data.Bids[0].Quantity));
+                new SharedOrderQuantity(resultTicker.Data.Bids[0].Quantity)));
         }
 
         #endregion
@@ -622,7 +622,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 x.OrderId.ToString(),
                 x.TradeId.ToString(),
                 x.OrderSide == OrderSide.Sell ? SharedOrderSide.Sell: SharedOrderSide.Buy,
-                x.Quantity,
+                new SharedOrderQuantity(x.Quantity),
                 x.Price,
                 x.Timestamp)
             {
@@ -674,7 +674,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                         x.OrderId.ToString(),
                         x.TradeId.ToString(),
                         x.OrderSide == OrderSide.Sell ? SharedOrderSide.Sell : SharedOrderSide.Buy,
-                        x.Quantity,
+                        new SharedOrderQuantity(x.Quantity),
                         x.Price,
                         x.Timestamp)
                     {
@@ -1149,7 +1149,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 x.OrderId.ToString(),
                 x.TradeId.ToString(),
                 x.OrderSide == OrderSide.Sell ? SharedOrderSide.Sell : SharedOrderSide.Buy,
-                x.Quantity,
+                new SharedOrderQuantity(contractQuantity: x.Quantity),
                 x.Price,
                 x.Timestamp)
             {
@@ -1200,7 +1200,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                             x.OrderId.ToString(),
                             x.TradeId.ToString(),
                             x.OrderSide == OrderSide.Sell ? SharedOrderSide.Sell : SharedOrderSide.Buy,
-                            x.Quantity,
+                            new SharedOrderQuantity(contractQuantity: x.Quantity),
                             x.Price,
                             x.Timestamp)
                         {
@@ -1241,14 +1241,19 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 data = data.Where(x => request.TradingMode == TradingMode.PerpetualInverse ? x.Symbol.Contains("_USD_") : !x.Symbol.Contains("_USD_"));
 
             var resultTypes = request.Symbol == null && request.TradingMode == null ? SupportedTradingModes : request.Symbol != null ? new[] { request.Symbol.TradingMode } : new[] { request.TradingMode!.Value };
-            return HttpResult.Ok(result, data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol), x.Symbol, Math.Abs(x.Size), x.UpdateTime)
-            {
-                LiquidationPrice = x.LiquidationPrice == 0 ? null : x.LiquidationPrice,
-                Leverage = x.Leverage,
-                AverageOpenPrice = x.AveragePrice,
-                PositionMode = SharedPositionMode.HedgeMode,
-                PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short
-            }).ToArray());
+            return HttpResult.Ok(result, data.Select(x => 
+                new SharedPosition(
+                    ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol),
+                    x.Symbol,
+                    new SharedOrderQuantity(contractQuantity: Math.Abs(x.Size)),
+                    x.UpdateTime)
+                {
+                    LiquidationPrice = x.LiquidationPrice == 0 ? null : x.LiquidationPrice,
+                    Leverage = x.Leverage,
+                    AverageOpenPrice = x.AveragePrice,
+                    PositionMode = SharedPositionMode.HedgeMode,
+                    PositionSide = x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short
+                }).ToArray());
         }
 
         ClosePositionOptions IFuturesOrderRestClient.ClosePositionOptions { get; } = new ClosePositionOptions(_exchangeName, true)
