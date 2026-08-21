@@ -24,7 +24,7 @@ For public market data only, no credentials are needed: `new DeepCoinRestClient(
 
 ## Result handling
 
-Methods return `WebCallResult<T>` (REST) or `CallResult<T>` (WebSocket). Always check `.Success` before reading `.Data`. The error is on `.Error`.
+REST methods return `HttpResult<T>` / `HttpResult`; WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`. Always check `.Success` before reading `.Data`. The error is on `.Error`.
 
 ## API structure
 

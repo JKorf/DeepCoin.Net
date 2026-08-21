@@ -252,7 +252,7 @@ The repository source exposes `DeepCoinEnvironment.Live` and `DeepCoinEnvironmen
 
 ## Reference
 
-- Full client reference: https://cryptoexchange.jkorf.dev/DeepCoin.Net/
+- Full client reference: https://cryptoexchange.jkorf.dev/docs/exchange-clients/reference?library=DeepCoin.Net
 - Examples: `Examples/ai-friendly/`
 - Source interfaces: `DeepCoin.Net/Interfaces/Clients/**`
 - Source: https://github.com/JKorf/DeepCoin.Net

@@ -2,12 +2,12 @@
 
 > Strongly typed .NET client library for the DeepCoin REST and WebSocket APIs. Supports DeepCoin spot and swap/futures market data, account endpoints, trading endpoints, private user streams, local order book support, and CryptoExchange.Net SharedApis integration.
 
-DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard CryptoExchange.Net result model, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. REST methods return `HttpResult<T>` / `HttpResult`, WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`, and selected shared helper methods return `ExchangeCallResult<T>`. Current version in this repository: 4.3.0. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
+DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard CryptoExchange.Net result model, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. REST methods return `HttpResult<T>` / `HttpResult`, WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`, and selected shared helper methods return `ExchangeCallResult<T>`. Current version in this repository: 4.4.0. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
 
 ## Documentation
 
 - [README](https://github.com/JKorf/DeepCoin.Net/blob/main/README.md): Overview, installation, supported features, usage examples, release notes
-- [Documentation Site](https://cryptoexchange.jkorf.dev/DeepCoin.Net/): Full documentation hub including client reference, WebSocket subscriptions, dependency injection, and shared interfaces
+- [Documentation Site](https://cryptoexchange.jkorf.dev/docs/exchange-clients?library=DeepCoin.Net): Full documentation hub including client reference, WebSocket subscriptions, dependency injection, and shared interfaces
 - [AI API Quick Map](https://github.com/JKorf/DeepCoin.Net/blob/main/docs/ai-api-map.md): Table-style intent-to-method map for routing common user requests to the correct client member
 - [Full LLM Context](https://github.com/JKorf/DeepCoin.Net/blob/main/llms-full.txt): Detailed AI/LLM guide with code patterns, endpoint map, common mistakes, and anti-hallucination rules
 - [Claude/Codex Skill](https://github.com/JKorf/DeepCoin.Net/blob/main/CLAUDE.md): Assistant-facing usage guide with examples and pitfalls
