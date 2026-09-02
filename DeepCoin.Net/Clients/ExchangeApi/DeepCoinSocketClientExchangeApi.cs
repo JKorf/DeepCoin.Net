@@ -35,6 +35,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     /// </summary>
     internal partial class DeepCoinSocketClientExchangeApi : SocketApiClient<DeepCoinEnvironment, DeepCoinAuthenticationProvider, DeepCoinCredentials>, IDeepCoinSocketClientExchangeApi
     {
+        private readonly DeepCoinSocketClientExchangeSharedApi _sharedApi;
         private readonly ILoggerFactory? _loggerFactory;
         private DeepCoinRestClient? _tokenClient;
         internal TokenManager TokenManager { get; }
@@ -66,6 +67,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             base(loggerFactory, DeepCoinExchange.Metadata.Id, options.Environment.SocketClientAddress!, options, options.ExchangeOptions)
         {
             _loggerFactory = loggerFactory;
+
+            _sharedApi = new DeepCoinSocketClientExchangeSharedApi(this);
 
             KeepAliveInterval = TimeSpan.Zero;
 
@@ -267,7 +270,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         /// <inheritdoc />
-        public IDeepCoinSocketClientExchangeApiShared SharedClient => this;
+        public IDeepCoinSocketClientExchangeApiShared SharedClient => _sharedApi;
+        /// <inheritdoc />
+        public IDeepCoinSocketClientExchangeSharedApi SharedApi => _sharedApi;
 
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null)
