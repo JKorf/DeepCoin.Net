@@ -24,9 +24,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
     internal partial class DeepCoinRestClientExchangeApi : RestApiClient<DeepCoinEnvironment, DeepCoinAuthenticationProvider, DeepCoinCredentials>, IDeepCoinRestClientExchangeApi
     {
         #region fields 
-
-        private readonly DeepCoinRestClientExchangeSharedApi _sharedApi;
-
+        
         protected override ErrorMapping ErrorMapping => DeepCoinErrors.Errors;
 
         protected override IRestMessageHandler MessageHandler => new DeepCoinRestMessageHandler(DeepCoinErrors.Errors);
@@ -50,8 +48,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             Account = new DeepCoinRestClientExchangeApiAccount(this);
             ExchangeData = new DeepCoinRestClientExchangeApiExchangeData(_logger, this);
             Trading = new DeepCoinRestClientExchangeApiTrading(_logger, this);
-
-            _sharedApi = new DeepCoinRestClientExchangeSharedApi(this);
         }
         #endregion
 
@@ -88,9 +84,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             => DeepCoinExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
 
         /// <inheritdoc />
-        public IDeepCoinRestClientExchangeApiShared SharedClient => _sharedApi;
-        /// <inheritdoc />
-        public IDeepCoinRestClientExchangeSharedApi SharedApi => _sharedApi;
+        public IDeepCoinRestClientExchangeApiShared SharedClient => this;
 
     }
 }

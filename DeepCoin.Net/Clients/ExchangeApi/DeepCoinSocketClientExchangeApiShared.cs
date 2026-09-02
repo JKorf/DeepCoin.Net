@@ -12,51 +12,29 @@ using CryptoExchange.Net;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
-    internal class DeepCoinSocketClientExchangeSharedApi :
-        SharedApiBase,
-        IDeepCoinSocketClientExchangeApiShared,
-        IDeepCoinSocketClientExchangeSharedApi
+    internal partial class DeepCoinSocketClientExchangeApi : IDeepCoinSocketClientExchangeApiShared
     {
-        private readonly DeepCoinSocketClientExchangeApi _api;
-
         private const string _topicSpotId = "DeepCoinSpot";
         private const string _topicFuturesId = "DeepCoinFutures";
         private const string _exchangeName = "DeepCoin";
-        public override SharedClientInfo Discover() => SharedUtils.GetClientInfo(DeepCoinExchange.Metadata, this);
 
-        public DeepCoinSocketClientExchangeSharedApi(DeepCoinSocketClientExchangeApi api)
-            : base(
-                  SharedTransport.Socket,
-                  api.Exchange,
-                  [TradingMode.Spot, TradingMode.PerpetualLinear, TradingMode.PerpetualInverse],
-                  () => api.Authenticated,
-                  api.FormatSymbol)
-        {
-            _api = api;
+        public TradingMode[] SupportedTradingModes => new[] { TradingMode.Spot, TradingMode.PerpetualLinear, TradingMode.PerpetualInverse };
 
-            SetCapabilities(
-                SubscribeKlineOptions,
-                SubscribeTickerOptions,
-                SubscribeTradeOptions,
-                SubscribeBalanceOptions,
-                SubscribeFuturesOrderOptions,
-                SubscribeSpotOrderOptions,
-                SubscribeUserTradeOptions,
-                SubscribePositionOptions
-                );
-        }
+        public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
+        public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
+        public SharedClientInfo Discover() => SharedUtils.GetClientInfo(DeepCoinExchange.Metadata, this);
 
         #region Kline client
-        public SubscribeKlineOptions SubscribeKlineOptions { get; } = new SubscribeKlineOptions(_exchangeName, false, SharedKlineInterval.OneMinute);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(SubscribeKlineRequest request, Action<DataEvent<SharedKline>> handler, CancellationToken ct)
+        SubscribeKlineOptions IKlineSocketClient.SubscribeKlineOptions { get; } = new SubscribeKlineOptions(_exchangeName, false, SharedKlineInterval.OneMinute);
+        async Task<WebSocketResult<UpdateSubscription>> IKlineSocketClient.SubscribeToKlineUpdatesAsync(SubscribeKlineRequest request, Action<DataEvent<SharedKline>> handler, CancellationToken ct)
         {
 
-            var validationError = SubscribeKlineOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeKlineOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
-            var result = await _api.SubscribeToKlineUpdatesAsync(symbol, update => handler(update.ToType(
+            var result = await SubscribeToKlineUpdatesAsync(symbol, update => handler(update.ToType(
                 new SharedKline(
                     request.Symbol,
                     symbol, 
@@ -72,19 +50,17 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region Ticker client
-        async Task<WebSocketResult<UpdateSubscription>> ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync(SubscribeTickerRequest request, Action<DataEvent<SharedTicker>> handler, CancellationToken ct)
-            => await SubscribeToTickerUpdatesAsync(request, x => handler(x.ToType<SharedTicker>(x.Data)), ct).ConfigureAwait(false);
 
-        public SubscribeTickerOptions SubscribeTickerOptions { get; } = new SubscribeTickerOptions(_exchangeName);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(SubscribeTickerRequest request, Action<DataEvent<SharedSpotTicker>> handler, CancellationToken ct)
+        SubscribeTickerOptions ITickerSocketClient.SubscribeTickerOptions { get; } = new SubscribeTickerOptions(_exchangeName);
+        async Task<WebSocketResult<UpdateSubscription>> ITickerSocketClient.SubscribeToTickerUpdatesAsync(SubscribeTickerRequest request, Action<DataEvent<SharedSpotTicker>> handler, CancellationToken ct)
         {
-            var validationError = SubscribeTickerOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeTickerOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
-            var result = await _api.SubscribeToSymbolUpdatesAsync(symbol, update => handler(update.ToType(
-                new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, _api.EnvironmentName, null, symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, _api.EnvironmentName, null, symbol),
+            var result = await SubscribeToSymbolUpdatesAsync(symbol, update => handler(update.ToType(
+                new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, symbol),
                 symbol,
                 update.Data.LastPrice,
                 update.Data.HighPrice,
@@ -103,15 +79,15 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Trade client
 
-        public SubscribeTradeOptions SubscribeTradeOptions { get; } = new SubscribeTradeOptions(_exchangeName, false);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(SubscribeTradeRequest request, Action<DataEvent<SharedTrade[]>> handler, CancellationToken ct)
+        SubscribeTradeOptions ITradeSocketClient.SubscribeTradeOptions { get; } = new SubscribeTradeOptions(_exchangeName, false);
+        async Task<WebSocketResult<UpdateSubscription>> ITradeSocketClient.SubscribeToTradeUpdatesAsync(SubscribeTradeRequest request, Action<DataEvent<SharedTrade[]>> handler, CancellationToken ct)
         {
-            var validationError = SubscribeTradeOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeTradeOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
             var symbol = request.Symbol!.GetSymbol(DeepCoinExchange.FormatSymbol);
-            var result = await _api.SubscribeToTradeUpdatesAsync(symbol, update => handler(update.ToType<SharedTrade[]>(new[] {
+            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.ToType<SharedTrade[]>(new[] {
                 new SharedTrade(
                     request.Symbol,
                     symbol,
@@ -131,14 +107,14 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region Balance client
-        public SubscribeBalanceOptions SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, true);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(SubscribeBalancesRequest request, Action<DataEvent<SharedBalance[]>> handler, CancellationToken ct)
+        SubscribeBalanceOptions IBalanceSocketClient.SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, true);
+        async Task<WebSocketResult<UpdateSubscription>> IBalanceSocketClient.SubscribeToBalanceUpdatesAsync(SubscribeBalancesRequest request, Action<DataEvent<SharedBalance[]>> handler, CancellationToken ct)
         {
-            var validationError = SubscribeBalanceOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeBalanceOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
-            var result = await _api.SubscribeToUserDataUpdatesAsync(
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onBalanceMessage: update => handler(update.ToType<SharedBalance[]>(update.Data.Select(x =>
                     new SharedBalance(
                         SupportedTradingModes, 
@@ -154,26 +130,23 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Futures Order client
 
+        SubscribeFuturesOrderOptions IFuturesOrderSocketClient.SubscribeFuturesOrderOptions { get; } = new SubscribeFuturesOrderOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> IFuturesOrderSocketClient.SubscribeToFuturesOrderUpdatesAsync(SubscribeFuturesOrderRequest request, Action<DataEvent<SharedFuturesOrder[]>> handler, CancellationToken ct)
-            => await SubscribeToFuturesOrderUpdatesAsync(request, x => handler(x.ToType<SharedFuturesOrder[]>(x.Data)), ct).ConfigureAwait(false);
-
-        public SubscribeFuturesOrderOptions SubscribeFuturesOrderOptions { get; } = new SubscribeFuturesOrderOptions(_exchangeName, true);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToFuturesOrderUpdatesAsync(SubscribeFuturesOrderRequest request, Action<DataEvent<SharedFuturesOrderUpdate[]>> handler, CancellationToken ct)
         {
-            var validationError = SubscribeFuturesOrderOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeFuturesOrderOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
-            var result = await _api.SubscribeToUserDataUpdatesAsync(
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onOrderMessage: update =>
                 {
                     var futuresOrders = update.Data.Where(x => !x.Symbol.Contains("/"));
                     if (!futuresOrders.Any())
                         return;
 
-                    handler(update.ToType<SharedFuturesOrderUpdate[]>(futuresOrders.Select(x =>
-                        new SharedFuturesOrderUpdate(
-                            ExchangeSymbolCache.ParseSymbol(_topicFuturesId, _api.EnvironmentName, null, x.Symbol),
+                    handler(update.ToType<SharedFuturesOrder[]>(futuresOrders.Select(x =>
+                        new SharedFuturesOrder(
+                            ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol),
                             x.Symbol,
                             x.OrderId,
                             ParseOrderType(x.OrderType),
@@ -200,26 +173,23 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Spot Order client
 
+        SubscribeSpotOrderOptions ISpotOrderSocketClient.SubscribeSpotOrderOptions { get; } = new SubscribeSpotOrderOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> ISpotOrderSocketClient.SubscribeToSpotOrderUpdatesAsync(SubscribeSpotOrderRequest request, Action<DataEvent<SharedSpotOrder[]>> handler, CancellationToken ct)
-            => await SubscribeToSpotOrderUpdatesAsync(request, x => handler(x.ToType<SharedSpotOrder[]>(x.Data)), ct).ConfigureAwait(false);
-
-        public SubscribeSpotOrderOptions SubscribeSpotOrderOptions { get; } = new SubscribeSpotOrderOptions(_exchangeName, true);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToSpotOrderUpdatesAsync(SubscribeSpotOrderRequest request, Action<DataEvent<SharedSpotOrderUpdate[]>> handler, CancellationToken ct)
         {
-            var validationError = SubscribeSpotOrderOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeSpotOrderOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
-            var result = await _api.SubscribeToUserDataUpdatesAsync(
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onOrderMessage: update =>
                 {
                     var spotOrders = update.Data.Where(x => x.Symbol.Contains("/"));
                     if (!spotOrders.Any())
                         return;
 
-                    handler(update.ToType<SharedSpotOrderUpdate[]>(spotOrders.Select(x =>
-                        new SharedSpotOrderUpdate(
-                            ExchangeSymbolCache.ParseSymbol(_topicSpotId, _api.EnvironmentName, null, x.Symbol),
+                    handler(update.ToType<SharedSpotOrder[]>(spotOrders.Select(x =>
+                        new SharedSpotOrder(
+                            ExchangeSymbolCache.ParseSymbol(_topicSpotId, EnvironmentName, null, x.Symbol),
                             x.Symbol,
                             x.OrderId,
                             ParseOrderType(x.OrderType),
@@ -244,17 +214,17 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         #endregion
 
         #region Position client
-        public SubscribePositionOptions SubscribePositionOptions { get; } = new SubscribePositionOptions(_exchangeName, true);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToPositionUpdatesAsync(SubscribePositionRequest request, Action<DataEvent<SharedPosition[]>> handler, CancellationToken ct)
+        SubscribePositionOptions IPositionSocketClient.SubscribePositionOptions { get; } = new SubscribePositionOptions(_exchangeName, true);
+        async Task<WebSocketResult<UpdateSubscription>> IPositionSocketClient.SubscribeToPositionUpdatesAsync(SubscribePositionRequest request, Action<DataEvent<SharedPosition[]>> handler, CancellationToken ct)
         {
-            var validationError = SubscribePositionOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribePositionOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
-            var result = await _api.SubscribeToUserDataUpdatesAsync(
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onPositionMessage: update => handler(update.ToType<SharedPosition[]>(update.Data.Select(x =>
                     new SharedPosition(
-                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, _api.EnvironmentName, null, x.Symbol),
+                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol),
                         x.Symbol,
                         new SharedOrderQuantity(contractQuantity: x.PositionSize),
                         x.UpdateTime)
@@ -273,17 +243,17 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region User Trade client
 
-        public SubscribeUserTradeOptions SubscribeUserTradeOptions { get; } = new SubscribeUserTradeOptions(_exchangeName, true);
-        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToUserTradeUpdatesAsync(SubscribeUserTradeRequest request, Action<DataEvent<SharedUserTrade[]>> handler, CancellationToken ct)
+        SubscribeUserTradeOptions IUserTradeSocketClient.SubscribeUserTradeOptions { get; } = new SubscribeUserTradeOptions(_exchangeName, true);
+        async Task<WebSocketResult<UpdateSubscription>> IUserTradeSocketClient.SubscribeToUserTradeUpdatesAsync(SubscribeUserTradeRequest request, Action<DataEvent<SharedUserTrade[]>> handler, CancellationToken ct)
         {
-            var validationError = SubscribeUserTradeOptions.ValidateRequest(request, this);
+            var validationError = SharedClient.SubscribeUserTradeOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return WebSocketResult.Fail<UpdateSubscription>(_exchangeName, validationError);
 
-            var result = await _api.SubscribeToUserDataUpdatesAsync(
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onUserTradeMessage: update => handler(update.ToType<SharedUserTrade[]>(update.Data.Select(x =>
                     new SharedUserTrade(
-                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, _api.EnvironmentName, null, x.Symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, _api.EnvironmentName, null, x.Symbol),
+                        ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol) ?? ExchangeSymbolCache.ParseSymbol(_topicFuturesId, EnvironmentName, null, x.Symbol),
                         x.Symbol,
                         x.OrderId.ToString(),
                         x.TradeId.ToString(),
