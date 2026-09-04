@@ -14,8 +14,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinSocketClientExchangeSharedApi
     {
-        #region Kline client
         public SubscribeKlineOptions SubscribeKlineOptions { get; } = new SubscribeKlineOptions(_exchangeName, false, SharedKlineInterval.OneMinute);
+        #region Subscribe To Kline Updates
+
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(SubscribeKlineRequest request, Action<DataEvent<SharedKline>> handler, CancellationToken ct)
         {
 
@@ -37,6 +38,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             return result;
         }
+
         #endregion
     }
 }

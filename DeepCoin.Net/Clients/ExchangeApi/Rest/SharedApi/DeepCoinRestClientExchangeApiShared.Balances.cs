@@ -16,7 +16,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinRestClientExchangeSharedApi
     {
-        #region Balance client
+        #region Get Balances
+
+        async Task<ICallResult<SharedBalance[]>> IGetBalances.GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
+            => await GetBalancesAsync(request, ct).ConfigureAwait(false);
+
         public GetBalancesOptions GetBalancesOptions { get; } = new GetBalancesOptions(_exchangeName, AccountTypeFilter.Spot, AccountTypeFilter.Futures);
 
         public async Task<HttpResult<SharedBalance[]>> GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
@@ -40,5 +44,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
     }
 }

@@ -14,9 +14,10 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinSocketClientExchangeSharedApi
     {
-        #region Trade client
 
         public SubscribeTradeOptions SubscribeTradeOptions { get; } = new SubscribeTradeOptions(_exchangeName, false);
+        #region Subscribe To Trade Updates
+
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(SubscribeTradeRequest request, Action<DataEvent<SharedTrade[]>> handler, CancellationToken ct)
         {
             var validationError = SubscribeTradeOptions.ValidateRequest(request, this);
@@ -42,5 +43,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
     }
 }

@@ -16,7 +16,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinRestClientExchangeSharedApi
     {
-        #region Deposit client
         public GetDepositAddressesOptions GetDepositAddressesOptions { get; } = new GetDepositAddressesOptions(_exchangeName, true)
         {
             RequestNotes = "Deposit addresses request not available in API"
@@ -26,6 +25,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         {
             return Task.FromResult(HttpResult.Fail<SharedDepositAddress[]>(Exchange, new InvalidOperationError("Deposit addresses request not available in API")));
         }
+
+        #region Get Deposit History
+
+        async Task<ICallResult<SharedDeposit[]>> IGetDepositHistory.GetDepositHistoryAsync(GetDepositsRequest request, PageRequest? pageRequest, CancellationToken ct)
+            => await GetDepositHistoryAsync(request, pageRequest, ct).ConfigureAwait(false);
 
         Task<HttpResult<SharedDeposit[]>> IDepositRestClient.GetDepositsAsync(GetDepositsRequest request, PageRequest? pageRequest, CancellationToken ct)
             => GetDepositHistoryAsync(request, pageRequest, ct);
@@ -78,6 +82,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                     .ToArray(), nextPageRequest);
         }
 
+        #endregion
+
         private SharedTransferStatus ParseTransferStatus(DepositStatus depositStatus)
         {
             if (depositStatus == DepositStatus.Success)
@@ -88,6 +94,5 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             return SharedTransferStatus.Unknown;
         }
 
-        #endregion
     }
 }

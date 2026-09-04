@@ -14,7 +14,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinSocketClientExchangeSharedApi
     {
-        #region Spot Order client
+
+        #region Subscribe To Spot Order Updates
 
         async Task<WebSocketResult<UpdateSubscription>> ISpotOrderSocketClient.SubscribeToSpotOrderUpdatesAsync(SubscribeSpotOrderRequest request, Action<DataEvent<SharedSpotOrder[]>> handler, CancellationToken ct)
             => await SubscribeToSpotOrderUpdatesAsync(request, x => handler(x.ToType<SharedSpotOrder[]>(x.Data)), ct).ConfigureAwait(false);
@@ -57,6 +58,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             return result;
         }
+
         #endregion
     }
 }

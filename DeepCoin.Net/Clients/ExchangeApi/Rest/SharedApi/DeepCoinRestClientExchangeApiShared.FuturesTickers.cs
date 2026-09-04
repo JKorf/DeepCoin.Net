@@ -16,7 +16,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinRestClientExchangeSharedApi
     {
-        #region Futures Ticker client
+
+        #region Get Futures Ticker
+
+        async Task<ICallResult<SharedFuturesTicker>> IGetFuturesTicker.GetFuturesTickerAsync(GetTickerRequest request, CancellationToken ct)
+            => await GetFuturesTickerAsync(request, ct).ConfigureAwait(false);
 
         public GetFuturesTickerOptions GetFuturesTickerOptions { get; } = new GetFuturesTickerOptions(_exchangeName);
         public async Task<HttpResult<SharedFuturesTicker>> GetFuturesTickerAsync(GetTickerRequest request, CancellationToken ct)
@@ -43,6 +47,13 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                     new SharedOrderQuantity(null, symbol.QuoteVolume, symbol.Volume),
                     symbol.OpenPrice == null ? null : Math.Round((symbol.LastPrice ?? 0) / symbol.OpenPrice.Value * 100 - 100, 3)));
         }
+
+        #endregion
+
+        #region Get All Futures Tickers
+
+        async Task<ICallResult<SharedFuturesTicker[]>> IGetAllFuturesTickers.GetAllFuturesTickersAsync(GetTickersRequest request, CancellationToken ct)
+            => await GetAllFuturesTickersAsync(request, ct).ConfigureAwait(false);
 
         Task<HttpResult<SharedFuturesTicker[]>> IFuturesTickerRestClient.GetFuturesTickersAsync(GetTickersRequest request, CancellationToken ct)
             => GetAllFuturesTickersAsync(request, ct);
@@ -71,5 +82,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
     }
 }

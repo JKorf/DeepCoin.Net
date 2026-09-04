@@ -119,6 +119,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 x.GetRequiredService<IOptions<DeepCoinRestOptions>>(),
                 x.GetRequiredService<IOptions<DeepCoinSocketOptions>>()));
 
+            services.AddTransient<IDeepCoinSharedApiClient, DeepCoinSharedApiClient>();
+
+            services.RegisterSharedApi(x => x.GetRequiredService<IDeepCoinRestClient>().ExchangeApi.SharedApi);
+            services.RegisterSharedApi(x => x.GetRequiredService<IDeepCoinSocketClient>().ExchangeApi.SharedApi);
+
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IDeepCoinRestClient>().ExchangeApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IDeepCoinSocketClient>().ExchangeApi.SharedClient);
 

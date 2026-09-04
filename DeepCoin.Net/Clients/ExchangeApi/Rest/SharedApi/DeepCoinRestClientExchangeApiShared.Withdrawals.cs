@@ -16,7 +16,11 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinRestClientExchangeSharedApi
     {
-        #region Withdrawal client
+
+        #region Get Withdrawal History
+
+        async Task<ICallResult<SharedWithdrawal[]>> IGetWithdrawalHistory.GetWithdrawalHistoryAsync(GetWithdrawalsRequest request, PageRequest? pageRequest, CancellationToken ct)
+            => await GetWithdrawalHistoryAsync(request, pageRequest, ct).ConfigureAwait(false);
 
         Task<HttpResult<SharedWithdrawal[]>> IWithdrawalRestClient.GetWithdrawalsAsync(GetWithdrawalsRequest request, PageRequest? pageRequest, CancellationToken ct)
             => GetWithdrawalHistoryAsync(request, pageRequest, ct);
@@ -68,6 +72,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                     .ToArray(), nextPageRequest);
         }
 
+        #endregion
+
         private SharedTransferStatus GetWithdrawalStatus(DeepCoinWithdrawal x)
         {
             if (x.DepositStatus == WithdrawStatus.Rejected)
@@ -81,6 +87,5 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
             return SharedTransferStatus.Unknown;
         }
-        #endregion
     }
 }

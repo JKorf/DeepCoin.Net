@@ -14,8 +14,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 {
     internal partial class DeepCoinSocketClientExchangeSharedApi
     {
-        #region Balance client
         public SubscribeBalanceOptions SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, true);
+        #region Subscribe To Balance Updates
+
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(SubscribeBalancesRequest request, Action<DataEvent<SharedBalance[]>> handler, CancellationToken ct)
         {
             var validationError = SubscribeBalanceOptions.ValidateRequest(request, this);
@@ -35,5 +36,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         }
 
         #endregion
+
     }
 }
