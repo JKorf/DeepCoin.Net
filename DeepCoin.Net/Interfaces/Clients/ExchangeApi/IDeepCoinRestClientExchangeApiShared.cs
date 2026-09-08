@@ -33,8 +33,8 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         IGetKlinesRest,
         IGetOrderBookRest,
         IGetWithdrawalHistoryRest,
-        IGetSpotTickerRest,
-        IGetAllSpotTickersRest,
+        IGetTickerRest,
+        IGetAllTickersRest,
         IGetSpotSymbolsRest,
         IPlaceSpotOrderRest,
         IGetSpotOrderRest,
@@ -45,8 +45,6 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         IGetSpotUserTradeHistoryRest,
         IGetLeverageRest,
         ISetLeverageRest,
-        IGetFuturesTickerRest,
-        IGetAllFuturesTickersRest,
         IGetFuturesSymbolsRest,
         IPlaceFuturesOrderRest,
         IGetFuturesOrderRest,
@@ -56,7 +54,6 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         IGetFuturesOrderTradesRest,
         IGetFuturesUserTradeHistoryRest,
         IGetPositionsRest,
-        IClosePositionRest,
         IGetBookTickerRest
     { }
 }

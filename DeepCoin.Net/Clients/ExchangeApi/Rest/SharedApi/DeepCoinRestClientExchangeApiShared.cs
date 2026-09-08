@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DeepCoin.Net.Clients.ExchangeApi
 {
-    internal partial class DeepCoinRestClientExchangeSharedApi : 
+    internal partial class DeepCoinRestClientExchangeSharedApi :
         SharedApiBase,
         IDeepCoinRestClientExchangeApiShared,
         IDeepCoinRestClientExchangeSharedApi
@@ -43,8 +43,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 GetKlinesOptions,
                 GetOrderBookOptions,
                 GetWithdrawalHistoryOptions,
-                GetSpotTickerOptions,
-                GetAllSpotTickersOptions,
+                GetTickerOptions,
+                GetAllTickersOptions,
                 GetBookTickerOptions,
                 GetSpotSymbolsOptions,
                 PlaceSpotOrderOptions,
@@ -56,8 +56,6 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 CancelSpotOrderOptions,
                 GetLeverageOptions,
                 SetLeverageOptions,
-                GetFuturesTickerOptions,
-                GetAllFuturesTickersOptions,
                 GetFuturesSymbolsOptions,
                 PlaceFuturesOrderOptions,
                 GetFuturesOrderOptions,
@@ -66,8 +64,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 CancelFuturesOrderOptions,
                 GetFuturesOrderTradesOptions,
                 GetFuturesUserTradeHistoryOptions,
-                GetPositionsOptions,
-                ClosePositionOptions
+                GetPositionsOptions
                 );
         }
     }
