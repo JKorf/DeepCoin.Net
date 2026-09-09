@@ -35,7 +35,8 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         public PlaceFuturesOrderOptions PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(_exchangeName, true)
         {
             ParameterRuleOverwrites = [
-                RequestParameterRuleOverride<PlaceFuturesOrderRequest>.Required(x => x.PositionSide)
+                RequestParameterRuleOverride<PlaceFuturesOrderRequest>.Required(x => x.PositionSide),
+                RequestParameterRuleOverride<PlaceFuturesOrderRequest>.NotSupported(x => x.Leverage),
             ],
 
             ExchangeParameterRules = [
@@ -61,6 +62,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 positionType: positionType ?? PositionType.Merge,
                 tpTriggerPrice: request.TakeProfitPrice,
                 slTriggerPrice: request.StopLossPrice,
+                reduceOnly: request.ReduceOnly,
                 ct: ct).ConfigureAwait(false);
 
             if (!result.Success)
