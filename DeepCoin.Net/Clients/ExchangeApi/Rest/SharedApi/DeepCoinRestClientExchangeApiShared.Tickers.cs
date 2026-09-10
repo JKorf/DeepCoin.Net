@@ -142,7 +142,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         public GetAllTickersOptions GetAllTickersOptions { get; } = new GetAllTickersOptions(_exchangeName)
         {
-            ParameterRuleOverwrites = [
+            ParameterRuleOverrides = [
                 RequestParameterRuleOverride<GetTickersRequest>.Required(x => x.TradingMode)
                 ]
         };
