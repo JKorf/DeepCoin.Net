@@ -1,3 +1,4 @@
+using CryptoExchange.Net.SharedApis;
 using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
 
 namespace DeepCoin.Net.Interfaces.Clients
@@ -5,7 +6,7 @@ namespace DeepCoin.Net.Interfaces.Clients
     /// <summary>
     /// Client for the shared REST and WebSocket API implementations of DeepCoin
     /// </summary>
-    public interface IDeepCoinSharedApiClient
+    public interface IDeepCoinSharedApiClient : ISharedApiClientBase
     {
         /// <summary>
         /// REST shared API implementations
