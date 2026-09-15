@@ -1,18 +1,19 @@
 using CryptoExchange.Net;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Net.Http;
+using CryptoExchange.Net.Interfaces.Clients;
+using CryptoExchange.Net.SharedApis;
 using DeepCoin.Net;
 using DeepCoin.Net.Clients;
 using DeepCoin.Net.Interfaces;
 using DeepCoin.Net.Interfaces.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.SymbolOrderBooks;
-using CryptoExchange.Net.Interfaces.Clients;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Net.Http;
 using System.Threading;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -120,16 +121,15 @@ namespace Microsoft.Extensions.DependencyInjection
                 x.GetRequiredService<IOptions<DeepCoinRestOptions>>(),
                 x.GetRequiredService<IOptions<DeepCoinSocketOptions>>()));
 
-            services.AddTransient<IDeepCoinSharedApiClient, DeepCoinSharedApiClient>();
-
-            services.RegisterSharedApi(x => x.GetRequiredService<IDeepCoinRestClient>().ExchangeApi.SharedApi);
-            services.RegisterSharedApi(x => x.GetRequiredService<IDeepCoinSocketClient>().ExchangeApi.SharedApi);
-
-            services.RegisterSharedApiClientCapabilities<IDeepCoinSharedApiClient>();
-
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IDeepCoinRestClient>().ExchangeApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IDeepCoinSocketClient>().ExchangeApi.SharedClient);
 
+            services.RegisterSharedApiClient<
+                IDeepCoinSharedApiClient,
+                DeepCoinSharedApiClient>(sharedApis => sharedApis
+                    .Add(client => client.Rest)
+                    .Add(client => client.Socket)
+                    );
             return services;
         }
     }
