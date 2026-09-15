@@ -67,12 +67,12 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("low24h")]
         public decimal? LowPrice { get; set; }
         /// <summary>
-        /// ["<c>vol24h</c>"] Volume in base asset
+        /// ["<c>vol24h</c>"] Volume in base currency for spot, or native contract count for swaps.
         /// </summary>
         [JsonPropertyName("vol24h")]
         public decimal Volume { get; set; }
         /// <summary>
-        /// ["<c>volCcy24h</c>"] Volume in quote asset
+        /// ["<c>volCcy24h</c>"] Turnover in quote currency for spot/linear swaps, or base currency for inverse swaps.
         /// </summary>
         [JsonPropertyName("volCcy24h")]
         public decimal QuoteVolume { get; set; }

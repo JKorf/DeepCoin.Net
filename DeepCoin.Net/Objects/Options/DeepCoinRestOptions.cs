@@ -29,10 +29,19 @@ namespace DeepCoin.Net.Objects.Options
         /// </summary>
         public RestApiOptions ExchangeOptions { get; private set; } = new RestApiOptions();
 
+        /// <summary>
+        /// V2 API options, independent of the legacy Exchange API.
+        /// </summary>
+        public RestApiOptions V2Options { get; private set; } = new RestApiOptions();
+
+        /// <summary>
+        /// Copies the exchange and version-specific REST options to the target.
+        /// </summary>
         internal DeepCoinRestOptions Set(DeepCoinRestOptions targetOptions)
         {
             targetOptions = base.Set<DeepCoinRestOptions>(targetOptions);            
             targetOptions.ExchangeOptions = ExchangeOptions.Set(targetOptions.ExchangeOptions);
+            targetOptions.V2Options = V2Options.Set(targetOptions.V2Options);
             return targetOptions;
         }
     }

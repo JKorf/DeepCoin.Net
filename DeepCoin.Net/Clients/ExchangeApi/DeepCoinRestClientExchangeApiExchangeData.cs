@@ -99,6 +99,21 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #endregion
 
+        #region Get Current Funding Rates
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinCurrentFundingRate[]>> GetCurrentFundingRatesAsync(ProductGroup contractType, string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instType", contractType);
+            parameters.Add("instId", symbol);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/fund-rate/current-funding-rate", DeepCoinExchange.RateLimiter.DeepCoin, 1, false, limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<DeepCoinCurrentFundingRates>(request, parameters, ct).ConfigureAwait(false);
+            return result.Success ? HttpResult.Ok(result, result.Data.Rates) : HttpResult.Fail<DeepCoinCurrentFundingRate[]>(result);
+        }
+
+        #endregion
+
         #region Get Mark Price
 
         /// <inheritdoc />

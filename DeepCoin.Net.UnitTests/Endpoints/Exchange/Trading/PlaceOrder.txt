@@ -1,6 +1,7 @@
 POST
 /deepcoin/trade/order
 true
+BodyParams: {"instId":"123","side":"buy","ordType":"limit","size":"0.1","tdMode":"cross"}
 {
     "code": "0",
     "msg": "",

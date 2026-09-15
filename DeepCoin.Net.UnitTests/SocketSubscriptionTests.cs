@@ -56,5 +56,20 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync<DeepCoinAccountUpdate[]>((client, handler) => client.ExchangeApi.SubscribeToUserDataUpdatesAsync("123", onAccountMessage: handler), "AccountUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
             await tester.ValidateAsync<DeepCoinTriggerOrderUpdate[]>((client, handler) => client.ExchangeApi.SubscribeToUserDataUpdatesAsync("123", onTriggerOrderMessage: handler), "TriggerOrderUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
         }
+
+        [Test]
+        public async Task ValidateV2PrivateSubscriptions()
+        {
+            // V2 has its own subscription entry point but receives the same six private frame types.
+            using var client = new DeepCoinSocketClient();
+            var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/Exchange", "wss://stream.deepcoin.com/v1/private?listenKey=123");
+
+            await tester.ValidateAsync<DeepCoinOrderUpdate[]>((client, handler) => client.V2Api.SubscribeToUserDataUpdatesAsync("123", handler), "OrderUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
+            await tester.ValidateAsync<DeepCoinBalanceUpdate[]>((client, handler) => client.V2Api.SubscribeToUserDataUpdatesAsync("123", onBalanceMessage: handler), "BalanceUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
+            await tester.ValidateAsync<DeepCoinPositionUpdate[]>((client, handler) => client.V2Api.SubscribeToUserDataUpdatesAsync("123", onPositionMessage: handler), "PositionUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
+            await tester.ValidateAsync<DeepCoinUserTradeUpdate[]>((client, handler) => client.V2Api.SubscribeToUserDataUpdatesAsync("123", onUserTradeMessage: handler), "UserTradeUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
+            await tester.ValidateAsync<DeepCoinAccountUpdate[]>((client, handler) => client.V2Api.SubscribeToUserDataUpdatesAsync("123", onAccountMessage: handler), "AccountUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
+            await tester.ValidateAsync<DeepCoinTriggerOrderUpdate[]>((client, handler) => client.V2Api.SubscribeToUserDataUpdatesAsync("123", onTriggerOrderMessage: handler), "TriggerOrderUpdate", nestedJsonProperty: "result", skipUpdateValidation: true);
+        }
     }
 }

@@ -172,6 +172,11 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("source")]
         public string? Source { get; set; }
         /// <summary>
+        /// ["<c>reduceOnly</c>"] Whether the order only reduces an existing position; null when the exchange returns an empty value
+        /// </summary>
+        [JsonPropertyName("reduceOnly")]
+        public bool? ReduceOnly { get; set; }
+        /// <summary>
         /// ["<c>rebate</c>"] Rebate quantity
         /// </summary>
         [JsonPropertyName("rebate")]
