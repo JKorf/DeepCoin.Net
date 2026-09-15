@@ -124,8 +124,9 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
 
     private static DateTime Timestamp(long value) => DateTimeOffset.FromUnixTimeMilliseconds(value).UtcDateTime;
 
-    private static string NativeSymbol(string symbol) => symbol.EndsWith("-SWAP", StringComparison.Ordinal)
-        ? symbol.Replace("-SWAP", "").Replace("-", "") : symbol.Replace("-", "/");
+    // V2 instruments can contain mixed-case asset codes (xAAOI), but socket topics require uppercase.
+    private static string NativeSymbol(string symbol) => (symbol.EndsWith("-SWAP", StringComparison.Ordinal)
+        ? symbol.Replace("-SWAP", "").Replace("-", "") : symbol.Replace("-", "/")).ToUpperInvariant();
 
     private string PublicAddress(string symbol) => BaseAddress.AppendPath(symbol.EndsWith("-SWAP", StringComparison.Ordinal)
         ? "streamlet/trade/public/swap?platform=api&version=v2" : "streamlet/trade/public/spot?platform=api&version=v2");
