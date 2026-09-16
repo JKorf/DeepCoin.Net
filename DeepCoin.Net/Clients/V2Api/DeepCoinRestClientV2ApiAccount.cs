@@ -28,6 +28,43 @@ namespace DeepCoin.Net.Clients.V2Api
 
         #region Methods
         /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinUserId>> GetUserIdAsync(CancellationToken ct = default)
+        {
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/v2/account/uid", DeepCoinExchange.RateLimiter.RestHistory, 1, true, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            return await _baseClient.SendAsync<DeepCoinUserId>(request, parameters, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinV2TransferResult>> TransferAsync(string asset, decimal quantity, long userId, TransferAccountType fromAccount, TransferAccountType toAccount, string? clientId = null, CancellationToken ct = default)
+        {
+            if (quantity <= 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity), "Transfer quantity must be positive.");
+            if (userId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(userId), "The authenticated owner's UID is required.");
+            if (!Enum.IsDefined(typeof(TransferAccountType), fromAccount))
+                throw new ArgumentOutOfRangeException(nameof(fromAccount));
+            if (!Enum.IsDefined(typeof(TransferAccountType), toAccount))
+                throw new ArgumentOutOfRangeException(nameof(toAccount));
+            if (fromAccount == toAccount)
+                throw new ArgumentException("Transfer wallets must be distinct.", nameof(toAccount));
+
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("type", "internal");
+            parameters.Add("ccy", asset);
+            parameters.Add("amt", quantity);
+            parameters.Add("clientId", clientId);
+            parameters.Add("internal", new Dictionary<string, object>
+            {
+                { "uid", userId },
+                { "fromAcctType", (int)fromAccount },
+                { "toAcctType", (int)toAccount }
+            });
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/v2/asset/unified-transfer", DeepCoinExchange.RateLimiter.RestHistory, 1, true, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            return await _baseClient.SendAsync<DeepCoinV2TransferResult>(request, parameters, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
         public async Task<HttpResult<DeepCoinAllBalances>> GetAllBalancesAsync(IEnumerable<BalanceType>? accountTypes = null, IEnumerable<string>? assets = null, CancellationToken ct = default)
         {
             var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);

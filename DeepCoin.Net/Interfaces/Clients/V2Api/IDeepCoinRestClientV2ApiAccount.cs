@@ -15,6 +15,36 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
     public interface IDeepCoinRestClientV2ApiAccount
     {
         /// <summary>
+        /// Gets the UID bound to the authenticated API key.
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/v2/DeepCoinAccount/getUID" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/v2/account/uid
+        /// </para>
+        /// </summary>
+        /// <param name="ct">Cancellation token.</param>
+        Task<HttpResult<DeepCoinUserId>> GetUserIdAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Transfers asset units between physical wallets belonging to the API key owner.
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/v2/assets/unified-transfer" /><br />
+        /// Endpoint:<br />
+        /// POST /deepcoin/v2/asset/unified-transfer
+        /// </para>
+        /// </summary>
+        /// <param name="asset">["<c>ccy</c>"] Native currency code.</param>
+        /// <param name="quantity">["<c>amt</c>"] Positive amount in asset units.</param>
+        /// <param name="userId">["<c>uid</c>"] UID bound to the authenticated API key, in the internal object.</param>
+        /// <param name="fromAccount">["<c>fromAcctType</c>"] Source physical wallet, in the internal object.</param>
+        /// <param name="toAccount">["<c>toAcctType</c>"] Destination physical wallet, in the internal object.</param>
+        /// <param name="clientId">["<c>clientId</c>"] Optional client idempotency identifier.</param>
+        /// <param name="ct">Cancellation token.</param>
+        Task<HttpResult<DeepCoinV2TransferResult>> TransferAsync(string asset, decimal quantity, long userId, TransferAccountType fromAccount, TransferAccountType toAccount, string? clientId = null, CancellationToken ct = default);
+
+        /// <summary>
         /// Gets balances with explicit physical wallet identities.
         /// <para>
         /// Docs:<br />

@@ -8,6 +8,8 @@ using System.Text.Json.Serialization;
 namespace DeepCoin.Net.Converters
 {
     [JsonSerializable(typeof(string[]))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinUserId>))]
+    [JsonSerializable(typeof(DeepCoinResponse<DeepCoinV2TransferResult>))]
     [JsonSerializable(typeof(DeepCoinResponse<DeepCoinV2Leverage>))]
     [JsonSerializable(typeof(DeepCoinResponse<DeepCoinV2Bill[]>))]
     [JsonSerializable(typeof(DeepCoinResponse<DeepCoinV2DepositPage>))]
