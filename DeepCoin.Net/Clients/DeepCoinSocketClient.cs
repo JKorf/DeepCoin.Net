@@ -8,6 +8,8 @@ using DeepCoin.Net.Interfaces.Clients;
 using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Interfaces.Clients.ExchangeApi;
 using DeepCoin.Net.Clients.ExchangeApi;
+using DeepCoin.Net.Clients.V2Api;
+using DeepCoin.Net.Interfaces.Clients.V2Api;
 
 namespace DeepCoin.Net.Clients
 {
@@ -21,6 +23,9 @@ namespace DeepCoin.Net.Clients
                 
          /// <inheritdoc />
         public IDeepCoinSocketClientExchangeApi ExchangeApi { get; }
+
+        /// <inheritdoc />
+        public IDeepCoinSocketClientV2Api V2Api { get; }
 
         #endregion
 
@@ -45,6 +50,7 @@ namespace DeepCoin.Net.Clients
             Initialize(options.Value);
                         
             ExchangeApi = AddApiClient(new DeepCoinSocketClientExchangeApi(loggerFactory, options.Value));
+            V2Api = AddApiClient(new DeepCoinSocketClientV2Api(loggerFactory, options.Value));
         }
 
         #endregion

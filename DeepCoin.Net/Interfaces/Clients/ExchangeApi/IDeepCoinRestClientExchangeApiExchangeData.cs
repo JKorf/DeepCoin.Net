@@ -88,6 +88,18 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         Task<HttpResult<DeepCoinFundingRate[]>> GetFundingRateAsync(ProductGroup type, string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
+        /// Get current funding rate estimates.
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/currentFundRate" /><br />
+        /// </para>
+        /// </summary>
+        /// <param name="contractType">["<c>instType</c>"] USDT-margined or coin-margined contracts.</param>
+        /// <param name="symbol">["<c>instId</c>"] Optional instrument identifier, for example BTCUSDT.</param>
+        /// <param name="ct">Cancellation token.</param>
+        Task<HttpResult<DeepCoinCurrentFundingRate[]>> GetCurrentFundingRatesAsync(ProductGroup contractType, string? symbol = null, CancellationToken ct = default);
+
+        /// <summary>
         /// Get mark prices
         /// <para>
         /// Docs:<br />

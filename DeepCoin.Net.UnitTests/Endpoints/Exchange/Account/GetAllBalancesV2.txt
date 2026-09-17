@@ -1,0 +1,23 @@
+GET
+/deepcoin/v2/account/all-balances
+true
+UriParams: {"accountType":"spot,swapU,swap","ccy":"USDT,BTC"}
+{
+  "code":"0",
+  "msg":"",
+  "data":{
+    "uTime":"1777449600000",
+    "summary":{"totalEqUsd":"2105","totalAvailBalByCcy":{"USDT":"250","BTC":"0.008"}},
+    "accounts":[
+      {"accountType":"spot","accountName":"Spot Account","enabled":true,"details":[
+        {"ccy":"USDT","bal":"100","availBal":"90","frozenBal":"10","unrealizedProfit":"0","equity":"100","eqUsd":"100","uTime":"1777449600000"}
+      ]},
+      {"accountType":"swapU","accountName":"USDT Swap Account","enabled":true,"details":[
+        {"ccy":"USDT","bal":"1000","availBal":"160","frozenBal":"40","unrealizedProfit":"5","equity":"1005","eqUsd":"1005","uTime":"1777449600000"}
+      ]},
+      {"accountType":"swap","accountName":"Coin-margined Swap Account","enabled":true,"details":[
+        {"ccy":"BTC","bal":"0.01","availBal":"0.008","frozenBal":"0.002","unrealizedProfit":"0","equity":"0.01","eqUsd":"1000","uTime":"1777449600000"}
+      ]}
+    ]
+  }
+}

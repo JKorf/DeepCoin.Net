@@ -35,6 +35,8 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetWithdrawHistoryAsync(), "GetWithdrawHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetTradeFeeAsync(SymbolType.Spot), "GetTradeFee", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Account.GetAllBalancesAsync(), "GetAllBalances", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.V2Api.Account.GetTradeFeeAsync(SymbolType.Swap, "BTC-USDT-SWAP", "BTC-USDT"), "GetTradeFeeV2", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.V2Api.Account.GetAllBalancesAsync([BalanceType.Spot, BalanceType.UsdtSwap, BalanceType.CoinSwap], ["USDT", "BTC"]), "GetAllBalancesV2", nestedJsonProperty: "data");
         }
 
         [Test]
@@ -73,6 +75,7 @@ namespace DeepCoin.Net.UnitTests
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.CancelOrdersAsync(["123"]), "CancelOrders", nestedJsonProperty: "data.errorList");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.CancelAllOrdersAsync("123", ProductGroup.CoinMargined, TradeMode.Isolated, PositionType.Merge), "CancelAllOrders", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetUserTradesAsync(SymbolType.Swap), "GetUserTrades", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetOrderAsync("BTC-USDT-SWAP", "42", "client42"), "GetOrderInfo", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetOpenOrderAsync("123", "123"), "GetOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetClosedOrderAsync("123", "123"), "GetClosedOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.ExchangeApi.Trading.GetClosedOrdersAsync(SymbolType.Swap), "GetClosedOrders", nestedJsonProperty: "data");

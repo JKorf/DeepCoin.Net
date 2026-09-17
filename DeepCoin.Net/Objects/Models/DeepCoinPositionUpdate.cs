@@ -41,11 +41,11 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("U")]
         public DateTime UpdateTime { get; set; }
-        ///// <summary>
-        ///// C
-        ///// </summary>
-        //[JsonPropertyName("c")]
-        //public decimal C { get; set; }
+        /// <summary>
+        /// ["<c>CP</c>"] Realized profit and loss from closing positions
+        /// </summary>
+        [JsonPropertyName("CP")]
+        public decimal? RealizedPnl { get; set; }
         /// <summary>
         /// ["<c>i</c>"] Is cross margin
         /// </summary>
