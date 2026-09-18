@@ -27,7 +27,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         public DeepCoinSocketClientExchangeSharedApi(DeepCoinSocketClientExchangeApi api)
             : base(
                   SharedTransport.Socket,
-                  api.Exchange,
+                  api,
                   [TradingMode.Spot, TradingMode.PerpetualLinear, TradingMode.PerpetualInverse],
                   () => api.Authenticated,
                   api.FormatSymbol)

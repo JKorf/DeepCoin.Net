@@ -20,7 +20,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Get Leverage
 
-        async Task<ICallResult<SharedLeverage>> IGetLeverage.GetLeverageAsync(GetLeverageRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<SharedLeverage>> IGetLeverage.GetLeverageAsync(GetLeverageRequest request, CancellationToken ct)
             => await GetLeverageAsync(request, ct).ConfigureAwait(false);
 
         public GetLeverageOptions GetLeverageOptions { get; } = new GetLeverageOptions(_exchangeName, true);
@@ -47,7 +47,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
 
         #region Set Leverage
 
-        async Task<ICallResult<SharedLeverage>> ISetLeverage.SetLeverageAsync(SetLeverageRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<SharedLeverage>> ISetLeverage.SetLeverageAsync(SetLeverageRequest request, CancellationToken ct)
             => await SetLeverageAsync(request, ct).ConfigureAwait(false);
 
         public SetLeverageOptions SetLeverageOptions { get; } = new SetLeverageOptions(_exchangeName)

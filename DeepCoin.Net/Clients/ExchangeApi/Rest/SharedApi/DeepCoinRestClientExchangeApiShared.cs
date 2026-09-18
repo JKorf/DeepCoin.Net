@@ -30,7 +30,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
         public DeepCoinRestClientExchangeSharedApi(DeepCoinRestClientExchangeApi api)
             : base(
                   SharedTransport.Rest,
-                  api.Exchange,
+                  api,
                   [TradingMode.Spot, TradingMode.PerpetualLinear, TradingMode.PerpetualInverse],
                   () => api.Authenticated,
                   api.FormatSymbol)
