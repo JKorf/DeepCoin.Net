@@ -4,9 +4,9 @@ using System;
 namespace DeepCoin.Net.Objects.Models;
 
 /// <summary>
-/// V2 symbol payload.
+/// V2 ticker payload.
 /// </summary>
-public sealed class DeepCoinV2SymbolData
+public sealed class DeepCoinV2TickerData
 {
     /// <summary>
     /// [<c>I</c>] Instrument identifier.

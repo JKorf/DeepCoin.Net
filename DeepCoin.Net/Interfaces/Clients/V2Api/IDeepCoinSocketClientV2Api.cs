@@ -15,7 +15,7 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
     public interface IDeepCoinSocketClientV2Api : ISocketApiClient<DeepCoinCredentials>, IDisposable
     {
         /// <summary>
-        /// Subscribe to symbol/ticker updates for a symbol
+        /// Subscribe to ticker updates for a symbol. Each event contains the received array of ticker updates.
         /// <para>
         /// Docs:<br />
         /// <a href="https://www.deepcoin.com/docs/v2/publicWS/latestMarketData" /><br />
@@ -27,7 +27,7 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2SymbolData[]>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2TickerData[]>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to trade updates for a symbol
@@ -61,7 +61,7 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
 
         /// <summary>
         /// Subscribe to order book snapshots and incremental updates.
-        /// Each event contains every book payload row from one frame. The event metadata supplies the symbol, timestamp and snapshot/update kind.
+        /// Each event contains one book payload. The event metadata supplies the symbol, timestamp and snapshot/update kind.
         /// <para>
         /// Docs:<br />
         /// <a href="https://www.deepcoin.com/docs/v2/publicWS/LevelIncrementalMarketData" /><br />
@@ -73,7 +73,7 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2OrderBookData[]>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2OrderBookData>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to user data updates. A V2 listen key is automatically obtained by the client and renewed as needed.

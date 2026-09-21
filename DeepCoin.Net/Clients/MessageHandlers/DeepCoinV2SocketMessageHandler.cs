@@ -59,8 +59,7 @@ internal sealed class DeepCoinV2SocketMessageHandler : JsonSocketMessageHandler
         };
 
         // PO frames identify the instrument inside d, without a top-level symbol.
-        AddTopicMapping<DeepCoinV2SymbolMessage>(message => message.Data.Length == 0 ? null : message.Data[0].Symbol);
-        
+        AddTopicMapping<DeepCoinV2TickerMessage>(message => message.Data.Length == 0 ? null : message.Data[0].Symbol);
         AddTopicMapping<DeepCoinV2SocketMessage>(message => message.Action switch
         {
             "PK" => message.Symbol + "_" + EnumConverter.GetString(message.Period),

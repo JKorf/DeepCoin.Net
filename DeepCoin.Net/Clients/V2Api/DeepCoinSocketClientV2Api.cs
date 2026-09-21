@@ -208,10 +208,10 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
         => DeepCoinExchange.FormatWebsocketSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
 
     /// <inheritdoc />
-    public Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2SymbolData[]>> onMessage, CancellationToken ct = default)
+    public Task<WebSocketResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2TickerData[]>> onMessage, CancellationToken ct = default)
     {
         var native = NativeSymbol(symbol);
-        var subscription = new DeepCoinV2Subscription<DeepCoinV2SymbolMessage>(_logger, native, "market", "PO", (received, original, message) =>
+        var subscription = new DeepCoinV2Subscription<DeepCoinV2TickerMessage>(_logger, native, "market", "PO", (received, original, message) =>
             onMessage(Event(message.Data, message, received, original, native, message.TradeTime)));
         return SubscribeAsync(PublicAddress(symbol), subscription, ct);
     }
@@ -235,7 +235,7 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
     }
 
     /// <inheritdoc />
-    public Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2OrderBookData[]>> onMessage, CancellationToken ct = default)
+    public Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2OrderBookData>> onMessage, CancellationToken ct = default)
     {
         var native = NativeSymbol(symbol);
         var subscription = new DeepCoinV2Subscription<DeepCoinV2OrderBookMessage>(_logger, native, "book", "PMO", (received, original, message) =>

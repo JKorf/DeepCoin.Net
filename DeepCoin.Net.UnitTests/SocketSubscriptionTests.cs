@@ -58,6 +58,16 @@ namespace DeepCoin.Net.UnitTests
         }
 
         [Test]
+        public async Task ValidateV2PublicSubscriptions()
+        {
+            using var client = new DeepCoinSocketClient();
+            var tester = new SocketSubscriptionValidator<DeepCoinSocketClient>(client, "Subscriptions/V2", "wss://stream.deepcoin.com/streamlet/trade/public/swap?platform=api&version=v2");
+
+            await tester.ValidateAsync<DeepCoinV2TickerData[]>((client, handler) => client.V2Api.SubscribeToTickerUpdatesAsync("BTC-USDT-SWAP", handler), "Ticker", nestedJsonProperty: "d");
+            await tester.ValidateAsync<DeepCoinV2OrderBookData>((client, handler) => client.V2Api.SubscribeToOrderBookUpdatesAsync("BTC-USDT-SWAP", handler), "OrderBook", nestedJsonProperty: "d");
+        }
+
+        [Test]
         public async Task ValidateV2PrivateSubscriptions()
         {
             // V2 has its own subscription entry point but receives the same six private frame types.

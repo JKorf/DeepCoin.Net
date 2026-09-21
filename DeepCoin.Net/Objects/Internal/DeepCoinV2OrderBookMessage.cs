@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using DeepCoin.Net.Converters;
 using DeepCoin.Net.Objects.Models;
 
 namespace DeepCoin.Net.Objects.Internal;
@@ -10,9 +9,8 @@ namespace DeepCoin.Net.Objects.Internal;
 internal sealed class DeepCoinV2OrderBookMessage : DeepCoinV2SocketMessage
 {
     /// <summary>
-    /// [<c>d</c>] OrderBook updates.
+    /// [<c>d</c>] Order book update. Live snapshots and increments contain one object, unlike the array in the docs example.
     /// </summary>
     [JsonPropertyName("d")]
-    [JsonConverter(typeof(DeepCoinV2DataConverter<DeepCoinV2OrderBookData>))]
-    public DeepCoinV2OrderBookData[] Data { get; set; } = [];
+    public DeepCoinV2OrderBookData Data { get; set; } = null!;
 }
