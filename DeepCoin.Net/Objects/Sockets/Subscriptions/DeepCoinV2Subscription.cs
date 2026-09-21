@@ -15,14 +15,14 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions;
 /// <summary>
 /// One native V2 public topic with explicit subscription acknowledgment.
 /// </summary>
-internal sealed class DeepCoinV2Subscription : Subscription
+internal sealed class DeepCoinV2Subscription<TMessage> : Subscription where TMessage : DeepCoinV2SocketMessage
 {
     #region Fields
 
     private readonly string _symbol;
     private readonly string _topic;
     private readonly KlineInterval? _period;
-    private readonly Action<DateTime, string?, DeepCoinV2SocketMessage> _handler;
+    private readonly Action<DateTime, string?, TMessage> _handler;
     private int _subscriptionId;
 
     #endregion
@@ -32,24 +32,21 @@ internal sealed class DeepCoinV2Subscription : Subscription
     /// <summary>
     /// Initializes a V2 public topic subscription and its message route.
     /// </summary>
-    public DeepCoinV2Subscription(ILogger logger, string symbol, string topic, string action, Action<DateTime, string?, DeepCoinV2SocketMessage> handler, KlineInterval? period = null)
+    public DeepCoinV2Subscription(ILogger logger, string symbol, string topic, string action, Action<DateTime, string?, TMessage> handler, KlineInterval? period = null)
         : base(logger, false)
     {
         _symbol = symbol;
         _topic = topic;
         _period = period;
         _handler = handler;
-        // Ticker frames can batch instruments. Each matching subscription must inspect its rows.
-        MessageRouter = action == "PO"
-            ? MessageRouter.CreateForEvent<DeepCoinV2SocketMessage>(action, HandleMessage, multipleReaders: true)
-            : MessageRouter.CreateForEvent<DeepCoinV2SocketMessage>(action, period == null ? symbol : symbol + "_" + EnumConverter.GetString(period), HandleMessage);
+        MessageRouter = MessageRouter.CreateForEvent<TMessage>(action, period == null ? symbol : symbol + "_" + EnumConverter.GetString(period), HandleMessage);
     }
 
     #endregion
 
     #region Methods
 
-    private CallResult HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, DeepCoinV2SocketMessage message)
+    private CallResult HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, TMessage message)
     {
         _handler(receiveTime, originalData, message);
         return CallResult.Ok();

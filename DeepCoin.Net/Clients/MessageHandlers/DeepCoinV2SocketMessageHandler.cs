@@ -1,14 +1,17 @@
 using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using DeepCoin.Net.Objects.Internal;
-using System.Linq;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Converters.SystemTextJson.MessageHandlers;
+using System;
+using System.Net.WebSockets;
+using System.Text.Json;
 
 namespace DeepCoin.Net.Clients.MessageHandlers;
 
 /// <summary>
 /// Routes V2 public envelopes and the unchanged private-stream envelopes.
 /// </summary>
-internal sealed class DeepCoinV2SocketMessageHandler : DeepCoinSocketMessageHandler
+internal sealed class DeepCoinV2SocketMessageHandler : JsonSocketMessageHandler
 {
     #region Fields
 
@@ -20,6 +23,9 @@ internal sealed class DeepCoinV2SocketMessageHandler : DeepCoinSocketMessageHand
 
     /// <inheritdoc />
     protected override MessageTypeDefinition[] TypeEvaluators => _typeEvaluators;
+
+    /// <inheritdoc />
+    public override JsonSerializerOptions Options { get; } = SerializerOptions.WithConverters(DeepCoinExchange._serializerContext);
 
     #endregion
 
@@ -43,16 +49,32 @@ internal sealed class DeepCoinV2SocketMessageHandler : DeepCoinSocketMessageHand
             {
                 Fields = [new PropertyFieldReference("a")],
                 TypeIdentifierCallback = fields => fields.FieldValue("a")!
+            },
+            // V2 listen keys still use the private stream's original action envelope.
+            new MessageTypeDefinition
+            {
+                Fields = [new PropertyFieldReference("action")],
+                TypeIdentifierCallback = fields => fields.FieldValue("action")!
             }
-        }.Concat(base.TypeEvaluators).ToArray();
+        };
+
+        // PO frames identify the instrument inside d, without a top-level symbol.
+        AddTopicMapping<DeepCoinV2SymbolMessage>(message => message.Data.Length == 0 ? null : message.Data[0].Symbol);
+        
         AddTopicMapping<DeepCoinV2SocketMessage>(message => message.Action switch
         {
-            // Live ticker batches identify each instrument inside d, so no single topic applies.
-            "PO" => null,
             "PK" => message.Symbol + "_" + EnumConverter.GetString(message.Period),
             _ => message.Symbol
         });
     }
+
+    #endregion
+
+    #region Methods
+
+    /// <inheritdoc />
+    protected override string? GetTypeIdentifierNonJson(ReadOnlySpan<byte> data, WebSocketMessageType? webSocketMessageType)
+        => data.Length == 4 ? "pong" : null;
 
     #endregion
 }

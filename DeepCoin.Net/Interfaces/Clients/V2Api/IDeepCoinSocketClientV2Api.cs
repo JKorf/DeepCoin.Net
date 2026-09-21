@@ -27,10 +27,10 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2SymbolData[]>> onMessage, CancellationToken ct = default);
 
         /// <summary>
-        /// Subscribe to live trade updates for a symbol
+        /// Subscribe to trade updates for a symbol
         /// <para>
         /// Docs:<br />
         /// <a href="https://www.deepcoin.com/docs/v2/publicWS/lastTransactions" /><br />
@@ -42,10 +42,10 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2TradeData[]>> onMessage, CancellationToken ct = default);
 
         /// <summary>
-        /// Subscribe to kline/candlestick updates for a symbol. Only 1 minute klines supported.
+        /// Subscribe to candle updates for a symbol. Only 1 minute klines supported.
         /// <para>
         /// Docs:<br />
         /// <a href="https://www.deepcoin.com/docs/v2/publicWS/KLines" /><br />
@@ -57,10 +57,11 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKline[]>> onMessage, CancellationToken ct = default);
 
         /// <summary>
-        /// Subscribe to order book snapshots and incremental updates
+        /// Subscribe to order book snapshots and incremental updates.
+        /// Each event contains every book payload row from one frame. The event metadata supplies the symbol, timestamp and snapshot/update kind.
         /// <para>
         /// Docs:<br />
         /// <a href="https://www.deepcoin.com/docs/v2/publicWS/LevelIncrementalMarketData" /><br />
@@ -72,7 +73,7 @@ namespace DeepCoin.Net.Interfaces.Clients.V2Api
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
-        Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default);
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2OrderBookData[]>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to user data updates. A V2 listen key is automatically obtained by the client and renewed as needed.

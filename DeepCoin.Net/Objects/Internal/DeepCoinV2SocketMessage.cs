@@ -1,4 +1,4 @@
-using System.Text.Json;
+using System;
 using System.Text.Json.Serialization;
 using DeepCoin.Net.Enums;
 
@@ -7,7 +7,7 @@ namespace DeepCoin.Net.Objects.Internal;
 /// <summary>
 /// V2 public stream envelope; the private stream retains the original protocol.
 /// </summary>
-internal sealed class DeepCoinV2SocketMessage
+internal class DeepCoinV2SocketMessage
 {
     /// <summary>
     /// [<c>I</c>] Symbol alias observed on live V2 candle frames.
@@ -55,23 +55,17 @@ internal sealed class DeepCoinV2SocketMessage
     /// [<c>tt</c>] Trade timestamp in Unix milliseconds.
     /// </summary>
     [JsonPropertyName("tt")]
-    public long TradeTime { get; set; }
+    public DateTime TradeTime { get; set; }
 
     /// <summary>
     /// [<c>mt</c>] Market timestamp in Unix milliseconds.
     /// </summary>
     [JsonPropertyName("mt")]
-    public long MarketTime { get; set; }
+    public DateTime MarketTime { get; set; }
 
     /// <summary>
-    /// [<c>pt</c>] Publication timestamp in Unix milliseconds.
+    /// [<c>pt</c>] Publication timestamp in Unix milliseconds; zero or omitted when unavailable.
     /// </summary>
     [JsonPropertyName("pt")]
-    public long PublishTime { get; set; }
-
-    /// <summary>
-    /// [<c>d</c>] Topic payload: ticker or book object or array, or trade or candle array.
-    /// </summary>
-    [JsonPropertyName("d")]
-    public JsonElement Data { get; set; }
+    public DateTime? PublishTime { get; set; }
 }

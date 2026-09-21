@@ -24,10 +24,8 @@ using DeepCoin.Net.Objects.Options;
 using DeepCoin.Net.Objects.Sockets.Subscriptions;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Net.WebSockets;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -116,14 +114,6 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
 
     #region Methods
 
-    private static decimal Number(JsonElement value) => value.ValueKind == JsonValueKind.String
-        ? decimal.Parse(value.GetString()!, CultureInfo.InvariantCulture) : value.GetDecimal();
-
-    private static decimal? OptionalNumber(JsonElement data, string name) => data.TryGetProperty(name, out var value) && value.ValueKind is not (JsonValueKind.Null or JsonValueKind.Undefined)
-        && (value.ValueKind != JsonValueKind.String || !string.IsNullOrEmpty(value.GetString())) ? Number(value) : null;
-
-    private static DateTime Timestamp(long value) => DateTimeOffset.FromUnixTimeMilliseconds(value).UtcDateTime;
-
     // V2 instruments can contain mixed-case asset codes (xAAOI), but socket topics require uppercase.
     private static string NativeSymbol(string symbol) => (symbol.EndsWith("-SWAP", StringComparison.Ordinal)
         ? symbol.Replace("-SWAP", "").Replace("-", "") : symbol.Replace("-", "/")).ToUpperInvariant();
@@ -136,41 +126,6 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
         UpdateTimeOffset(timestamp);
         return new DataEvent<T>(DeepCoinExchange.ExchangeName, data, received, original)
             .WithSymbol(symbol).WithStreamId(message.Action).WithUpdateType(updateType).WithDataTimestamp(timestamp, GetTimeOffset());
-    }
-
-    private static DeepCoinOrderBookUpdateEntry[] BookSide(JsonElement data, string side, string symbol, OrderSide direction)
-    {
-        if (!data.TryGetProperty(side, out var levels))
-            return [];
-        return levels.EnumerateArray().Select(row => new DeepCoinOrderBookUpdateEntry { Symbol = symbol, Direction = direction, Price = Number(row[0]), Quantity = Number(row[1]) }).ToArray();
-    }
-
-    private void HandleSymbolUpdate(JsonElement data, DeepCoinV2SocketMessage message, DateTime received, string? original, string symbol, string native, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage)
-    {
-        if (!string.Equals(data.GetProperty("I").GetString(), native, StringComparison.Ordinal))
-            return;
-
-        var timestamp = Timestamp((long)(OptionalNumber(data, "U") ?? message.TradeTime));
-        var fundingTime = OptionalNumber(data, "PF");
-        var update = new DeepCoinSymbolUpdate
-        {
-            Symbol = data.GetProperty("I").GetString()!, UpdateTime = timestamp,
-            ProductGroup = symbol.EndsWith("-USD-SWAP", StringComparison.Ordinal) ? ProductGroup.CoinMargined
-                : symbol.EndsWith("-SWAP", StringComparison.Ordinal) ? ProductGroup.USDTMargined : ProductGroup.Spot,
-            LastPrice = OptionalNumber(data, "N"), OpenPrice = OptionalNumber(data, "O"), HighPrice = OptionalNumber(data, "H"), LowPrice = OptionalNumber(data, "L"),
-            MarkedPrice = OptionalNumber(data, "M"), UnderlyingPrice = OptionalNumber(data, "D") ?? 0,
-            UpperLimitPrice = OptionalNumber(data, "C") ?? 0, LowerLimitPrice = OptionalNumber(data, "F") ?? 0,
-            Volume = OptionalNumber(data, "V") ?? 0, Turnover = OptionalNumber(data, "T") ?? 0,
-            // The docs label V/T as today's totals, but synchronized live linear/inverse REST
-            // responses expose these exact values as vol24h/volCcy24h. V2/T2 use an unspecified window.
-            Volume24Hrs = OptionalNumber(data, "V"), Turnover24Hrs = OptionalNumber(data, "T"),
-            RawV2Volume = OptionalNumber(data, "V2"), RawV2Turnover = OptionalNumber(data, "T2"),
-            BestBidPrice = OptionalNumber(data, "BP1"), BestAskPrice = OptionalNumber(data, "AP1"),
-            // V2 E is the previous settlement's funding rate, not the next funding rate.
-            PrePositionFeeRate = OptionalNumber(data, "E") ?? 0,
-            PositionFeeTime = fundingTime > 0 ? DateTimeOffset.FromUnixTimeSeconds((long)fundingTime.Value).UtcDateTime : null
-        };
-        onMessage(Event(update, message, received, original, native, timestamp));
     }
 
     private async Task<CallResult<string>> StartListenKeyAsync(TokenScope tokenScope, CancellationToken ct)
@@ -253,72 +208,37 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
         => DeepCoinExchange.FormatWebsocketSymbol(baseAsset, quoteAsset, tradingMode, deliverDate);
 
     /// <inheritdoc />
-    public Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinSymbolUpdate>> onMessage, CancellationToken ct = default)
+    public Task<WebSocketResult<UpdateSubscription>> SubscribeToSymbolUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2SymbolData[]>> onMessage, CancellationToken ct = default)
     {
         var native = NativeSymbol(symbol);
-        var subscription = new DeepCoinV2Subscription(_logger, native, "market", "PO", (received, original, message) =>
-        {
-            // The docs show one object; live streams send arrays that can contain several instruments.
-            // Filter each row so a shared socket never delivers another instrument to this subscriber.
-            if (message.Data.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var data in message.Data.EnumerateArray())
-                    HandleSymbolUpdate(data, message, received, original, symbol, native, onMessage);
-            }
-            else
-            {
-                HandleSymbolUpdate(message.Data, message, received, original, symbol, native, onMessage);
-            }
-        });
+        var subscription = new DeepCoinV2Subscription<DeepCoinV2SymbolMessage>(_logger, native, "market", "PO", (received, original, message) =>
+            onMessage(Event(message.Data, message, received, original, native, message.TradeTime)));
         return SubscribeAsync(PublicAddress(symbol), subscription, ct);
     }
 
     /// <inheritdoc />
-    public Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinTradeUpdate>> onMessage, CancellationToken ct = default)
+    public Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2TradeData[]>> onMessage, CancellationToken ct = default)
     {
         var native = NativeSymbol(symbol);
-        var subscription = new DeepCoinV2Subscription(_logger, native, "trade", "PMT", (received, original, message) =>
-        {
-            foreach (var row in message.Data.EnumerateArray())
-            {
-                var timestamp = DateTimeOffset.FromUnixTimeSeconds((long)Number(row.GetProperty("T"))).UtcDateTime;
-                var update = new DeepCoinTradeUpdate
-                {
-                    Symbol = message.Symbol, TradeId = row.GetProperty("TradeID").GetString()!, Price = Number(row.GetProperty("P")), Quantity = Number(row.GetProperty("V")), Timestamp = timestamp,
-                    Side = row.GetProperty("D").ToString() switch { "0" => OrderSide.Buy, "1" => OrderSide.Sell, var side => throw new InvalidOperationException($"Unsupported DeepCoin trade direction '{side}'.") }
-                };
-                onMessage(Event(update, message, received, original, native, timestamp));
-            }
-        });
+        var subscription = new DeepCoinV2Subscription<DeepCoinV2TradeMessage>(_logger, native, "trade", "PMT", (received, original, message) =>
+            onMessage(Event(message.Data, message, received, original, native, message.TradeTime)));
         return SubscribeAsync(PublicAddress(symbol), subscription, ct);
     }
 
     /// <inheritdoc />
-    public Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKlineUpdate>> onMessage, CancellationToken ct = default)
+    public Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, Action<DataEvent<DeepCoinKline[]>> onMessage, CancellationToken ct = default)
     {
         var native = NativeSymbol(symbol);
-        var subscription = new DeepCoinV2Subscription(_logger, native, "kline", "PK", (received, original, message) =>
-        {
-            foreach (var row in message.Data.EnumerateArray())
-            {
-                var timestamp = Timestamp(message.TradeTime);
-                // Live candle rows use Unix seconds; the documented example uses milliseconds.
-                var update = new DeepCoinKlineUpdate
-                {
-                    Symbol = message.Symbol, Interval = KlineInterval.OneMinute, OpenTime = DateTimeConverter.ParseFromDecimal(Number(row[0])),
-                    OpenPrice = Number(row[1]), HighPrice = Number(row[2]), LowPrice = Number(row[3]), ClosePrice = Number(row[4]), Volume = Number(row[5]), Turnover = Number(row[6]), UpdateTime = timestamp
-                };
-                onMessage(Event(update, message, received, original, native, timestamp));
-            }
-        }, KlineInterval.OneMinute);
+        var subscription = new DeepCoinV2Subscription<DeepCoinV2KlineMessage>(_logger, native, "kline", "PK", (received, original, message) =>
+            onMessage(Event(message.Data, message, received, original, native, message.TradeTime)), KlineInterval.OneMinute);
         return SubscribeAsync(PublicAddress(symbol), subscription, ct);
     }
 
     /// <inheritdoc />
-    public Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinOrderBookUpdate>> onMessage, CancellationToken ct = default)
+    public Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderBookUpdatesAsync(string symbol, Action<DataEvent<DeepCoinV2OrderBookData[]>> onMessage, CancellationToken ct = default)
     {
         var native = NativeSymbol(symbol);
-        var subscription = new DeepCoinV2Subscription(_logger, native, "book", "PMO", (received, original, message) =>
+        var subscription = new DeepCoinV2Subscription<DeepCoinV2OrderBookMessage>(_logger, native, "book", "PMO", (received, original, message) =>
         {
             var type = message.UpdateType switch
             {
@@ -326,15 +246,7 @@ internal sealed class DeepCoinSocketClientV2Api : SocketApiClient<DeepCoinEnviro
                 V2BookUpdateType.Incremental => SocketUpdateType.Update,
                 var value => throw new InvalidOperationException($"Unsupported DeepCoin V2 order book update type '{value}'.")
             };
-            // Live V2 sends one object; the documented example wraps the same book in an array.
-            var rows = message.Data.ValueKind == JsonValueKind.Array ? message.Data.EnumerateArray().ToArray() : [message.Data];
-            var update = new DeepCoinOrderBookUpdate
-            {
-                Asks = rows.SelectMany(row => BookSide(row, "a", native, OrderSide.Sell)).ToArray(),
-                Bids = rows.SelectMany(row => BookSide(row, "b", native, OrderSide.Buy)).ToArray()
-            };
-            // V2 documents timestamps, not sequence IDs. Retain zero as unavailable.
-            onMessage(Event(update, message, received, original, native, Timestamp(message.PublishTime == 0 ? message.TradeTime : message.PublishTime), type));
+            onMessage(Event(message.Data, message, received, original, native, message.PublishTime ?? message.TradeTime, type));
         });
         return SubscribeAsync(PublicAddress(symbol), subscription, ct);
     }
