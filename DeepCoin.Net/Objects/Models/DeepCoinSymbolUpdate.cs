@@ -106,6 +106,49 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("PrePositionFeeRate")]
         public decimal PrePositionFeeRate { get; set; }
+
+        /// <summary>
+        /// ["<c>PositionFeeTime</c>"] Funding settlement time, Unix seconds on the wire; zero when unavailable.
+        /// </summary>
+        [JsonPropertyName("PositionFeeTime")]
+        public DateTime? PositionFeeTime { get; set; }
+
+        /// <summary>
+        /// ["<c>BidPrice1</c>"] Best bid price.
+        /// </summary>
+        [JsonPropertyName("BidPrice1")]
+        public decimal? BestBidPrice { get; set; }
+
+        /// <summary>
+        /// ["<c>AskPrice1</c>"] Best ask price.
+        /// </summary>
+        [JsonPropertyName("AskPrice1")]
+        public decimal? BestAskPrice { get; set; }
+
+        /// <summary>
+        /// ["<c>Volume24</c>"] Rolling 24-hour quantity, in contracts for futures and base currency for spot.
+        /// </summary>
+        [JsonPropertyName("Volume24")]
+        public decimal? Volume24Hrs { get; set; }
+
+        /// <summary>
+        /// ["<c>Turnover24</c>"] Rolling 24-hour turnover, in quote currency for linear contracts and base currency for inverse contracts.
+        /// </summary>
+        [JsonPropertyName("Turnover24")]
+        public decimal? Turnover24Hrs { get; set; }
+
+        /// <summary>
+        /// ["<c>V2</c>"] Raw additional V2 ticker volume. The reporting window is unspecified; this is not the REST 24-hour volume.
+        /// </summary>
+        [JsonPropertyName("V2")]
+        public decimal? RawV2Volume { get; set; }
+
+        /// <summary>
+        /// ["<c>T2</c>"] Raw additional V2 ticker turnover. The reporting window is unspecified; this is not the REST 24-hour turnover.
+        /// </summary>
+        [JsonPropertyName("T2")]
+        public decimal? RawV2Turnover { get; set; }
+
     }
 
 

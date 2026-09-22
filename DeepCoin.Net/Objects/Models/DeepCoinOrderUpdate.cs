@@ -31,11 +31,16 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("L")]
         public string LocalId { get; set; } = string.Empty;
-        ///// <summary>
-        ///// O
-        ///// </summary>
-        //[JsonPropertyName("O")]
-        //public decimal O { get; set; }
+        /// <summary>
+        /// ["<c>OPT</c>"] Native order price type
+        /// </summary>
+        [JsonPropertyName("OPT")]
+        public string? OrderPriceType { get; set; }
+        /// <summary>
+        /// ["<c>O</c>"] Order price type alias used in the documented push example
+        /// </summary>
+        [JsonInclude, JsonPropertyName("O")]
+        internal string? OrderPriceTypeAlias { get => OrderPriceType; set => OrderPriceType = value; }
         /// <summary>
         /// ["<c>OS</c>"] Order id
         /// </summary>
@@ -67,6 +72,11 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("U")]
         public DateTime? UpdateTime { get; set; }
         /// <summary>
+        /// ["<c>UM</c>"] Update timestamp with millisecond precision
+        /// </summary>
+        [JsonPropertyName("UM")]
+        public DateTime? UpdateTimeMilliseconds { get; set; }
+        /// <summary>
         /// ["<c>V</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("V")]
@@ -97,9 +107,9 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("t")]
         public decimal? AverageFillPrice { get; set; }
         /// <summary>
-        /// ["<c>VT</c>"] Quantity filled
+        /// ["<c>v</c>"] Quantity filled
         /// </summary>
-        [JsonPropertyName("VT")]
+        [JsonPropertyName("v")]
         public decimal QuantityFilled { get; set; }
     }
 
