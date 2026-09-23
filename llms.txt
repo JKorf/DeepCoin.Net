@@ -31,7 +31,7 @@ DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard C
 - Always check `.Success` before reading `.Data`.
 - Use `socketClient.UnsubscribeAsync(subscription.Data)` for teardown.
 - Private WebSocket streams require `restClient.ExchangeApi.Account.StartUserStreamAsync()`.
-- For cross-exchange code, use `CryptoExchange.Net.SharedApis` via `.ExchangeApi.SharedClient` and call `.Discover()` to inspect supported shared features.
+- Use the exchange-level `IDeepCoinSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 - Shared spot/futures symbol clients expose symbol catalogs and return display names plus base/quote asset type and subtype metadata; `GetSymbolsRequest` can filter on that metadata.
 
 ## Reference

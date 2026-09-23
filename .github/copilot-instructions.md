@@ -31,9 +31,9 @@ REST methods return `HttpResult<T>` / `HttpResult`; WebSocket subscriptions retu
 - `restClient.ExchangeApi.ExchangeData` - public market data: tickers, symbols, klines, order book, funding rates
 - `restClient.ExchangeApi.Account` - balances, bills, leverage, deposit/withdraw history, listen keys
 - `restClient.ExchangeApi.Trading` - positions, orders, user trades, order history, TP/SL
-- `restClient.ExchangeApi.SharedClient` - CryptoExchange.Net shared REST interfaces
+- `restClient.ExchangeApi.SharedApi` - CryptoExchange.Net shared REST interfaces
 - `socketClient.ExchangeApi` - public and private WebSocket subscriptions
-- `socketClient.ExchangeApi.SharedClient` - CryptoExchange.Net shared socket interfaces
+- `socketClient.ExchangeApi.SharedApi` - CryptoExchange.Net shared socket interfaces
 
 ## DeepCoin symbol shape
 
@@ -49,7 +49,7 @@ Store the returned `UpdateSubscription` and unsubscribe on shutdown via `socketC
 
 ## Cross-exchange
 
-For code that needs to work across multiple exchanges, use `CryptoExchange.Net.SharedApis` interfaces accessed via `.ExchangeApi.SharedClient`.
+For code that needs to work across multiple exchanges, use `CryptoExchange.Net.SharedApis` interfaces accessed via `.ExchangeApi.SharedApi`.
 
 The shared spot/futures symbol interfaces expose `SpotSymbolCatalog` / `FuturesSymbolCatalog`. Returned symbols include `DisplayName` and base/quote asset type and subtype metadata; use the matching `GetSymbolsRequest` filters when callers need a particular asset classification.
 
