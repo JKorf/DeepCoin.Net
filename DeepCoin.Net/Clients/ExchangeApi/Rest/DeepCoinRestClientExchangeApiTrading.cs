@@ -79,7 +79,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             parameters.Add("reduceOnly", reduceOnly);
             parameters.Add("tpTriggerPx", tpTriggerPrice);
             parameters.Add("slTriggerPx", slTriggerPrice);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/order", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/deepcoin/trade/order", DeepCoinExchange.RateLimiter.RestOrder, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinOrderResult>(request, parameters, ct).ConfigureAwait(false);
             if (!result.Success)
                 return result;
@@ -185,6 +185,34 @@ namespace DeepCoin.Net.Clients.ExchangeApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/fills", DeepCoinExchange.RateLimiter.DeepCoin, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<DeepCoinUserTrade[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
+        }
+
+        #endregion
+
+        #region Get Order
+
+        /// <inheritdoc />
+        public async Task<HttpResult<DeepCoinOrder>> GetOrderAsync(string symbol, string? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(orderId) && string.IsNullOrWhiteSpace(clientOrderId))
+                throw new ArgumentException("An order id or client order id is required", nameof(orderId));
+
+            var parameters = new Parameters(DeepCoinExchange._parameterSerializationSettings);
+            parameters.Add("instId", symbol);
+            parameters.Add("ordId", orderId);
+            parameters.Add("clOrdId", clientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/deepcoin/trade/order", DeepCoinExchange.RateLimiter.RestOrder, 1, true);
+            var result = await _baseClient.SendAsync<DeepCoinOrder[]>(request, parameters, ct).ConfigureAwait(false);
+            if (!result.Success)
+                return HttpResult.Fail<DeepCoinOrder>(result);
+
+            if (result.Data?.Length == 0)
+                return HttpResult.Fail<DeepCoinOrder>(result, new ServerError(new ErrorInfo(ErrorType.UnknownOrder, "Order not found")));
+
+            if (result.Data == null || result.Data.Length != 1 || result.Data[0] == null)
+                return HttpResult.Fail<DeepCoinOrder>(result, new ServerError(new ErrorInfo(ErrorType.Unknown, "Expected one order in the order info response")));
+
+            return HttpResult.Ok(result, result.Data[0]);
         }
 
         #endregion

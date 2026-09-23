@@ -62,6 +62,26 @@ namespace DeepCoin.Net.Objects.Models
         [JsonPropertyName("useMargin")]
         public decimal UsedMargin { get; set; }
         /// <summary>
+        /// ["<c>unrealizedProfit</c>"] Unrealized profit and loss in the margin currency
+        /// </summary>
+        [JsonPropertyName("unrealizedProfit")]
+        public decimal? UnrealizedPnl { get; set; }
+        /// <summary>
+        /// ["<c>lastPx</c>"] Current last traded price
+        /// </summary>
+        [JsonPropertyName("lastPx")]
+        public decimal? LastPrice { get; set; }
+        /// <summary>
+        /// ["<c>tpTriggerPx</c>"] Take profit trigger price; null when not set
+        /// </summary>
+        [JsonPropertyName("tpTriggerPx")]
+        public decimal? TpTriggerPrice { get; set; }
+        /// <summary>
+        /// ["<c>slTriggerPx</c>"] Stop loss trigger price; null when not set
+        /// </summary>
+        [JsonPropertyName("slTriggerPx")]
+        public decimal? SlTriggerPrice { get; set; }
+        /// <summary>
         /// ["<c>mrgPosition</c>"] Position type
         /// </summary>
         [JsonPropertyName("mrgPosition")]

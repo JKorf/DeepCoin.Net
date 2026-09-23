@@ -1,0 +1,23 @@
+GET
+/deepcoin/v2/account/trade-fee
+true
+UriParams: {"instType":"SWAP","instId":"BTC-USDT-SWAP","instFamily":"BTC-USDT"}
+{
+  "code":"0",
+  "msg":"",
+  "data":[{
+    "level":"Lv1",
+    "feeGroup":"",
+    "category":"",
+    "instType":"SWAP",
+    "maker":"0.0002",
+    "taker":"0.0005",
+    "makerU":"0.0003",
+    "takerU":"0.0006",
+    "makerUSDC":"",
+    "takerUSDC":"",
+    "delivery":"",
+    "exercise":"",
+    "ts":"1777449600000"
+  }]
+}

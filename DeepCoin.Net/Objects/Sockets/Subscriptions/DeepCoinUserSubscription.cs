@@ -9,14 +9,14 @@ using System.Linq;
 using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Sockets.Default;
 using CryptoExchange.Net.Sockets.Default.Routing;
-using DeepCoin.Net.Clients.ExchangeApi;
+using CryptoExchange.Net.Clients;
 
 namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
     internal class DeepCoinUserSubscription : Subscription
     {
-        private readonly DeepCoinSocketClientExchangeApi _client;
+        private readonly SocketApiClient _client;
 
         private readonly Action<DataEvent<DeepCoinOrderUpdate[]>>? _orderUpdateHandler;
         private readonly Action<DataEvent<DeepCoinBalanceUpdate[]>>? _balanceUpdateHandler;
@@ -30,7 +30,7 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// </summary>
         public DeepCoinUserSubscription(
             ILogger logger,
-            DeepCoinSocketClientExchangeApi client,
+            SocketApiClient client,
             Action<DataEvent<DeepCoinOrderUpdate[]>>? orderUpdate,
             Action<DataEvent<DeepCoinBalanceUpdate[]>>? balanceUpdate,
             Action<DataEvent<DeepCoinPositionUpdate[]>>? positionUpdate,
@@ -67,10 +67,13 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinOrderUpdate> message)
         {
+            if (message.Result.Length == 0)
+                return CallResult.Ok();
+
             DateTime? timestamp = null;
             if (message.Result.Length != 0)
             {
-                timestamp = message.Result.Max(x => x.Data.UpdateTime);
+                timestamp = message.Result.Max(x => x.Data.UpdateTimeMilliseconds ?? x.Data.UpdateTime);
                 if (timestamp != null)
                     _client.UpdateTimeOffset(timestamp.Value);
             }
@@ -85,6 +88,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
 
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinBalanceUpdate> message)
         {
+            if (message.Result.Length == 0)
+                return CallResult.Ok();
+
             _balanceUpdateHandler?.Invoke(
                 new DataEvent<DeepCoinBalanceUpdate[]>(DeepCoinExchange.ExchangeName, message.Result.Select(x => x.Data).ToArray(), receiveTime, originalData)
                 );
@@ -92,6 +98,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinPositionUpdate> message)
         {
+            if (message.Result.Length == 0)
+                return CallResult.Ok();
+
             var timestamp = message.Result.Max(x => x.Data.UpdateTime);
             _client.UpdateTimeOffset(timestamp);
 
@@ -104,6 +113,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinUserTradeUpdate> message)
         {
+            if (message.Result.Length == 0)
+                return CallResult.Ok();
+
             var timestamp = message.Result.Max(x => x.Data.TradeTime);
             _client.UpdateTimeOffset(timestamp);
 
@@ -116,6 +128,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinAccountUpdate> message)
         {
+            if (message.Result.Length == 0)
+                return CallResult.Ok();
+
             var timestamp = message.Result.Max(x => x.Data.CreateTime);
             _client.UpdateTimeOffset(timestamp);
 
@@ -128,6 +143,9 @@ namespace DeepCoin.Net.Objects.Sockets.Subscriptions
         }
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, SocketUpdate<DeepCoinTriggerOrderUpdate> message)
         {
+            if (message.Result.Length == 0)
+                return CallResult.Ok();
+
             var timestamp = message.Result.Max(x => x.Data.CreateTime);
             _client.UpdateTimeOffset(timestamp);
 

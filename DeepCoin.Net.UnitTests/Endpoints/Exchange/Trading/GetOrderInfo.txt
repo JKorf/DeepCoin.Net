@@ -1,0 +1,49 @@
+GET
+/deepcoin/trade/order
+true
+UriParams: {"instId":"BTC-USDT-SWAP","ordId":"42","clOrdId":"client42"}
+{
+    "code": "0",
+    "msg": "",
+    "data": [
+        {
+            "instType": "SWAP",
+            "instId": "BTC-USDT-SWAP",
+            "tgtCcy": "",
+            "ccy": "",
+            "ordId": "42",
+            "clOrdId": "client42",
+            "tag": "",
+            "px": "62000",
+            "sz": "1",
+            "pnl": "0",
+            "ordType": "limit",
+            "side": "buy",
+            "posSide": "long",
+            "tdMode": "cross",
+            "accFillSz": "0",
+            "fillPx": "",
+            "tradeId": "",
+            "fillSz": "0",
+            "fillTime": "1780040369000",
+            "avgPx": "",
+            "state": "live",
+            "lever": "17",
+            "tpTriggerPx": "",
+            "tpTriggerPxType": "",
+            "tpOrdPx": "",
+            "slTriggerPx": "",
+            "slTriggerPxType": "",
+            "slOrdPx": "",
+            "feeCcy": "USDT",
+            "fee": "0",
+            "rebateCcy": "",
+            "source": "",
+            "reduceOnly": "",
+            "rebate": "",
+            "category": "normal",
+            "uTime": "1780040369000",
+            "cTime": "1780040369000"
+        }
+    ]
+}

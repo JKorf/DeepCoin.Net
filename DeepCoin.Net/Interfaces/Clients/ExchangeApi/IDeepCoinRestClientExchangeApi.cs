@@ -28,14 +28,8 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         public IDeepCoinRestClientExchangeApiTrading Trading { get; }
 
         /// <summary>
-        /// [V1] Get the shared rest requests client. For new implementations prefer <see cref="SharedApi"/>
+        /// Get the shared rest requests client. This interface is shared with other exchanges to allow for a common implementation for different exchanges.
         /// </summary>
         public IDeepCoinRestClientExchangeApiShared SharedClient { get; }
-        /// <summary>
-        /// [V2] Gets the aggregate Shared API interface. Shared APIs provide a common,
-        /// exchange-independent contract for accessing functionality across different
-        /// exchange client libraries.
-        /// </summary>
-        public IDeepCoinRestClientExchangeSharedApi SharedApi { get; }
     }
 }

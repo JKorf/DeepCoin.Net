@@ -135,6 +135,25 @@ namespace DeepCoin.Net.Interfaces.Clients.ExchangeApi
         Task<HttpResult<DeepCoinUserTrade[]>> GetUserTradesAsync(SymbolType symbolType, string? symbol = null, string? orderId = null, string? afterId = null, string? beforeId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
+        /// Get an order by exchange order id or client order id. Searches historical orders first, then pending orders.
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://www.deepcoin.com/docs/DeepCoinTrade/order#get-order-info" /><br />
+        /// Endpoint:<br />
+        /// GET /deepcoin/trade/order
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// REST visibility can lag newly accepted or filled orders. A missing result immediately after placement does not prove that the order was rejected.
+        /// Use private WebSocket order or trade updates for timely order lifecycle changes.
+        /// </remarks>
+        /// <param name="symbol">["<c>instId</c>"] The symbol, for example `ETH-USDT` or `ETH-USDT-SWAP`</param>
+        /// <param name="orderId">["<c>ordId</c>"] Order id. Either this or clientOrderId is required; takes priority when both are provided.</param>
+        /// <param name="clientOrderId">["<c>clOrdId</c>"] Client order id, 1-20 characters. Returns the most recent matching order when the id was reused.</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<DeepCoinOrder>> GetOrderAsync(string symbol, string? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+
+        /// <summary>
         /// Get a open order by id
         /// <para>
         /// Docs:<br />

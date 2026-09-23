@@ -8,6 +8,9 @@ using DeepCoin.Net.Clients;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net.Http;
+using DeepCoin.Net.Clients;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Objects;
 
 namespace DeepCoin.Net.UnitTests
 {
