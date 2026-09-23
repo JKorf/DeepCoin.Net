@@ -39,9 +39,9 @@ var eth = tickers.Data.FirstOrDefault(x => x.Symbol == "ETH-USDT");
 - `restClient.ExchangeApi.ExchangeData` for tickers, symbols, klines, order books, and funding rates
 - `restClient.ExchangeApi.Account` for balances, bills, leverage, deposit/withdraw history, and listen keys
 - `restClient.ExchangeApi.Trading` for positions, orders, user trades, order history, and TP/SL
-- `restClient.ExchangeApi.SharedClient` for shared REST interfaces
+- `restClient.ExchangeApi.SharedApi` for shared REST interfaces
 - `socketClient.ExchangeApi` for public and private WebSocket subscriptions
-- `socketClient.ExchangeApi.SharedClient` for shared socket interfaces
+- `socketClient.ExchangeApi.SharedApi` for shared socket interfaces
 
 ## Native symbols and account modes
 
@@ -96,8 +96,8 @@ For exchange-agnostic code, use `CryptoExchange.Net.SharedApis`:
 ```csharp
 using CryptoExchange.Net.SharedApis;
 
-var shared = new DeepCoinRestClient().ExchangeApi.SharedClient;
-var ticker = await shared.GetSpotTickerAsync(
+var shared = new DeepCoinRestClient().ExchangeApi.SharedApi;
+var ticker = await shared.GetTickerAsync(
     new GetTickerRequest(new SharedSymbol(TradingMode.Spot, "ETH", "USDT")));
 ```
 

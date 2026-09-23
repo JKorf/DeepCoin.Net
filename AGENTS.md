@@ -9,7 +9,7 @@ description: Use DeepCoin.Net when generating C#/.NET code that interacts with t
 
 If the user asks for DeepCoin API access in C#/.NET, use **DeepCoin.Net**. Do not write raw `HttpClient` calls to DeepCoin endpoints because that bypasses signing, rate limiting, result handling, and WebSocket lifecycle support.
 
-For multi-exchange code, use `CryptoExchange.Net.SharedApis` interfaces from `.ExchangeApi.SharedClient`. Call `.ExchangeApi.SharedClient.Discover()` to inspect supported shared features.
+Use the exchange-level `IDeepCoinSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 
 ## Installation
 
@@ -63,10 +63,10 @@ Console.WriteLine(ticker?.LastPrice);
 restClient.ExchangeApi.ExchangeData  // tickers, symbols, klines, order book, funding rates
 restClient.ExchangeApi.Account       // balances, bills, leverage, deposits, withdrawals, listen keys
 restClient.ExchangeApi.Trading       // positions, place/edit/cancel orders, user trades, order history, TP/SL
-restClient.ExchangeApi.SharedClient  // shared REST interfaces
+restClient.ExchangeApi.SharedApi  // shared REST interfaces
 
 socketClient.ExchangeApi             // public and private WebSocket subscriptions
-socketClient.ExchangeApi.SharedClient // shared socket interfaces
+socketClient.ExchangeApi.SharedApi // shared socket interfaces
 ```
 
 DeepCoin.Net does not expose Binance-style `SpotApi`, `UsdFuturesApi`, or `CoinFuturesApi` branches.
@@ -189,11 +189,11 @@ using DeepCoin.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
 var restClient = new DeepCoinRestClient();
-ISpotTickerRestClient tickerClient = restClient.ExchangeApi.SharedClient;
-var info = restClient.ExchangeApi.SharedClient.Discover();
+IGetTickerRest tickerClient = restClient.ExchangeApi.SharedApi;
+// Use the exchange-level `IDeepCoinSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 var symbol = new SharedSymbol(TradingMode.Spot, "ETH", "USDT");
 
-var ticker = await tickerClient.GetSpotTickerAsync(new GetTickerRequest(symbol));
+var ticker = await tickerClient.GetTickerAsync(new GetTickerRequest(symbol));
 if (!ticker.Success)
 {
     Console.WriteLine(ticker.Error);
@@ -203,11 +203,11 @@ if (!ticker.Success)
 Console.WriteLine(ticker.Data.LastPrice);
 ```
 
-Available shared REST interfaces include `IBalanceRestClient`, `IDepositRestClient`, `IKlineRestClient`, `IListenKeyRestClient`, `IOrderBookRestClient`, `IWithdrawalRestClient`, `ISpotTickerRestClient`, `ISpotSymbolRestClient`, `ISpotOrderRestClient`, `ILeverageRestClient`, `IFuturesTickerRestClient`, `IFuturesSymbolRestClient`, `IFuturesOrderRestClient`, and `IBookTickerRestClient`.
+Available shared REST interfaces include `IGetBalancesRest`, `IGetDepositHistoryRest`, `IGetKlinesRest`, `IGetOrderBookRest`, `IGetWithdrawalHistoryRest`, `IGetTickerRest`, `IGetSpotSymbolsRest`, `IPlaceSpotOrderRest`, `ISetLeverageRest`, `IGetFuturesSymbolsRest`, `IPlaceFuturesOrderRest`, and `IGetBookTickerRest`. Listen keys are managed internally and are not a V2 capability.
 
 The shared symbol clients expose `SpotSymbolCatalog` and `FuturesSymbolCatalog`. Their symbol results include `DisplayName` plus `BaseAssetType`, `BaseAssetSubType`, `QuoteAssetType`, and `QuoteAssetSubType`, and support the corresponding asset type/subtype filters on `GetSymbolsRequest`. DeepCoin classifies crypto and stablecoin assets, fiat quote assets for inverse futures, and commodity/equity base assets where applicable.
 
-Available shared socket interfaces include `IKlineSocketClient`, `ITickerSocketClient`, `ITradeSocketClient`, `IBalanceSocketClient`, `ISpotOrderSocketClient`, `IFuturesOrderSocketClient`, `IUserTradeSocketClient`, and `IPositionSocketClient`.
+Available shared socket interfaces include `ISubscribeKlinesSocket`, `ISubscribeTickerSocket`, `ISubscribeTradesSocket`, `ISubscribeBalancesSocket`, `ISubscribeSpotOrdersSocket`, `ISubscribeFuturesOrdersSocket`, `ISubscribeUserTradesSocket`, and `ISubscribePositionsSocket`.
 
 ## Dependency Injection
 

@@ -14,9 +14,9 @@ Use this file to route common user intents to the correct DeepCoin.Net client me
 | Dependency injection | `services.AddDeepCoin(options => { ... })` |
 | REST API root | `client.ExchangeApi` |
 | WebSocket API root | `socketClient.ExchangeApi` |
-| Shared REST client | `client.ExchangeApi.SharedClient` |
-| Shared socket client | `socketClient.ExchangeApi.SharedClient` |
-| Discover shared capabilities | `client.ExchangeApi.SharedClient.Discover()` |
+| Shared REST client | `client.ExchangeApi.SharedApi` |
+| Shared socket client | `socketClient.ExchangeApi.SharedApi` |
+| Resolve a runtime-selected Shared API capability | `IDeepCoinSharedApiClient.GetCapability(...)` |
 
 ## Exchange Data REST
 
@@ -99,33 +99,33 @@ Use this file to route common user intents to the correct DeepCoin.Net client me
 
 | User intent | DeepCoin.Net member or interface |
 |---|---|
-| Shared REST client | `new DeepCoinRestClient().ExchangeApi.SharedClient` |
-| Shared socket client | `new DeepCoinSocketClient().ExchangeApi.SharedClient` |
-| Discover shared capabilities | `client.ExchangeApi.SharedClient.Discover()` |
-| Shared spot ticker REST | `ISpotTickerRestClient.GetSpotTickerAsync(new GetTickerRequest(symbol))` |
-| Shared futures ticker REST | `IFuturesTickerRestClient.GetFuturesTickerAsync(new GetTickerRequest(symbol))` |
-| Shared spot symbols REST | `ISpotSymbolRestClient.GetSpotSymbolsAsync(...)` |
-| Shared futures symbols REST | `IFuturesSymbolRestClient.GetFuturesSymbolsAsync(...)` |
-| Shared spot symbol catalog | `ISpotSymbolRestClient.SpotSymbolCatalog` |
-| Shared futures symbol catalog | `IFuturesSymbolRestClient.FuturesSymbolCatalog` |
-| Shared spot order REST | `ISpotOrderRestClient.PlaceSpotOrderAsync(...)` |
-| Shared futures order REST | `IFuturesOrderRestClient.PlaceFuturesOrderAsync(...)` |
-| Shared balance REST | `IBalanceRestClient.GetBalancesAsync(...)` |
-| Shared deposit REST | `IDepositRestClient.GetDepositsAsync(...)` |
-| Shared withdrawal REST | `IWithdrawalRestClient.GetWithdrawalsAsync(...)` |
-| Shared order book REST | `IOrderBookRestClient.GetOrderBookAsync(...)` |
-| Shared kline REST | `IKlineRestClient.GetKlinesAsync(...)` |
-| Shared listen key REST | `IListenKeyRestClient.StartListenKeyAsync(...)` |
-| Shared leverage REST | `ILeverageRestClient.SetLeverageAsync(...)` |
-| Shared book ticker REST | `IBookTickerRestClient.GetBookTickerAsync(...)` |
-| Shared ticker socket | `ITickerSocketClient.SubscribeToTickerUpdatesAsync(...)` |
-| Shared trade socket | `ITradeSocketClient.SubscribeToTradeUpdatesAsync(...)` |
-| Shared kline socket | `IKlineSocketClient.SubscribeToKlineUpdatesAsync(...)` |
-| Shared balance socket | `IBalanceSocketClient.SubscribeToBalanceUpdatesAsync(...)` |
-| Shared spot order socket | `ISpotOrderSocketClient.SubscribeToSpotOrderUpdatesAsync(...)` |
-| Shared futures order socket | `IFuturesOrderSocketClient.SubscribeToFuturesOrderUpdatesAsync(...)` |
-| Shared user trade socket | `IUserTradeSocketClient.SubscribeToUserTradeUpdatesAsync(...)` |
-| Shared position socket | `IPositionSocketClient.SubscribeToPositionUpdatesAsync(...)` |
+| Shared REST client | `new DeepCoinRestClient().ExchangeApi.SharedApi` |
+| Shared socket client | `new DeepCoinSocketClient().ExchangeApi.SharedApi` |
+| Resolve a runtime-selected Shared API capability | `IDeepCoinSharedApiClient.GetCapability(...)` |
+| Shared spot ticker REST | `IGetTickerRest.GetTickerAsync(new GetTickerRequest(symbol))` |
+| Shared futures ticker REST | `IGetTickerRest.GetTickerAsync(new GetTickerRequest(symbol))` |
+| Shared spot symbols REST | `IGetSpotSymbolsRest.GetSpotSymbolsAsync(...)` |
+| Shared futures symbols REST | `IGetFuturesSymbolsRest.GetFuturesSymbolsAsync(...)` |
+| Shared spot symbol catalog | `IGetSpotSymbolsRest.SpotSymbolCatalog` |
+| Shared futures symbol catalog | `IGetFuturesSymbolsRest.FuturesSymbolCatalog` |
+| Shared spot order REST | `IPlaceSpotOrderRest.PlaceSpotOrderAsync(...)` |
+| Shared futures order REST | `IPlaceFuturesOrderRest.PlaceFuturesOrderAsync(...)` |
+| Shared balance REST | `IGetBalancesRest.GetBalancesAsync(...)` |
+| Shared deposit REST | `IGetDepositHistoryRest.GetDepositHistoryAsync(...)` |
+| Shared withdrawal REST | `IGetWithdrawalHistoryRest.GetWithdrawalHistoryAsync(...)` |
+| Shared order book REST | `IGetOrderBookRest.GetOrderBookAsync(...)` |
+| Shared kline REST | `IGetKlinesRest.GetKlinesAsync(...)` |
+| Shared listen key REST | `internal listen-key management.StartListenKeyAsync(...)` |
+| Shared leverage REST | `ISetLeverageRest.SetLeverageAsync(...)` |
+| Shared book ticker REST | `IGetBookTickerRest.GetBookTickerAsync(...)` |
+| Shared ticker socket | `ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync(...)` |
+| Shared trade socket | `ISubscribeTradesSocket.SubscribeToTradeUpdatesAsync(...)` |
+| Shared kline socket | `ISubscribeKlinesSocket.SubscribeToKlineUpdatesAsync(...)` |
+| Shared balance socket | `ISubscribeBalancesSocket.SubscribeToBalanceUpdatesAsync(...)` |
+| Shared spot order socket | `ISubscribeSpotOrdersSocket.SubscribeToSpotOrderUpdatesAsync(...)` |
+| Shared futures order socket | `ISubscribeFuturesOrdersSocket.SubscribeToFuturesOrderUpdatesAsync(...)` |
+| Shared user trade socket | `ISubscribeUserTradesSocket.SubscribeToUserTradeUpdatesAsync(...)` |
+| Shared position socket | `ISubscribePositionsSocket.SubscribeToPositionUpdatesAsync(...)` |
 
 Shared REST methods return `HttpResult<T>` / `HttpResult`; shared socket subscriptions return `WebSocketResult<UpdateSubscription>`; shared symbol/cache helpers such as `SupportsSpotSymbolAsync` and `SupportsFuturesSymbolAsync` can return `ExchangeCallResult<T>`.
 
@@ -159,4 +159,4 @@ For shared socket subscriptions, keep the concrete socket client and unsubscribe
 | `Trading.GetOrderAsync(...)` | `Trading.GetOpenOrderAsync(...)` or `Trading.GetClosedOrderAsync(...)` |
 | `CancelAllOrdersAsync(symbol)` | `CancelAllOrdersAsync(symbol, productGroup, marginMode, positionType)` |
 | `.Data` without `.Success` check | Check `.Success` first |
-| `ITickerSocketClient.UnsubscribeAsync(...)` | Keep the concrete socket client and call `socketClient.UnsubscribeAsync(subscription.Data)` |
+| Unsubscribe from a shared subscription | Keep the concrete socket client and call `socketClient.UnsubscribeAsync(subscription.Data)` |
