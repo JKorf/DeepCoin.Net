@@ -29,6 +29,11 @@ namespace DeepCoin.Net.Enums
         /// ["<c>filled</c>"] Filled
         /// </summary>
         [Map("filled", "1")]
-        Filled
+        Filled,
+        /// <summary>
+        /// ["<c>partially_filled_canceled</c>"] Canceled after a partial fill
+        /// </summary>
+        [Map("partially_filled_canceled")]
+        PartiallyFilledCanceled
     }
 }
