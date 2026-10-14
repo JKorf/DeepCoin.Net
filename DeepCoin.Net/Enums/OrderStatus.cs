@@ -16,9 +16,9 @@ namespace DeepCoin.Net.Enums
         [Map("live", "4")]
         Live,
         /// <summary>
-        /// ["<c>partially_filled</c>"] Partially filled open order
+        /// ["<c>partially_filled</c>", "<c>2</c>"] Partially filled open order
         /// </summary>
-        [Map("partially_filled")]
+        [Map("partially_filled", "2")]
         PartiallyFilled,
         /// <summary>
         /// ["<c>canceled</c>"] Canceled
@@ -31,9 +31,9 @@ namespace DeepCoin.Net.Enums
         [Map("filled", "1")]
         Filled,
         /// <summary>
-        /// ["<c>partially_filled_canceled</c>"] Canceled after a partial fill
+        /// ["<c>partially_filled_canceled</c>", "<c>3</c>"] Canceled after a partial fill
         /// </summary>
-        [Map("partially_filled_canceled")]
+        [Map("partially_filled_canceled", "3")]
         PartiallyFilledCanceled
     }
 }
