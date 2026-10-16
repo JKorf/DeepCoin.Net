@@ -165,7 +165,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                     x.HighPrice,
                     x.LowPrice,
                     new SharedOrderQuantity(), // The volumes for spot symbols are incorrect
-                    x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))
+                    (x.OpenPrice == null || x.OpenPrice == 0) ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))
                 {
                 }).ToArray());
         }
@@ -188,7 +188,7 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                     x.HighPrice,
                     x.LowPrice,
                     new SharedOrderQuantity(null, x.QuoteVolume, x.Volume),
-                    x.OpenPrice == null ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))).ToArray());
+                    (x.OpenPrice == null || x.OpenPrice == 0) ? null : Math.Round((x.LastPrice ?? 0) / x.OpenPrice.Value * 100 - 100, 3))).ToArray());
         }
 
         #endregion

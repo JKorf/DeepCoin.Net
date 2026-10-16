@@ -45,5 +45,9 @@ namespace DeepCoin.Net.Clients.ExchangeApi
                 SubscribePositionOptions
                 );
         }
+
+
+        /// <inheritdoc />
+        public Task UnsubscribeAllAsync() => _api.UnsubscribeAllAsync();
     }
 }
