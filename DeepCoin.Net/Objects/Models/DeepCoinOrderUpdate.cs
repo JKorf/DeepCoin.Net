@@ -111,6 +111,12 @@ namespace DeepCoin.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("v")]
         public decimal QuantityFilled { get; set; }
+        /// <summary>
+        /// ["<c>VT</c>"] Cumulative quantity traded; null when this field is absent
+        /// <para><see href="https://www.deepcoin.com/docs/zh/privateWS/order" /></para>
+        /// </summary>
+        [JsonPropertyName("VT")]
+        public decimal? QuantityTraded { get; set; }
     }
 
 
