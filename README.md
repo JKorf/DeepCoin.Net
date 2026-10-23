@@ -221,6 +221,11 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 4.7.0 - 23 Oct 2026
+    * Updated CryptoExchange.Net to v13.2.2
+    * Updated OrderStatus Enum
+    * Added QuantityTraded property to DeepCoinOrderUpdate model
+
 * Version 4.6.1 - 30 Sep 2026
     * Fixed exception in Shared API GetAllFuturesTickersAsync implementation
 
