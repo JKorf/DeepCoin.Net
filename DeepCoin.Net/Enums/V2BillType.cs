@@ -74,6 +74,11 @@ namespace DeepCoin.Net.Enums
         /// [<c>k</c>] Trial money recovery.
         /// </summary>
         [Map("k")]
-        TrialMoneyRecovery
+        TrialMoneyRecovery,
+        /// <summary>
+        /// [<c>N</c>] System transfer out.
+        /// </summary>
+        [Map("N")]
+        SystemTransferOut
     }
 }
