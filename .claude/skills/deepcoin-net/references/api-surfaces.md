@@ -1,22 +1,12 @@
-# DeepCoin.Net AI API Quick Map
+# API surfaces
 
-Use this file to route common user intents to the correct DeepCoin.Net client member. If a method name or parameter is not listed here, inspect `DeepCoin.Net/Interfaces/Clients/**` before generating code.
+## Client roots, symbols, and modes
 
-## Client Roots
+`client` below is a `DeepCoinRestClient`; `socketClient` is a `DeepCoinSocketClient`. Both use `ExchangeApi`. REST groups are `ExchangeData`, `Account`, and `Trading`; socket subscriptions live directly under `ExchangeApi`.
 
-| Intent | Use |
-|---|---|
-| REST calls | `new DeepCoinRestClient()` |
-| WebSocket streams | `new DeepCoinSocketClient()` |
-| API key authentication | `options.ApiCredentials = new DeepCoinCredentials("key", "secret", "pass")` |
-| Live environment | `DeepCoinEnvironment.Live` |
-| Custom environment | `DeepCoinEnvironment.CreateCustom(name, restAddress, socketAddress)` |
-| Dependency injection | `services.AddDeepCoin(options => { ... })` |
-| REST API root | `client.ExchangeApi` |
-| WebSocket API root | `socketClient.ExchangeApi` |
-| Shared REST client | `client.ExchangeApi.SharedApi` |
-| Shared socket client | `socketClient.ExchangeApi.SharedApi` |
-| Resolve a runtime-selected Shared API capability | `IDeepCoinSharedApiClient.GetCapability(...)` |
+Native symbols use `ETH-USDT` for spot and `ETH-USDT-SWAP` for swaps. `DeepCoinExchange.FormatSymbol` formats native shared symbols; socket methods accept native names and handle socket-specific formatting internally. Discover actual instruments before selecting one.
+
+`SymbolType.Spot` / `Swap` select markets and account scopes. Order margin selection uses `TradeMode.Spot`, `Cross`, or `Isolated`. `ProductGroup.USDTMargined` / `CoinMargined` select derivative product groups for relevant methods. `PositionType.Merge` / `Split` and `PositionSide` control derivative position behavior; candles use `KlineInterval`.
 
 ## Exchange Data REST
 
@@ -95,68 +85,41 @@ Use this file to route common user intents to the correct DeepCoin.Net client me
 | Handle trigger order updates | `socketClient.ExchangeApi.SubscribeToUserDataUpdatesAsync(listenKey, onTriggerOrderMessage: handler)` |
 | Unsubscribe | `socketClient.UnsubscribeAsync(subscription.Data)` |
 
-## SharedApis
+## Private stream lifecycle
 
-| User intent | DeepCoin.Net member or interface |
-|---|---|
-| Shared REST client | `new DeepCoinRestClient().ExchangeApi.SharedApi` |
-| Shared socket client | `new DeepCoinSocketClient().ExchangeApi.SharedApi` |
-| Resolve a runtime-selected Shared API capability | `IDeepCoinSharedApiClient.GetCapability(...)` |
-| Shared spot ticker REST | `IGetTickerRest.GetTickerAsync(new GetTickerRequest(symbol))` |
-| Shared futures ticker REST | `IGetTickerRest.GetTickerAsync(new GetTickerRequest(symbol))` |
-| Shared spot symbols REST | `IGetSpotSymbolsRest.GetSpotSymbolsAsync(...)` |
-| Shared futures symbols REST | `IGetFuturesSymbolsRest.GetFuturesSymbolsAsync(...)` |
-| Shared spot symbol catalog | `IGetSpotSymbolsRest.SpotSymbolCatalog` |
-| Shared futures symbol catalog | `IGetFuturesSymbolsRest.FuturesSymbolCatalog` |
-| Shared spot order REST | `IPlaceSpotOrderRest.PlaceSpotOrderAsync(...)` |
-| Shared futures order REST | `IPlaceFuturesOrderRest.PlaceFuturesOrderAsync(...)` |
-| Shared balance REST | `IGetBalancesRest.GetBalancesAsync(...)` |
-| Shared deposit REST | `IGetDepositHistoryRest.GetDepositHistoryAsync(...)` |
-| Shared withdrawal REST | `IGetWithdrawalHistoryRest.GetWithdrawalHistoryAsync(...)` |
-| Shared order book REST | `IGetOrderBookRest.GetOrderBookAsync(...)` |
-| Shared kline REST | `IGetKlinesRest.GetKlinesAsync(...)` |
-| Shared listen key REST | `internal listen-key management.StartListenKeyAsync(...)` |
-| Shared leverage REST | `ISetLeverageRest.SetLeverageAsync(...)` |
-| Shared book ticker REST | `IGetBookTickerRest.GetBookTickerAsync(...)` |
-| Shared ticker socket | `ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync(...)` |
-| Shared trade socket | `ISubscribeTradesSocket.SubscribeToTradeUpdatesAsync(...)` |
-| Shared kline socket | `ISubscribeKlinesSocket.SubscribeToKlineUpdatesAsync(...)` |
-| Shared balance socket | `ISubscribeBalancesSocket.SubscribeToBalanceUpdatesAsync(...)` |
-| Shared spot order socket | `ISubscribeSpotOrdersSocket.SubscribeToSpotOrderUpdatesAsync(...)` |
-| Shared futures order socket | `ISubscribeFuturesOrdersSocket.SubscribeToFuturesOrderUpdatesAsync(...)` |
-| Shared user trade socket | `ISubscribeUserTradesSocket.SubscribeToUserTradeUpdatesAsync(...)` |
-| Shared position socket | `ISubscribePositionsSocket.SubscribeToPositionUpdatesAsync(...)` |
+For credentialed clients, `SubscribeToUserDataUpdatesAsync` without a listen-key argument obtains a token lease and renews it internally. It routes order, balance, position, execution, account, and trigger-order callbacks through one user subscription. Keep and unsubscribe the returned subscription.
 
-Shared REST methods return `HttpResult<T>` / `HttpResult`; shared socket subscriptions return `WebSocketResult<UpdateSubscription>`; shared symbol/cache helpers such as `SupportsSpotSymbolAsync` and `SupportsFuturesSymbolAsync` can return `ExchangeCallResult<T>`.
+For externally managed keys, call `Account.StartUserStreamAsync`, pass `ListenKey` to the explicit-key overload, and maintain it with `KeepAliveUserStreamAsync`. The explicit-key overload does not acquire a managed token lease. Do not run two independent keepalive owners for the same managed workflow.
 
-Shared spot/futures symbol results include `DisplayName`, `BaseAssetType`, `BaseAssetSubType`, `QuoteAssetType`, and `QuoteAssetSubType`. `GetSymbolsRequest` supports filters for those asset type/subtype fields.
+## Shared API V2
 
-For shared socket subscriptions, keep the concrete socket client and unsubscribe with `await socketClient.UnsubscribeAsync(subscription.Data)`.
+Use `client.ExchangeApi.SharedApi` and `socketClient.ExchangeApi.SharedApi`. The DI aggregate `IDeepCoinSharedApiClient` exposes `Rest` and `Socket`.
 
-## Result Handling
+| Intent | Representative capabilities |
+| --- | --- |
+| Symbols and tickers | `IGetSpotSymbolsRest`, `IGetFuturesSymbolsRest`, `IGetTickerRest`, `IGetAllTickersRest`, `IGetBookTickerRest` |
+| Accounts and market data | `IGetBalancesRest`, `IGetDepositHistoryRest`, `IGetWithdrawalHistoryRest`, `IGetKlinesRest`, `IGetOrderBookRest`, `IGetLeverageRest`, `ISetLeverageRest` |
+| Spot trading | `IPlaceSpotOrderRest`, `IGetSpotOrderRest`, `IGetOpenSpotOrdersRest`, `IGetClosedSpotOrdersRest`, `ICancelSpotOrderRest`, order/trade history capabilities |
+| Futures trading | `IPlaceFuturesOrderRest`, `IGetFuturesOrderRest`, `IGetOpenFuturesOrdersRest`, `IGetClosedFuturesOrdersRest`, `ICancelFuturesOrderRest`, `IGetPositionsRest`, order/trade history capabilities |
+| Public socket | `ISubscribeKlinesSocket`, `ISubscribeTickerSocket`, `ISubscribeTradesSocket` |
+| Private socket | `ISubscribeBalancesSocket`, `ISubscribeSpotOrdersSocket`, `ISubscribeFuturesOrdersSocket`, `ISubscribeUserTradesSocket`, `ISubscribePositionsSocket` |
 
-| Situation | Pattern |
-|---|---|
-| REST success check | `if (!result.Success) { Console.WriteLine(result.Error); return; }` |
-| Socket subscription success check | `if (!sub.Success) { Console.WriteLine(sub.Error); return; }` where `sub` is `WebSocketResult<UpdateSubscription>` |
-| Read REST data | Read `result.Data` only after `result.Success` |
-| Read shared helper data | Read `ExchangeCallResult<T>.Data` only after `.Success` |
-| Retry decision | Retry only when `result.Error?.IsTransient == true` |
-| Cancellation | Pass `ct: cancellationToken` |
+Shared socket interfaces do not expose order-book subscriptions or socket order placement. Use the native order-book method or a maintained local book when required. Shared REST supports deposit/withdrawal history reads rather than withdrawal placement. Do not call internal listen-key helpers as public capabilities.
 
-## Common Routing Pitfalls
+For dynamic selection, call the aggregate's `GetCapability` with a descriptor such as `SharedCapabilities.Tickers.GetTicker.Rest` and the required trading mode. Check for a missing match before accessing `Capability` and `Options`. Use `GetCapabilities` for matching implementations and `Discover()` for operation metadata. With multiple exchanges registered, resolve `IEnumerable<TCapability>` and select by exchange and supported mode.
 
-| Do not use | Use instead |
-|---|---|
-| `DeepCoinClient` | `DeepCoinRestClient` |
-| `ApiCredentials` | `DeepCoinCredentials` |
-| `SpotApi` | `ExchangeApi` plus `SymbolType.Spot` / `TradeMode.Spot` |
-| `UsdFuturesApi` / `CoinFuturesApi` | `ExchangeApi` plus `SymbolType.Swap`, `ProductGroup`, and swap symbols |
-| `ETHUSDT` in native DeepCoin methods | `ETH-USDT` |
-| `ETHUSDT` swap symbol | `ETH-USDT-SWAP` |
-| `GetTickerAsync("ETH-USDT")` | `GetTickersAsync(SymbolType.Spot)` then filter by symbol |
-| `Account.GetPositionsAsync(...)` | `Trading.GetPositionsAsync(...)` |
-| `Trading.GetOrderAsync(...)` | `Trading.GetOpenOrderAsync(...)` or `Trading.GetClosedOrderAsync(...)` |
-| `CancelAllOrdersAsync(symbol)` | `CancelAllOrdersAsync(symbol, productGroup, marginMode, positionType)` |
-| `.Data` without `.Success` check | Check `.Success` first |
-| Unsubscribe from a shared subscription | Keep the concrete socket client and call `socketClient.UnsubscribeAsync(subscription.Data)` |
+### Catalogs, quantities, and prerequisites
+
+Call `IGetSpotSymbolsRest.GetSpotSymbolsAsync(new GetSymbolsRequest())` or `IGetFuturesSymbolsRest.GetFuturesSymbolsAsync(new GetSymbolsRequest())` successfully before reading `SpotSymbolCatalog` or `FuturesSymbolCatalog`. Requests support base/quote asset type and subtype filters; results include `DisplayName`, constraints, and classifications (`Crypto`, `Fiat`, `TradFi`; applicable `StableCoin`, `Equity`, `Commodity` subtypes). Inverse futures can have fiat quote assets; commodity/equity underlyings receive corresponding classifications where supported.
+
+Shared orders use `SharedOrderQuantity`. Spot limit orders use base quantity, and market orders can use base or quote quantity. Futures orders use contract quantities through `QuantityInContracts`. Shared REST books report `SharedQuantityType.BaseAsset` for spot and `SharedQuantityType.Contracts` for derivatives.
+
+Shared all-ticker requests require `TradingMode`. Spot and futures open-order requests require a symbol. Futures placement requires `PositionSide` and does not set leverage inline. Set leverage separately with the required `MarginMode`; the `PositionType` exchange parameter selects split/merge behavior (placement also accepts alias `mrgPosition`). Inspect operation-specific rules before copying a portable request from another exchange.
+
+Shared REST uses `HttpResult<T>` / `HttpResult`, subscriptions use `WebSocketResult<UpdateSubscription>`, and non-I/O symbol/cache helpers can return `ExchangeCallResult<T>`.
+
+## Environments and source navigation
+
+`DeepCoinEnvironment.Live` is the built-in environment. `CreateCustom` takes a name, REST address, and socket address; custom endpoints do not themselves supply a testnet.
+
+Checkout-only: [public interfaces](../../../../DeepCoin.Net/Interfaces/Clients/), [local order books](../../../../DeepCoin.Net/SymbolOrderBooks/), and [tracker factory](../../../../DeepCoin.Net/DeepCoinTrackerFactory.cs).

@@ -1,43 +1,18 @@
 # DeepCoin.Net
 
-> Strongly typed .NET client library for the DeepCoin REST and WebSocket APIs. Supports DeepCoin spot and swap/futures market data, account endpoints, trading endpoints, private user streams, local order book support, and CryptoExchange.Net SharedApis integration.
+> A .NET client library for DeepCoin spot and derivatives REST and WebSocket APIs.
 
-DeepCoin.Net is part of the CryptoExchange.Net ecosystem. It uses the standard CryptoExchange.Net result model, strongly typed enums and models, automatic WebSocket reconnect handling, client-side rate limiting, dependency injection integration, and native AOT support. REST methods return `HttpResult<T>` / `HttpResult`, WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`, and selected shared helper methods return `ExchangeCallResult<T>`. Current version in this repository: 4.7.0. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
+## Library usage
 
-## Documentation
+- [DeepCoin.Net skill](.claude/skills/deepcoin-net/SKILL.md): Consumer conventions and task-specific guidance.
+- [API surfaces](.claude/skills/deepcoin-net/references/api-surfaces.md): Client roots, intent-to-method routing, and Shared APIs.
+- [Usage examples](.claude/skills/deepcoin-net/references/usage.md): Authentication, REST, WebSockets, and dependency injection.
+- [Operational considerations](.claude/skills/deepcoin-net/references/safety.md): Credentials, order handling, and retry decisions.
 
-- [README](https://github.com/JKorf/DeepCoin.Net/blob/main/README.md): Overview, installation, supported features, usage examples, release notes
-- [Documentation Site](https://cryptoexchange.jkorf.dev/docs/exchange-clients?library=DeepCoin.Net): Full documentation hub including client reference, WebSocket subscriptions, dependency injection, and shared interfaces
-- [AI API Quick Map](https://github.com/JKorf/DeepCoin.Net/blob/main/docs/ai-api-map.md): Table-style intent-to-method map for routing common user requests to the correct client member
-- [Full LLM Context](https://github.com/JKorf/DeepCoin.Net/blob/main/llms-full.txt): Detailed AI/LLM guide with code patterns, endpoint map, common mistakes, and anti-hallucination rules
-- [Claude/Codex Skill](https://github.com/JKorf/DeepCoin.Net/blob/main/CLAUDE.md): Assistant-facing usage guide with examples and pitfalls
+## Repository and reference
 
-## Examples
-
-- [AI-friendly examples directory](https://github.com/JKorf/DeepCoin.Net/tree/main/Examples/ai-friendly): Compact, fully runnable examples optimized for AI assistants and quick onboarding
-- [Spot Quickstart](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/01-spot-quickstart.cs): Client setup, ticker lookup, balances, limit spot order, order status and cancellation
-- [Swap/Futures Trading](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/02-futures.cs): Set leverage, place swap order, retrieve position, reduce-only close
-- [WebSocket Streams](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/03-websocket.cs): Public ticker/trade/kline/order book streams and authenticated user stream
-- [Multi-Exchange Pattern](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/04-multi-exchange.cs): Using CryptoExchange.Net SharedApis and shared capability discovery for exchange-agnostic code
-- [Error Handling](https://github.com/JKorf/DeepCoin.Net/blob/main/Examples/ai-friendly/05-error-handling.cs): HttpResult, WebSocketResult, and ExchangeCallResult patterns, retry logic, common errors and their handling
-- [Full Examples Repository](https://github.com/JKorf/DeepCoin.Net/tree/main/Examples): Console, API, order book, and tracker examples
-
-## Critical Rules
-
-- Use `DeepCoinRestClient` for REST and `DeepCoinSocketClient` for WebSocket.
-- Use `DeepCoinCredentials("key", "secret", "pass")`, not generic `ApiCredentials`.
-- Use `restClient.ExchangeApi.ExchangeData`, `.Account`, and `.Trading`; do not invent `SpotApi` or futures-specific root branches.
-- Native DeepCoin methods use symbols such as `ETH-USDT` and `ETH-USDT-SWAP`.
-- Always check `.Success` before reading `.Data`.
-- Use `socketClient.UnsubscribeAsync(subscription.Data)` for teardown.
-- Private WebSocket streams require `restClient.ExchangeApi.Account.StartUserStreamAsync()`.
-- Use the exchange-level `IDeepCoinSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
-- Shared spot/futures symbol clients expose symbol catalogs and return display names plus base/quote asset type and subtype metadata; `GetSymbolsRequest` can filter on that metadata.
-
-## Reference
-
-- [CryptoExchange.Net base library](https://github.com/JKorf/CryptoExchange.Net): Base abstractions used by DeepCoin.Net and other exchange libraries
-- [CryptoClients.Net](https://github.com/JKorf/CryptoClients.Net): Bundle package providing unified access to all exchange libraries
-- [NuGet Package](https://www.nuget.org/packages/DeepCoin.Net): Latest stable release on NuGet
-- [Changelog](https://github.com/JKorf/DeepCoin.Net/blob/main/README.md#release-notes): Version history
-- [Discord Community](https://discord.gg/MSpeEtSY8t): Maintainer-supported Discord for questions and discussion
+- [README](README.md): Overview, installation, release notes, and documentation site link.
+- [Repository instructions](AGENTS.md): Development workflow and documentation ownership.
+- [Client interfaces](DeepCoin.Net/Interfaces/Clients/): Exact endpoint signatures and XML documentation.
+- [Library project](DeepCoin.Net/DeepCoin.Net.csproj): Package version, dependencies, and target frameworks.
+- [AI-friendly examples](Examples/ai-friendly/): Complete programs compiled by the documentation test.

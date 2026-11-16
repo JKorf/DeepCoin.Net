@@ -1,0 +1,4 @@
+interface:
+  display_name: "DeepCoin.Net"
+  short_description: "Build C# DeepCoin spot and swap integrations."
+  default_prompt: "Use $deepcoin-net to implement a DeepCoin.Net REST, websocket, account, or trading workflow."

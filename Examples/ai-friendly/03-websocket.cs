@@ -79,32 +79,29 @@ if (!bookSub.Success)
 }
 
 // ---- 5. PRIVATE USER DATA STREAM ----
-// Private streams require credentials on REST to acquire a listen key, and
-// credentials on the socket client for authenticated socket behavior.
-var restClient = new DeepCoinRestClient(options =>
+// This overload obtains and renews its listen key from socket credentials.
+using var privateSocketClient = new DeepCoinSocketClient(options =>
 {
     options.ApiCredentials = new DeepCoinCredentials("API_KEY", "API_SECRET", "API_PASS");
 });
-
-var privateSocketClient = new DeepCoinSocketClient(options =>
+var userSub = await privateSocketClient.ExchangeApi.SubscribeToUserDataUpdatesAsync(
+    onOrderMessage: update => Console.WriteLine($"Order updates: {update.Data.Length}"),
+    onBalanceMessage: update => Console.WriteLine($"Balance updates: {update.Data.Length}"),
+    onPositionMessage: update => Console.WriteLine($"Position updates: {update.Data.Length}"));
+if (userSub.Success)
 {
-    options.ApiCredentials = new DeepCoinCredentials("API_KEY", "API_SECRET", "API_PASS");
-});
-
-var listenKey = await restClient.ExchangeApi.Account.StartUserStreamAsync();
-if (listenKey.Success)
-{
-    var userSub = await privateSocketClient.ExchangeApi.SubscribeToUserDataUpdatesAsync(
-        listenKey.Data.ListenKey,
-        onOrderMessage: update => Console.WriteLine($"Order updates: {update.Data.Length}"),
-        onBalanceMessage: update => Console.WriteLine($"Balance updates: {update.Data.Length}"),
-        onPositionMessage: update => Console.WriteLine($"Position updates: {update.Data.Length}"));
-
-    if (userSub.Success)
+    try
     {
-        Console.WriteLine("Private user stream subscribed.");
+        await Task.Delay(TimeSpan.FromSeconds(5));
+    }
+    finally
+    {
         await privateSocketClient.UnsubscribeAsync(userSub.Data);
     }
+}
+else
+{
+    Console.WriteLine(userSub.Error);
 }
 
 Console.WriteLine("Press Enter to exit public subscriptions");
@@ -117,5 +114,5 @@ await socketClient.UnsubscribeAsync(bookSub.Data);
 
 // Common variations:
 //   Swap symbol streams:       use "ETH-USDT-SWAP"
-//   Keep listen key alive:     restClient.ExchangeApi.Account.KeepAliveUserStreamAsync(listenKey)
+//   Manual listen keys: use StartUserStreamAsync and KeepAliveUserStreamAsync with the explicit-key overload.
 //   Local order book:          use DeepCoinSymbolOrderBook or IDeepCoinOrderBookFactory
