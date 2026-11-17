@@ -1,0 +1,18 @@
+{
+  "baseBranch": "main",
+  "sdk": "11.0.100",
+  "packages": [
+    {
+      "key": "deepcoin",
+      "project": "DeepCoin.Net/DeepCoin.Net.csproj",
+      "testProjects": [
+        "DeepCoin.Net.UnitTests/DeepCoin.Net.UnitTests.csproj"
+      ],
+      "packageId": "DeepCoin.Net",
+      "readme": "README.md",
+      "tagPrefix": "DeepCoin.Net.",
+      "releaseIntegrationTests": false,
+      "publishToGitHubPackages": true
+    }
+  ]
+}
