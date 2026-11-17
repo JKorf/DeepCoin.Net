@@ -53,8 +53,8 @@ namespace DeepCoin.Net
 
             return new KlineTracker(
                 _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
-                restClient.ExchangeApi.SharedClient,
-                socketClient.ExchangeApi.SharedClient,
+                restClient.ExchangeApi.SharedApi,
+                socketClient.ExchangeApi.SharedApi,
                 symbol,
                 interval,
                 limit,
@@ -74,7 +74,7 @@ namespace DeepCoin.Net
                 _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
                 null,
                 null,
-                socketClient.ExchangeApi.SharedClient,
+                socketClient.ExchangeApi.SharedApi,
                 symbol,
                 limit,
                 period,
